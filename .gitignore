@@ -17,3 +17,6 @@ _site/
 # Editor and tool state
 .vscode/
 .idea/
+# Impeccable generated artifacts; keep each folder's config.json
+**/.impeccable/*
+!**/.impeccable/config.json
