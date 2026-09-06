@@ -29,7 +29,7 @@ Opened directly from the filesystem in a browser. The showcase links to sibling 
 
 ## Capabilities and Constraints
 
-- Working projects are Calculator and Elevator, linking to `calculator/calculator.html` and `elevator/elevator.html`.
+- Working projects are Calculator and Elevator, linking to `01-calculator/calculator.html` and `02-elevator/elevator.html`.
 - Roadmap projects 3–18 and the small RTS target are represented as disabled future stops with “Coming Soon”.
 - The route is intentionally winding and illustration-like rather than a conventional grid of cards.
 - Card content must come from `ROADMAP.md`; do not invent finished project claims or links.
@@ -42,7 +42,7 @@ The tone is encouraging, concrete, and family-friendly. Existing project worlds 
 ## Evidence on Hand
 
 - `ROADMAP.md` is the source of truth for the project sequence and teaching topics.
-- `calculator/` and `elevator/` contain the two working project pages.
+- `01-calculator/` and `02-elevator/` contain the two working project pages.
 - No public testimonials, benchmarks, or commercial claims exist; none should be fabricated.
 
 ## Product Principles

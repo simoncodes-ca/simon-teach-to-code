@@ -29,7 +29,7 @@ Inside `elevator.js` six functions have `// TODO` in them. Work through them in 
 
 ### What you already know from the calculator
 
-These still work exactly the same. Flip back to `calculator/README.md` if you want the full story.
+These still work exactly the same. Flip back to `01-calculator/README.md` if you want the full story.
 
 - `let` and `const` make labelled boxes for values. Objects are backpacks with labelled pockets.
 - Arrays are ordered lists. `.push(x)` adds to the end, `[0]` reads the first item, `.length` counts.

@@ -18,7 +18,7 @@ There is nothing to install. Open the HTML file in a browser and the JavaScript 
 
 A working calculator: digits, a decimal point, `+ - × ÷`, equals, and clear. The page gives you the buttons. You build the memory (what the calculator remembers between presses), the display, and the arithmetic.
 
-Files: `calculator/calculator.html`, `calculator/styles.css`, `calculator/calculator.js`.
+Files: `01-calculator/calculator.html`, `01-calculator/styles.css`, `01-calculator/calculator.js`.
 
 There is also a second skin, `calculator-anna.html`, that dresses the same page differently and shares the same JavaScript. It shows how the look and the logic live apart.
 
@@ -26,7 +26,7 @@ There is also a second skin, `calculator-anna.html`, that dresses the same page 
 
 A five-floor building with a working elevator. The call buttons light up and stay lit. The car travels between floors and opens its doors. The page gives you the building, the buttons, and a live diagram. You build the queue of floor requests and the state machine that decides what happens next. A state machine is a program that is always in exactly one named state, like `doorsOpen` or `movingUp`.
 
-Files: `elevator/elevator.html`, `elevator/styles.css`, `elevator/elevator.js`.
+Files: `02-elevator/elevator.html`, `02-elevator/styles.css`, `02-elevator/elevator.js`.
 
 ## Suggested learning path
 
@@ -37,6 +37,6 @@ New projects will appear here over time. The path for now is calculator first, e
 
 ## Getting started
 
-1. Open `calculator/calculator.html` in your browser.
-2. Open `calculator/calculator.js` in a text editor.
+1. Open `01-calculator/calculator.html` in your browser.
+2. Open `01-calculator/calculator.js` in a text editor.
 3. Follow the comments in the file, from the top.

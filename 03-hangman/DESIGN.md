@@ -15,7 +15,7 @@ typography:
 
 # Design System: The Sketchbook
 
-> Recorded from the built Hangman page; see `hangman/` for the implementation.
+> Recorded from the built Hangman page; see `03-hangman/` for the implementation.
 
 ## Overview
 

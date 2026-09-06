@@ -60,7 +60,7 @@ Most beginner hangman tutorials are either ugly or unreadable. This one is neith
 ## Evidence on Hand
 
 - `ROADMAP.md` names Hangman project 3 and lists what it teaches: strings and string methods, arrays, loops, booleans, input validation, invalid actions, derived display state.
-- The sibling projects `calculator/` and `elevator/` establish the pattern: three files, pre-written wiring, stubbed core with plain-language doc comments, graduated hints, and a themed skin that makes the source worth reading. Simon completed and understood both.
+- The sibling projects `01-calculator/` and `02-elevator/` establish the pattern: three files, pre-written wiring, stubbed core with plain-language doc comments, graduated hints, and a themed skin that makes the source worth reading. Simon completed and understood both.
 - No public claims, scores, or testimonials exist; none should be fabricated.
 
 ## Product Principles
