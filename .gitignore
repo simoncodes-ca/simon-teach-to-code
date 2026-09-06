@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+**/*.local.json
+
+# Dependency and build output
+node_modules/
+dist/
+_site/
+
+# Editor and tool state
+.vscode/
+.idea/

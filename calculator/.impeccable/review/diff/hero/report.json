@@ -1,0 +1,352 @@
+{
+  "tool": "comp-diff",
+  "version": 1,
+  "createdAt": "2026-09-04T17:40:34.554Z",
+  "label": "hero",
+  "comp": ".impeccable/mocks/yard-a-bolted-plate.png",
+  "build": ".impeccable/review/hero-repro.png",
+  "spec": ".impeccable/build/spec.json",
+  "compSize": "1344x768",
+  "buildSize": "1344x768",
+  "align": "top",
+  "overall": 0.5151,
+  "verdict": "contradicted",
+  "scores": {
+    "overall": 0.5151,
+    "structure": 0.6337,
+    "color": 0.6147,
+    "colorIntersection": 0.4045,
+    "paletteMatch": 0.7279,
+    "detail": 0.3085,
+    "detailRaw": 0.5064,
+    "detailAdded": 0.3958,
+    "bands": 0.4171
+  },
+  "palette": {
+    "comp": [
+      {
+        "hex": "#1b1919",
+        "coverage": 0.6392
+      },
+      {
+        "hex": "#3e3024",
+        "coverage": 0.2613
+      },
+      {
+        "hex": "#6c482b",
+        "coverage": 0.038
+      },
+      {
+        "hex": "#659220",
+        "coverage": 0.0238
+      },
+      {
+        "hex": "#525557",
+        "coverage": 0.0202
+      },
+      {
+        "hex": "#b7afa7",
+        "coverage": 0.0174
+      }
+    ],
+    "build": [
+      {
+        "hex": "#232226",
+        "coverage": 0.7326
+      },
+      {
+        "hex": "#483d29",
+        "coverage": 0.1057
+      },
+      {
+        "hex": "#f2f2f2",
+        "coverage": 0.051
+      },
+      {
+        "hex": "#3df86f",
+        "coverage": 0.0481
+      },
+      {
+        "hex": "#6f5229",
+        "coverage": 0.0448
+      },
+      {
+        "hex": "#f83990",
+        "coverage": 0.0178
+      }
+    ]
+  },
+  "regions": [
+    {
+      "id": "wall",
+      "x": 0,
+      "y": 0.5,
+      "w": 0.2,
+      "h": 0.2,
+      "kind": "texture",
+      "score": {
+        "overall": 0.269,
+        "structure": 0.9738,
+        "color": 0.3513,
+        "colorIntersection": 0.0001,
+        "paletteMatch": 0.5403,
+        "detail": 0,
+        "detailRaw": 0.2513,
+        "detailAdded": 1,
+        "bands": 1
+      },
+      "verdict": "missing",
+      "inkBox": {
+        "comp": null,
+        "build": null
+      }
+    },
+    {
+      "id": "title",
+      "x": 0.4501,
+      "y": 0.1003,
+      "w": 0.3497,
+      "h": 0.0703,
+      "kind": "text",
+      "score": {
+        "overall": 0.3074,
+        "structure": 0.294,
+        "color": 0.3748,
+        "colorIntersection": 0.0375,
+        "paletteMatch": 0.5564,
+        "detail": 0.4447,
+        "detailRaw": 0.5489,
+        "detailAdded": 0.2083,
+        "bands": 0
+      },
+      "verdict": "contradicted",
+      "inkBox": {
+        "comp": {
+          "x": 8,
+          "y": 0,
+          "w": 462,
+          "h": 48
+        },
+        "build": {
+          "x": 2,
+          "y": 2,
+          "w": 402,
+          "h": 33
+        }
+      }
+    },
+    {
+      "id": "panel-frame",
+      "x": 0.2,
+      "y": 0.2,
+      "w": 0.4,
+      "h": 0.7,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.4776,
+        "structure": 0.3779,
+        "color": 0.5974,
+        "colorIntersection": 0.4417,
+        "paletteMatch": 0.6812,
+        "detail": 0.2887,
+        "detailRaw": 0.5335,
+        "detailAdded": 0.4896,
+        "bands": 0.8252
+      },
+      "verdict": "contradicted",
+      "inkBox": {
+        "comp": {
+          "x": 11,
+          "y": 48,
+          "w": 526,
+          "h": 443
+        },
+        "build": {
+          "x": 88,
+          "y": 6,
+          "w": 449,
+          "h": 531
+        }
+      }
+    },
+    {
+      "id": "readout-well",
+      "x": 0.2,
+      "y": 0.3,
+      "w": 0.4,
+      "h": 0.2,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.3726,
+        "structure": 0.4502,
+        "color": 0.5494,
+        "colorIntersection": 0.3485,
+        "paletteMatch": 0.6577,
+        "detail": 0.0945,
+        "detailRaw": 0.3028,
+        "detailAdded": 0.4167,
+        "bands": 0.36
+      },
+      "verdict": "contradicted",
+      "inkBox": {
+        "comp": {
+          "x": 17,
+          "y": 0,
+          "w": 520,
+          "h": 154
+        },
+        "build": {
+          "x": 114,
+          "y": 0,
+          "w": 423,
+          "h": 154
+        }
+      }
+    },
+    {
+      "id": "readout",
+      "x": 0.4115,
+      "y": 0.2995,
+      "w": 0.1161,
+      "h": 0.0625,
+      "kind": "text",
+      "score": {
+        "overall": 0.2931,
+        "structure": 0.2659,
+        "color": 0.6055,
+        "colorIntersection": 0.2687,
+        "paletteMatch": 0.7869,
+        "detail": 0.0584,
+        "detailRaw": 0.1573,
+        "detailAdded": 0.1979,
+        "bands": 0
+      },
+      "verdict": "missing",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 150,
+          "h": 48
+        },
+        "build": {
+          "x": 73,
+          "y": 11,
+          "w": 37,
+          "h": 37
+        }
+      }
+    },
+    {
+      "id": "keypad",
+      "x": 0.2314,
+      "y": 0.5,
+      "w": 0.2649,
+      "h": 0.3099,
+      "kind": "control",
+      "score": {
+        "overall": 0.2318,
+        "structure": 0.1745,
+        "color": 0.2506,
+        "colorIntersection": 0.1659,
+        "paletteMatch": 0.2962,
+        "detail": 0.3279,
+        "detailRaw": 0.5675,
+        "detailAdded": 0.4792,
+        "bands": 0.7709
+      },
+      "verdict": "contradicted",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 356,
+          "h": 238
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 356,
+          "h": 238
+        }
+      }
+    },
+    {
+      "id": "buffer-panel",
+      "x": 0.6,
+      "y": 0.2,
+      "w": 0.2,
+      "h": 0.7,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.5444,
+        "structure": 0.7777,
+        "color": 0.5785,
+        "colorIntersection": 0.3527,
+        "paletteMatch": 0.7002,
+        "detail": 0.0903,
+        "detailRaw": 0.3195,
+        "detailAdded": 0.4583,
+        "bands": 0.7
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 58,
+          "w": 225,
+          "h": 387
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 187,
+          "h": 499
+        }
+      }
+    },
+    {
+      "id": "buffer-list",
+      "x": 0.6161,
+      "y": 0.5013,
+      "w": 0.061,
+      "h": 0.0521,
+      "kind": "control",
+      "score": {
+        "overall": 0.4142,
+        "structure": 0.7002,
+        "color": 0.2833,
+        "colorIntersection": 0,
+        "paletteMatch": 0.4358,
+        "detail": 0,
+        "detailRaw": 0,
+        "detailAdded": 0,
+        "bands": 0.4
+      },
+      "verdict": "missing",
+      "inkBox": {
+        "comp": {
+          "x": 8,
+          "y": 10,
+          "w": 71,
+          "h": 27
+        },
+        "build": null
+      }
+    }
+  ],
+  "files": {
+    "sideBySide": ".impeccable/review/diff/hero/side-by-side.png",
+    "heatmap": ".impeccable/review/diff/hero/heatmap.png",
+    "regionFiles": [
+      ".impeccable/review/diff/hero/regions/wall.png",
+      ".impeccable/review/diff/hero/regions/title.png",
+      ".impeccable/review/diff/hero/regions/panel-frame.png",
+      ".impeccable/review/diff/hero/regions/readout-well.png",
+      ".impeccable/review/diff/hero/regions/readout.png",
+      ".impeccable/review/diff/hero/regions/keypad.png",
+      ".impeccable/review/diff/hero/regions/buffer-panel.png",
+      ".impeccable/review/diff/hero/regions/buffer-list.png"
+    ]
+  }
+}

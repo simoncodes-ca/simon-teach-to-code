@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Hangman</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="book">
+    <header class="r-title"><h1>Simon&rsquo;s Hangman</h1></header>
+    <div class="spine" aria-hidden="true"></div>
+
+    <figure class="r-drawing" aria-hidden="true">
+      <svg id="drawing" viewBox="20 60 380 440" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="pencil" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="2" seed="7" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+          </filter>
+          <filter id="smudge" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+        </defs>
+        <g class="guides" filter="url(#pencil)">
+          <circle cx="300" cy="172" r="30"/>
+          <line x1="300" y1="80" x2="300" y2="440"/>
+        </g>
+        <g class="smudges" filter="url(#smudge)">
+          <ellipse cx="150" cy="470" rx="70" ry="9"/>
+          <ellipse cx="290" cy="452" rx="46" ry="7"/>
+        </g>
+        <g id="gallows" class="drawn" filter="url(#pencil)">
+          <path class="stroke" d="M38 474 Q140 470 330 473"/>
+          <path class="stroke" d="M62 446 Q60 444 300 445"/>
+          <path class="stroke" d="M63 446 L62 473"/>
+          <path class="stroke" d="M298 444 L300 472"/>
+          <path class="stroke heavy" d="M100 442 Q96 260 99 82"/>
+          <path class="stroke heavy" d="M99 84 Q200 78 312 82"/>
+          <path class="stroke" d="M103 158 Q135 118 168 86"/>
+          <path class="stroke" d="M296 86 Q299 116 300 142"/>
+          <path class="stroke" d="M293 144 q8 8 14 0 q8 -8 14 0"/>
+        </g>
+        <g id="part-head" class="part" filter="url(#pencil)"><path class="stroke heavy" d="M332 171 a30 30 0 1 0 -4 32"/></g>
+        <g id="part-body" class="part" filter="url(#pencil)"><path class="stroke heavy" d="M299 202 Q297 268 300 332"/></g>
+        <g id="part-arm-left" class="part" filter="url(#pencil)"><path class="stroke heavy" d="M298 240 Q270 266 248 300"/></g>
+        <g id="part-arm-right" class="part" filter="url(#pencil)"><path class="stroke heavy" d="M302 238 Q330 260 350 284"/></g>
+        <g id="part-leg-left" class="part" filter="url(#pencil)"><path class="stroke heavy" d="M299 331 Q282 378 262 420"/></g>
+        <g id="part-leg-right" class="part" filter="url(#pencil)"><path class="stroke heavy" d="M301 331 Q318 378 338 420"/></g>
+      </svg>
+    </figure>
+
+    <p class="stamp stamp-lose" id="stampLose" hidden>SCRAPPED</p>
+    <p class="stamp stamp-win" id="stampWin" hidden>APPROVED</p>
+    <p class="r-tally" aria-hidden="true"><svg id="tally" viewBox="0 0 140 44"></svg></p>
+    <p class="r-word" id="word" aria-live="polite"></p>
+    <p class="r-status" id="status" aria-live="polite"></p>
+    <div class="r-rail" id="rail" role="group" aria-label="Letters to guess"></div>
+    <button class="r-newword" id="newWord" type="button">New word</button>
+  </main>
+  <script src="hangman.js"></script>
+</body>
+</html>

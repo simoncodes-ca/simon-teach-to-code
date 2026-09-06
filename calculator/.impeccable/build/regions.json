@@ -1,0 +1,12 @@
+{
+  "regions": [
+    { "id": "wall",          "kind": "texture", "grid": "A5:B6", "note": "clean sample of the dark concrete wall, no ink on it; the page tiles this wherever the wall shows" },
+    { "id": "title",         "kind": "text",    "grid": "C1:H1", "note": "SIMON'S CALCULATOR spray-stencilled in blocky white caps with stencil bridges" },
+    { "id": "panel-frame",   "kind": "chrome",  "grid": "C2:F8", "container": true, "note": "the bolted steel plate: brushed gunmetal frame, bevelled lit top edge, hex bolts at four corners, raised on a cast shadow" },
+    { "id": "readout-well",  "kind": "chrome",  "grid": "C3:F4", "note": "recessed dark display well with an inner shadow lip, holding the readout" },
+    { "id": "readout",       "kind": "text",    "grid": "D3:F4", "note": "current number in crisp white blocky digits, right-aligned, largest type on the page" },
+    { "id": "keypad",        "kind": "control", "grid": "C5:F8", "note": "extruded square keycaps with visible side walls and contact shadows; green digits, pink operators, cyan equals, orange hazard clear" },
+    { "id": "buffer-panel",  "kind": "chrome",  "grid": "G2:H8", "container": true, "note": "separate bolted panel to the right across a gap of bare wall, same frame and bolts as the calculator" },
+    { "id": "buffer-list",   "kind": "control", "grid": "G3:H7", "note": "entered terms stacked one per line, hairline rule between lines, numbers white and operators pink" }
+  ]
+}

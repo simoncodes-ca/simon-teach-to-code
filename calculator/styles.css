@@ -1,0 +1,908 @@
+/* =====================================================================
+   Simon & Anna's Calculator — all the styling.
+
+   Nothing in here needs changing to make the calculator work. The
+   markup is in calculator.html and the logic is in calculator.js;
+   this file only decides how it all looks.
+
+   One page, two worlds:
+     Simon's  — a steel plate bolted to a floodlit concrete wall.
+     Anna's   — soft white plates stuck to a pink polka-dot wall.
+
+   The page carries a little switch (two radio buttons) under the
+   title. Part 4 of this file watches it with :has(): while the radio
+   called theme-anna is checked, every rule in there comes alive and,
+   being more specific than the default ones, wins. A browser too old
+   to understand :has() simply never applies Anna's world — the page
+   still works and still looks like Simon's.
+
+   The file is in four parts:
+     1. THE TOKENS      the shared vocabulary: colours, fonts, sizes
+     2. THE SKELETON    the size and position of everything, once
+     3. SIMON'S WORLD   the default look: materials and colours
+     4. ANNA'S WORLD    the same machine, dressed for Anna
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. THE TOKENS
+   ===================================================================== */
+
+:root {
+  /* These are Simon's values, because Simon's is the theme the page
+     starts on. Part 4 gives some of them new values for Anna. */
+
+  /* the wall */
+  --wall:       #0e0f12;
+  --flood:      #ffb020;
+
+  /* the plate */
+  --steel:      #2a2d33;
+  --steel-hi:   #4b5058;
+  --steel-lo:   #14161a;
+  --well:       #0a0b0d;
+
+  /* the spray */
+  --green:      #35ff6b;
+  --green-lo:   #17a840;
+  --pink:       #ff2e88;
+  --pink-lo:    #ab1855;
+  --cyan:       #00d4ff;
+  --cyan-lo:    #0088a6;
+  --orange:     #ff6b18;
+  --orange-lo:  #a83c00;
+
+  --chalk:      #f2f2f0;   /* near-white */
+  --ink:        #0d0f12;   /* text on a coloured cap */
+
+  /* the divider between lines of the buffer */
+  --buffer-divider: 1px solid rgba(255, 255, 255, .07);
+
+  --stencil:    "Haettenschweiler", "Arial Narrow", Impact,
+                "Helvetica Neue", Arial, sans-serif;
+  --panel:      "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --gap:        11px;   /* between keycaps */
+  --travel:     7px;    /* how far a key sinks when pressed */
+  --radius:     9px;    /* corner rounding of a keycap */
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+
+/* =====================================================================
+   2. THE SKELETON
+   ===================================================================== */
+
+/* Where everything sits. Neither theme changes a line of this —
+   they only dress it. */
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+}
+
+.calc          { width: 356px; flex: none; }
+.buffer .plate { width: 100%; }
+
+.yard {
+  display: flex;
+  align-items: stretch;   /* both plates end up the same height */
+  justify-content: center;
+  gap: 42px;              /* the bare wall between plate and buffer */
+  flex-wrap: wrap;
+  /* The plates stand in front of the wall art. */
+  position: relative;
+  z-index: 1;
+}
+
+/* Decoration sits in its own fixed layer so it never takes part in
+   the calculator's layout, and it never takes a click. */
+.wall-art {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.stencil,
+.doodle {
+  position: absolute;
+  fill: var(--chalk);
+  stroke: var(--chalk);
+}
+
+/* Each world hides the other's name and shows its own. */
+.title {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+/* The theme switch: a full-width row that centers a little tray.
+   The radio buttons themselves never show — you click the labels. */
+.theme-switch {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* The tray is the visible chip holding the two labels. */
+.theme-switch__tray {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+}
+
+.theme-switch__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.theme-switch__option {
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Keyboard users tab to the hidden radio; the ring goes on its label. */
+.theme-switch__radio:focus-visible + .theme-switch__option {
+  outline: 3px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* ---- the plate ----------------------------------------------- */
+
+/* Both the calculator and the buffer are the same kind of object:
+   a plate standing off the wall. Each world decides what it is
+   made of; this only says where it sits. */
+.plate {
+  position: relative;
+  padding: 16px;
+}
+
+/* the four studs in the corners, one per corner */
+.plate::before,
+.plate::after,
+.plate > .bolt-b,
+.plate > .bolt-c {
+  content: "";
+  position: absolute;
+}
+
+.plate::before   { top: 9px;    left: 9px; }
+.plate::after    { top: 9px;    right: 9px; }
+.plate > .bolt-b { bottom: 9px; left: 9px; }
+.plate > .bolt-c { bottom: 9px; right: 9px; }
+
+.plate__inner {
+  position: relative;
+  padding: 12px;
+}
+
+/* ---- readout -------------------------------------------------- */
+
+.readout {
+  padding: 14px 18px 16px;
+  text-align: right;
+  font-size: clamp(44px, 9vw, 68px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+/* ---- keypad --------------------------------------------------- */
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  margin-top: 12px;
+}
+
+/* A keycap: a top face sitting on a solid coloured side wall.
+   Pressing it sinks the cap into its own side wall. */
+.key {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  min-height: 72px;
+  padding: 6px 8px 7px;
+  border: 0;
+  border-radius: var(--radius);
+  font: inherit;
+  cursor: pointer;
+  transform: translateY(0);
+  transition: transform .07s ease-out, box-shadow .07s ease-out;
+}
+.key__hint {
+  justify-self: start;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.key__glyph {
+  align-self: center;
+  font-size: clamp(22px, 4.4vw, 30px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+
+.key__name {
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .08em;
+  text-transform: lowercase;
+}
+
+.key:hover { transform: translateY(-2px); }
+
+/* Pressed: the cap travels down; each world also collapses its
+   side wall in its own press rules below. */
+.key:active,
+.key[data-pressed="true"] {
+  transform: translateY(var(--travel));
+}
+
+.key--equals { grid-column: span 2; }
+
+.key--clear {
+  grid-column: span 3;
+  min-height: 50px;
+  grid-template-rows: 1fr;
+  align-content: center;
+}
+
+.key--clear .key__glyph {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 3px 15px;
+  font-size: 21px;
+  letter-spacing: .06em;
+}
+
+.key--clear .key__hint-inline {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ---- the buffer plate ---------------------------------------- */
+
+.buffer {
+  width: 236px;
+  flex: none;
+  display: flex;
+}
+
+/* The buffer plate and its tray both stretch, so the column fills
+   exactly the height of the calculator standing beside it. */
+.buffer .plate,
+.buffer .plate__inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* The column itself: one entered term per line, reading top to
+   bottom in the order they were typed. */
+.buffer__list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  padding: 3px 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.buffer__line {
+  flex: none;
+  padding: 5px 12px;
+  border-bottom: var(--buffer-divider);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.buffer__line:last-child { border-bottom: 0; }
+
+.buffer__empty {
+  padding: 10px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ---- shared breakpoints --------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .key { transition: none; }
+  .key:hover { transform: none; }
+}
+
+/* Below this there is not enough bare wall beside the plates to hold
+   wall art without it colliding or being trimmed, so it comes off. */
+@media (max-width: 1180px) {
+  .wall-art { display: none; }
+}
+
+@media (max-width: 720px) {
+
+  .yard { gap: 22px; }
+  .calc   { width: 100%; max-width: 380px; }
+  .buffer { width: 100%; max-width: 380px; }
+
+  /* Stacked, the two plates no longer pair by height, so the column
+     needs a floor of its own to stay a usable panel. */
+  .buffer__list { min-height: 128px; }
+}
+
+@media (max-width: 520px) {
+  :root { --gap: 8px; --travel: 6px; }
+  body { padding: 18px 12px; }
+  .plate { padding: 12px; }
+  .plate__inner { padding: 9px; }
+  .readout { padding: 10px 13px 12px; }
+  .key { min-height: 58px; }
+  .key__glyph { font-size: 22px; }
+}
+
+
+/* =====================================================================
+   3. SIMON'S WORLD — the default look
+   ===================================================================== */
+
+/* A steel plate bolted to a floodlit concrete wall at night. One warm
+   light high on the wall; every highlight and shadow obeys it. */
+
+body {
+  background-color: var(--wall);
+  /* The floodlight: one warm pool high on the wall, then the wall
+     falling away into the dark, then a fine grain so the concrete
+     is not flat colour. */
+  background-image:
+    radial-gradient(58% 42% at 50% 2%, rgba(255, 176, 32, .34), transparent 70%),
+    radial-gradient(90% 70% at 50% 0%, rgba(255, 140, 40, .13), transparent 75%),
+    radial-gradient(120% 100% at 50% 40%, transparent 38%, rgba(0, 0, 0, .66) 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23g)' opacity='0.3'/></svg>");
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  background-attachment: fixed, fixed, fixed, scroll;
+  color: var(--chalk);
+  font-family: var(--panel);
+  font-synthesis-weight: none;
+}
+
+::selection { background: var(--green); color: var(--ink); }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 4px; }
+
+/* ---- wall stencils -------------------------------------------- */
+
+/* Weapons and targets, sprayed on the concrete, dim enough that the
+   keys always win the eye. Anna's doodles are told to stay off. */
+.stencil { opacity: .06; }
+.doodle  { display: none; }
+
+/* Every stencil sits wholly inside the viewport — none of them bleed
+   off an edge, because a clipped weapon reads as a rendering fault
+   rather than as wall art. */
+.stencil--mg        { top: 10%; left:  2%;  width: 268px; transform: rotate(-9deg); }
+.stencil--target    { top: 45%; left:  4%;  width: 122px; }
+.stencil--bullet    { top: 70%; left: 11%;  width:  46px; transform: rotate(14deg); }
+
+.stencil--rpg       { top: 13%; right: 2%;  width: 278px; transform: rotate(7deg); }
+.stencil--crosshair { top: 44%; right: 4%;  width: 132px; }
+.stencil--pistol    { top: 70%; right: 10%; width: 142px; transform: rotate(-6deg); }
+
+/* ---- the stencilled title ------------------------------------ */
+
+.title__anna { display: none; }
+
+.title {
+  font-family: var(--stencil);
+  font-size: clamp(30px, 6.6vw, 62px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #dcdad6;
+  /* Real stencil bridges: thin gaps cut clean across the
+     letterforms, the way a spray stencil holds itself together. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0 30%, transparent 30% 34%,
+    #000 34% 64%, transparent 64% 68%, #000 68% 100%);
+          mask-image: linear-gradient(
+    to bottom,
+    #000 0 30%, transparent 30% 34%,
+    #000 34% 64%, transparent 64% 68%, #000 68% 100%);
+}
+
+/* ---- the theme switch, in steel ------------------------------- */
+
+/* A small tray milled into the wall, with the chosen name standing
+   proud on it like a keycap. */
+.theme-switch__tray {
+  border-radius: 9px;
+  background: #1a1c20;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .8),
+              inset 0 -1px 0 rgba(255, 255, 255, .05);
+}
+
+.theme-switch__option {
+  border-radius: 6px;
+  color: #767d87;
+}
+
+.theme-switch__radio:checked + .theme-switch__option {
+  background: linear-gradient(#4b5058, #2a2d33);
+  color: var(--chalk);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22),
+              0 1px 2px rgba(0, 0, 0, .6);
+}
+
+.theme-switch__radio:focus-visible + .theme-switch__option {
+  outline: 3px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* ---- the bolted plate ---------------------------------------- */
+
+.plate {
+  border-radius: 16px;
+  background:
+    linear-gradient(160deg, var(--steel-hi) 0%, var(--steel) 22%, var(--steel-lo) 100%);
+  /* raised: a lit top edge, a dark under edge, a real cast shadow */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .22),
+    inset 0 -2px 0 rgba(0, 0, 0, .55),
+    0 2px 0 #0b0c0e,
+    22px 26px 44px rgba(0, 0, 0, .62);
+}
+
+/* the four hex bolts */
+.plate::before,
+.plate::after,
+.plate > .bolt-b,
+.plate > .bolt-c {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  background: radial-gradient(circle at 34% 30%, #6d737c, #23262b 70%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35),
+              0 1px 2px rgba(0, 0, 0, .8);
+}
+
+.plate__inner {
+  border-radius: 9px;
+  background: #1a1c20;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, .8),
+              inset 0 -1px 0 rgba(255, 255, 255, .05);
+}
+
+/* ---- readout well -------------------------------------------- */
+
+.readout {
+  border-radius: 6px;
+  background: linear-gradient(#06070a, var(--well));
+  /* recessed: the lip catches light along the bottom, not the top */
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, .95),
+              inset 0 -1px 0 rgba(255, 255, 255, .09);
+  color: var(--chalk);
+  text-shadow: 0 0 16px rgba(242, 242, 240, .32);
+  scrollbar-color: var(--steel-hi) transparent;
+}
+
+/* ---- keypad --------------------------------------------------- */
+
+/* Digit caps are spray green — "input you are giving the machine". */
+.key {
+  background: linear-gradient(#4bff7d, var(--green) 58%);
+  color: var(--ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .5),
+    0 var(--travel) 0 var(--green-lo),
+    0 calc(var(--travel) + 4px) 10px rgba(0, 0, 0, .65);
+}
+
+.key__hint { opacity: .62; }
+.key__name { opacity: .76; }
+
+/* Pressed: the cap sinks and its side wall disappears. */
+.key:active,
+.key[data-pressed="true"] {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .3),
+    0 0 0 var(--green-lo),
+    0 1px 3px rgba(0, 0, 0, .7);
+}
+
+/* Operators are pink — "the thing that joins two numbers". */
+.key--operator {
+  background: linear-gradient(#ff5ba3, var(--pink) 58%);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .45),
+    0 var(--travel) 0 var(--pink-lo),
+    0 calc(var(--travel) + 4px) 10px rgba(0, 0, 0, .65);
+}
+
+.key--operator:active,
+.key--operator[data-pressed="true"] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 var(--pink-lo), 0 1px 3px rgba(0,0,0,.7);
+}
+
+/* Equals is cyan — the resolution colour, used once. */
+.key--equals {
+  background: linear-gradient(#4ce6ff, var(--cyan) 58%);
+  color: var(--ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .5),
+    0 var(--travel) 0 var(--cyan-lo),
+    0 calc(var(--travel) + 4px) 10px rgba(0, 0, 0, .65);
+}
+
+.key--equals:active,
+.key--equals[data-pressed="true"] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 var(--cyan-lo), 0 1px 3px rgba(0,0,0,.7);
+}
+
+/* Clear is taped and banded, because it throws work away. */
+.key--clear {
+  background-color: var(--orange);
+  background-image: repeating-linear-gradient(
+    -45deg, rgba(0,0,0,.82) 0 12px, transparent 12px 28px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .35),
+    0 var(--travel) 0 var(--orange-lo),
+    0 calc(var(--travel) + 4px) 10px rgba(0, 0, 0, .65);
+}
+
+.key--clear:active,
+.key--clear[data-pressed="true"] {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 0 var(--orange-lo), 0 1px 3px rgba(0,0,0,.7);
+}
+
+.key--clear .key__glyph {
+  border-radius: 4px;
+  background: var(--chalk);
+}
+
+.key--clear .key__hint-inline {
+  color: #5a5f68;
+}
+
+/* ---- the buffer plate ---------------------------------------- */
+
+.buffer__list {
+  border-radius: 6px;
+  background: linear-gradient(#06070a, var(--well));
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, .95),
+              inset 0 -1px 0 rgba(255, 255, 255, .09);
+  scrollbar-color: var(--steel-hi) transparent;
+}
+
+.buffer__line { color: var(--chalk); }
+.buffer__line--operator { color: var(--pink); }
+
+/* The term being typed right now. */
+.buffer__line--active {
+  background: rgba(53, 255, 107, .14);
+  box-shadow: inset 3px 0 0 var(--green);
+  color: var(--green);
+}
+
+.buffer__empty { color: #767d87; }
+
+
+/* =====================================================================
+   4. ANNA'S WORLD
+   ===================================================================== */
+
+/* The same machine, dressed for Anna: a sweet pink wall with white
+   doodles, and soft white plates with candy studs. Everything round,
+   everything pink.
+
+   The one rule below matches the <html> element only while the radio
+   called theme-anna is the checked one. Inside it, "&" means "that
+   same html, when Anna is checked", so "& body" is the page body in
+   Anna's world — and because that selector carries an id, every rule
+   here beats its default twin above. */
+
+html:has(#theme-anna:checked) {
+
+  /* ---- her tokens: same names, different values ---- */
+  --travel:     6px;
+  --radius:     18px;
+
+  --panel:      "Comic Sans MS", "Chalkboard SE", "Comic Neue",
+                "Trebuchet MS", "Segoe UI", sans-serif;
+
+  --wall:       #ffd3e8;
+  --well:       #fff3f9;
+
+  --plate-hi:   #ffffff;
+  --plate:      #fff9fc;
+  --plate-lo:   #ffeaf4;
+
+  --pink:       #ff6fa5;
+  --pink-lo:    #e2558a;
+  --red:        #ff4d6d;   /* the bow red */
+  --red-lo:     #d13350;
+  --lavender:   #b28dff;
+  --lavender-lo:#8f66d9;
+
+  --chalk:      #ffffff;
+  --ink:        #7a2e55;   /* deep berry, for reading */
+
+  --buffer-divider: 1px dashed rgba(255, 111, 165, .35);
+
+  @media (max-width: 520px) {
+    --travel: 5px;
+  }
+
+  /* ---- backdrop ---- */
+
+  & body {
+    background-color: var(--wall);
+    /* A soft glow high on the wall, a deeper pink at the edges, and
+       white polka dots so the wall is never flat colour. */
+    background-image:
+      radial-gradient(58% 42% at 50% 2%, rgba(255, 255, 255, .55), transparent 70%),
+      radial-gradient(120% 100% at 50% 40%, transparent 45%, rgba(255, 145, 190, .45) 100%),
+      radial-gradient(circle, rgba(255, 255, 255, .5) 7px, transparent 8px);
+    background-size: auto, auto, 96px 96px;
+    background-repeat: no-repeat, no-repeat, repeat;
+    background-attachment: fixed, fixed, scroll;
+    color: var(--ink);
+    font-family: var(--panel);
+  }
+
+  & ::selection { background: var(--pink); color: var(--chalk); }
+  & :focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+
+  /* ---- wall doodles ---- */
+
+  /* White shapes floating on the pink wall — visible enough to feel
+     like a decorated room, low enough that the keys win the eye. */
+  & .stencil { display: none; }
+
+  /* Simon's world switched the doodles off; hers come back on. */
+  & .doodle {
+    display: block;
+    opacity: .55;
+    filter: drop-shadow(0 2px 0 rgba(226, 85, 138, .35));
+  }
+
+  & .doodle--bow      { top:  8%; left:  3%; width: 190px; transform: rotate(-12deg); }
+  & .doodle--sparkle  { top: 27%; left: 15%; width:  56px; }
+  & .doodle--kitty    { top: 42%; left:  4%; width: 150px; }
+  & .doodle--heart    { top: 72%; left: 10%; width:  86px; transform: rotate(-10deg); }
+
+  & .doodle--star     { top:  9%; right:  4%; width: 106px; transform: rotate(9deg); }
+  & .doodle--flower   { top: 42%; right:  5%; width: 116px; }
+  & .doodle--cloud    { top: 72%; right:  8%; width: 172px; }
+
+  /* ---- the title ---- */
+
+  & .title__simon { display: none; }
+  & .title__anna { display: inline; }
+  & .title {
+    font-family: var(--panel);
+    font-size: clamp(28px, 6vw, 54px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: .02em;
+    text-transform: none;
+    color: var(--red);
+    /* a soft white halo, like a sticker lifting off the wall */
+    text-shadow:
+      0 2px 0 var(--chalk),
+      0 5px 14px rgba(226, 85, 138, .35);
+  }
+
+  /* ---- the theme switch, in candy ---- */
+
+  & .theme-switch__tray {
+    border-radius: 999px;
+    background: var(--well);
+    box-shadow: inset 0 3px 8px rgba(226, 85, 138, .28),
+                inset 0 -1px 0 rgba(255, 255, 255, .8);
+  }
+
+  & .theme-switch__option {
+    border-radius: 999px;
+    color: var(--pink-lo);
+  }
+
+  & .theme-switch__radio:checked + .theme-switch__option {
+    background: linear-gradient(#ff9cc0, var(--pink));
+    color: var(--chalk);
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, .55),
+                0 1px 3px rgba(214, 84, 140, .5);
+  }
+
+  & .theme-switch__radio:focus-visible + .theme-switch__option {
+    outline: 3px solid var(--red);
+    outline-offset: 2px;
+  }
+
+  /* ---- the plate ---- */
+
+  /* A round white plate standing off the pink wall: a lit top edge,
+     a candy rim, a real soft shadow. */
+  & .plate {
+    border-radius: 28px;
+    background: linear-gradient(165deg, var(--plate-hi) 0%, var(--plate) 30%, var(--plate-lo) 100%);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, .9),
+      inset 0 0 0 2px rgba(255, 143, 191, .55),
+      0 4px 0 rgba(226, 85, 138, .45),
+      18px 22px 40px rgba(214, 84, 140, .38);
+  }
+
+  /* the four candy studs */
+  & .plate::before,
+  & .plate::after,
+  & .plate > .bolt-b,
+  & .plate > .bolt-c {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, #ffd3e4, var(--pink) 72%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .75),
+                0 1px 3px rgba(214, 84, 140, .6);
+  }
+
+  & .plate__inner {
+    border-radius: 20px;
+    background: var(--well);
+    box-shadow: inset 0 3px 8px rgba(226, 85, 138, .28),
+                inset 0 -1px 0 rgba(255, 255, 255, .8);
+  }
+
+  /* ---- readout well ---- */
+
+  & .readout {
+    border-radius: 14px;
+    background: linear-gradient(var(--chalk), var(--well));
+    /* recessed: the lip catches light along the bottom, not the top */
+    box-shadow: inset 0 4px 10px rgba(226, 85, 138, .35),
+                inset 0 -1px 0 rgba(255, 255, 255, .9);
+    color: var(--ink);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+    scrollbar-color: var(--pink) transparent;
+  }
+
+  /* ---- keypad ---- */
+
+  /* Digit caps are squishy and pale; the chosen name stands proud. */
+  & .key {
+    background: linear-gradient(#fff0f7, #ffd0e4 58%);
+    color: var(--ink);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, .9),
+      0 var(--travel) 0 #f0a8cd,
+      0 calc(var(--travel) + 5px) 12px rgba(214, 84, 140, .45);
+  }
+
+  & .key__hint { opacity: .55; }
+  & .key__name { opacity: .68; }
+
+  /* Pressed: the cap sinks and its side wall disappears. */
+  & .key:active,
+  & .key[data-pressed="true"] {
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, .5),
+      0 0 0 #f0a8cd,
+      0 1px 4px rgba(214, 84, 140, .5);
+  }
+
+  & .key--operator {
+    background: linear-gradient(#ff9cc0, var(--pink) 58%);
+    color: var(--chalk);
+    text-shadow: 0 1px 0 rgba(160, 40, 95, .45);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, .55),
+      0 var(--travel) 0 var(--pink-lo),
+      0 calc(var(--travel) + 5px) 12px rgba(214, 84, 140, .45);
+  }
+
+  & .key--operator:active,
+  & .key--operator[data-pressed="true"] {
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 0 0 var(--pink-lo), 0 1px 4px rgba(214,84,140,.5);
+  }
+
+  & .key--equals {
+    background: linear-gradient(#d5c2ff, var(--lavender) 58%);
+    color: var(--chalk);
+    text-shadow: 0 1px 0 rgba(110, 70, 180, .5);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, .7),
+      0 var(--travel) 0 var(--lavender-lo),
+      0 calc(var(--travel) + 5px) 12px rgba(143, 102, 217, .45);
+  }
+
+  & .key--equals:active,
+  & .key--equals[data-pressed="true"] {
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 0 0 var(--lavender-lo), 0 1px 4px rgba(143,102,217,.5);
+  }
+
+  /* Clear is a candy stripe, because it throws work away. */
+  & .key--clear {
+    color: var(--chalk);
+    background-color: var(--red);
+    background-image: repeating-linear-gradient(
+      -45deg, rgba(255, 255, 255, .9) 0 12px, transparent 12px 28px);
+    text-shadow: 0 1px 0 rgba(160, 20, 50, .5);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, .55),
+      0 var(--travel) 0 var(--red-lo),
+      0 calc(var(--travel) + 5px) 12px rgba(214, 84, 140, .45);
+  }
+
+  & .key--clear:active,
+  & .key--clear[data-pressed="true"] {
+    box-shadow: inset 0 2px 0 rgba(255,255,255,.4), 0 0 0 var(--red-lo), 0 1px 4px rgba(214,84,140,.5);
+  }
+
+  & .key--clear .key__glyph {
+    border-radius: 999px;
+    background: var(--chalk);
+    color: var(--red);
+    text-shadow: none;
+  }
+
+  & .key--clear .key__hint-inline {
+    color: var(--pink-lo);
+  }
+
+  /* ---- the buffer plate ---- */
+
+  & .buffer__list {
+    border-radius: 14px;
+    background: linear-gradient(var(--chalk), var(--well));
+    box-shadow: inset 0 4px 10px rgba(226, 85, 138, .35),
+                inset 0 -1px 0 rgba(255, 255, 255, .9);
+    scrollbar-color: var(--pink) transparent;
+  }
+
+  & .buffer__line { color: var(--ink); }
+  & .buffer__line--operator { color: var(--red); }
+
+  /* The term being typed right now. */
+  & .buffer__line--active {
+    background: rgba(178, 141, 255, .18);
+    box-shadow: inset 3px 0 0 var(--lavender);
+    color: var(--lavender-lo);
+  }
+
+  & .buffer__empty { color: var(--pink-lo); }
+}

@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Coding Trail — Simon's projects</title>
+  <style>
+    :root {
+      --night: #17282b;
+      --night-soft: #21393b;
+      --line: rgba(248, 232, 200, .24);
+      --paper: #f8e8c8;
+      --paper-deep: #e6c892;
+      --paper-shadow: #b69162;
+      --coral: #e86848;
+      --gold: #d8b888;
+      --sage: #9db8a4;
+      --white: #fff9ec;
+      --line: rgba(248, 232, 200, .24);
+      --shadow: 0 18px 30px rgba(4, 13, 15, .28);
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans: 'Trebuchet MS', 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--night); }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--paper);
+      background: var(--night);
+      font-family: var(--sans);
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+    ::selection { color: var(--night); background: var(--gold); }
+    :focus-visible { outline: 3px solid var(--coral); outline-offset: 5px; }
+    a { color: inherit; }
+
+    .page {
+      position: relative;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 56px 6vw 100px;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      color: var(--gold);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .topline strong { color: var(--paper); font-weight: 800; }
+    .intro { max-width: 760px; padding: 62px 0 42px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 680px;
+      margin-bottom: 18px;
+      color: var(--paper);
+      font-family: var(--serif);
+      font-size: clamp(3.7rem, 8vw, 7rem);
+      line-height: .9;
+      letter-spacing: -.055em;
+      text-wrap: balance;
+    }
+    .intro p {
+      max-width: 58ch;
+      margin-bottom: 0;
+      color: #d7dfd2;
+      font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 22px;
+      align-items: center;
+      margin-top: 28px;
+      color: var(--gold);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 8px; }
+    .legend i { width: 12px; height: 12px; display: inline-block; border-radius: 50%; background: var(--coral); }
+    .legend i.future { background: var(--gold); border: 2px solid var(--night); box-shadow: 0 0 0 1px var(--gold); }
+
+    .trail-map {
+      position: relative;
+      margin: 12px -2vw 0;
+      padding: 26px 2vw 72px;
+      isolation: isolate;
+      scroll-margin-top: 94px;
+    }
+    .trail-map::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 50px;
+      z-index: -2;
+      background: #1d3032;
+      border: 1px solid rgba(216, 184, 136, .18);
+      border-radius: 36px 80px 40px 74px;
+      transform: rotate(-1.4deg);
+      box-shadow: inset 0 0 0 9px rgba(248, 232, 200, .025), var(--shadow);
+    }
+    .trail-map::after {
+      content: '';
+      position: absolute;
+      inset: 24px 20px 76px;
+      z-index: -1;
+      border: 1px dashed rgba(216, 184, 136, .22);
+      border-radius: 28px 64px 34px 58px;
+      pointer-events: none;
+    }
+    .route {
+      position: absolute;
+      inset: 78px 6% 92px;
+      z-index: -1;
+      width: 88%;
+      height: calc(100% - 170px);
+      overflow: visible;
+      pointer-events: none;
+    }
+    .route path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .route .under { stroke: #6f5945; stroke-width: 34; }
+    .route .over { stroke: var(--gold); stroke-width: 22; stroke-dasharray: 2 28; }
+    .route .arrow { fill: var(--gold); }
+
+    .landmarks {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(52px, auto);
+      gap: 14px 18px;
+      min-height: 1080px;
+    }
+    .landmark { position: relative; z-index: 1; scroll-margin-top: 86px; }
+    .landmark:nth-child(1) { grid-column: 1 / span 4; grid-row: 1 / span 3; }
+    .landmark:nth-child(2) { grid-column: 5 / span 4; grid-row: 4 / span 3; }
+    .landmark:nth-child(3) { grid-column: 9 / span 4; grid-row: 7 / span 3; }
+    .landmark:nth-child(4) { grid-column: 3 / span 4; grid-row: 10 / span 3; }
+    .landmark:nth-child(5) { grid-column: 7 / span 4; grid-row: 13 / span 3; }
+    .landmark:nth-child(6) { grid-column: 1 / span 4; grid-row: 16 / span 3; }
+    .landmark:nth-child(7) { grid-column: 5 / span 4; grid-row: 19 / span 3; }
+    .landmark:nth-child(8) { grid-column: 9 / span 4; grid-row: 22 / span 3; }
+.landmark:nth-child(9) { grid-column: 3 / span 4; grid-row: 25 / span 3; }
+.landmark:nth-child(10) { grid-column: 7 / span 4; grid-row: 28 / span 3; }
+.landmark:nth-child(11) { grid-column: 1 / span 4; grid-row: 31 / span 3; }
+.landmark:nth-child(12) { grid-column: 5 / span 4; grid-row: 34 / span 3; }
+.landmark:nth-child(13) { grid-column: 9 / span 4; grid-row: 37 / span 3; }
+.landmark:nth-child(14) { grid-column: 3 / span 4; grid-row: 40 / span 3; }
+.landmark:nth-child(15) { grid-column: 7 / span 4; grid-row: 43 / span 3; }
+.landmark:nth-child(16) { grid-column: 1 / span 4; grid-row: 46 / span 3; }
+.landmark:nth-child(17) { grid-column: 5 / span 4; grid-row: 49 / span 3; }
+.landmark:nth-child(18) { grid-column: 9 / span 4; grid-row: 52 / span 3; }
+.landmark:nth-child(19) { grid-column: 3 / span 4; grid-row: 55 / span 3; }
+.landmark--final { grid-column: 4 / span 6; grid-row: 58 / span 4; }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-height: 158px;
+      height: 100%;
+      padding: 16px 18px 15px;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid rgba(23, 48, 51, .22);
+      border-radius: 18px 24px 16px 22px;
+      box-shadow: 8px 10px 0 var(--paper-shadow), 0 18px 28px rgba(0, 0, 0, .2);
+      text-decoration: none;
+      transform: rotate(var(--tilt, -1deg));
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .landmark:nth-child(even) .card { --tilt: 1.2deg; }
+    .card:hover, .card:focus-visible { background: var(--white); box-shadow: 12px 15px 0 var(--paper-shadow), 0 22px 34px rgba(0, 0, 0, .3); transform: translateY(-8px) rotate(0deg); }
+    .card:focus-visible { outline-color: var(--gold); }
+    .card--disabled { color: #5e685f; background: #d9d0ba; border-style: dashed; box-shadow: 6px 7px 0 #8e846f; cursor: not-allowed; }
+    .card--disabled:hover { background: #d9d0ba; box-shadow: 6px 7px 0 #8e846f; transform: rotate(var(--tilt, -1deg)); }
+    .card__top { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+    .number { color: var(--coral); font-size: .68rem; font-weight: 900; letter-spacing: .1em; }
+    .card--disabled .number { color: #8e846f; }
+    .status { color: #226449; font-size: .58rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    .card--disabled .status { color: #716956; }
+    .card h2 { margin-bottom: 6px; font-family: var(--serif); font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: .98; letter-spacing: -.045em; }
+    .card p { max-width: 30ch; margin-bottom: 10px; color: #426063; font-size: .76rem; line-height: 1.3; }
+    .card--disabled p { color: #6e756b; }
+    .skills { display: flex; flex-wrap: wrap; gap: 4px; margin-top: auto; padding-top: 6px; }
+    .skills span { padding: 3px 6px; color: #476761; background: rgba(157, 184, 164, .42); border-radius: 5px; font-size: .58rem; font-weight: 800; }
+    .card--disabled .skills span { color: #6d7569; background: rgba(113, 105, 86, .13); }
+    .launch { margin-top: 10px; color: var(--coral); font-size: .64rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+
+    .trail-toc {
+      position: fixed;
+      top: 50%;
+      right: 18px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 174px;
+      max-height: calc(100vh - 32px);
+      padding: 8px;
+      overflow-y: auto;
+      background: rgba(23, 40, 43, .96);
+      border: 1px solid rgba(216, 184, 136, .3);
+      border-radius: 12px;
+      box-shadow: 0 10px 22px rgba(4, 13, 15, .2);
+      transform: translateY(-50%);
+      scrollbar-width: thin;
+    }
+    .trail-toc a { flex: 0 0 auto; padding: 6px 8px; color: #d7dfd2; border-radius: 7px; font-size: .62rem; font-weight: 800; text-decoration: none; white-space: nowrap; }
+    .trail-toc a:hover, .trail-toc a:focus-visible { color: var(--night); background: var(--gold); }
+    .trail-toc a span { display: inline-block; width: 24px; color: var(--coral); margin-right: 4px; }
+    .trail-toc a:last-child span { color: var(--gold); }
+    .trail-toc::-webkit-scrollbar { width: 5px; }
+    .trail-toc::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 9px; }
+
+    .trail-end { max-width: 670px; margin: 16px auto 0; padding: 34px; text-align: center; color: var(--paper); border: 1px solid rgba(216, 184, 136, .28); border-radius: 24px; background: var(--night-soft); }
+    .trail-end h2 { margin-bottom: 10px; font-family: var(--serif); font-size: clamp(2rem, 4vw, 3.3rem); letter-spacing: -.04em; }
+    .trail-end p { max-width: 52ch; margin: 0 auto; color: #d7dfd2; }
+    footer { margin-top: 62px; padding-top: 20px; border-top: 1px solid var(--line); color: #a4b5a6; font-size: .84rem; text-align: center; }
+
+    @media (max-width: 760px) {
+      .page { padding: 28px 18px 70px; }
+      .topline { align-items: flex-start; font-size: .64rem; }
+      .topline span:last-child { text-align: right; }
+      .intro { padding: 52px 0 28px; }
+      h1 { font-size: clamp(3.6rem, 17vw, 6rem); }
+      .trail-map { margin: 12px 0 0; padding: 32px 18px 64px; }
+      .trail-map::before { border-radius: 22px 34px 26px 38px; }
+      .trail-map::after { inset: 16px 12px 42px; }
+      .route { inset: 72px 10% 70px; width: 80%; height: calc(100% - 130px); }
+      .route .under { stroke-width: 26; }
+      .route .over { stroke-width: 16; stroke-dasharray: 2 20; }
+      .landmarks { display: flex; flex-direction: column; gap: 20px; min-height: 0; padding: 12px 10px; }
+      .landmark, .landmark--final { width: min(100%, 350px); min-height: 0; }
+      .landmark:nth-child(even) { align-self: flex-end; }
+      .landmark--final { align-self: center; }
+      .card { min-height: 150px; padding: 14px 15px 13px; }
+      .trail-toc { position: sticky; top: 10px; right: auto; width: 100%; max-height: none; flex-direction: row; margin: 0 0 8px; overflow-x: auto; transform: none; }
+      .trail-toc a { flex: 0 0 auto; padding: 6px 8px; font-size: .6rem; }
+      .trail-end { padding: 26px 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topline"><strong>Simon’s teach-to-code</strong><span>One small project at a time</span></div>
+    <header class="intro">
+      <h1>The coding trail</h1>
+      <p>Every stop is a small, real thing you can open in a browser. Follow the path from buttons and pages to maps, motion, and a tiny strategy game.</p>
+      <div class="legend" aria-label="Map legend"><span><i></i> Ready to explore</span><span><i class="future"></i> Coming soon</span></div>
+    </header>
+    <nav class="trail-toc" aria-label="Project table of contents">
+      <a href="#project-01"><span>01</span>Calculator</a>
+      <a href="#project-02"><span>02</span>Elevator</a>
+      <a href="#project-03"><span>03</span>Hangman</a>
+      <a href="#project-04"><span>04</span>Blackjack</a>
+      <a href="#project-05"><span>05</span>Battleship</a>
+      <a href="#project-06"><span>06</span>Paint</a>
+      <a href="#project-07"><span>07</span>Balloons</a>
+      <a href="#project-08"><span>08</span>Parachuter</a>
+      <a href="#project-09"><span>09</span>Library</a>
+      <a href="#project-10"><span>10</span>Aliens</a>
+      <a href="#project-11"><span>11</span>Tic-tac-toe</a>
+      <a href="#project-12"><span>12</span>Maze</a>
+      <a href="#project-13"><span>13</span>Helicopter</a>
+      <a href="#project-14"><span>14</span>Tank</a>
+      <a href="#project-15"><span>15</span>Map editor</a>
+      <a href="#project-16"><span>16</span>Units</a>
+      <a href="#project-17"><span>17</span>Resources</a>
+      <a href="#project-18"><span>18</span>Queue</a>
+      <a href="#project-19"><span>19</span>Enemy AI</a>
+      <a href="#project-final"><span>★</span>RTS</a>
+    </nav>
+
+    <section class="trail-map" aria-labelledby="trail-heading">
+      <h2 id="trail-heading" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Project trail map</h2>
+      <svg class="route" viewBox="0 0 1000 1500" preserveAspectRatio="none" aria-hidden="true">
+        <path class="under" d="M80 70 C330 180 210 340 470 420 S800 670 690 820 S240 1010 410 1170 S780 1330 910 1460"/>
+        <path class="over" d="M80 70 C330 180 210 340 470 420 S800 670 690 820 S240 1010 410 1170 S780 1330 910 1460"/>
+      </svg>
+      <div class="landmarks">
+        <div class="landmark"><a class="card" href="calculator/calculator.html"><div class="card__top"><span class="number">01 / FIRST STEPS</span><span class="status">Ready</span></div><h2>Calculator</h2><p>Make buttons remember numbers and update a page when you click.</p><div class="skills"><span>Variables</span><span>Functions</span><span>Events</span></div><span class="launch">Open project →</span></a></div>
+        <div class="landmark"><a class="card" href="elevator/elevator.html"><div class="card__top"><span class="number">02 / MOVING PARTS</span><span class="status">Ready</span></div><h2>Elevator</h2><p>Build a state machine that queues requests and moves between floors.</p><div class="skills"><span>Queues</span><span>Timers</span><span>Animation</span></div><span class="launch">Open project →</span></a></div>
+        <div class="landmark"><a class="card" href="hangman/hangman.html"><div class="card__top"><span class="number">03 / WORDS</span><span class="status">Ready</span></div><h2>Hangman</h2><p>Use strings, loops, and validation to make a word game.</p><div class="skills"><span>Strings</span><span>Loops</span><span>Rules</span></div><span class="launch">Open project →</span></a></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">04 / DECK</span><span class="status">Coming Soon</span></div><h2>Blackjack</h2><p>Model cards, shuffle a deck, and make decisions from rules.</p><div class="skills"><span>Objects</span><span>Arrays</span><span>Randomness</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">05 / MAPS</span><span class="status">Coming Soon</span></div><h2>Battleship</h2><p>Place ships on a grid and discover coordinates, turns, and hidden information.</p><div class="skills"><span>2D arrays</span><span>Coordinates</span><span>Collision</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">06 / CANVAS</span><span class="status">Coming Soon</span></div><h2>Paint app with undo</h2><p>Draw with pointer events, then keep a history so undo and redo work.</p><div class="skills"><span>Canvas</span><span>Pointer events</span><span>History</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">07 / PHYSICS</span><span class="status">Coming Soon</span></div><h2>Balloon shooting game</h2><p>Animate objects through time, gravity, angles, and collisions.</p><div class="skills"><span>Game loops</span><span>Velocity</span><span>Gravity</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">08 / ENTITIES</span><span class="status">Coming Soon</span></div><h2>Parachuter game</h2><p>Update, collide, remove, and draw many moving entities at once.</p><div class="skills"><span>Spawning</span><span>Counters</span><span>Game over</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">09 / CHECKPOINT</span><span class="status">Coming Soon</span></div><h2>Game library remake</h2><p>Rebuild the balloon or parachuter game and compare what the library replaces.</p><div class="skills"><span>Sprites</span><span>Scenes</span><span>Asset handling</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">10 / WAVES</span><span class="status">Coming Soon</span></div><h2>Aliens game</h2><p>Control a player, fire bullets, and grow a reusable game structure.</p><div class="skills"><span>Keyboard</span><span>Formations</span><span>Waves</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">11 / SMALL GRID</span><span class="status">Coming Soon</span></div><h2>Tic-tac-toe</h2><p>Track board state, turns, wins, and a simple computer decision.</p><div class="skills"><span>Board state</span><span>Turns</span><span>Decisions</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">12 / MAZE</span><span class="status">Coming Soon</span></div><h2>Maze game</h2><p>Represent a map as data and restrict movement with walls.</p><div class="skills"><span>Grid maps</span><span>Collision</span><span>Movement</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">13 / WORLD</span><span class="status">Coming Soon</span></div><h2>2D helicopter game</h2><p>Connect world coordinates, a scrolling camera, and continuous physics.</p><div class="skills"><span>Scrolling</span><span>Camera</span><span>Terrain</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">14 / AIM</span><span class="status">Coming Soon</span></div><h2>Top-down tank game</h2><p>Move, aim, fire, and handle obstacles, health, and damage.</p><div class="skills"><span>Projectiles</span><span>Obstacles</span><span>Health</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">15 / EDITOR</span><span class="status">Coming Soon</span></div><h2>Map editor</h2><p>Edit terrain on a grid, then save and load the map data.</p><div class="skills"><span>Editing</span><span>Terrain</span><span>Saving</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">16 / COMMAND</span><span class="status">Coming Soon</span></div><h2>Unit selection game</h2><p>Select one unit or many, then send them to a destination.</p><div class="skills"><span>Selection</span><span>Commands</span><span>Movement</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">17 / GATHER</span><span class="status">Coming Soon</span></div><h2>Resource gathering game</h2><p>Coordinate workers, resources, production, and progress over time.</p><div class="skills"><span>Workers</span><span>Resources</span><span>Progress</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">18 / QUEUE</span><span class="status">Coming Soon</span></div><h2>Building and production queue</h2><p>Model build times, prerequisites, and enabled or disabled actions.</p><div class="skills"><span>Queues</span><span>Prerequisites</span><span>State</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">19 / OPPONENT</span><span class="status">Coming Soon</span></div><h2>Simple enemy AI</h2><p>Choose targets, patrol, attack, and find a path across the map.</p><div class="skills"><span>Targets</span><span>Patrol</span><span>Pathfinding</span></div></article></div>
+        <div class="landmark landmark--final"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">THE HORIZON</span><span class="status">Coming Soon</span></div><h2>Small strategy game</h2><p>A small map, two teams, two unit types, one resource, one building, one queue, and one win condition.</p><div class="skills"><span>Maps</span><span>Units</span><span>Strategy</span></div></article></div>
+      </div>
+    </section>
+
+    <section class="trail-end" aria-label="Learning path ending"><h2>Keep following the path.</h2><p>Each project is deliberately small. Finish one, look back at what it taught you, and take the next step when you are ready.</p></section>
+    <footer>Built for curious beginners. The roadmap is the map; the code is the journey.</footer>
+  </main>
+  <script>
+    document.querySelectorAll('.landmark').forEach((landmark, index) => {
+      landmark.id = index === 19 ? 'project-final' : `project-${String(index + 1).padStart(2, '0')}`;
+    });
+  </script>
+</body>
+</html>

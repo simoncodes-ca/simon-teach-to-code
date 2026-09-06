@@ -1,0 +1,287 @@
+{
+  "tool": "build-phase",
+  "version": 2,
+  "startedAt": "2026-09-06T08:44:33.246Z",
+  "comp": ".impeccable/mocks/hangman-comp-a-spread.png",
+  "direction": "baec6bfe",
+  "breakpoint": "1536x1024",
+  "artifact": "hangman/hangman.html",
+  "phase": "hero",
+  "phases": {
+    "comps": {
+      "status": "closed",
+      "openedAt": "2026-09-06T08:44:33.245Z",
+      "closedAt": "2026-09-06T08:51:09.929Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "6 comps, 1 approved",
+        "approved": ".impeccable/mocks/hangman-comp-a-spread.png",
+        "at": "2026-09-06T08:51:09.928Z"
+      },
+      "forced": null
+    },
+    "spec": {
+      "status": "closed",
+      "openedAt": "2026-09-06T08:51:09.975Z",
+      "closedAt": "2026-09-06T08:55:45.988Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "9 regions, 2 plates, 3 text regions measured",
+        "at": "2026-09-06T08:55:45.988Z"
+      },
+      "forced": null
+    },
+    "plates": {
+      "status": "closed",
+      "openedAt": "2026-09-06T08:55:45.988Z",
+      "closedAt": "2026-09-06T09:04:12.162Z",
+      "attempts": 2,
+      "notes": [],
+      "gate": {
+        "ok": true,
+        "reasons": [],
+        "summary": "2/2 plates",
+        "at": "2026-09-06T09:04:12.161Z"
+      },
+      "forced": null
+    },
+    "hero": {
+      "status": "open",
+      "openedAt": "2026-09-06T09:04:12.162Z",
+      "closedAt": null,
+      "attempts": 4,
+      "notes": [],
+      "gate": {
+        "ok": false,
+        "reasons": [
+          "hero overall 65.0% < 72% (structure 64%, color 92%, detail 61%)",
+          "region strike-tally is missing (detail 18%, structure 37%): the comp shows material the build does not",
+          "control new-word-button drifts to 57% (structure 60%, color 74%): its chrome differs from the comp's; open .impeccable/review/diff/hero/regions/new-word-button.png and match the border, fill, radius, chevron or arrow, and label size",
+          "artifact draws an illustration in inline SVG (drawing): <svg id=\"drawing\" viewBox=\"20 60 380 440\"...> (18 shapes, 367 chars of path data, 440px). Drawings, diagrams, notation, and leader lines are plates or belong to the plate they annotate; only icon-sized SVG (under 64px, a few paths) is code",
+          "hero readings errored (Cannot read properties of undefined (reading 'chosen')); the region scores above stand"
+        ],
+        "summary": "hero 65% (drift)",
+        "score": 0.6504,
+        "verdict": "drift",
+        "report": ".impeccable/review/diff/hero/report.json",
+        "sideBySide": ".impeccable/review/diff/hero/side-by-side.png",
+        "worst": [
+          "strike-tally missing 32%",
+          "new-word-button drift 57%",
+          "status-line drift 58%"
+        ],
+        "worstIds": [
+          "strike-tally",
+          "new-word-button",
+          "status-line"
+        ],
+        "worstCrops": [
+          {
+            "id": "strike-tally",
+            "verdict": "missing",
+            "score": {
+              "overall": 0.3173,
+              "structure": 0.3728,
+              "color": 0.3229,
+              "colorIntersection": 0.0745,
+              "paletteMatch": 0.4566,
+              "detail": 0.1826,
+              "detailRaw": 0.193,
+              "detailAdded": 0.0208,
+              "bands": 0.4
+            },
+            "file": ".impeccable/review/diff/hero/regions/strike-tally.png"
+          },
+          {
+            "id": "new-word-button",
+            "verdict": "drift",
+            "score": {
+              "overall": 0.5707,
+              "structure": 0.6048,
+              "color": 0.7437,
+              "colorIntersection": 0.4744,
+              "paletteMatch": 0.8887,
+              "detail": 0.1913,
+              "detailRaw": 0.3371,
+              "detailAdded": 0.2917,
+              "bands": 0.2
+            },
+            "file": ".impeccable/review/diff/hero/regions/new-word-button.png"
+          },
+          {
+            "id": "status-line",
+            "verdict": "drift",
+            "score": {
+              "overall": 0.5824,
+              "structure": 0.6855,
+              "color": 0.9107,
+              "colorIntersection": 0.8399,
+              "paletteMatch": 0.9488,
+              "detail": 0.0798,
+              "detailRaw": 0.1788,
+              "detailAdded": 0.1979,
+              "bands": 0
+            },
+            "file": ".impeccable/review/diff/hero/regions/status-line.png"
+          }
+        ],
+        "advisories": [],
+        "regionVerdicts": {
+          "paper": "drift",
+          "spine": "drift",
+          "hangman-drawing": "drift",
+          "strike-tally": "missing",
+          "title": "drift",
+          "word-display": "drift",
+          "status-line": "drift",
+          "letter-rail": "drift",
+          "new-word-button": "drift"
+        },
+        "at": "2026-09-06T09:33:04.771Z"
+      },
+      "forced": null,
+      "readingsSeen": {},
+      "history": [
+        {
+          "at": "2026-09-06T09:29:27.783Z",
+          "score": 0.2784,
+          "worstIds": [
+            "letter-rail",
+            "new-word-button",
+            "word-display"
+          ],
+          "regionVerdicts": {
+            "paper": "missing",
+            "spine": "missing",
+            "hangman-drawing": "contradicted",
+            "strike-tally": "contradicted",
+            "title": "contradicted",
+            "word-display": "missing",
+            "status-line": "missing",
+            "letter-rail": "missing",
+            "new-word-button": "missing"
+          },
+          "artifactHash": null
+        },
+        {
+          "at": "2026-09-06T09:31:29.323Z",
+          "score": 0.2784,
+          "worstIds": [
+            "letter-rail",
+            "new-word-button",
+            "word-display"
+          ],
+          "regionVerdicts": {
+            "paper": "missing",
+            "spine": "missing",
+            "hangman-drawing": "contradicted",
+            "strike-tally": "contradicted",
+            "title": "contradicted",
+            "word-display": "missing",
+            "status-line": "missing",
+            "letter-rail": "missing",
+            "new-word-button": "missing"
+          },
+          "artifactHash": "59694d14b4e5"
+        },
+        {
+          "at": "2026-09-06T09:32:07.512Z",
+          "score": 0.2784,
+          "worstIds": [
+            "letter-rail",
+            "new-word-button",
+            "word-display"
+          ],
+          "regionVerdicts": {
+            "paper": "missing",
+            "spine": "missing",
+            "hangman-drawing": "contradicted",
+            "strike-tally": "contradicted",
+            "title": "contradicted",
+            "word-display": "missing",
+            "status-line": "missing",
+            "letter-rail": "missing",
+            "new-word-button": "missing"
+          },
+          "artifactHash": "59694d14b4e5"
+        },
+        {
+          "at": "2026-09-06T09:33:04.772Z",
+          "score": 0.6504,
+          "worstIds": [
+            "strike-tally",
+            "new-word-button",
+            "status-line"
+          ],
+          "regionVerdicts": {
+            "paper": "drift",
+            "spine": "drift",
+            "hangman-drawing": "drift",
+            "strike-tally": "missing",
+            "title": "drift",
+            "word-display": "drift",
+            "status-line": "drift",
+            "letter-rail": "drift",
+            "new-word-button": "drift"
+          },
+          "artifactHash": "59694d14b4e5"
+        }
+      ]
+    },
+    "sections": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "motion": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "responsive": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    },
+    "review": {
+      "status": "pending",
+      "openedAt": null,
+      "closedAt": null,
+      "attempts": 0,
+      "notes": [],
+      "gate": null,
+      "forced": null
+    }
+  },
+  "finish": null,
+  "plates": {
+    "paper": {
+      "status": "ok",
+      "score": 0.6867,
+      "size": "768x728"
+    },
+    "spine": {
+      "status": "ok",
+      "score": 0.7804,
+      "size": "768x1330"
+    }
+  }
+}

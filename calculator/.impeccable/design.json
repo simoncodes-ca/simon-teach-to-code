@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-04T00:00:00Z",
+  "title": "Design System: Simon's Calculator",
+  "extensions": {
+    "colorMeta": {
+      "wall": { "role": "neutral", "displayName": "Night Concrete", "canonical": "#0e0f12", "tonalRamp": ["#050506", "#0e0f12", "#1a1c21", "#2b2e35", "#474b54", "#6b707a", "#9ca1aa", "#d5d8dd"] },
+      "flood": { "role": "tertiary", "displayName": "Sodium Flood", "canonical": "#ffb020", "tonalRamp": ["#3d2700", "#6b4400", "#9a6200", "#c88200", "#ffb020", "#ffc55c", "#ffd991", "#ffeecb"] },
+      "steel": { "role": "neutral", "displayName": "Gunmetal Steel", "canonical": "#2a2d33", "tonalRamp": ["#0b0c0e", "#14161a", "#2a2d33", "#3b3f46", "#4b5058", "#7a808a", "#a9aeb7", "#dcdee2"] },
+      "steel-hi": { "role": "neutral", "displayName": "Brushed Highlight", "canonical": "#4b5058", "tonalRamp": ["#14161a", "#22252a", "#31353c", "#3e434a", "#4b5058", "#7d838c", "#aeb3bb", "#dfe1e5"] },
+      "steel-lo": { "role": "neutral", "displayName": "Plate Underside", "canonical": "#14161a", "tonalRamp": ["#050607", "#0b0c0e", "#14161a", "#20232a", "#31353d", "#5a5f68", "#8f949c", "#c9ccd1"] },
+      "well": { "role": "neutral", "displayName": "Well Bottom", "canonical": "#0a0b0d", "tonalRamp": ["#020203", "#06070a", "#0a0b0d", "#151719", "#2a2d31", "#53575d", "#8b8f96", "#c8cbcf"] },
+      "green": { "role": "primary", "displayName": "Spray Green", "canonical": "#35ff6b", "tonalRamp": ["#04240d", "#07451a", "#0b6727", "#118934", "#17a840", "#22d455", "#35ff6b", "#a4ffbf"] },
+      "green-lo": { "role": "primary", "displayName": "Green Riser", "canonical": "#17a840", "tonalRamp": ["#031a09", "#063313", "#0a4d1d", "#0e6727", "#128132", "#17a840", "#2ad95a", "#8cf5ab"] },
+      "pink": { "role": "secondary", "displayName": "Spray Pink", "canonical": "#ff2e88", "tonalRamp": ["#2c0417", "#530a2a", "#7a103e", "#a11753", "#c81f68", "#ff2e88", "#ff77b0", "#ffc2da"] },
+      "pink-lo": { "role": "secondary", "displayName": "Pink Riser", "canonical": "#ab1855", "tonalRamp": ["#1e0410", "#3a081f", "#570c2d", "#73113c", "#8f144a", "#ab1855", "#d8407c", "#f0a0be"] },
+      "cyan": { "role": "secondary", "displayName": "Signal Cyan", "canonical": "#00d4ff", "tonalRamp": ["#00242c", "#004252", "#006178", "#00809e", "#00a0c4", "#00d4ff", "#66e5ff", "#c2f4ff"] },
+      "cyan-lo": { "role": "secondary", "displayName": "Cyan Riser", "canonical": "#0088a6", "tonalRamp": ["#001a20", "#00323d", "#004b5b", "#006378", "#007b95", "#0088a6", "#2cbfdf", "#96e2f2"] },
+      "orange": { "role": "tertiary", "displayName": "Hazard Orange", "canonical": "#ff6b18", "tonalRamp": ["#2b1003", "#4f1e06", "#742c09", "#98390c", "#bd470f", "#ff6b18", "#ff9c62", "#ffd0b2"] },
+      "orange-lo": { "role": "tertiary", "displayName": "Orange Riser", "canonical": "#a83c00", "tonalRamp": ["#200b00", "#3c1600", "#582000", "#742b00", "#903500", "#a83c00", "#d96e2c", "#f2b189"] },
+      "chalk": { "role": "neutral", "displayName": "Chalk", "canonical": "#f2f2f0", "tonalRamp": ["#232322", "#3b3b39", "#545451", "#6d6d69", "#8c8c88", "#b3b3af", "#d5d5d2", "#f2f2f0"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#0d0f12", "tonalRamp": ["#040506", "#0d0f12", "#191c21", "#282c33", "#43484f", "#6a6f78", "#9ba0a8", "#d4d7db"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Stencil Display", "purpose": "Page title only. Condensed system stack cut by a three-band mask-image that opens transparent bridges at 30-34% and 64-68% height. The stencil is the mask, not the typeface." },
+      "readout": { "displayName": "Readout", "purpose": "The number currently shown. Largest object on screen, right-aligned, tabular, soft phosphor text-shadow." },
+      "glyph": { "displayName": "Keycap Glyph", "purpose": "The digit or operator on a keycap face." },
+      "term": { "displayName": "Buffer Term", "purpose": "One entered term per buffer line, tabular." },
+      "label": { "displayName": "Panel Label", "purpose": "Toggle text, empty/off captions, keycap corner hint. Uppercase, wide tracking." },
+      "caption": { "displayName": "Spoken Name", "purpose": "The lowercase spelled-out key name at the foot of every keycap." }
+    },
+    "shadows": [
+      { "name": "plate-bolted", "value": "inset 0 1px 0 rgba(255,255,255,.22), inset 0 -2px 0 rgba(0,0,0,.55), 0 2px 0 #0b0c0e, 22px 26px 44px rgba(0,0,0,.62)", "purpose": "The standoff of a steel plate bolted to the wall: lit top edge, dark under edge, hard body edge, long cast shadow down-right from the flood." },
+      { "name": "tray-recessed", "value": "inset 0 2px 5px rgba(0,0,0,.8), inset 0 -1px 0 rgba(255,255,255,.05)", "purpose": "The milled tray inside a plate. Light lip on the bottom edge because it is a recess." },
+      { "name": "well", "value": "inset 0 4px 10px rgba(0,0,0,.95), inset 0 -1px 0 rgba(255,255,255,.09)", "purpose": "Deepest recess: readout and buffer column. Identical stack for both; they are the same hole." },
+      { "name": "key-rest", "value": "inset 0 1px 0 rgba(255,255,255,.5), 0 var(--travel) 0 var(--green-lo), 0 calc(var(--travel) + 4px) 10px rgba(0,0,0,.65)", "purpose": "Extruded keycap at rest: visible coloured side wall plus its shadow on the plate. Swap the -lo colour per variant." },
+      { "name": "key-pressed", "value": "inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 var(--green-lo), 0 1px 3px rgba(0,0,0,.7)", "purpose": "Pressed keycap: the side wall collapses to zero as the cap translates down by --travel." },
+      { "name": "bolt", "value": "inset 0 1px 0 rgba(255,255,255,.35), 0 1px 2px rgba(0,0,0,.8)", "purpose": "A 13px hex bolt head, four per plate, 9px in from each corner." },
+      { "name": "toggle-rest", "value": "inset 0 1px 0 rgba(255,255,255,.14), 0 2px 0 #0d0f12", "purpose": "Small equipment-panel switch: a shallow 2px riser rather than a full keycap extrusion." },
+      { "name": "readout-phosphor", "value": "0 0 16px rgba(242,242,240,.32)", "purpose": "The only soft light in the system, and only as text-shadow on a recessed surface. Never as a box-shadow glow on a raised element." }
+    ],
+    "motion": [
+      { "name": "key-press", "value": "transform .07s ease-out, box-shadow .07s ease-out", "purpose": "The only transition in the system. Fast enough to read as mechanical rather than animated." },
+      { "name": "hover-lift", "value": "translateY(-2px)", "purpose": "Key lifts slightly off its side wall on hover. Removed under prefers-reduced-motion." },
+      { "name": "press-travel", "value": "translateY(var(--travel))", "purpose": "Press displacement, equal to the side-wall height. Kept under prefers-reduced-motion because it is state feedback, not decoration." }
+    ],
+    "breakpoints": [
+      { "name": "stack", "value": "720px" },
+      { "name": "dense", "value": "520px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bolted Plate",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "The only container in the system: brushed steel bolted to the wall at four corners, standing off it.",
+      "html": "<div class=\"ds-plate\"><span class=\"ds-bolt-b\"></span><span class=\"ds-bolt-c\"></span><div class=\"ds-tray\">Tray content</div></div>",
+      "css": ".ds-plate { position: relative; padding: 16px; border-radius: 16px; background: linear-gradient(160deg, #4b5058 0%, #2a2d33 22%, #14161a 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -2px 0 rgba(0,0,0,.55), 0 2px 0 #0b0c0e, 22px 26px 44px rgba(0,0,0,.62); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #f2f2f0; } .ds-plate::before, .ds-plate::after, .ds-plate > .ds-bolt-b, .ds-plate > .ds-bolt-c { content: ''; position: absolute; width: 13px; height: 13px; border-radius: 3px; background: radial-gradient(circle at 34% 30%, #6d737c, #23262b 70%); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 1px 2px rgba(0,0,0,.8); } .ds-plate::before { top: 9px; left: 9px; } .ds-plate::after { top: 9px; right: 9px; } .ds-plate > .ds-bolt-b { bottom: 9px; left: 9px; } .ds-plate > .ds-bolt-c { bottom: 9px; right: 9px; } .ds-tray { position: relative; padding: 12px; border-radius: 9px; background: #1a1c20; box-shadow: inset 0 2px 5px rgba(0,0,0,.8), inset 0 -1px 0 rgba(255,255,255,.05); }"
+    },
+    {
+      "name": "Readout Well",
+      "kind": "custom",
+      "refersTo": "readout",
+      "description": "The recessed display well holding the current number. Right-aligned, tabular, horizontally scrollable.",
+      "html": "<div class=\"ds-readout\">1284.5</div>",
+      "css": ".ds-readout { padding: 14px 18px 16px; border-radius: 6px; background: linear-gradient(#06070a, #0a0b0d); box-shadow: inset 0 4px 10px rgba(0,0,0,.95), inset 0 -1px 0 rgba(255,255,255,.09); text-align: right; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: clamp(44px, 9vw, 68px); font-weight: 800; line-height: 1.05; letter-spacing: .02em; color: #f2f2f0; font-variant-numeric: tabular-nums; text-shadow: 0 0 16px rgba(242,242,240,.32); overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: #4b5058 transparent; }"
+    },
+    {
+      "name": "Digit Key",
+      "kind": "button",
+      "refersTo": "key-digit",
+      "description": "Extruded green keycap with a corner keyboard hint, a monumental glyph and a lowercase spoken name.",
+      "html": "<button type=\"button\" class=\"ds-key\"><span class=\"ds-key-hint\">7</span><span class=\"ds-key-glyph\">7</span><span class=\"ds-key-name\">seven</span></button>",
+      "css": ".ds-key { --travel: 7px; position: relative; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; min-height: 72px; width: 82px; padding: 6px 8px 7px; border: 0; border-radius: 9px; background: linear-gradient(#4bff7d, #35ff6b 58%); color: #0d0f12; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 var(--travel) 0 #17a840, 0 calc(var(--travel) + 4px) 10px rgba(0,0,0,.65); transform: translateY(0); transition: transform .07s ease-out, box-shadow .07s ease-out; } .ds-key-hint { justify-self: start; font-size: 11px; font-weight: 800; line-height: 1; opacity: .62; font-variant-numeric: tabular-nums; } .ds-key-glyph { align-self: center; font-size: clamp(22px, 4.4vw, 30px); font-weight: 900; line-height: 1; letter-spacing: -.02em; } .ds-key-name { font-size: 10px; font-weight: 800; line-height: 1; letter-spacing: .08em; text-transform: lowercase; opacity: .76; } .ds-key:hover { transform: translateY(-2px); } .ds-key:focus-visible { outline: 3px solid #00d4ff; outline-offset: 4px; } .ds-key:active { transform: translateY(var(--travel)); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 #17a840, 0 1px 3px rgba(0,0,0,.7); }"
+    },
+    {
+      "name": "Operator Key",
+      "kind": "button",
+      "refersTo": "key-operator",
+      "description": "Pink variant of the keycap, used for the right-hand operator column.",
+      "html": "<button type=\"button\" class=\"ds-key-op\"><span class=\"ds-key-hint\">*</span><span class=\"ds-key-glyph\">&times;</span><span class=\"ds-key-name\">times</span></button>",
+      "css": ".ds-key-op { --travel: 7px; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; min-height: 72px; width: 82px; padding: 6px 8px 7px; border: 0; border-radius: 9px; background: linear-gradient(#ff5ba3, #ff2e88 58%); color: #fff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 var(--travel) 0 #ab1855, 0 calc(var(--travel) + 4px) 10px rgba(0,0,0,.65); transition: transform .07s ease-out, box-shadow .07s ease-out; } .ds-key-op:hover { transform: translateY(-2px); } .ds-key-op:focus-visible { outline: 3px solid #00d4ff; outline-offset: 4px; } .ds-key-op:active { transform: translateY(var(--travel)); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 #ab1855, 0 1px 3px rgba(0,0,0,.7); }"
+    },
+    {
+      "name": "Equals Key",
+      "kind": "button",
+      "refersTo": "key-equals",
+      "description": "Cyan keycap spanning two grid columns. Cyan appears here and on the focus ring, nowhere else.",
+      "html": "<button type=\"button\" class=\"ds-key-eq\"><span class=\"ds-key-hint\">enter</span><span class=\"ds-key-glyph\">=</span><span class=\"ds-key-name\">equals</span></button>",
+      "css": ".ds-key-eq { --travel: 7px; display: grid; grid-template-rows: auto 1fr auto; justify-items: center; min-height: 72px; width: 175px; padding: 6px 8px 7px; border: 0; border-radius: 9px; background: linear-gradient(#4ce6ff, #00d4ff 58%); color: #0d0f12; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.5), 0 var(--travel) 0 #0088a6, 0 calc(var(--travel) + 4px) 10px rgba(0,0,0,.65); transition: transform .07s ease-out, box-shadow .07s ease-out; } .ds-key-eq:hover { transform: translateY(-2px); } .ds-key-eq:active { transform: translateY(var(--travel)); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 #0088a6, 0 1px 3px rgba(0,0,0,.7); }"
+    },
+    {
+      "name": "Clear Key",
+      "kind": "button",
+      "refersTo": "key-clear",
+      "description": "Hazard-banded orange bar spanning three columns; its label sits in a chalk lozenge so the banding never runs under the text.",
+      "html": "<button type=\"button\" class=\"ds-key-clear\"><span class=\"ds-clear-label\">Clear <span class=\"ds-clear-hint\">esc</span></span></button>",
+      "css": ".ds-key-clear { --travel: 7px; display: grid; align-content: center; justify-items: center; min-height: 50px; width: 266px; padding: 6px 8px 7px; border: 0; border-radius: 9px; color: #0d0f12; background-color: #ff6b18; background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,.82) 0 12px, transparent 12px 28px); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 var(--travel) 0 #a83c00, 0 calc(var(--travel) + 4px) 10px rgba(0,0,0,.65); transition: transform .07s ease-out, box-shadow .07s ease-out; } .ds-clear-label { display: inline-flex; align-items: baseline; gap: 9px; padding: 3px 15px; border-radius: 4px; background: #f2f2f0; font-size: 21px; font-weight: 900; letter-spacing: .06em; } .ds-clear-hint { font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #5a5f68; } .ds-key-clear:hover { transform: translateY(-2px); } .ds-key-clear:active { transform: translateY(var(--travel)); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 0 0 #a83c00, 0 1px 3px rgba(0,0,0,.7); }"
+    },
+    {
+      "name": "Buffer Toggle",
+      "kind": "button",
+      "refersTo": "buffer-toggle",
+      "description": "Equipment-panel switch with a square indicator drawn by ::before; aria-pressed=true swaps the whole control to the green face.",
+      "html": "<button type=\"button\" class=\"ds-toggle\" aria-pressed=\"false\">Buffer</button>",
+      "css": ".ds-toggle { width: 236px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 7px 10px; border: 1px solid #4a4f57; border-radius: 6px; background: linear-gradient(#31353c, #202329); color: #ccd1d8; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 2px 0 #0d0f12; } .ds-toggle::before { content: ''; width: 11px; height: 11px; border: 1px solid #7c828b; border-radius: 2px; background: #121418; } .ds-toggle:hover { border-color: #35ff6b; } .ds-toggle:focus-visible { outline: 3px solid #00d4ff; outline-offset: 4px; } .ds-toggle[aria-pressed=\"true\"] { color: #0d0f12; background: linear-gradient(#4bff7d, #35ff6b 60%); border-color: #17a840; } .ds-toggle[aria-pressed=\"true\"]::before { background: #0d0f12; border-color: #0d0f12; }"
+    },
+    {
+      "name": "Buffer Column",
+      "kind": "custom",
+      "refersTo": "buffer-line",
+      "description": "A well identical to the readout's, holding one entered term per line with three states: default, operator, and the term being typed right now.",
+      "html": "<div class=\"ds-buffer\"><div class=\"ds-line\">12</div><div class=\"ds-line ds-line-op\">+</div><div class=\"ds-line ds-line-active\">7</div><span class=\"ds-empty\">Nothing entered yet</span></div>",
+      "css": ".ds-buffer { display: flex; flex-direction: column; width: 236px; padding: 4px 0; border-radius: 6px; background: linear-gradient(#06070a, #0a0b0d); box-shadow: inset 0 4px 10px rgba(0,0,0,.95), inset 0 -1px 0 rgba(255,255,255,.09); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; scrollbar-width: thin; scrollbar-color: #4b5058 transparent; } .ds-line { flex: none; padding: 7px 14px; border-bottom: 1px solid rgba(255,255,255,.07); font-size: 21px; font-weight: 800; line-height: 1.2; color: #f2f2f0; font-variant-numeric: tabular-nums; } .ds-line-op { color: #ff2e88; } .ds-line-active { background: rgba(53,255,107,.14); box-shadow: inset 3px 0 0 #35ff6b; color: #35ff6b; } .ds-empty { padding: 12px 14px; color: #767d87; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }"
+    },
+    {
+      "name": "Stencilled Title",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "The page title. The stencil bridges are a CSS mask cutting across the letterforms, not a stencil typeface.",
+      "html": "<h1 class=\"ds-title\">Simon's Calculator</h1>",
+      "css": ".ds-title { margin: 0 0 26px; text-align: center; font-family: Haettenschweiler, 'Arial Narrow', Impact, 'Helvetica Neue', Arial, sans-serif; font-size: clamp(30px, 6.6vw, 62px); font-weight: 700; line-height: 1; letter-spacing: .1em; text-transform: uppercase; color: #dcdad6; -webkit-mask-image: linear-gradient(to bottom, #000 0 30%, transparent 30% 34%, #000 34% 64%, transparent 64% 68%, #000 68% 100%); mask-image: linear-gradient(to bottom, #000 0 30%, transparent 30% 34%, #000 34% 64%, transparent 64% 68%, #000 68% 100%); }"
+    },
+    {
+      "name": "Floodlit Wall",
+      "kind": "custom",
+      "refersTo": "wall",
+      "description": "The page ground: one warm pool of sodium light high on the wall, falloff into dark, and procedural concrete grain from an inline SVG feTurbulence data URI. Authored, not a raster.",
+      "html": "<div class=\"ds-wall\"></div>",
+      "css": ".ds-wall { min-height: 220px; background-color: #0e0f12; background-image: radial-gradient(58% 42% at 50% 2%, rgba(255,176,32,.34), transparent 70%), radial-gradient(90% 70% at 50% 0%, rgba(255,140,40,.13), transparent 75%), radial-gradient(120% 100% at 50% 40%, transparent 38%, rgba(0,0,0,.66) 100%), url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23g)' opacity='0.3'/></svg>\"); background-repeat: no-repeat, no-repeat, no-repeat, repeat; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Floodlit Yard / Bolted Plate",
+    "overview": "The page is a dark concrete wall at night with one sodium floodlight aimed high on it. Everything the user touches is a heavy steel plate bolted to that wall at four corners, standing off it far enough to throw a real shadow. The calculator is one plate; the buffer is a second plate of the same kind, standing on its own across a gap of bare wall. Nothing floats, nothing is a card: every object is fixed to something and lit from one direction.\n\nDepth is the whole language. Objects are either raised (lit top edge, dark under edge, cast shadow down and to the right) or recessed (deep inset shadow with the light lip on the bottom edge, because a hole catches light on its far wall). The keys are extruded blocks with coloured side walls you can see, and pressing one sinks the cap into its own side wall. The colour is sprayed on so the instrument reads as workshop equipment rather than a phone app.\n\nThe wall is authored, not photographed: layered radial gradients for the flood pool and the falloff, plus an inline SVG feTurbulence data URI for grain. There is a raster wall plate on disk at assets/plates/wall.png, and the approved comp's wall region is real, but embedding it would have cost roughly 98KB of base64 inside a file written to be read end to end by a beginner. The procedural wall is a stated scope decision made against that product constraint, not a silent flattening.",
+    "keyCharacteristics": [
+      "One light source, high and centre, warm sodium (#ffb020); every highlight and shadow obeys it.",
+      "Two material states only: raised steel and recessed well.",
+      "Four spray colours, each with a darker -lo riser that is the object's visible side wall.",
+      "Saturated colour appears only on keycaps and buffer states; the chrome is gunmetal.",
+      "Hard geometry, small radii (9-16px), no soft or glassy surfaces."
+    ],
+    "rules": [
+      { "name": "The Riser Rule", "body": "Every spray colour ships as a pair: the face and its -lo riser. The -lo value is only ever a side wall or a border - never a background face, never text.", "section": "colors" },
+      { "name": "The One Light Rule", "body": "Warm light comes from the top centre. A raised object gets a white inset on its top edge; a recessed object gets its white inset on its bottom edge. Reversing that flips the object inside out.", "section": "colors" },
+      { "name": "The No Glow Rule", "body": "No zero-offset coloured glows. The title and the plate once carried them and they were removed; the floodlight is produced by the wall's own radial gradients and by the plate's cast shadow, never by a halo painted around an element. The single permitted soft light is the readout's text-shadow phosphor on a recessed surface.", "section": "colors" },
+      { "name": "The Tabular Rule", "body": "Anything that shows a number the user typed - readout, buffer line, keycap hint - carries font-variant-numeric: tabular-nums so digits never shuffle as they change.", "section": "typography" },
+      { "name": "The Spoken Name Rule", "body": "A keycap carries three registers at once: the keyboard character in the corner, the mathematical glyph in the centre, and the spoken name in lowercase at the foot. All three or none; the lowercase name is what makes the keypad teachable.", "section": "typography" },
+      { "name": "The Token Breakpoint Rule", "body": "The small breakpoint re-declares :root custom properties rather than overriding individual components. Density changes are made once, at the token, and every surface inherits them.", "section": "layout" },
+      { "name": "The Travel Rule", "body": "A key's rest-state side wall and its press distance are the same number, --travel. Pressing translates the cap down by exactly --travel while the 0 var(--travel) 0 riser goes to 0 0 0.", "section": "elevation" },
+      { "name": "The Recess Lip Rule", "body": "Raised objects take their white 1px inset on the top edge; recessed objects take it on the bottom. This is the single tell that separates a plate from a well and it is never violated.", "section": "elevation" },
+      { "name": "The Bolted Rule", "body": "Any new object at plate scale gets four bolts and a cast shadow, or it does not belong on this wall. Nothing is allowed to float.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do build any new container as a .plate: brushed steel, 16px radius, four hex bolts, cast shadow. Nothing floats on this wall.",
+      "Do put interactive content inside a recessed tray or well, never straight onto the plate face.",
+      "Do pair every spray colour with its -lo riser and drive the press with --travel on both the transform and the shadow.",
+      "Do author the light from the top centre: white inset on the top edge for raised objects, on the bottom edge for recessed ones.",
+      "Do author new density at :root in the 520px breakpoint rather than overriding components one by one.",
+      "Do style every key state for :active and [data-pressed=\"true\"] together.",
+      "Do keep font-variant-numeric: tabular-nums on anything showing typed numbers."
+    ],
+    "donts": [
+      "Don't add zero-offset coloured glows to the title, the plate, or any raised element. The floodlight lives in the wall's radial gradients.",
+      "Don't use a -lo riser colour as a background face or as text.",
+      "Don't put spray colour on chrome. Green, pink, cyan and orange belong to keycaps, buffer states, focus and selection - the plates and trays stay gunmetal.",
+      "Don't use cyan for anything but equals and the focus ring, or orange for anything but clear.",
+      "Don't introduce a second light direction, a second cast-shadow angle, or a soft/glassy surface treatment.",
+      "Don't literalize the approved comp's keypad: it renders garbled keys (ORC / MRFE / MRU), duplicate divide keys, and is missing 7, 8, 9 and 0. The shipped grid is 4 columns x 5 rows with equals spanning 2 and clear spanning 3.",
+      "Don't add a web font, an icon font, or any external request. Everything the page needs is in the file."
+    ]
+  }
+}

@@ -1,0 +1,489 @@
+{
+  "tool": "comp-spec",
+  "version": 1,
+  "createdAt": "2026-09-04T17:35:13.458Z",
+  "comp": ".impeccable/mocks/yard-a-bolted-plate.png",
+  "warnings": [
+    "region panel-frame: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)",
+    "region buffer-panel: \"container\": true set in the regions file (the region-size refusal is overridden: one undivided element)"
+  ],
+  "uncoveredInkCells": [
+    "C0",
+    "D0",
+    "H0"
+  ],
+  "compSize": {
+    "width": 1344,
+    "height": 768
+  },
+  "aspect": 1.75,
+  "orientation": "landscape",
+  "palette": [
+    {
+      "hex": "#1b1919",
+      "coverage": 0.6506
+    },
+    {
+      "hex": "#3e3024",
+      "coverage": 0.2659
+    },
+    {
+      "hex": "#6c482b",
+      "coverage": 0.0387
+    },
+    {
+      "hex": "#659220",
+      "coverage": 0.0242
+    },
+    {
+      "hex": "#525557",
+      "coverage": 0.0206
+    }
+  ],
+  "bands": [
+    {
+      "y": 0.0822,
+      "strength": 0.2706
+    },
+    {
+      "y": 0.1644,
+      "strength": 0.4147
+    },
+    {
+      "y": 0.3151,
+      "strength": 0.2252
+    },
+    {
+      "y": 0.5616,
+      "strength": 0.2383
+    },
+    {
+      "y": 0.6301,
+      "strength": 0.2026
+    }
+  ],
+  "regions": [
+    {
+      "id": "wall",
+      "kind": "texture",
+      "note": "clean sample of the dark concrete wall, no ink on it; the page tiles this wherever the wall shows",
+      "grid": "A5:B6",
+      "box": {
+        "x": 0,
+        "y": 0.5,
+        "w": 0.2,
+        "h": 0.2
+      },
+      "px": {
+        "x": 0,
+        "y": 384,
+        "w": 269,
+        "h": 154
+      },
+      "aspect": 1.7468,
+      "palette": [
+        {
+          "hex": "#2d2318",
+          "coverage": 1
+        }
+      ],
+      "detail": {
+        "energy": 3.8341
+      },
+      "medium": "raster",
+      "plate": "assets/plates/wall.png",
+      "text": null
+    },
+    {
+      "id": "title",
+      "kind": "text",
+      "note": "SIMON'S CALCULATOR spray-stencilled in blocky white caps with stencil bridges",
+      "grid": "C1:H1",
+      "coverBox": {
+        "x": 0.2,
+        "y": 0.1,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "box": {
+        "x": 0.4501,
+        "y": 0.1003,
+        "w": 0.3497,
+        "h": 0.0703
+      },
+      "px": {
+        "x": 605,
+        "y": 77,
+        "w": 470,
+        "h": 54
+      },
+      "aspect": 8.7037,
+      "palette": [
+        {
+          "hex": "#34302b",
+          "coverage": 0.6009
+        },
+        {
+          "hex": "#aaa5a0",
+          "coverage": 0.3322
+        },
+        {
+          "hex": "#6e6764",
+          "coverage": 0.0656
+        },
+        {
+          "hex": "#202818",
+          "coverage": 0.0014
+        }
+      ],
+      "detail": {
+        "energy": 43.5108
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 1,
+          "glyphs": 13,
+          "capHeightPx": 47.1,
+          "inkIsDark": false,
+          "allCaps": true,
+          "advance": 0.4675,
+          "advTall": 0.4675,
+          "advX": null,
+          "gap": 0.1063,
+          "xRatio": null,
+          "stemW": 0.2613,
+          "contrast": 1.4889,
+          "serif": 0.896,
+          "densTall": 0.5466,
+          "densX": null,
+          "weight": 0.5466
+        },
+        "widthClass": "condensed",
+        "weightClass": "medium",
+        "chosen": {
+          "family": "Oleo Script",
+          "weight": 400,
+          "fontSizePx": 67,
+          "source": "catalog",
+          "estimatedSize": true,
+          "stamp": "7d7579c8e039"
+        }
+      }
+    },
+    {
+      "id": "panel-frame",
+      "kind": "chrome",
+      "note": "the bolted steel plate: brushed gunmetal frame, bevelled lit top edge, hex bolts at four corners, raised on a cast shadow",
+      "grid": "C2:F8",
+      "container": true,
+      "box": {
+        "x": 0.2,
+        "y": 0.2,
+        "w": 0.4,
+        "h": 0.7
+      },
+      "px": {
+        "x": 269,
+        "y": 154,
+        "w": 538,
+        "h": 538
+      },
+      "aspect": 1,
+      "palette": [
+        {
+          "hex": "#1a1817",
+          "coverage": 0.6315
+        },
+        {
+          "hex": "#3b362c",
+          "coverage": 0.1546
+        },
+        {
+          "hex": "#669321",
+          "coverage": 0.0996
+        },
+        {
+          "hex": "#af2d55",
+          "coverage": 0.0611
+        },
+        {
+          "hex": "#595c5e",
+          "coverage": 0.0532
+        }
+      ],
+      "detail": {
+        "energy": 14.9287
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "readout-well",
+      "kind": "chrome",
+      "note": "recessed dark display well with an inner shadow lip, holding the readout",
+      "grid": "C3:F4",
+      "box": {
+        "x": 0.2,
+        "y": 0.3,
+        "w": 0.4,
+        "h": 0.2
+      },
+      "px": {
+        "x": 269,
+        "y": 230,
+        "w": 538,
+        "h": 154
+      },
+      "aspect": 3.4935,
+      "palette": [
+        {
+          "hex": "#211918",
+          "coverage": 0.5072
+        },
+        {
+          "hex": "#33342e",
+          "coverage": 0.3691
+        },
+        {
+          "hex": "#585e61",
+          "coverage": 0.0564
+        },
+        {
+          "hex": "#789f2a",
+          "coverage": 0.0373
+        },
+        {
+          "hex": "#e2e3e3",
+          "coverage": 0.0301
+        }
+      ],
+      "detail": {
+        "energy": 19.2991
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "readout",
+      "kind": "text",
+      "note": "current number in crisp white blocky digits, right-aligned, largest type on the page",
+      "grid": "D3:F4",
+      "coverBox": {
+        "x": 0.3,
+        "y": 0.3,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "box": {
+        "x": 0.4115,
+        "y": 0.2995,
+        "w": 0.1161,
+        "h": 0.0625
+      },
+      "px": {
+        "x": 553,
+        "y": 230,
+        "w": 156,
+        "h": 48
+      },
+      "aspect": 3.25,
+      "palette": [
+        {
+          "hex": "#1a1817",
+          "coverage": 0.5253
+        },
+        {
+          "hex": "#5b6165",
+          "coverage": 0.3609
+        },
+        {
+          "hex": "#e4e6e5",
+          "coverage": 0.0544
+        },
+        {
+          "hex": "#43372e",
+          "coverage": 0.0297
+        },
+        {
+          "hex": "#313839",
+          "coverage": 0.0297
+        }
+      ],
+      "detail": {
+        "energy": 12.8428
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-04T17:35:18.298Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "keypad",
+      "kind": "control",
+      "note": "extruded square keycaps with visible side walls and contact shadows; green digits, pink operators, cyan equals, orange hazard clear",
+      "grid": "C5:F8",
+      "coverBox": {
+        "x": 0.2,
+        "y": 0.5,
+        "w": 0.4,
+        "h": 0.4
+      },
+      "box": {
+        "x": 0.2314,
+        "y": 0.5,
+        "w": 0.2649,
+        "h": 0.3099
+      },
+      "px": {
+        "x": 311,
+        "y": 384,
+        "w": 356,
+        "h": 238
+      },
+      "aspect": 1.4958,
+      "palette": [
+        {
+          "hex": "#181914",
+          "coverage": 0.3763
+        },
+        {
+          "hex": "#649220",
+          "coverage": 0.3204
+        },
+        {
+          "hex": "#ae2b53",
+          "coverage": 0.1883
+        },
+        {
+          "hex": "#288887",
+          "coverage": 0.0798
+        },
+        {
+          "hex": "#1f500b",
+          "coverage": 0.0353
+        }
+      ],
+      "detail": {
+        "energy": 17.2235
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "buffer-panel",
+      "kind": "chrome",
+      "note": "separate bolted panel to the right across a gap of bare wall, same frame and bolts as the calculator",
+      "grid": "G2:H8",
+      "container": true,
+      "box": {
+        "x": 0.6,
+        "y": 0.2,
+        "w": 0.2,
+        "h": 0.7
+      },
+      "px": {
+        "x": 806,
+        "y": 154,
+        "w": 269,
+        "h": 538
+      },
+      "aspect": 0.5,
+      "palette": [
+        {
+          "hex": "#191918",
+          "coverage": 0.9441
+        },
+        {
+          "hex": "#353335",
+          "coverage": 0.0274
+        },
+        {
+          "hex": "#4c5559",
+          "coverage": 0.0214
+        },
+        {
+          "hex": "#3a2c1c",
+          "coverage": 0.004
+        },
+        {
+          "hex": "#d5d5d5",
+          "coverage": 0.0032
+        }
+      ],
+      "detail": {
+        "energy": 5.45
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "buffer-list",
+      "kind": "control",
+      "note": "entered terms stacked one per line, hairline rule between lines, numbers white and operators pink",
+      "grid": "G3:H7",
+      "coverBox": {
+        "x": 0.6,
+        "y": 0.3,
+        "w": 0.2,
+        "h": 0.5
+      },
+      "box": {
+        "x": 0.6161,
+        "y": 0.5013,
+        "w": 0.061,
+        "h": 0.0521
+      },
+      "px": {
+        "x": 828,
+        "y": 385,
+        "w": 82,
+        "h": 40
+      },
+      "aspect": 2.05,
+      "palette": [
+        {
+          "hex": "#191818",
+          "coverage": 0.8464
+        },
+        {
+          "hex": "#d0d0d1",
+          "coverage": 0.0938
+        },
+        {
+          "hex": "#b82866",
+          "coverage": 0.0234
+        },
+        {
+          "hex": "#6f6f6c",
+          "coverage": 0.0234
+        },
+        {
+          "hex": "#7e2542",
+          "coverage": 0.013
+        }
+      ],
+      "detail": {
+        "energy": 11.5694
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-04T17:35:18.367Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    }
+  ]
+}

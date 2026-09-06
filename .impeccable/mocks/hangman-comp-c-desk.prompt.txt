@@ -1,0 +1,11 @@
+Flat design render of a webpage UI (not a photograph, not a poster). The webpage is "Simon's Hangman", a hangman word game, captured mid-round at desktop size 1440x1000.
+
+WORLD: A sheet of warm cream sketchbook paper (#f4efe4) lies on a plain warm wooden desk surface visible as a narrow band around the paper edges. The sheet is very slightly rotated (about 2 degrees). Everything on the sheet is drawn in soft graphite pencil strokes with slightly wobbly hand-drawn linework; a faint pencil-tooth grain covers the paper. No straight digital edges, no gloss, no color except one muted red pencil accent (#c0392b) reserved for wrong-guess marks. A hand-drawn pencil (diagonal, above the sheet's top edge) and a hand-drawn eraser (beside the sheet's right edge) sit on the desk as drawn chrome around the page.
+
+STRUCTURE: The sheet is split asymmetrically: word play owns the left 55%, the drawing owns the right 45%.
+
+LEFT COLUMN: small handwritten graphite title "Simon's Hangman" at top; below it the handwritten secret word very large: "E _ _ P H _ N T" — letters E, L, P, H, N, T in firm graphite, three unknown slots as hand-drawn underline dashes; under the word one short handwritten status line "3 wrong guesses"; below that the A-to-Z letter grid in four rows of seven, each letter hand-written above its own pencil underline — letters E, L, P, H, N, T filled in darker, letters R, S, O each crossed out with one red pencil stroke and dimmed, remaining letters soft graphite; bottom left a small hand-drawn rounded-rectangle button reads "New word".
+
+RIGHT COLUMN: the large hand-drawn hangman drawing — gallows base, vertical post, top beam and rope complete in firm graphite, stick figure with head, body and one arm sketched darker with faint construction guide lines and eraser smudge trails; three small red pencil tally hatch marks in its bottom corner.
+
+No browser chrome, no navigation bar, no footer, no logos. The visitor's job — guess letters to reveal the word before the drawing completes — must be readable from the image alone.

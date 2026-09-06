@@ -1,0 +1,95 @@
+{
+  "regions": [
+    {
+      "id": "paper",
+      "kind": "texture",
+      "grid": "G0:H0",
+      "note": "clean warm cream sketchbook paper with faint pencil tooth grain; tiles as the page ground"
+    },
+    {
+      "id": "spine",
+      "kind": "plate",
+      "grid": "E0:F9",
+      "note": "spiral binding rings running the full height of the open sketchbook gutter, graphite shading on rings"
+    },
+    {
+      "id": "hangman-drawing",
+      "kind": "control",
+      "codeDrawn": true,
+      "container": true,
+      "grid": "A1:E8",
+      "note": "hand-drawn graphite hangman: gallows base, post, beam and rope complete, stick figure head, body and one arm, eraser smudge trails and faint construction guides; must be code-drawn SVG stroke groups so one group can be revealed per wrong guess"
+    },
+    {
+      "id": "strike-tally",
+      "kind": "control",
+      "codeDrawn": true,
+      "grid": "A8:B9",
+      "note": "red pencil tally hatch marks in the bottom-left corner, one stroke per wrong guess"
+    },
+    {
+      "id": "title",
+      "kind": "text",
+      "codeDrawn": true,
+      "grid": "A0:D0",
+      "note": "handwritten graphite title reading Simon's Hangman",
+      "box": {
+        "x": 0.06,
+        "y": 0.02,
+        "w": 0.3,
+        "h": 0.09
+      }
+    },
+    {
+      "id": "word-display",
+      "kind": "text",
+      "grid": "F2:J3",
+      "note": "large handwritten word row: revealed letters E P H N T in firm graphite, hidden letters as hand-drawn underline dashes",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.55,
+        "y": 0.19,
+        "w": 0.44,
+        "h": 0.11
+      }
+    },
+    {
+      "id": "status-line",
+      "kind": "text",
+      "grid": "G3:I3",
+      "note": "handwritten status line reading 3 wrong guesses",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.6,
+        "y": 0.3,
+        "w": 0.26,
+        "h": 0.07
+      }
+    },
+    {
+      "id": "letter-rail",
+      "kind": "control",
+      "grid": "F4:J7",
+      "note": "A to Z letter buttons in four rows, each letter above a pencil underline; correct-used letters darker, wrong letters red-struck and dimmed",
+      "box": {
+        "x": 0.53,
+        "y": 0.4,
+        "w": 0.46,
+        "h": 0.36
+      }
+    },
+    {
+      "id": "new-word-button",
+      "kind": "control",
+      "grid": "I8:J9",
+      "note": "small hand-drawn rounded-rectangle button reading New word",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.8,
+        "y": 0.82,
+        "w": 0.17,
+        "h": 0.14
+      }
+    }
+  ]
+}

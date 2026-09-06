@@ -1,0 +1,13 @@
+{
+  "direction": "41a41e9b",
+  "surface": "calculator.html",
+  "approved": false,
+  "slug": "yard-c-bevelled-slab",
+  "prompt": "Floodlit yard calculator as a thick floating slab with a wide 45-degree chamfered bevel frame catching the floodlight, deep inset readout well, and tall extruded block keys with bright top faces and shaded side faces. Separate framed buffer panel to the right.",
+  "doNotLiteralize": [
+    "the whole panel is drawn in perspective at an angle; the real page is flat-on",
+    "the skate ramp and floor in the background are scene dressing, not page furniture",
+    "nonsense key labels F2 / 13 / DO / F9",
+    "digits duplicated and out of order"
+  ]
+}

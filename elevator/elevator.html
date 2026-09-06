@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simon's Elevator</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="elevator.js" defer></script>
+</head>
+
+<!--
+  Simon's Elevator is three files:
+    elevator.html  this file — what is on the page
+    styles.css     how it looks
+    elevator.js    what happens when a floor button is pressed
+
+  The ids on the readouts and buttons are the contract with elevator.js.
+-->
+<body>
+  <main class="app-shell">
+    <header class="page-header">
+      <div>
+        <h1>Simon's Elevator</h1>
+        <p class="page-header__description">A five-floor elevator simulator</p>
+      </div>
+    </header>
+
+    <div class="simulator-layout">
+      <section class="tower-panel" aria-labelledby="tower-heading">
+        <div class="panel-heading panel-heading--tower">
+          <div>
+            <span class="panel-heading__number">01</span>
+            <h2 id="tower-heading">The tower</h2>
+          </div>
+          <p>Watch the car find its floor.</p>
+        </div>
+
+        <div class="tower-stage">
+          <div class="tower-art-wrap">
+            <img class="tower-art" src="assets/skyscraper.png" alt="A five-floor LEGO skyscraper with a central elevator shaft">
+            <div class="shaft-guide" aria-hidden="true"></div>
+            <div class="floor-markers" aria-hidden="true">
+              <span class="floor-marker floor-marker--5">5</span>
+              <span class="floor-marker floor-marker--4">4</span>
+              <span class="floor-marker floor-marker--3">3</span>
+              <span class="floor-marker floor-marker--2">2</span>
+              <span class="floor-marker floor-marker--1">1</span>
+            </div>
+            <img class="elevator-car" id="elevator-car" src="assets/elevator.png" alt="Elevator car">
+          </div>
+        </div>
+
+      </section>
+
+      <aside class="teaching-rail" aria-label="Elevator controls and state machine lesson">
+        <section class="instrument-panel state-panel" aria-labelledby="state-heading">
+          <div class="panel-heading">
+            <div>
+              <span class="panel-heading__number">02</span>
+              <h2 id="state-heading">State machine</h2>
+            </div>
+            <div class="live-chip" aria-live="polite">
+              <span class="live-chip__label">LIVE STATE</span>
+              <strong class="live-chip__value" id="state-chip">idle</strong>
+            </div>
+          </div>
+
+          <div class="state-machine" id="state-machine" role="list" aria-label="Elevator state machine. The highlighted node is the current state.">
+            <div class="state-row state-row--queue">
+              <span class="state-node state-node--active" data-state-node="idle" role="listitem">idle</span>
+              <span class="state-arrow" aria-hidden="true"></span>
+              <span class="state-node" data-state-node="waitingForRequest" role="listitem">waiting<br>for request</span>
+              <span class="state-arrow" aria-hidden="true"></span>
+              <span class="state-node" data-state-node="choosingNextStop" role="listitem">choosing<br>next stop</span>
+            </div>
+            <div class="state-branch" aria-hidden="true">
+              <span class="state-branch__line"></span>
+              <span class="state-branch__label">then the machine chooses a visible action</span>
+            </div>
+            <div class="state-row state-row--actions">
+              <span class="state-node" data-state-node="doorsOpening" role="listitem">doors<br>opening</span>
+              <span class="state-arrow" aria-hidden="true"></span>
+              <span class="state-node" data-state-node="doorsOpen" role="listitem">doors<br>open</span>
+              <span class="state-arrow" aria-hidden="true"></span>
+              <span class="state-node" data-state-node="doorsClosing" role="listitem">doors<br>closing</span>
+            </div>
+            <div class="state-row state-row--travel">
+              <span class="state-node" data-state-node="movingUp" role="listitem">moving<br>up</span>
+              <span class="state-node" data-state-node="movingDown" role="listitem">moving<br>down</span>
+            </div>
+          </div>
+
+          <p class="state-explanation" id="state-explanation">The car is waiting for its next instruction.</p>
+        </section>
+        <section class="instrument-panel readouts-panel" aria-label="Elevator status">
+          <div class="tower-readouts" aria-live="polite">
+            <div class="tower-readout">
+              <span class="tower-readout__label">CURRENT FLOOR</span>
+              <strong id="floor-readout">—</strong>
+            </div>
+            <div class="tower-readout">
+              <span class="tower-readout__label">REQUESTS WAITING</span>
+              <strong id="queue-readout">0</strong>
+            </div>
+            <p class="tower-readout__note" id="request-feedback">The scaffold is ready. Choose a floor to leave a safe request note.</p>
+          </div>
+        </section>
+
+        <section class="instrument-panel controls-panel" aria-labelledby="controls-heading">
+          <div class="panel-heading">
+            <div>
+              <span class="panel-heading__number">03</span>
+              <h2 id="controls-heading">Call a floor</h2>
+            </div>
+            <p>Press a real button.</p>
+          </div>
+
+          <div class="floor-buttons" id="floor-buttons">
+            <button class="floor-call floor-call--5" type="button" data-floor="5" aria-label="Call the elevator to floor 5">
+              <span class="floor-call__number">5</span>
+              <span class="floor-call__caption">top</span>
+            </button>
+            <button class="floor-call floor-call--4" type="button" data-floor="4" aria-label="Call the elevator to floor 4">
+              <span class="floor-call__number">4</span>
+              <span class="floor-call__caption">four</span>
+            </button>
+            <button class="floor-call floor-call--3" type="button" data-floor="3" aria-label="Call the elevator to floor 3">
+              <span class="floor-call__number">3</span>
+              <span class="floor-call__caption">three</span>
+            </button>
+            <button class="floor-call floor-call--2" type="button" data-floor="2" aria-label="Call the elevator to floor 2">
+              <span class="floor-call__number">2</span>
+              <span class="floor-call__caption">two</span>
+            </button>
+            <button class="floor-call floor-call--1" type="button" data-floor="1" aria-label="Call the elevator to floor 1">
+              <span class="floor-call__number">1</span>
+              <span class="floor-call__caption">lobby</span>
+            </button>
+          </div>
+
+          <p class="controls-note">The buttons give feedback now. Fill the request and state stubs in <code>elevator.js</code> to make the car move.</p>
+        </section>
+
+        <section class="instrument-panel log-panel" aria-labelledby="log-heading">
+          <div class="panel-heading">
+            <div>
+              <span class="panel-heading__number">04</span>
+              <h2 id="log-heading">Transition log</h2>
+            </div>
+            <p>Read the machine's history.</p>
+          </div>
+
+          <ol class="event-log" id="event-log" aria-live="polite">
+            <li class="event-log__empty">Waiting for the first state transition...</li>
+          </ol>
+        </section>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simon &amp; Anna's Calculator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<!--
+  One calculator, two looks.
+
+    calculator.html  this one — what is on the page
+    styles.css       how it looks, in both themes
+    calculator.js    what happens when you press something
+
+  Under the title there is a switch with two names on it. It is really
+  two radio buttons; styles.css watches which one is checked and
+  repaints the whole page. No JavaScript involved.
+
+  Every calculator button below has an id. That id is how calculator.js
+  finds it, and those ids and classes are the same in both themes.
+-->
+
+<body>
+
+  <!--
+    Wall art. Two sets of decoration live here: the stencils sprayed on
+    Simon's concrete wall, and the doodles floating on pink one.
+    styles.css shows one set and hides the other, depending on the
+    theme switch. None of it is controls and nothing in calculator.js
+    touches it. aria-hidden keeps it out of screen readers.
+  -->
+  <div class="wall-art" aria-hidden="true">
+
+    <svg class="stencil stencil--mg" viewBox="0 0 220 100">
+      <path d="M4 22l16-4v40l-16-4z"/>
+      <path d="M20 28h38v24H20z"/>
+      <path d="M58 22h92v32H58z"/>
+      <path d="M150 32h44v12h-44z"/>
+      <path d="M194 28h12v20h-12z"/>
+      <path d="M180 20h8v12h-8z"/>
+      <path d="M84 10h42v12H84z"/>
+      <path d="M64 54h20l-6 30H58z"/>
+      <path d="M98 54h26l-6 40H92z"/>
+    </svg>
+
+    <svg class="stencil stencil--target" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="45" fill="none" stroke-width="7"/>
+      <circle cx="50" cy="50" r="31" fill="none" stroke-width="7"/>
+      <circle cx="50" cy="50" r="17" fill="none" stroke-width="7"/>
+      <circle cx="50" cy="50" r="5"/>
+    </svg>
+
+    <svg class="stencil stencil--bullet" viewBox="0 0 60 140">
+      <path d="M30 4c14 20 18 36 18 48H12c0-12 4-28 18-48z"/>
+      <path d="M12 58h36v58H12z"/>
+      <path d="M7 116h46v18H7z"/>
+    </svg>
+
+    <svg class="stencil stencil--rpg" viewBox="0 0 220 100">
+      <path d="M8 40L30 14v52z"/>
+      <path d="M30 18h34v44H30z"/>
+      <path d="M64 26h18v28H64z"/>
+      <path d="M82 32h90v20H82z"/>
+      <path d="M172 28h18l18-12v52l-18-12h-18z"/>
+      <path d="M124 12h16v20h-16z"/>
+      <path d="M128 32h8v6h-8z"/>
+      <path d="M96 52h18l-6 34H90z"/>
+    </svg>
+
+    <svg class="stencil stencil--crosshair" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="36" fill="none" stroke-width="6"/>
+      <path d="M47 0h6v26h-6zM47 74h6v26h-6zM0 47h26v6H0zM74 47h26v6H74z"/>
+      <circle cx="50" cy="50" r="4"/>
+    </svg>
+
+    <svg class="stencil stencil--pistol" viewBox="0 0 130 110">
+      <path d="M16 12h104v8h8v12H6V20z"/>
+      <path d="M16 32h38L44 102H6z"/>
+      <path d="M54 32h26v8H54z"/>
+    </svg>
+
+    <svg class="doodle doodle--bow" viewBox="0 0 140 90">
+      <path d="M66 45C48 20 14 22 12 46c-2 22 34 26 54 1z"/>
+      <path d="M74 45c18-25 52-23 54 1 2 22-34 26-54 1z"/>
+      <ellipse cx="70" cy="46" rx="13" ry="12"/>
+    </svg>
+
+    <svg class="doodle doodle--kitty" viewBox="0 0 140 120">
+      <path d="M30 40L20 8l40 16z"/>
+      <path d="M110 40l10-32-40 16z"/>
+      <ellipse cx="70" cy="64" rx="52" ry="42"/>
+      <ellipse cx="50" cy="62" rx="5" ry="7"/>
+      <ellipse cx="90" cy="62" rx="5" ry="7"/>
+      <ellipse cx="70" cy="76" rx="6" ry="4.5"/>
+      <path d="M14 54h22M14 66h22M104 54h22M104 66h22"
+            fill="none" stroke-width="4" stroke-linecap="round"/>
+      <path d="M66 20C58 4 40 6 40 18c0 10 16 12 26 2z"/>
+      <path d="M70 20c8-16 26-14 26-2 0 10-16 12-26 2z"/>
+    </svg>
+
+    <svg class="doodle doodle--heart" viewBox="0 0 100 100">
+      <path d="M50 88C10 55 22 12 50 30c28-18 40 25 0 58z"/>
+    </svg>
+
+    <svg class="doodle doodle--star" viewBox="0 0 100 100">
+      <path d="M50 5l11 33h35l-28 21 11 33-29-21-29 21 11-33L4 38h35z"/>
+    </svg>
+
+    <svg class="doodle doodle--flower" viewBox="0 0 100 100">
+      <circle cx="76" cy="50" r="17"/>
+      <circle cx="63" cy="72.5" r="17"/>
+      <circle cx="37" cy="72.5" r="17"/>
+      <circle cx="24" cy="50" r="17"/>
+      <circle cx="37" cy="27.5" r="17"/>
+      <circle cx="63" cy="27.5" r="17"/>
+      <circle cx="50" cy="50" r="13"/>
+    </svg>
+
+    <svg class="doodle doodle--sparkle" viewBox="0 0 100 100">
+      <path d="M50 0c5 35 15 45 50 50-35 5-45 15-50 50-5-35-15-45-50-50 35-5 45-15 50-50z"/>
+    </svg>
+
+    <svg class="doodle doodle--cloud" viewBox="0 0 140 80">
+      <circle cx="35" cy="52" r="22"/>
+      <circle cx="65" cy="42" r="26"/>
+      <circle cx="95" cy="52" r="22"/>
+      <rect x="24" y="46" width="92" height="22" rx="11"/>
+    </svg>
+
+  </div>
+
+  <div class="yard">
+
+    <!-- Two names for one calculator; styles.css shows the one that
+         belongs to the chosen theme. -->
+    <h1 class="title">
+      <span class="title__simon">Simon's Calculator</span>
+      <span class="title__anna">Anna's Hello Kitty Calculator</span>
+    </h1>
+
+    <!--
+      The theme switch. Two radio buttons that never show themselves —
+      you click the labels. When the page loads, Simon's theme is the
+      one checked, so it is also the one you get if the browser is old
+      and does not understand the switch.
+    -->
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <div class="theme-switch__tray">
+        <input class="theme-switch__radio" type="radio" name="theme" id="theme-simon" checked>
+        <label class="theme-switch__option" for="theme-simon">Simon</label>
+        <input class="theme-switch__radio" type="radio" name="theme" id="theme-anna">
+        <label class="theme-switch__option" for="theme-anna">Anna</label>
+      </div>
+    </div>
+
+    <!-- the calculator plate -->
+    <main class="plate calc">
+      <span class="bolt-b"></span><span class="bolt-c"></span>
+
+      <div class="plate__inner">
+
+        <!-- The number the calculator is showing right now. -->
+        <div class="readout" id="display" role="status" aria-live="polite" aria-label="Result">0</div>
+
+        <div class="keypad">
+
+          <button type="button" class="key key--clear" id="btn-clear">
+            <span class="key__glyph">Clear <span class="key__hint-inline">esc</span></span>
+          </button>
+
+          <button type="button" class="key key--operator" id="btn-divide">
+            <span class="key__hint">/</span>
+            <span class="key__glyph">&divide;</span>
+            <span class="key__name">entre</span>
+          </button>
+
+          <button type="button" class="key" id="btn-7">
+            <span class="key__hint">7</span><span class="key__glyph">7</span><span class="key__name">siete</span>
+          </button>
+          <button type="button" class="key" id="btn-8">
+            <span class="key__hint">8</span><span class="key__glyph">8</span><span class="key__name">ocho</span>
+          </button>
+          <button type="button" class="key" id="btn-9">
+            <span class="key__hint">9</span><span class="key__glyph">9</span><span class="key__name">nueve</span>
+          </button>
+          <button type="button" class="key key--operator" id="btn-multiply">
+            <span class="key__hint">*</span><span class="key__glyph">&times;</span><span class="key__name">por</span>
+          </button>
+
+          <button type="button" class="key" id="btn-4">
+            <span class="key__hint">4</span><span class="key__glyph">4</span><span class="key__name">cuatro</span>
+          </button>
+          <button type="button" class="key" id="btn-5">
+            <span class="key__hint">5</span><span class="key__glyph">5</span><span class="key__name">cinco</span>
+          </button>
+          <button type="button" class="key" id="btn-6">
+            <span class="key__hint">6</span><span class="key__glyph">6</span><span class="key__name">seis</span>
+          </button>
+          <button type="button" class="key key--operator" id="btn-subtract">
+            <span class="key__hint">-</span><span class="key__glyph">&minus;</span><span class="key__name">menos</span>
+          </button>
+
+          <button type="button" class="key" id="btn-1">
+            <span class="key__hint">1</span><span class="key__glyph">1</span><span class="key__name">uno</span>
+          </button>
+          <button type="button" class="key" id="btn-2">
+            <span class="key__hint">2</span><span class="key__glyph">2</span><span class="key__name">dos</span>
+          </button>
+          <button type="button" class="key" id="btn-3">
+            <span class="key__hint">3</span><span class="key__glyph">3</span><span class="key__name">tres</span>
+          </button>
+          <button type="button" class="key key--operator" id="btn-add">
+            <span class="key__hint">+</span><span class="key__glyph">+</span><span class="key__name">más</span>
+          </button>
+
+          <button type="button" class="key" id="btn-0">
+            <span class="key__hint">0</span><span class="key__glyph">0</span><span class="key__name">cero</span>
+          </button>
+          <button type="button" class="key" id="btn-decimal">
+            <span class="key__hint">.</span><span class="key__glyph">.</span><span class="key__name">punto</span>
+          </button>
+          <button type="button" class="key key--equals" id="btn-equals">
+            <span class="key__hint">enter</span><span class="key__glyph">=</span><span class="key__name">igual</span>
+          </button>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- the second plate, standing on its own across a gap of wall -->
+    <aside class="buffer">
+      <div class="plate">
+        <span class="bolt-b"></span><span class="bolt-c"></span>
+        <div class="plate__inner">
+          <div class="buffer__list" id="buffer">
+            <span class="buffer__empty" id="buffer-empty">Nothing entered yet</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="calculator.js"></script>
+</body>
+</html>
