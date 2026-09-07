@@ -50,8 +50,8 @@ Beginner blackjack tutorials teach the arithmetic and skip the two ideas that ac
 - The whole implementation stays small enough for a beginner to read end to end.
 - No abstraction that exists only for elegance. Repetition he can follow beats indirection he cannot.
 - Comments use plain language for someone who has never programmed.
-- Simon writes the deck building, the shuffle, the card values, the hand totals, the bust test, the dealer's rule, the settlement and the hit action. The HTML/CSS, card rendering, dealing animation, dealer loop, phase-driven buttons, result plaque and restart flow are given.
-- The initial page is an inert scaffold: an empty felt, a shoe reading zero, and a status line naming the first stub. Every completed stub makes something new visible on screen.
+- Simon writes the deck building, the shoe count, the shuffle, drawing a card, the card values, the hand sum, the ace-aware total, the hole-card reveal, the dealer's rule, the bust test, the settlement and the hit action. The HTML/CSS, card rendering, dealing animation, dealer loop, phase-driven buttons, result plaque and restart flow are given.
+- The initial page is an inert scaffold: an empty felt, a blank shoe, and a status line naming the first stub. Every completed stub makes something new visible on screen.
 - Stubs are filled in file order, top to bottom.
 
 ## Brand Commitments

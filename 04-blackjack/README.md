@@ -16,9 +16,9 @@ Blackjack takes the object you met once in the calculator and builds the whole g
 
 Double-click `blackjack.html` to play. After you change `blackjack.js`, save the file and refresh the browser page.
 
-Inside `blackjack.js` eight functions are marked `// TODO`. Write them in file order, from top to bottom. Each one carries two hints in its comments: a gentle hint first, then a stronger one. Try the gentle hint first. If you are still stuck, the answers are all together in a block at the very bottom of the file — scroll down to it when you want it, and only then.
+Inside `blackjack.js` twelve functions are marked `// TODO`. Write them in file order, from top to bottom. Each one carries two hints in its comments: a gentle hint first, then a stronger one. Try the gentle hint first. If you are still stuck, the answers are all together in a block at the very bottom of the file — scroll down to it when you want it, and only then.
 
-Right now the page does nothing. The felt is there and the chips are there, but the deck says 0. The status line asks you to write the first function. That is on purpose.
+Right now the page does nothing. The felt is there and the chips are there, but the shoe is blank and no cards come out. The status line asks you to write the first function. That is on purpose.
 
 ## The rules of the game
 
@@ -148,7 +148,7 @@ The strip is there because randomness is normally the least visible thing a prog
 
 ### Functions that calculate
 
-`cardValue` and `handTotal` are a kind of function you have not written much of yet. They change nothing. They take something, work out a number, and return it. Ask twice and you get the same answer twice.
+`cardValue`, `sumCards` and `handTotal` are a kind of function you have not written much of yet. They change nothing. They take something, work out a number, and return it. Ask twice and you get the same answer twice.
 
 Keep that true on purpose. `handTotal(playerHand)` is called by `render`, by `isBust`, by `decideWinner` and by the dealer loop. In some places it runs many times a second.
 
@@ -168,7 +168,7 @@ A + A + 9      = 11+11+9   = 31, drop one ace -> 21, and stop
 
 That last line is the important one. **Drop only as many aces as you must.** Drop both and you get 11, and you have thrown a perfect hand away.
 
-You could work out every combination, but there is a much easier way. Dropping an ace from 11 to 1 takes exactly 10 off the total. So add everything up as 11s first. Then take 10 off, once per ace, until the total fits:
+You could work out every combination, but there is a much easier way. Dropping an ace from 11 to 1 takes exactly 10 off the total. So add everything up as 11s first — that is `sumCards`, and it is a whole function on its own. Then take 10 off, once per ace, until the total fits:
 
 ```js
 while (total > BUST_AT && aces > 0) {
@@ -182,6 +182,8 @@ A `while` loop is a `for` loop with only the middle part. It repeats for as long
 Both halves of that question matter. Without `total > BUST_AT` it would drop every ace every time. Without `aces > 0` it would keep subtracting 10 forever on a hand with no aces, and the page would freeze.
 
 So whenever you write a `while`, check that something inside it moves the question towards `false`.
+
+That split is worth noticing. `sumCards` does the boring part and `handTotal` does the interesting part, and each is small enough to check on its own. When a total comes out wrong you can ask `sumCards` first: if it says 26 for A + K + 5 it is doing its job, and the mistake is in the aces.
 
 ### Rules with several cases, and why order matters
 
@@ -237,9 +239,8 @@ That is why you have one line to get right instead of five. It is the same reaso
 
 Section 3 of `blackjack.js` is already written, like the three projects before it.
 
-- `drawCard()` takes the top card off the deck and returns it, using `deck.pop()`. Because `pop` **removes** the card, the same card can never come out twice.
-- `render()` calls seven smaller drawing functions: the hands, the totals, the deck, the ribbon, the phase, the status and the chips. Each one reads the memory and redraws its own part.
-- `handleStand()` is written out in full as an example. It has the same shape as the `handleHit` you have to write. Read it before you start the eighth function.
+- `render()` calls seven smaller drawing functions: the hands, the totals, the shoe, the ribbon, the phase, the status and the chips. Each one reads the memory and redraws its own part. Six of them are written for you; `renderShoe` is yours.
+- `handleStand()` is written out in full as an example. It has the same shape as the `handleHit` you have to write. Read it before you start the last function.
 - `runDealerTurn()` takes one card every 700 milliseconds, so you can watch it happen. It asks your `dealerShouldHit` before each card.
 - `settleRound()` asks your `decideWinner` who won. Then it shows the plaque and plays the sound.
 - `startRound()` builds a deck, shuffles it, and deals two cards each, one at a time. The **New deal** chip is already connected to it.
@@ -260,12 +261,14 @@ Sounds work exactly as they did in hangman, and `playSound` is the same function
 
 ### Finding your mistakes
 
-The console works as it always has. But this table tells you more than the console does, because four of your functions are printed on the felt while you play. Check these four things, in this order:
+The console works as it always has. But this table tells you more than the console does, because most of your functions are printed on the felt while you play. Check these six things, in this order:
 
-1. **The deck count and the ribbon** tell you about the deck. A count of 52 with four clean stripes means `buildDeck` works and `shuffleDeck` does not. A count below 52 means the loops are missing some pairings.
-2. **The `worth` lines** tell you about `cardValue`, one card at a time, and you print nothing yourself.
-3. **The totals** tell you about `handTotal`. Deal until you get an ace, then check the arithmetic by hand.
-4. **The phase** tells you where the round thinks it is. A stuck phase is why a chip will not respond.
+1. **The shoe and the ribbon** tell you about the deck. Fifty-two ticks in four clean stripes means `buildDeck` works and `shuffleDeck` does not. Fewer than 52 means the loops are missing some pairings. A blank shoe with a full ribbon means `renderShoe`.
+2. **A bare felt** means `drawCard`. The deal asks for four cards, and if nothing comes back nothing is dealt.
+3. **The `worth` lines** tell you about `cardValue`, one card at a time, and you print nothing yourself.
+4. **The dealer's `9 + ?`** tells you about `sumCards`, on a single card where the ace rule cannot get in the way.
+5. **The totals** tell you about `handTotal`. Deal until you get an ace, then check the arithmetic by hand.
+6. **The phase** tells you where the round thinks it is. A stuck phase is why a chip will not respond.
 
 When the screen still disagrees with you, print the memory:
 

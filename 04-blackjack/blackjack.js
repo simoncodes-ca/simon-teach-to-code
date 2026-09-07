@@ -6,14 +6,18 @@
    you fill in the TODO functions below.
 
    A good order to work in:
-     1. buildDeck         — make all 52 cards
-     2. shuffleDeck       — put them in a random order
-     3. cardValue         — say what one card is worth
-     4. handTotal         — add up a hand, and be kind about aces
-     5. dealerShouldHit   — the dealer's one and only rule
-     6. isBust            — decide when a hand has gone too far
-     7. decideWinner      — compare the two hands
-     8. handleHit         — take a card, and end the round if it burst
+      1. buildDeck        — make all 52 cards
+      2. renderShoe       — show how many are left
+      3. shuffleDeck      — put them in a random order
+      4. drawCard         — take the top card off the deck
+      5. cardValue        — say what one card is worth
+      6. sumCards         — add a hand up, aces high
+      7. handTotal        — the same, but kind about aces
+      8. revealHoleCard   — turn the dealer's hidden card over
+      9. dealerShouldHit  — the dealer's one and only rule
+     10. isBust           — decide when a hand has gone too far
+     11. decideWinner     — compare the two hands
+     12. handleHit        — take a card, and end the round if it burst
 
    Each one you finish makes something new happen on the table.
    ===================================================================== */
@@ -55,7 +59,7 @@ const DEALER_STANDS_ON = 17; // the dealer takes cards until it reaches this
 /* ---------------------------------------------------------------------
    2. YOUR JOB
 
-   Eight small functions. Fill them in from the top down. Each comment
+   Twelve small functions. Fill them in from the top down. Each comment
    gives you two hints — read only as far as you need. The answers are
    in one block at the very bottom of this file, when you want them.
    --------------------------------------------------------------------- */
@@ -64,7 +68,7 @@ const DEALER_STANDS_ON = 17; // the dealer takes cards until it reaches this
  * Build a full deck: every rank, in every suit. 4 x 13 = 52 cards.
  *
  * Put them in `cards` in a sensible order — all the spades, then all the
- * hearts, and so on. Do not try to shuffle here; that is the next job.
+ * hearts, and so on. Do not try to shuffle here; that is a later job.
  *
  * Gentle hint: you need every combination of a suit and a rank. One loop
  *   can only walk through one list, so you need a loop inside a loop.
@@ -73,14 +77,34 @@ const DEALER_STANDS_ON = 17; // the dealer takes cards until it reaches this
  *   card object and cards.push(...) it onto the end.
  * Stuck? The answer key is at the bottom of this file.
  *
- * The moment this works the shoe shows 52, and the ribbon underneath it
- * draws one tick per card: thirteen black, thirteen red, thirteen red,
- * thirteen black. That striped pattern is your deck, in order.
+ * The moment this works the ribbon under the shoe draws one tick per
+ * card: thirteen black, thirteen red, thirteen red, thirteen black. That
+ * striped pattern is your deck, in order.
  */
 function buildDeck() {
   const cards = [];
   // TODO: add all 52 cards to `cards`.
   return cards;
+}
+
+/**
+ * Write the number of cards left onto the front of the shoe.
+ *
+ * This is the one drawing job that is yours. Everything else on the
+ * table is painted for you, but the shoe is a good place to start: one
+ * line, and a number appears.
+ *
+ * Gentle hint: `deck.length` is how many cards are still in the deck.
+ *   `deckCountEl` is the little window on the front of the shoe.
+ * Stronger hint: putting text inside an element is
+ *   `someElement.textContent = something;`
+ * Stuck? The answer key is at the bottom of this file.
+ *
+ * With buildDeck working too, the shoe should read 52 the moment the
+ * page loads. If it reads 0, buildDeck is the one to look at.
+ */
+function renderShoe() {
+  // TODO: show deck.length on the shoe.
 }
 
 /**
@@ -100,13 +124,39 @@ function buildDeck() {
  *     const keep = cards[i]; cards[i] = cards[j]; cards[j] = keep;
  * Stuck? The answer key is at the bottom of this file.
  *
- * You can see this one work. The ribbon under the shoe shows the deck's
- * order: four clean stripes before you shuffle, red and black scattered
- * all the way along afterwards. Press New deal a few times and watch it
- * come out different every time.
+ * You can see this one work. The ribbon shows the deck's order: four
+ * clean stripes before you shuffle, red and black scattered all the way
+ * along afterwards. Press New deal a few times and watch it come out
+ * different every time.
  */
 function shuffleDeck(cards) {
   // TODO: put the cards into a random order.
+}
+
+/**
+ * Take the top card off the deck and hand it back.
+ *
+ * Two things have to happen, and one line does both: the card comes out,
+ * and it is no longer in the deck. A card that stayed in the deck could
+ * be dealt twice, and a game where the same queen turns up in both hands
+ * is not a game any more.
+ *
+ * The top card is the one at the END of the array.
+ *
+ * Gentle hint: `pop` takes the last item off an array and gives it back
+ *   to you. It removes it — that is exactly what you want here.
+ * Stronger hint: one line, `return deck.pop();`, and the `if` above it
+ *   is already written so an empty deck hands back nothing instead of
+ *   breaking.
+ * Stuck? The answer key is at the bottom of this file.
+ *
+ * Until this works the felt stays bare: startRound asks for four cards
+ * and gets nothing back, so nothing is dealt. Finish it and the cards
+ * fly out, two each, and the shoe counts down from 52 to 48.
+ */
+function drawCard() {
+  if (deck.length === 0) return null;
+  // TODO: take the last card off the deck and return it.
 }
 
 /**
@@ -131,7 +181,28 @@ function cardValue(card) {
 }
 
 /**
- * Add up a whole hand and return one number.
+ * Add up every card in a hand and return the total, counting each ace
+ * as 11. No cleverness about aces here — that is the next function.
+ *
+ * Gentle hint: `for (const card of hand)` walks a hand one card at a
+ *   time. Use cardValue — you have already written it.
+ * Stronger hint: `total = total + cardValue(card);` inside the loop.
+ * Stuck? The answer key is at the bottom of this file.
+ *
+ * The dealer's first card is face up and the second is face down, so
+ * while a round is being played the table shows the dealer's up card and
+ * a question mark: "9 + ?". One card on its own can never need the ace
+ * rule, so that little number is this function, and it appears the
+ * moment you finish it.
+ */
+function sumCards(hand) {
+  let total = 0;
+  // TODO: add up what every card in the hand is worth.
+  return total;
+}
+
+/**
+ * Add up a whole hand properly, and return one number.
  *
  * This is where the one interesting rule in blackjack lives. An ace is
  * worth 11, unless that would burst the hand — then it is worth 1. A
@@ -142,27 +213,50 @@ function cardValue(card) {
  *   A + A + 9     = 21, then one ace drops               -> 21
  *
  * Dropping an ace from 11 to 1 takes 10 off the total. So instead of
- * working out every combination, add everything up as 11s and then take
- * 10 off, once per ace, until the total fits.
+ * working out every combination, start from the total sumCards gives you
+ * and take 10 off, once per ace, until it fits.
  *
- * Gentle hint: `for (const card of hand)` walks a hand one card at a
- *   time. Use cardValue — you have already written it.
- * Stronger hint: count the aces as you go. Then a `while` loop: while
- *   the total is too big AND there is still an ace left at 11, take off
- *   10 and one from the ace count.
+ * Gentle hint: sumCards has already done the adding. What is left is to
+ *   count how many aces are in the hand, then bring the total down.
+ * Stronger hint: walk the hand and add one to `aces` for each card whose
+ *   rank is "A". Then a `while` loop: while the total is too big AND
+ *   there is still an ace left at 11, take off 10 and one from the ace
+ *   count.
  * Stuck? The answer key is at the bottom of this file.
  *
  * A `while` loop is a `for` loop with only the middle part: it repeats
  * for as long as its question stays true. Make sure something inside it
  * moves towards making that question false, or it never stops.
  *
- * When this works, both totals appear on the felt in brass.
+ * When this works, both full totals appear on the felt in brass.
  */
 function handTotal(hand) {
-  let total = 0;
+  let total = sumCards(hand);
   let aces = 0;
-  // TODO: add up the cards, then bring the aces down while the total is too big.
+  // TODO: count the aces, then bring the total down while it is too big.
   return total;
+}
+
+/**
+ * Turn the dealer's hidden card face up.
+ *
+ * The dealer's second card is dealt face down and stays that way until
+ * your turn is over — that is the only thing you are not allowed to know
+ * while you decide. `holeHidden` is the piece of memory that remembers
+ * whether it is still face down.
+ *
+ * Gentle hint: this function changes one variable and nothing else. No
+ *   `return`, no `if`.
+ * Stronger hint: `holeHidden` is true while the card is hidden, so
+ *   turning it over means setting it to false.
+ * Stuck? The answer key is at the bottom of this file.
+ *
+ * handleStand calls this the moment you stand, and render animates the
+ * flip. Until you write it the card stays face down for ever and the
+ * dealer's total never stops saying "+ ?", even after the round ends.
+ */
+function revealHoleCard() {
+  // TODO: remember that the hidden card is not hidden any more.
 }
 
 /**
@@ -261,11 +355,10 @@ function decideWinner() {
  *   phase = "finished";
  * Stuck? The answer key is at the bottom of this file.
  *
- * drawCard() takes the top card off the deck and hands it to you — it
- * removes it, so the same card can never come out twice. render()
- * repaints the whole table from the four variables. settleRound() works
- * out who won, shows the plaque and plays the sound. All three are
- * already written for you.
+ * drawCard() is your own, from earlier up this file. render() repaints
+ * the whole table from the four variables, and settleRound() works out
+ * who won, shows the plaque and plays the sound — those two are written
+ * for you.
  *
  * Notice you never touch the chip buttons here. render() switches them
  * on and off by looking at phase, so setting phase is the only thing you
@@ -324,18 +417,6 @@ function playSound(sound) {
   // Browsers refuse to play sound before the first real click on the
   // page. .catch swallows that harmless refusal instead of logging it.
   sound.play().catch(() => {});
-}
-
-/* Takes the top card off the deck and hands it back. `pop` removes the
-   last item of an array and returns it, so a card that has been dealt is
-   no longer in the deck and cannot come out a second time. */
-function drawCard() {
-  if (deck.length === 0) return null;
-  return deck.pop();
-}
-
-function revealHoleCard() {
-  holeHidden = false;
 }
 
 /* --- Painting the table --- */
@@ -415,15 +496,11 @@ function renderTotals() {
     dealerTotalEl.classList.remove("bust");
   } else if (holeHidden) {
     // Hidden information: with a card face down, only the up card counts.
-    dealerTotalEl.textContent = handTotal(dealerHand.slice(0, 1)) + " + ?";
+    dealerTotalEl.textContent = sumCards(dealerHand.slice(0, 1)) + " + ?";
     dealerTotalEl.classList.remove("bust");
   } else {
     showTotal(dealerTotalEl, dealerHand);
   }
-}
-
-function renderShoe() {
-  deckCountEl.textContent = String(deck.length);
 }
 
 /* One tick per card still in the deck, in the order they will come out.
@@ -485,7 +562,8 @@ function runDealerTurn() {
   dealerTimer = setTimeout(() => {
     if (phase !== "dealerTurn") return;
     if (dealerShouldHit(dealerHand) && deck.length > 0) {
-      dealerHand.push(drawCard());
+      const card = drawCard();
+      if (card) dealerHand.push(card);
       playSound(dealSound);
       render();
       runDealerTurn();
@@ -512,7 +590,7 @@ function settleRound() {
     resultEl.className = "t-result";
     playSound(pushSound);
   } else {
-    resultEl.textContent = "Fill in STUB 7 to find out who won";
+    resultEl.textContent = "Fill in decideWinner() to find out who won";
     resultEl.className = "t-result";
   }
   resultEl.hidden = false;
@@ -533,7 +611,7 @@ function startRound() {
 
   if (deck.length < 4) {
     phase = "finished";
-    statusMessage = "Fill in STUB 1 in blackjack.js!";
+    statusMessage = "Fill in buildDeck() in blackjack.js!";
     render();
     return;
   }
@@ -547,7 +625,10 @@ function startRound() {
   const order = [playerHand, dealerHand, playerHand, dealerHand];
   order.forEach((hand, step) => {
     setTimeout(() => {
-      hand.push(drawCard());
+      // drawCard hands back nothing until you have written it, and a hand
+      // of nothings would break every function that reads a card.
+      const card = drawCard();
+      if (card) hand.push(card);
       playSound(dealSound);
       if (step === order.length - 1) {
         phase = "playerTurn";
@@ -572,9 +653,9 @@ dealBtn.addEventListener("click", () => startRound());
 window.addEventListener("hashchange", () => location.reload());
 
 /* Demo states keep the finished look inspectable before the stubs are
-   filled in. The cards and totals are drawn from buildDeck, cardValue
-   and handTotal, so the demo needs working ones — these stand-ins are
-   for the picture only, never for the game. */
+   filled in. The picture is drawn by buildDeck, renderShoe, cardValue,
+   sumCards, handTotal and isBust, so the demo needs working ones — these
+   stand-ins are for the picture only, never for the game. */
 if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) {
   const demoSuits = { S: SUITS[0], H: SUITS[1], D: SUITS[2], C: SUITS[3] };
   const card = (rank, suit) => ({ rank: rank, suit: demoSuits[suit] });
@@ -582,13 +663,21 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
   if (buildDeck().length !== 52) {
     buildDeck = () => SUITS.flatMap((suit) => RANKS.map((rank) => ({ rank, suit })));
   }
+  deck = buildDeck();
+  renderShoe();
+  if (deckCountEl.textContent !== "52") {
+    renderShoe = () => { deckCountEl.textContent = String(deck.length); };
+  }
   if (cardValue(card("K", "S")) !== 10) {
     cardValue = (c) => (c.rank === "A" ? 11 : "JQK".includes(c.rank) ? 10 : Number(c.rank));
   }
-  if (handTotal([card("A", "S"), card("K", "H")]) !== 21) {
+  if (sumCards([card("K", "S"), card("3", "H")]) !== 13) {
+    sumCards = (hand) => hand.reduce((sum, c) => sum + cardValue(c), 0);
+  }
+  if (handTotal([card("A", "S"), card("K", "H"), card("5", "D")]) !== 16) {
     handTotal = (hand) => {
-      let total = 0, aces = 0;
-      for (const c of hand) { total += cardValue(c); if (c.rank === "A") aces += 1; }
+      let total = sumCards(hand);
+      let aces = hand.filter((c) => c.rank === "A").length;
       while (total > BUST_AT && aces > 0) { total -= 10; aces -= 1; }
       return total;
     };
@@ -597,7 +686,6 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
     isBust = (hand) => handTotal(hand) > BUST_AT;
   }
 
-  deck = buildDeck();
   shuffleDeck(deck);
   if (deck[0] === deck[1] || deck.slice(0, 13).every((c) => c.suit === deck[0].suit)) {
     shuffleDeck = (cards) => {
@@ -667,6 +755,11 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
      }
 
 
+   --- renderShoe() ---
+
+     deckCountEl.textContent = deck.length;
+
+
    --- shuffleDeck(cards) ---
 
      for (let i = cards.length - 1; i > 0; i = i - 1) {
@@ -677,6 +770,11 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
      }
 
 
+   --- drawCard() ---
+
+     return deck.pop();
+
+
    --- cardValue(card) ---
 
      if (card.rank === "A") return 11;
@@ -684,16 +782,27 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
      return Number(card.rank);
 
 
-   --- handTotal(hand) ---
+   --- sumCards(hand) ---
 
      for (const card of hand) {
        total = total + cardValue(card);
+     }
+
+
+   --- handTotal(hand) ---
+
+     for (const card of hand) {
        if (card.rank === "A") aces = aces + 1;
      }
      while (total > BUST_AT && aces > 0) {
        total = total - 10;
        aces = aces - 1;
      }
+
+
+   --- revealHoleCard() ---
+
+     holeHidden = false;
 
 
    --- dealerShouldHit(hand) ---
