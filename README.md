@@ -12,7 +12,7 @@ The JavaScript file is yours. Some of its functions are empty. Each empty functi
 
 Write those functions one at a time, in the order they appear in the file. Each function you finish makes something new happen on the screen.
 
-You do not install anything. Open the HTML file in a browser. Open the JavaScript file in a text editor. Put the two windows side by side. Change the JavaScript, save it, then refresh the browser page.
+For every project on this page, you install nothing. Open the HTML file in a browser. Open the JavaScript file in a text editor. Put the two windows side by side. Change the JavaScript, save it, then refresh the browser page.
 
 ## The projects
 
@@ -59,7 +59,30 @@ Files: `04-blackjack/blackjack.html`, `04-blackjack/styles.css`, `04-blackjack/b
 3. **Then build hangman.** You learn strings, loops and true/false values. You also learn the idea under both earlier projects: everything on the screen comes from a small amount of memory.
 4. **Then build blackjack.** You learn objects, randomness, and rules with several cases. The program is always in one named phase.
 
-More projects will appear here over time. `ROADMAP.md` shows the whole path. `showcase.html` shows the same path as a map.
+More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
+
+## What comes next
+
+The next four projects stay ordinary web pages, then the pictures start to move.
+
+1. **Battleship.** Your first map. You learn grids, coordinates and turns.
+2. **Paint app.** Your first canvas. You draw with the mouse, then add undo.
+3. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
+4. **Parachuter.** Many things moving at once, each one with its own rules.
+
+After those, you rebuild a game you already finished using Phaser, a real game library. You will be able to point at every part the library replaced.
+
+The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
+
+### Three moments where the rules change
+
+Three projects on the trail change how you work, not just what you build.
+
+- **Project 14.** You split one finished game into several files. You also learn git.
+- **Project 15.** You write a second program, a server, so two computers can share one score table.
+- **Project 17.** You move to TypeScript. From here you install things, and the page needs a build step before it runs.
+
+Every project before 14 stays one JavaScript file that you open by double-clicking. That is on purpose. One file is the easiest way to start.
 
 ## Getting started
 

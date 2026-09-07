@@ -1,14 +1,34 @@
 # Coding Roadmap
 
-This roadmap leads from the existing calculator and elevator projects toward a small Red Alert-style strategy game.
+This roadmap runs from the four finished projects to a small Red Alert-style strategy game.
 
-The sequence moves from webpage programs to grid-based games, then to Canvas, animation, physics, and reusable game systems.
+The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
-## Current projects
+## How to read this
+
+The strategy game is the real destination.
+
+Simon finishes one or two small projects a week. A big project takes one or two weeks. The whole list is about a year of work at that pace.
+
+Three projects in the list are **cutovers** (a project that changes how we work, not just what we build). Each cutover is marked. Each one arrives because the next project needs it.
+
+`AGENTS.md` still holds the rule that matters most. The stubs are the deliverable, and Simon fills them in.
+
+### Numbering
+
+**A project number never changes.** Every later README points back at earlier projects by folder name. Those pointers add up, and renaming a folder breaks all of them.
+
+Give an inserted project a letter suffix instead. A project between 07 and 08 becomes `07b-something`. It sorts correctly, and it breaks nothing.
+
+### What still opens by double-clicking
+
+Every project through 16 opens by double-clicking the HTML file. Every project through 16 also deploys to GitHub Pages. Project 15 has one exception: its server half runs from a terminal.
+
+From project 17 onward, we use npm and a development server. Those projects run on the computer instead of on GitHub Pages.
+
+## Finished projects
 
 ### 1. Calculator
-
-The calculator teaches:
 
 - Variables and data types
 - Functions
@@ -20,8 +40,6 @@ The calculator teaches:
 
 ### 2. Elevator
 
-The elevator teaches:
-
 - State machines
 - Queues
 - Timers
@@ -32,9 +50,7 @@ The elevator teaches:
 
 ### 3. Hangman
 
-Hangman remains a simple webpage while adding richer rules.
-
-It teaches:
+Hangman stays a simple webpage and adds richer rules.
 
 - Strings and string methods
 - Arrays
@@ -44,17 +60,15 @@ It teaches:
 - Invalid actions
 - Derived display state
 
-Possible extensions include categories, hints, difficulty levels, and keyboard input.
+Later additions could include categories, hints, difficulty levels, and keyboard input.
 
 ### 4. Blackjack
 
-Blackjack introduces objects and rule modeling without requiring a visual game board.
+Blackjack teaches objects and rules without a visual game board.
 
-It teaches:
-
-- Objects representing things
+- Objects that represent things
 - Arrays of objects
-- Creating and shuffling a deck
+- Building and shuffling a deck
 - Randomness
 - Functions that calculate values
 - Rules with several cases
@@ -62,19 +76,39 @@ It teaches:
 
 The phases are `dealing`, `playerTurn`, `dealerTurn`, and `finished`.
 
-Deferred on purpose: betting, blackjack paying 3:2, splitting, doubling down, insurance, and a multi-deck shoe.
+We left these out on purpose: betting, blackjack paying 3:2, splitting, doubling down, insurance, and a multi-deck shoe.
 
-## Recommended project sequence
+## The sequence
+
+| # | Project | The new idea |
+|---|---|---|
+| 5 | Battleship | Grids as two-dimensional arrays |
+| 6 | Paint app | Canvas and pointer events |
+| 7 | Balloon shooting | A game loop and time-based movement |
+| 8 | Parachuter | Many entities, and sprites as plain data |
+| 9 | Phaser remake | What a game library replaces |
+| 10 | Aliens | A game built on the library |
+| 11 | Maze | Tile collision |
+| 12 | Scrolling world | Camera and world coordinates |
+| 13 | Endless runner | Generated obstacles, and saved high scores |
+| 14 | **Cutover: many files** | One program in several files, and git |
+| 15 | **Cutover: client and server** | Two programs that talk, and `await` |
+| 16 | Tank game | The last step before a strategy game |
+| 17 | **Cutover: TypeScript** | Types, npm, and a build step |
+| 18 | Map editor | Content as data, and the first tests |
+| 19 | Unit selection | Selecting units and commanding them |
+| 20 | Pathfinding | Finding a route around walls |
+| 21 | Resources | Production over time |
+| 22 | Production queue | Build times and prerequisites |
+| 23 | Enemy AI | Choosing a target, patrolling, and attacking |
+| 24 | Small strategy game | All of it, kept small |
 
 ### 5. Battleship
 
-Battleship is the first important map-based project.
-
-It teaches:
+Battleship is the first project with a map. It is still an ordinary webpage.
 
 - Two-dimensional arrays
-- Rows and columns
-- Coordinates
+- Rows, columns, and coordinates
 - Nested loops
 - Random placement
 - Overlap checking
@@ -82,102 +116,88 @@ It teaches:
 - Hidden information
 - Game phases
 
-Recommended stages:
+Stages:
 
 1. Display an empty grid.
 2. Let the player choose a square.
-3. Place one ship manually.
+3. Place one ship by hand.
 4. Detect hits and misses.
 5. Add several ships.
-6. Add a computer opponent.
-7. Randomly place the computer's ships.
+6. Add a computer opponent that picks a square.
+7. Place the computer's ships at random.
 8. Add sinking and win detection.
 
-Battleship introduces maps made from cells. Those cells later become terrain, buildings, units, resources, and movement areas.
+Battleship teaches maps made of cells. Later projects turn those cells into terrain, buildings, units, resources, and movement areas.
 
 ### 6. Paint app with undo
 
-The paint app introduces the Canvas API before real-time games begin.
-
-It teaches:
+The paint app teaches Canvas before anything moves on its own.
 
 - Canvas drawing
 - Pointer events
-- Screen and canvas coordinates
+- Screen coordinates and canvas coordinates
 - Drawing lines and shapes
-- Separating input from rendering
+- Keeping input separate from drawing
 - History stacks
 - Undo and redo
-- Saving and restoring state
 
-Recommended stages:
+Stages:
 
 1. Draw a dot.
 2. Draw while dragging.
-3. Change brush size.
-4. Change colour.
+3. Change the brush size.
+4. Change the colour.
 5. Add an eraser.
 6. Clear the canvas.
 7. Add undo.
 8. Add redo.
 9. Save the drawing as an image.
 
-Canvas is the bridge between ordinary webpage programs and game graphics.
+Canvas connects webpage programs to game graphics.
 
 ### 7. Balloon shooting game
 
-Balloon shooting should be the first fully animated game.
-
-It teaches:
+This is the first game that animates on its own.
 
 - Game loops
 - Time-based movement
-- Velocity
-- Gravity
-- Angles
-- Trigonometry
+- Velocity and gravity
+- Angles and trigonometry
 - Collision detection
-- Spawning and removing objects
-- Score and lives
-- Restarting a game
+- Adding and removing objects
+- Score, lives, and restarting
 
-Recommended stages:
+Stages:
 
 1. Draw one balloon.
 2. Make the balloon move.
 3. Add a projectile.
 4. Aim with the mouse.
 5. Detect a hit.
-6. Add multiple balloons.
+6. Add several balloons.
 7. Add gravity.
 8. Add score, lives, and a restart state.
 
-The game should use elapsed time rather than moving a fixed number of pixels per frame.
+The game moves things by elapsed time. It does not move things a fixed number of pixels per frame.
 
 ### 8. Parachuter game
 
-The parachuter game adds several moving entities with different behaviours.
-
-The entities can include an airplane, paratroopers, a turret, bullets, and explosions.
-
-It teaches:
+Several things move at once, and each one moves differently. The game has an airplane, paratroopers, a turret, bullets, and explosions.
 
 - Lists of entities
 - Timed spawning
 - Different movement rules
 - Ground and landing detection
-- Counters
-- Simultaneous animations
+- Several animations at the same time
 - Game-over conditions
-- Separation of updating and drawing
-- Sprites as data: an image, position, size, and movement state
-- Drawing the same sprite data in different states
+- Keeping updating separate from drawing
+- Sprites as data: an image, a position, a size, and a movement state
 
-A sprite does not need to be a library object yet. Start with plain objects and a small `drawSprite` function. A parachuter can have an image, `x`, `y`, width, height, velocity, and a state such as `falling` or `landed`.
+A sprite is still a plain object. It has `x`, `y`, a width, a height, a velocity, and a state such as `falling` or `landed`. A small `drawSprite` function draws it.
 
-A possible rule is that 3 paratroopers landing near the turret destroy it.
+One possible rule: three paratroopers that land near the turret destroy it.
 
-Recommended structure:
+The loop:
 
 ```text
 update all objects
@@ -187,41 +207,37 @@ draw all sprites
 check whether the game has ended
 ```
 
-The game should make the sprite concept visible before introducing a game library: the same data should drive movement, collision checks, and drawing.
+This project must make the sprite idea visible before a library hides it. The same data drives movement, collision checks, and drawing.
 
-### 9. Game library remake
+### 9. Phaser remake
 
-After the parachuter game, remake the balloon or parachuter game with a game library. This is a comparison project, not a larger game: the child should be able to point to what the library replaces.
-
-It teaches:
+Remake the parachuter game with Phaser. This project compares two versions of one game. Simon should be able to point at each part the library replaced.
 
 - Library timing and the game loop
 - Library sprites and asset handling
-- Scenes or game states
-- Comparing manual code with library code
-- Recognising which abstractions are helpful and which are hidden complexity
+- Scenes
+- Comparing hand-written code with library code
+- Telling a helpful abstraction from hidden complexity
 
-Use p5.js for the first remake because it keeps the Canvas model visible while removing routine browser plumbing. Phaser is a later option when scenes, cameras, and asset management become the lesson.
+**Use Phaser, not p5.** p5 removes browser plumbing that Simon will have written twice by project 9. That comparison is real, but it is small. He would then leave p5 as soon as he needs scenes, cameras, and asset loading. Phaser means he learns one library instead of two.
 
-The remake should use an existing small game. Do not introduce the library and a larger game at the same time.
+Keep a copy of `phaser.min.js` next to the HTML file. The library must not force the build step to arrive early. The build step arrives at project 17.
+
+Remake a game Simon has already finished. Never introduce a library and a new game at the same time.
 
 ### 10. Aliens game
 
-The aliens game develops a reusable small game engine.
-
-It teaches:
+This is the first new game built on Phaser.
 
 - Keyboard input
-- Player movement
-- Firing
-- Multiple enemy objects
-- Enemy formations
+- Player movement and firing
+- Several enemies, and enemy formations
 - Bullets and collisions
 - Waves
 - Lives and respawning
-- Difficulty progression
+- Rising difficulty
 
-Recommended stages:
+Stages:
 
 1. Move a player left and right.
 2. Fire one bullet.
@@ -231,117 +247,150 @@ Recommended stages:
 6. Move the aliens as a group.
 7. Add alien bullets.
 8. Add waves.
-9. Add score, lives, and increasing difficulty.
+9. Add score, lives, and rising difficulty.
 
-### 11. Tic-tac-toe
+### 11. Maze game
 
-Tic-tac-toe is a short state-focused project between animated games. It teaches board state, turn management, win detection, and simple computer decisions.
+The maze teaches grid maps, walls, movement limits, tile collision, and a map stored as data.
 
-### 12. Maze game
+Tile collision is what the tank game needs at project 16. The map-as-data idea returns at project 18.
 
-The maze game teaches grid maps, walls, movement restrictions, tile collision, and maps represented as data.
+### 12. Scrolling world
 
-### 13. 2D helicopter game
-
-The helicopter game adds a moving world and continuous physics.
-
-It teaches:
+The world is larger than the screen.
 
 - Gravity and thrust
 - Scrolling
-- Camera coordinates
-- World coordinates
-- Procedurally generated obstacles
+- World coordinates and camera coordinates
 - Collision with terrain
-- Difficulty curves
-- Endless-game design
-- High scores and restart flow
 
-A key relationship is:
+Memorise this relationship:
 
 ```text
 screen position = world position - camera position
 ```
 
-Recommended stages:
+Stages:
 
-1. Move the helicopter up and down.
+1. Move the vehicle up and down.
 2. Add gravity.
 3. Add walls.
 4. Make the world scroll.
-5. Generate obstacles.
-6. Detect crashes.
-7. Increase speed gradually.
-8. Add a distance score.
-9. Add fuel, collectibles, or enemies.
+5. Detect crashes.
 
-## When to introduce a game library
+### 13. Endless runner
 
-Introduce the first game library after the parachuter game, once the child has built at least two manual Canvas games and has seen sprites represented as plain data.
+The same world now generates itself and never ends. We split this from project 12 because generation and difficulty are their own lesson.
 
-The child should first understand what the library replaces. Use the library to remake the balloon or parachuter game before using it for a larger new game.
+- Generating obstacles as the game runs
+- Difficulty curves
+- Designing a game with no end
+- Saving data with `localStorage` and `JSON`
+- High scores and the restart flow
 
-A useful progression is:
+Stages:
 
-```text
-Calculator and elevator
-  DOM and browser events
+1. Generate obstacles ahead of the camera.
+2. Raise the speed gradually.
+3. Add a distance score.
+4. Save the best score, so it survives a refresh.
+5. Add fuel, collectibles, or enemies.
 
-Paint app
-  Canvas and pointer events
+A high score that survives a refresh is the first time Simon wants to save data. Every earlier project would have saved data because we told him to.
 
-Balloon shooting
-  Manual animation loop and physics
+### 14. Cutover: many files
 
-Parachuter
-  Manual sprites, entities, and collisions
+Split a game Simon has already written. Add no new gameplay. The split is the only thing to think about.
 
-Game library remake
-  Compare library timing, sprites, and asset handling
+- Why one file stops working
+- Several `<script>` tags, in order
+- What each file is responsible for
+- Names shared between files
 
-Aliens and later games
-  Build on the library once the comparison is understood
-```
+Every project up to here uses one `.js` file. Every project from here on uses several.
 
-A library remake makes the library's value visible. The child can compare the manual version with the library version instead of treating the library as magic.
+`file://` blocks ES modules, so this project uses `<script>` tags and shared globals. It does not use `import`. That limit ends at project 17.
 
-For browser-based JavaScript, p5.js is a gentle first library. Phaser is a stronger later choice for sprites, scenes, cameras, and asset handling once the student needs a larger game structure.
+**Git belongs here too.** Put it in the README as a short chapter, not as a project. Cover commits, history, and getting back a file you broke. Simon will have worked inside a git repository for thirteen projects without hearing about it.
 
-## Projects needed before a Red Alert-style game
+This project has no stubs. `AGENTS.md` should record it as the one exception.
 
-The listed projects teach general game programming. A strategy game also needs maps, units, resources, buildings, and simple artificial intelligence.
+### 15. Cutover: client and server
 
-### 14. Top-down tank game
+Build a shared high-score table. It holds Simon's scores and yours, on one list, from two computers.
 
-The tank game teaches movement, aiming, projectiles, obstacles, health, and damage.
+- Why a page cannot do some things alone
+- A server as a second program
+- Requests and responses
+- `fetch`, plus **`async` and `await`**, taught here as the lesson
+- JSON as the thing the two programs send each other
 
-This is the most direct bridge to an RTS game.
+This is the smallest thing that truly needs a server. It is one request each way.
 
-### 15. Map editor
+We leave these out on purpose: logins, two-player over the network, and real-time sync. Network multiplayer is a much larger lesson than this project.
 
-The map editor teaches grid editing, terrain types, saving maps, loading maps, and separating map data from presentation.
+The browser half still opens by double-clicking. The server runs from a terminal.
 
-### 16. Unit selection game
+### 16. Tank game
 
-The unit selection game teaches selecting one unit, selecting multiple units, rectangle selection, and click-to-move commands.
+The tank game teaches top-down movement, aiming, projectiles, obstacles, health, and damage.
 
-### 17. Resource gathering game
+It is the project closest to a strategy game. It is also the last project before the tools change.
 
-The resource game teaches workers, resources, production over time, counters, and progress bars.
+### 17. Cutover: TypeScript
 
-### 18. Building and production queue
+Rewrite the tank game with types. This works the same way as project 9. Remake something finished, so the new idea is the only thing that changed.
 
-The production game teaches build times, queues, prerequisites, enabled and disabled buttons, and state-driven interfaces.
+- What a type is, and what it catches
+- Adding types to the entities from project 16
+- npm, a build step, and a development server
+- `import` and `export`, which the build step now allows
 
-### 19. Simple enemy AI
+Types arrive here, before the strategy projects. Those projects have many kinds of entity to keep straight. Types help across all of them, not only at the end.
 
-The enemy AI project teaches distance checks, target selection, patrol states, attack states, and basic pathfinding.
+Every project from here on uses TypeScript.
 
-## Small RTS target
+### 18. Map editor
 
-Do not begin by trying to build all of Red Alert.
+- Grid editing and terrain types
+- Saving and loading maps through the server from project 15
+- Map data kept separate from how the map is drawn
+- **Content as data**: terrain types, and later unit stats, live in a table instead of in code
 
-The first strategy game should contain:
+Content as data is the idea the whole strategy game depends on.
+
+The first tests live here. See "Testing" below.
+
+### 19. Unit selection
+
+This project teaches selecting one unit, selecting several units, rectangle selection, and click-to-move commands.
+
+### 20. Pathfinding
+
+Find a route from one cell to another, around walls.
+
+- The neighbours of a cell
+- A frontier of cells still to try
+- Breadth-first search, then A\*
+- Why a route can fail
+
+This is the hardest idea in the strategy game. It is also the easiest to test, so **the second set of tests lives here**.
+
+### 21. Resources
+
+This project teaches workers, resources, production over time, counters, and progress bars.
+
+### 22. Building and production queue
+
+This project teaches build times, queues, prerequisites, enabled and disabled buttons, and an interface driven by state.
+
+### 23. Enemy AI
+
+This project teaches distance checks, target selection, patrol states, and attack states. It uses the pathfinding from project 20.
+
+### 24. Small strategy game
+
+Do not try to build all of Red Alert. The first strategy game contains:
 
 - 1 small map
 - 2 teams
@@ -351,4 +400,46 @@ The first strategy game should contain:
 - 1 production queue
 - 1 win condition
 
-That small game contains the essential strategy-game ideas without requiring a complete commercial game engine.
+That game holds every important strategy-game idea. It needs no commercial engine.
+
+## The three cutovers
+
+The cutovers are ordered by cost. Each one adds a single new idea, and the free one comes first.
+
+| Cutover | Project | It brings | It costs |
+|---|---|---|---|
+| Many files | 14 | Several `<script>` tags, and git | Nothing. The page still double-clicks |
+| Client and server | 15 | A terminal, a second program, `await` | The server half stops being a webpage |
+| TypeScript | 17 | Types, npm, a build step, `import` | The double-click rule ends |
+
+Two of the three remake a finished project. That is deliberate. Simon can see what changed, because nothing else changed.
+
+## Testing
+
+Testing starts after TypeScript, and it stays small.
+
+**Runner: Vitest.** It runs TypeScript with no configuration, and npm already arrived at project 17. Put a fifteen-line `expect` helper in the README, so Simon can see what a runner does. Do not make that helper a project. Projects 9 and 17 already taught him to compare hand-written code with a tool.
+
+**Where: projects 18 and 20.** Both are pure grid logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
+
+Project 17 is the wrong place, because it already introduces types.
+
+**What we test: pure logic only.** Test functions that take values and return values. Do not test the DOM, Phaser, or drawing. This avoids a second round of new tools. It also rewards keeping the game rules separate from the drawing code.
+
+**Shape of a project with tests.** It has an eighth file, `NN.test.ts`. That file holds three or four finished tests and two stubbed ones. The test file carries its own answer key at its own bottom. Opening one file never gives away the other.
+
+Simon writes the two test stubs before he writes the functions they test. The hint at the implementation stub says so:
+
+```text
+Write its test first — see NN.test.ts
+```
+
+## What we cut, and why
+
+**Tic-tac-toe.** Battleship already teaches board state, turn management, win detection, and a computer opponent. A tic-tac-toe project about minimax would earn a place, but that project belongs much later.
+
+**p5.js.** See project 9. Simon learns one library, once, and it lasts to the end of the list.
+
+**A testing project.** Tests attach to the two projects that need them instead.
+
+**An async project.** We teach `async` inside project 15, where it appears for a reason.
