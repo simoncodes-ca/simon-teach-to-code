@@ -1,10 +1,10 @@
 # Simon & Anna's Calculator
 
-A calculator that runs in your browser. It adds, subtracts, multiplies and divides, and it keeps a list of everything you typed in the tall column beside it.
+A calculator that runs in your browser. It adds, subtracts, multiplies and divides. It also keeps a list of everything you typed, in the tall column beside it.
 
-The page has two looks. Simon's is a steel plate bolted to a concrete wall. Anna's is a white plate on a pink wall. The switch under the title changes between them. That part already works.
+The page has two looks. Simon's look is a steel plate on a concrete wall. Anna's look is a white plate on a pink wall. The switch under the title changes between them. That part already works.
 
-Your job is the thinking. The page and its looks are finished. The calculator's brain is not.
+The page is finished. The way it looks is finished. What the calculator does is your job.
 
 ## The three files
 
@@ -14,27 +14,29 @@ Your job is the thinking. The page and its looks are finished. The calculator's 
 | `styles.css` | Decides how everything looks | Finished. Do not edit |
 | `calculator.js` | What happens when a key is pressed | You |
 
-Double-click `calculator.html` to open the calculator in your browser. After you change `calculator.js`, save the file and refresh the browser page to see the change.
+Double-click `calculator.html` to open the calculator in your browser. After you change `calculator.js`, save the file. Then refresh the browser page to see your change.
 
-Inside `calculator.js` you will find empty functions with `// TODO` in them. Work through them in the order listed at the top of the file. Each one is a small puzzle.
+Inside `calculator.js` you will find empty functions marked `// TODO`. Write them in the order listed at the top of the file. Each one is a small puzzle.
 
 ## What you will learn
 
-- How a web page is built from boxes (HTML)
-- How boxes get their looks (CSS)
+- How a web page is built from boxes, using HTML
+- How those boxes get their looks, using CSS
 - How JavaScript finds a box on the page and changes it while you watch
 - How a program remembers things between button presses
-- The difference between the text `"12"` and the number `12`, and the classic bug it causes
-- How to hunt down your own mistakes with `console.log`
+- Why the text `"12"` and the number `12` are different, and what goes wrong when you confuse them
+- How to find your own mistakes with `console.log`
 
 ## Good to know
 
 ### The page is made of boxes
 
-HTML is a set of instructions that builds the page. Each instruction creates one box, called an element. The two kinds you will meet here:
+HTML is a set of instructions that builds the page. Each instruction creates one box. A box is called an element.
 
-- `<div>` — a plain box. Panels, lines and keypads are divs.
-- `<span>` — a small piece of text that sits inside a box.
+You will meet two kinds of element here:
+
+- `<div>` is a plain box. Panels, lines and the keypad are all divs.
+- `<span>` is a small piece of text that sits inside a box.
 
 One line of the calculator's HTML looks like this:
 
@@ -42,116 +44,120 @@ One line of the calculator's HTML looks like this:
 <div class="readout" id="display">0</div>
 ```
 
-That line makes one box. Its class is `readout`, its name tag says `display`, and the words inside it are `0`. That box is the calculator's screen.
+That line makes one box. Its class is `readout`. Its id is `display`. The text inside it is `0`. That box is the calculator's screen.
 
-### id: a name tag
+### id: a name for one element
 
-An id is like a name tag pinned to one element. No two elements may share an id, so an id always points at exactly one thing.
+An id is a name for one element. Two elements must never share an id. So an id always points to exactly one element.
 
-The calculator already wears these name tags:
+The calculator already has these ids:
 
-- `display` — the big number at the top of the calculator
-- `buffer` — the tall column beside the calculator
-- `buffer-empty` — the "Nothing entered yet" message inside the column
-- Every key: `btn-0` to `btn-9`, `btn-decimal`, `btn-add`, `btn-subtract`, `btn-multiply`, `btn-divide`, `btn-equals`, `btn-clear`
+- `display` is the big number at the top of the calculator.
+- `buffer` is the tall column beside the calculator.
+- `buffer-empty` is the "Nothing entered yet" message inside that column.
+- Every key has one: `btn-0` to `btn-9`, `btn-decimal`, `btn-add`, `btn-subtract`, `btn-multiply`, `btn-divide`, `btn-equals` and `btn-clear`.
 
-### class: a sticker that CSS reads
+### class: a label that CSS reads
 
-A class is a sticker stuck on an element. Many elements can wear the same sticker. One element can wear several stickers at once. The stylesheet reads the stickers and decides how each element looks.
+A class is a label on an element. Many elements can share one class. One element can carry several classes at once. The stylesheet reads the classes and decides how each element looks.
 
-The stickers that matter for the column:
+Three classes matter for the column:
 
-- `buffer__line` — one line in the column. Each thing the user types becomes one line.
-- `buffer__line--operator` — an extra sticker for a line holding `+ - * /`. It colours the line pink.
-- `buffer__line--active` — an extra sticker for the line being typed right now. Optional.
+- `buffer__line` marks one line in the column. Each thing the user types becomes one line.
+- `buffer__line--operator` is an extra class for a line that holds `+`, `-`, `*` or `/`. It makes the line pink.
+- `buffer__line--active` is an extra class for the line being typed right now. This one is optional.
 
 ### Variables: the program's memory
 
-A variable is a labelled box that holds a value. Put a value in and it stays there until you replace it.
+A variable is a labelled box that holds a value. You put a value in, and it stays there until you replace it.
 
 ```js
-let current = "12";   // make a box called current, put "12" in it
-current = "123";      // take the old value out, put "123" in
+let current = "12";   // make a box called current, and put "12" in it
+current = "123";      // take the old value out, and put "123" in
 ```
 
-`let` makes a box whose contents can change. `const` makes one that cannot be replaced. Values come in types:
+`let` makes a box whose contents can change. `const` makes a box whose value cannot be replaced.
 
-- Text, called a string: `"12"` — the quotes are the clue
-- Numbers: `12`
-- Booleans, which are yes/no values: `true` or `false`
+Every value has a type. Three types matter here:
 
-Two containers are useful for this project.
+- A **string** is text. It has quotes around it, like `"12"`.
+- A **number** is for maths, like `12`.
+- A **boolean** is either `true` or `false`.
 
-An object is like a backpack with labelled pockets:
+Two more containers are useful in this project.
+
+An **object** is one value with named parts:
 
 ```js
 const calculator = {
-  left: "",       // pocket for the number typed before the operator
-  operator: "",   // pocket for the operator waiting to be used
+  left: "",       // the number typed before the operator
+  operator: "",   // the operator waiting to be used
 };
 
-calculator.left = "12";   // put "12" in the left pocket
+calculator.left = "12";   // set the left part to "12"
 ```
 
-An array is a numbered list that keeps its order:
+An **array** is a numbered list that keeps its order:
 
 ```js
 const entered = [];       // an empty list
-entered.push("12");       // add to the end. Now: ["12"]
-entered.push("+");        // now: ["12", "+"]
-entered[0];               // the first item: "12"
-entered.length;           // how many items: 2
+entered.push("12");       // add to the end. The list is now ["12"]
+entered.push("+");        // the list is now ["12", "+"]
+entered[0];               // the first item, which is "12"
+entered.length;           // how many items there are, which is 2
 ```
 
-### Functions: recipes with a name
+### Functions: steps with a name
 
-A function is a recipe. Give it a name, write the steps once, then call it by name whenever you want those steps to run.
+A function is a set of steps with a name. You write the steps once. Then you run them by calling the name.
 
 ```js
 function greet(name) {
   return "Hello, " + name;
 }
 
-greet("Anna");   // gives back "Hello, Anna"
+greet("Anna");   // returns "Hello, Anna"
 ```
 
-- `name` is a parameter: a value the caller hands in through the brackets.
-- `return` hands a value back to whoever called the function.
-- Some functions return nothing. They just do things, like writing on the screen.
+- `name` is a **parameter**. The caller passes a value in through the brackets.
+- `return` sends a value back to the code that called the function.
+- Some functions return nothing. They only do something, such as writing on the screen.
 
 ### Decisions: if and else
 
-Programs choose. `if` runs steps only when a question is true. `else` runs different steps when it is false.
+Programs make choices. `if` runs steps only when a question is true. `else` runs different steps when the question is false.
 
 ```js
 if (current === "0") {
-  current = digit;             // replace a lonely 0 instead of stacking onto it
+  current = digit;             // replace a single 0 instead of adding to it
 } else {
-  current = current + digit;   // glue the new digit onto the end
+  current = current + digit;   // add the new digit to the end
 }
 ```
 
-Three equals signs, `===`, ask "are these exactly equal?". One equals sign, `=`, puts a value into a variable. Mixing those two up is the classic beginner bug.
+Three equals signs, `===`, ask whether two values are exactly equal. One equals sign, `=`, puts a value into a variable. Beginners confuse these two very often.
 
 ### Changing the page from JavaScript
 
-The browser keeps a live list of everything on the page. JavaScript can read that list and change it. These are the tools. `document` means "the whole page".
+The browser keeps a live list of everything on the page. JavaScript can read that list and change it.
+
+Here are the tools you need. In this code, `document` means the whole page.
 
 ```js
 const screen = document.getElementById("display");
-// find the element whose name tag is "display"
+// find the element whose id is "display"
 
 screen.textContent = "12";
-// replace the words inside it
+// replace the text inside it
 
 screen.classList.add("buffer__line--operator");
-// stick an extra sticker on it
+// add another class to it
 
 screen.classList.remove("buffer__line--operator");
-// peel the sticker off again
+// remove that class again
 
 const line = document.createElement("div");
-// make a brand new, empty div. It is not on the page yet.
+// make a new, empty div. It is not on the page yet.
 
 line.textContent = "12";
 line.classList.add("buffer__line");
@@ -160,23 +166,23 @@ screen.append(line);
 // put the new line inside screen, at the bottom
 
 screen.replaceChildren();
-// remove everything inside screen. The box itself stays.
+// remove everything inside screen. The element itself stays.
 ```
 
 ### Text and numbers are different
 
-This is the one that bites every calculator.
+This difference causes more calculator bugs than anything else.
 
-Joining strings with `+` glues them together. That is exactly what you want while someone types a number:
+The `+` sign joins two strings end to end. That is exactly what you want while someone is typing a number:
 
 ```js
-"1" + "2"   // gives "12", not 3. Gluing is what typing needs.
+"1" + "2"   // gives "12", not 3. Joining is correct while typing.
 ```
 
-But gluing is wrong when it is time to do the maths:
+But joining is wrong once the calculator has to do the maths:
 
 ```js
-"12" + "3"   // gives "123". Not 15. Not 9. A three-digit surprise.
+"12" + "3"   // gives "123", not 15
 ```
 
 `Number()` turns a string of digits into a real number:
@@ -185,25 +191,31 @@ But gluing is wrong when it is time to do the maths:
 Number("12") + Number("3")   // gives 15
 ```
 
-`calculate()` receives its two values as strings, so converting them is part of its job.
+`calculate()` receives both of its values as strings. Converting them is part of its job.
 
-One more surprise: dividing by zero in JavaScript does not crash and does not show an error. It quietly produces `Infinity`. What should the person using the calculator see instead? That decision is yours, inside one of the TODOs.
+JavaScript also does something odd when you divide by zero. It does not crash, and it shows no error. It produces the value `Infinity` instead.
+
+Decide what the person using the calculator should see instead. You make that choice inside one of the TODO functions.
 
 ### Finding your mistakes
 
-Open the console: right-click the page, choose Inspect, then click the Console tab.
+Open the console first. Right-click the page, choose Inspect, then click the Console tab.
 
 - Anything you print with `console.log("current is", current);` appears there.
-- Mistakes appear there too, in red, with a file name and a line number. Read them. They are more helpful than they look.
+- Errors appear there too, in red. Each error gives a file name and a line number. Read them, because they tell you more than you expect.
 
-When a function misbehaves, put a `console.log` inside it. Print the value you are unsure about, refresh the page, press a key, and see what the function really received.
+When a function does the wrong thing, add a `console.log` inside it. Print the value you are unsure about. Refresh the page and press a key. Now you can see what the function really received.
 
-### Already done for you
+### Already written for you
 
-The bottom of `calculator.js` is finished wiring. Read it, but leave it alone.
+The bottom of `calculator.js` is already written. Read it, but do not change it.
 
-- An object called `BUTTONS` has one pocket per key id. Each pocket holds the function to run when that key is clicked.
-- An object called `KEYS` maps keyboard keys — `0`–`9`, `.`, `+ - * x /`, `Enter`, `Escape`, `c` — onto the same buttons, so typing on the keyboard works too.
-- When a key runs, `activate()` also flashes the keycap on screen. It sets `data-pressed` on the button, and the stylesheet sinks the cap down while that is set.
+An object called `BUTTONS` has one part for each key id. Each part holds the function that runs when you click that key.
 
-So you never need to write "when this button is clicked, call my function". The wiring does that. You only write what each button does.
+An object called `KEYS` connects keyboard keys to those same buttons. It covers `0` to `9`, `.`, `+`, `-`, `*`, `x`, `/`, `Enter`, `Escape` and `c`. This is why the keyboard works as well as the mouse.
+
+When a key runs, `activate()` does two more things. It plays the click sound, and it flashes that key on the screen.
+
+The flash works through an attribute. `activate()` writes `tile.dataset.pressed`, which sets `data-pressed` on the button. The stylesheet pushes the key down while `data-pressed` is set. After 90 milliseconds the attribute is removed again.
+
+So you never write "when this button is clicked, call my function". That part is already written. You only write what each button does.
