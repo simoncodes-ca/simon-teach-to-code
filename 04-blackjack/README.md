@@ -16,7 +16,7 @@ Blackjack takes the object you met once in the calculator and builds the whole g
 
 Double-click `blackjack.html` to play. After you change `blackjack.js`, save the file and refresh the browser page.
 
-Inside `blackjack.js` eight functions are marked `// TODO`. Write them in file order, from top to bottom. Each one carries three levels of help in its comments. First a gentle hint, then a stronger hint, then the answer if you choose to read it. Try the gentle hint first.
+Inside `blackjack.js` eight functions are marked `// TODO`. Write them in file order, from top to bottom. Each one carries two hints in its comments: a gentle hint first, then a stronger one. Try the gentle hint first. If you are still stuck, the answers are all together in a block at the very bottom of the file — scroll down to it when you want it, and only then.
 
 Right now the page does nothing. The felt is there and the chips are there, but the deck says 0. The status line asks you to write the first function. That is on purpose.
 

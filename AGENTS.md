@@ -32,13 +32,23 @@ The `.js` file is organised in numbered sections: **the memory** (the handful of
 
 ## Writing a stub
 
-- **Graduated hints, three levels**, in this order: `Gentle hint:` names the idea, `Stronger hint:` names the method, `Answer if you want it:` gives the line. The learner chooses how far to read.
+- **Two hints at the stub**, in this order: `Gentle hint:` names the idea, `Stronger hint:` names the method. The answer never sits next to the stub.
+- **The answer lives in the answer key at the bottom of the file**, so it is there when the learner wants it but out of sight while they work. The stub's last hint line points to it: `Stuck? The answer key is at the bottom of this file.`
 - **Order stubs so each one only needs what came before it.** The function that assembles the others goes last.
 - **Every completed stub changes something on screen.** A stub whose payoff is invisible is a defect — check that the given wiring actually reads its return value.
 - **Every function the learner must call is named in a comment.** A helper sitting in the wiring that nothing points at is unguessable.
 - Plain language, no jargon. Repetition the learner can follow beats indirection they cannot.
 
 Read the project's `PRODUCT.md` before changing scope — it records what is deliberately deferred, and "missing" features are usually held back on purpose.
+
+## The answer key
+
+Every `.js` file ends with one comment block holding the answers, after all the given wiring — the last thing in the file, so scrolling to it is a deliberate act.
+
+- **One block, at the bottom.** Never an answer beside its stub, and never a second answer block partway down.
+- **Group answers by function, in stub order**, each under a heading naming the function: `--- pickWord() ---`, then the lines that complete it.
+- **Give the working lines, not prose.** Enough to type in and see it run; a sentence of why only when the line alone would puzzle.
+- Keep it in step with the stubs. Renaming a stub, reordering the stubs, or changing a signature means editing the key in the same change.
 
 ## Each project builds on the last
 

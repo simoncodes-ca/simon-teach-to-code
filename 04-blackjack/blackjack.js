@@ -56,7 +56,8 @@ const DEALER_STANDS_ON = 17; // the dealer takes cards until it reaches this
    2. YOUR JOB
 
    Eight small functions. Fill them in from the top down. Each comment
-   gives you three levels of help — read only as far as you need.
+   gives you two hints — read only as far as you need. The answers are
+   in one block at the very bottom of this file, when you want them.
    --------------------------------------------------------------------- */
 
 /**
@@ -70,7 +71,7 @@ const DEALER_STANDS_ON = 17; // the dealer takes cards until it reaches this
  * Stronger hint: `for (const suit of SUITS)` on the outside, and
  *   `for (const rank of RANKS)` on the inside. Inside both, build one
  *   card object and cards.push(...) it onto the end.
- * Answer if you want it: cards.push({ rank: rank, suit: suit });
+ * Stuck? The answer key is at the bottom of this file.
  *
  * The moment this works the shoe shows 52, and the ribbon underneath it
  * draws one tick per card: thirteen black, thirteen red, thirteen red,
@@ -97,13 +98,7 @@ function buildDeck() {
  * Stronger hint: to swap two things you need a third box to hold one of
  *   them for a moment, or the first one is lost:
  *     const keep = cards[i]; cards[i] = cards[j]; cards[j] = keep;
- * Answer if you want it:
- *     for (let i = cards.length - 1; i > 0; i = i - 1) {
- *       const j = Math.floor(Math.random() * (i + 1));
- *       const keep = cards[i];
- *       cards[i] = cards[j];
- *       cards[j] = keep;
- *     }
+ * Stuck? The answer key is at the bottom of this file.
  *
  * You can see this one work. The ribbon under the shoe shows the deck's
  * order: four clean stripes before you shuffle, red and black scattered
@@ -125,10 +120,7 @@ function shuffleDeck(cards) {
  *   a number. Three cases, so two ifs and a last line for the rest.
  * Stronger hint: "7" is text and 7 is a number, and they are not the
  *   same thing. Number("7") turns the text into the number.
- * Answer if you want it:
- *     if (card.rank === "A") return 11;
- *     if (card.rank === "J" || card.rank === "Q" || card.rank === "K") return 10;
- *     return Number(card.rank);
+ * Stuck? The answer key is at the bottom of this file.
  *
  * Every card on the table has a small line under it saying what it is
  * worth, so you will see all of them light up at once.
@@ -158,15 +150,7 @@ function cardValue(card) {
  * Stronger hint: count the aces as you go. Then a `while` loop: while
  *   the total is too big AND there is still an ace left at 11, take off
  *   10 and one from the ace count.
- * Answer if you want it:
- *     for (const card of hand) {
- *       total = total + cardValue(card);
- *       if (card.rank === "A") aces = aces + 1;
- *     }
- *     while (total > BUST_AT && aces > 0) {
- *       total = total - 10;
- *       aces = aces - 1;
- *     }
+ * Stuck? The answer key is at the bottom of this file.
  *
  * A `while` loop is a `for` loop with only the middle part: it repeats
  * for as long as its question stays true. Make sure something inside it
@@ -191,7 +175,7 @@ function handTotal(hand) {
  * Gentle hint: DEALER_STANDS_ON is 17, and handTotal gives you a number.
  * Stronger hint: "under 17" is `< DEALER_STANDS_ON`, not `<=`. On
  *   exactly 17 the dealer stops.
- * Answer if you want it: return handTotal(hand) < DEALER_STANDS_ON;
+ * Stuck? The answer key is at the bottom of this file.
  *
  * runDealerTurn, in the wiring below, asks this over and over, one card
  * at a time with a pause between. Until you write it the dealer always
@@ -209,7 +193,7 @@ function dealerShouldHit(hand) {
  * Gentle hint: you already have a function that adds a hand up.
  * Stronger hint: a comparison is already true or false, so you do not
  *   need an if.
- * Answer if you want it: return handTotal(hand) > BUST_AT;
+ * Stuck? The answer key is at the bottom of this file.
  *
  * Use BUST_AT, not 21. The name says why the number is there, and if the
  * rule ever changed there would be one place to change it.
@@ -246,12 +230,7 @@ function isBust(hand) {
  *   cases as five lines, from the top.
  * Stronger hint: an early `return` inside a function stops it dead, so
  *   each case can be one line and none of them need an `else`.
- * Answer if you want it:
- *     if (isBust(playerHand)) return "dealer";
- *     if (isBust(dealerHand)) return "player";
- *     if (handTotal(playerHand) > handTotal(dealerHand)) return "player";
- *     if (handTotal(playerHand) < handTotal(dealerHand)) return "dealer";
- *     return "push";
+ * Stuck? The answer key is at the bottom of this file.
  *
  * This one reads the memory directly instead of taking a hand, because
  * it is about the round rather than about one pile of cards.
@@ -280,13 +259,7 @@ function decideWinner() {
  * Stronger hint: phase is just a variable holding a piece of text.
  *   Changing the round from your turn to over is one line:
  *   phase = "finished";
- * Answer if you want it:
- *     playerHand.push(drawCard());
- *     render();
- *     if (isBust(playerHand)) {
- *       phase = "finished";
- *       settleRound();
- *     }
+ * Stuck? The answer key is at the bottom of this file.
  *
  * drawCard() takes the top card off the deck and hands it to you — it
  * removes it, so the same card can never come out twice. render()
@@ -676,3 +649,79 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
 } else {
   startRound();
 }
+
+
+/* ---------------------------------------------------------------------
+   4. THE ANSWER KEY
+
+   Only worth reading once you have tried. Each block is one function,
+   in the same order as the TODOs above.
+
+
+   --- buildDeck() ---
+
+     for (const suit of SUITS) {
+       for (const rank of RANKS) {
+         cards.push({ rank: rank, suit: suit });
+       }
+     }
+
+
+   --- shuffleDeck(cards) ---
+
+     for (let i = cards.length - 1; i > 0; i = i - 1) {
+       const j = Math.floor(Math.random() * (i + 1));
+       const keep = cards[i];
+       cards[i] = cards[j];
+       cards[j] = keep;
+     }
+
+
+   --- cardValue(card) ---
+
+     if (card.rank === "A") return 11;
+     if (card.rank === "J" || card.rank === "Q" || card.rank === "K") return 10;
+     return Number(card.rank);
+
+
+   --- handTotal(hand) ---
+
+     for (const card of hand) {
+       total = total + cardValue(card);
+       if (card.rank === "A") aces = aces + 1;
+     }
+     while (total > BUST_AT && aces > 0) {
+       total = total - 10;
+       aces = aces - 1;
+     }
+
+
+   --- dealerShouldHit(hand) ---
+
+     return handTotal(hand) < DEALER_STANDS_ON;
+
+
+   --- isBust(hand) ---
+
+     return handTotal(hand) > BUST_AT;
+
+
+   --- decideWinner() ---
+
+     if (isBust(playerHand)) return "dealer";
+     if (isBust(dealerHand)) return "player";
+     if (handTotal(playerHand) > handTotal(dealerHand)) return "player";
+     if (handTotal(playerHand) < handTotal(dealerHand)) return "dealer";
+     return "push";
+
+
+   --- handleHit() ---
+
+     playerHand.push(drawCard());
+     render();
+     if (isBust(playerHand)) {
+       phase = "finished";
+       settleRound();
+     }
+
+   --------------------------------------------------------------------- */

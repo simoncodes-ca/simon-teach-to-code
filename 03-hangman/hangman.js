@@ -44,7 +44,8 @@ const MAX_MISTAKES = 6;     // six wrong guesses and the round is lost
    2. YOUR JOB
 
    Seven small functions. Fill them in from the top down. Each comment
-   gives you three levels of help — read only as far as you need.
+   gives you two hints — read only as far as you need. The answers are
+   in one block at the very bottom of this file, when you want them.
    --------------------------------------------------------------------- */
 
 /**
@@ -54,7 +55,7 @@ const MAX_MISTAKES = 6;     // six wrong guesses and the round is lost
  * Stronger hint: Math.random() gives a decimal between 0 and 1. Multiply
  *   it by WORDS.length to spread it across the whole list, then use
  *   Math.floor() to chop off the decimal part.
- * Answer if you want it: return WORDS[Math.floor(Math.random() * WORDS.length)];
+ * Stuck? The answer key is at the bottom of this file.
  *
  * Return the word as a string. While this returns "", the page shows a
  * reminder instead of a round.
@@ -75,8 +76,7 @@ function pickRandomWord() {
  *   time. word[i] is the letter at position i.
  * Stronger hint: guessedLetters.includes(word[i]) is true or false. Use
  *   an if/else to decide what to glue onto display.
- * Answer if you want it: add word[i] when it has been guessed, "_" when
- *   it has not.
+ * Stuck? The answer key is at the bottom of this file.
  *
  * This is the function the page reads to draw the word, so the moment it
  * works you will see letters appear in the blanks.
@@ -95,7 +95,7 @@ function buildWordDisplay(word, guessedLetters) {
  *
  * Gentle hint: guessedLetters remembers every press, right or wrong.
  * Stronger hint: arrays can answer this question themselves.
- * Answer if you want it: return guessedLetters.includes(letter);
+ * Stuck? The answer key is at the bottom of this file.
  *
  * Return true or false. A value that is only ever true or false is called
  * a boolean. handleGuess uses this to refuse a repeat press without
@@ -115,7 +115,7 @@ function isLetterAlreadyGuessed(letter) {
  * Gentle hint: mistakeCount counts from 1, but arrays count from 0.
  * Stronger hint: the first mistake should draw PART_IDS[0], the second
  *   PART_IDS[1], and so on.
- * Answer if you want it: showPart(PART_IDS[mistakeCount - 1]);
+ * Stuck? The answer key is at the bottom of this file.
  *
  * Careful: reading past the end of an array gives undefined, not an
  * error. showPart ignores an id it cannot find, so a seventh mistake
@@ -132,8 +132,7 @@ function drawNextPart(mistakeCount) {
  * Stronger hint: walk through secretWord one letter at a time and ask
  *   whether guessedLetters contains it. If you find one that is missing
  *   you can stop straight away — return false from inside the loop.
- * Answer if you want it: return false the first time a letter is not in
- *   guessedLetters, and return true after the loop has checked them all.
+ * Stuck? The answer key is at the bottom of this file.
  *
  * A word with a repeated letter, like "PUZZLE", still works: guessing "Z"
  * once satisfies both positions, because both ask the same question.
@@ -149,7 +148,7 @@ function isWordComplete() {
  * Gentle hint: mistakes counts the wrong guesses, MAX_MISTAKES is the limit.
  * Stronger hint: comparing two numbers gives you a boolean directly — you
  *   do not need an if.
- * Answer if you want it: return mistakes >= MAX_MISTAKES;
+ * Stuck? The answer key is at the bottom of this file.
  *
  * Use >= rather than ===. They behave the same if the counting is
  * perfect, but >= still ends the round if a bug ever pushes the count
@@ -178,8 +177,7 @@ function isGameOver() {
  * Stronger hint: `return` on its own leaves a function immediately —
  *   that is how job 1 stops the rest from running. Setting statusMessage
  *   to a sentence makes it appear in red under the word.
- * Answer if you want it: the last two lines are render(); then
- *   finishIfNeeded(); — in that order, and outside the if.
+ * Stuck? The answer key is at the bottom of this file.
  *
  * render() repaints everything from memory. finishIfNeeded() asks your
  * isWordComplete and isGameOver whether the round is over, and shows the
@@ -370,3 +368,67 @@ if (["#demo", "#demo-win", "#demo-lose"].includes(location.hash)) {
 } else {
   startRound();
 }
+
+
+/* ---------------------------------------------------------------------
+   4. THE ANSWER KEY
+
+   Only worth reading once you have tried. Each block is one function,
+   in the same order as the TODOs above.
+
+
+   --- pickRandomWord() ---
+
+     return WORDS[Math.floor(Math.random() * WORDS.length)];
+
+
+   --- buildWordDisplay(word, guessedLetters) ---
+
+     inside the loop, instead of display = display + "_":
+
+     if (guessedLetters.includes(word[i])) display = display + word[i];
+     else display = display + "_";
+
+
+   --- isLetterAlreadyGuessed(letter) ---
+
+     return guessedLetters.includes(letter);
+
+
+   --- drawNextPart(mistakeCount) ---
+
+     showPart(PART_IDS[mistakeCount - 1]);
+
+
+   --- isWordComplete() ---
+
+     for (let i = 0; i < secretWord.length; i = i + 1) {
+       if (!guessedLetters.includes(secretWord[i])) return false;
+     }
+     return true;
+
+
+   --- isGameOver() ---
+
+     return mistakes >= MAX_MISTAKES;
+
+
+   --- handleGuess(letter) ---
+
+     if (isLetterAlreadyGuessed(letter)) {
+       statusMessage = "You already tried " + letter;
+       render();
+       return;
+     }
+
+     guessedLetters.push(letter);
+
+     if (!secretWord.includes(letter)) {
+       mistakes = mistakes + 1;
+       drawNextPart(mistakes);
+     }
+
+     render();
+     finishIfNeeded();
+
+   --------------------------------------------------------------------- */

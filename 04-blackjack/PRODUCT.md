@@ -41,7 +41,7 @@ Beginner blackjack tutorials teach the arithmetic and skip the two ideas that ac
 - The dealer as a rule rather than an opponent: draw under 17, stand on 17 or more, never look at the player's hand.
 - Settlement with five ordered cases, bust first, and a draw called a push.
 - Four named phases, with the phase shown on the felt so the state machine is legible while it runs.
-- Graduated hints per stub in comments: a gentle nudge, then a stronger hint, then the answer if he chooses to read it — all in the single `blackjack.js`.
+- Graduated hints per stub in comments: a gentle nudge, then a stronger hint, then a pointer to the answer key — one comment block at the bottom of `blackjack.js`, grouped by function, so the answers are there without sitting under his nose.
 
 **Explicitly deferred (later projects or extensions):** betting and a chip balance, blackjack paying 3:2, splitting, doubling down, insurance, surrender, a multi-deck shoe with a cut card, more than one player seat, and any running score across rounds. Each is a rule, not an idea, and every extra rule is more source before the interesting part.
 

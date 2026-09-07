@@ -40,7 +40,7 @@ Most beginner hangman tutorials are either ugly or unreadable. This one is neith
 - Wrong guesses add one pencil stroke group to the drawing, in order, up to a fixed limit of 6.
 - Guessing the same letter twice is an invalid action: honest feedback, no penalty, no state change.
 - Win when every letter of the word is guessed; lose when 6 wrong guesses are reached. Either way the round ends with a visible result and a working restart.
-- Graduated hints per stub in comments: a gentle nudge, then a stronger hint, then the answer if he chooses to read it — all in the single `hangman.js`.
+- Graduated hints per stub in comments: a gentle nudge, then a stronger hint, then a pointer to the answer key — one comment block at the bottom of `hangman.js`, grouped by function, so the answers are there without sitting under his nose.
 
 **Explicitly deferred (roadmap extensions):** categories, hints, difficulty levels, keyboard input, two-player word entry, score across rounds.
 

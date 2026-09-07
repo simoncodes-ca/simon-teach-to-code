@@ -161,7 +161,7 @@ function setState(nextState, reason) {
  *
  * Gentle hint: an array can remember more than one floor.
  * Stronger hint: use waitingList.includes(floor) before waitingList.push(floor).
- * Answer if you want it: only push the floor when it is not already waiting.
+ * Stuck? The answer key is at the bottom of this file.
  *
  * A second click on a floor should not create a duplicate request.
  * Keep the queue in FIFO order: the first new floor pressed is served first.
@@ -176,7 +176,7 @@ function addFloorRequest(floor) {
  *
  * Gentle hint: FIFO means "first in, first out".
  * Stronger hint: the first item is at position zero.
- * Answer if you want it: remove the first item with shift().
+ * Stuck? The answer key is at the bottom of this file.
  *
  * Return the floor you chose. Return null when there is no work.
  */
@@ -204,7 +204,7 @@ function requestFloor(floor) {
  * Gentle hint: check whether waitingList has any items.
  * Stronger hint: chooseNextStop gives you a floor to compare with
  * currentFloor. Then choose movingUp, movingDown, or doorsOpening.
- * Answer if you want it: call setState with the name that matches.
+ * Stuck? The answer key is at the bottom of this file.
  */
 function startNextTrip() {
   // TODO: move the machine from idle to its next useful state.
@@ -216,7 +216,7 @@ function startNextTrip() {
  * Gentle hint: a door-opening state should be visible before doorsOpen.
  * Stronger hint: setState can name both transitions and set nextFloor as
  * the current floor.
- * Answer if you want it: change currentFloor, then set doorsOpening.
+ * Stuck? The answer key is at the bottom of this file.
  */
 function openDoors() {
   // TODO: show doorsOpening, then doorsOpen after a short pause.
@@ -228,7 +228,7 @@ function openDoors() {
  * Gentle hint: the next state depends on whether waitingList has work.
  * Stronger hint: doorsClosing normally comes before movingUp, movingDown,
  * or idle.
- * Answer if you want it: setState('doorsClosing'), then choose the next job.
+ * Stuck? The answer key is at the bottom of this file.
  */
 function closeDoors() {
   // TODO: show doorsClosing, then send the machine to its next job.
@@ -240,8 +240,8 @@ function closeDoors() {
  * Gentle hint: the browser gives you time in milliseconds.
  * Stronger hint: compare nextFloor with currentFloor and change a position
  * number by a small amount each frame. Use showCarAtTop to draw it.
- * Answer if you want it: requestAnimationFrame calls this function again.
  * Stop when the position reaches FLOOR_TOPS[nextFloor].
+ * Stuck? The answer key is at the bottom of this file.
  *
  * This is where smooth motion belongs. Do not jump straight to a floor.
  */
@@ -309,3 +309,85 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+
+/* ---------------------------------------------------------------------
+   6. THE ANSWER KEY
+
+   Only worth reading once you have tried. Each block is one function,
+   in the same order as the TODOs above.
+
+
+   --- addFloorRequest(floor) ---
+
+     if (!elevator.waitingList.includes(floor)) {
+       elevator.waitingList.push(floor);
+     }
+     showFloor(elevator.currentFloor);
+     if (elevator.state === 'idle') startNextTrip();
+
+
+   --- chooseNextStop() ---
+
+     if (elevator.waitingList.length === 0) return null;
+     return elevator.waitingList.shift();
+
+
+   --- startNextTrip() ---
+
+     setState('choosingNextStop');
+     const floor = chooseNextStop();
+     if (floor === null) {
+       setState('idle');
+       return;
+     }
+     elevator.nextFloor = floor;
+     showFloor(elevator.currentFloor);
+     if (floor > elevator.currentFloor) setState('movingUp', `to floor ${floor}`);
+     else if (floor < elevator.currentFloor) setState('movingDown', `to floor ${floor}`);
+     else openDoors();
+
+
+   --- openDoors() ---
+
+     elevator.currentFloor = elevator.nextFloor;
+     showFloor(elevator.currentFloor);
+     setState('doorsOpening');
+     setTimeout(() => {
+       setState('doorsOpen');
+       setTimeout(closeDoors, 1200);
+     }, 600);
+
+
+   --- closeDoors() ---
+
+     setState('doorsClosing');
+     setTimeout(() => {
+       if (elevator.waitingList.length > 0) startNextTrip();
+       else setState('idle');
+     }, 600);
+
+
+   --- moveElevator(time) ---
+
+     const car = document.getElementById('elevator-car');
+     if (!car) return;
+
+     if (elevator.lastTime === null) elevator.lastTime = time;
+     const elapsed = time - elevator.lastTime;
+     elevator.lastTime = time;
+
+     const target = FLOOR_TOPS[elevator.nextFloor];
+     const current = parseFloat(car.style.top) || FLOOR_TOPS[elevator.currentFloor];
+     const step = elapsed * 0.02;
+
+     if (Math.abs(target - current) <= step) {
+       showCarAtTop(target);
+       elevator.lastTime = null;
+       openDoors();
+       return;
+     }
+
+     showCarAtTop(current + (target > current ? step : -step));
+
+   --------------------------------------------------------------------- */

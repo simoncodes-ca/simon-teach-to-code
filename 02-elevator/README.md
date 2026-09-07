@@ -16,7 +16,7 @@ Double-click `elevator.html` to open the simulator. After you change `elevator.j
 
 Inside `elevator.js` six functions are marked `// TODO`. Write them in file order, from top to bottom. Each one you finish makes something new happen on the screen.
 
-Every function carries three levels of help in its comments. First a gentle hint, then a stronger hint, then the answer if you choose to read it. Try the gentle hint first.
+Every function carries two hints in its comments: a gentle hint first, then a stronger one. Try the gentle hint first. If you are still stuck, the answers are all together in a block at the very bottom of the file — scroll down to it when you want it, and only then.
 
 ## What you will learn
 
