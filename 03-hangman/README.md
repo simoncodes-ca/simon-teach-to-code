@@ -253,12 +253,7 @@ Section 3 of `hangman.js` is already written, like the calculator's and the elev
 
 ### Finding your mistakes
 
-Use the same method as the last two projects. Right-click the page, choose Inspect, then click the Console tab.
-
-- Anything you print with `console.log("guessedLetters is", guessedLetters);` appears there.
-- Errors appear in red, with a file name and a line number. Read them.
-
-The three variables help you most here. When something looks wrong on the screen, print all three at the top of `handleGuess`, then press a letter:
+The console works as it always has. What helps you most in this project is the three variables. When something looks wrong on the screen, print all three at the top of `handleGuess`, then press a letter:
 
 ```js
 console.log(secretWord, guessedLetters, mistakes);

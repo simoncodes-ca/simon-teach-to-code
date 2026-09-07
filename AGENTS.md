@@ -40,6 +40,19 @@ The `.js` file is organised in numbered sections: **the memory** (the handful of
 
 Read the project's `PRODUCT.md` before changing scope — it records what is deliberately deferred, and "missing" features are usually held back on purpose.
 
+## Each project builds on the last
+
+**Never re-teach what an earlier project already taught.** The learner works the folders in order, so project 03 may assume everything 01 and 02 covered.
+
+- A concept gets one full explanation, in the earliest project that needs it. Later projects name it and point back: "Read `01-calculator/README.md` again for the full story."
+- Every README after the first opens its **Good to know** with a `### What you already know` list — one line per carried-over idea, no teaching, plus the pointer to the earlier READMEs.
+- Only put an idea in that list if an earlier project genuinely covered it. Listing something as known when it is new is worse than repeating it.
+- Explain in full only what is actually new here, or what an earlier project used in its given wiring without ever explaining.
+- Same for repeated mechanics — the console, the sound pattern, `render()`. One sentence saying it works as before, then only the part that differs.
+- Stub hints follow the same rule. A hint names a method the learner has met; it does not re-introduce it.
+
+Repetition is not kindness here. It buries the one new idea the project exists to teach.
+
 ## Hard constraints
 
 - **No build step, no dependencies, no framework, no network.** The page must work by double-clicking the HTML.

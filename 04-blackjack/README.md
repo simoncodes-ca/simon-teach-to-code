@@ -4,7 +4,7 @@ A game of blackjack that runs in your browser, played on a green felt table. You
 
 This is your fourth project. The calculator taught you variables and functions. The elevator taught you state machines. Hangman taught you that everything on the screen comes from a small amount of memory.
 
-Blackjack keeps all of that and adds one new idea. **A thing in your program can be an object, which is one value with named parts.** A card is not a piece of text. It is a rank and a suit, travelling together.
+Blackjack takes the object you met once in the calculator and builds the whole game out of it. **A thing in your program can be an object, which is one value with named parts.** A card is not a piece of text. It is a rank and a suit, travelling together.
 
 ## The three files
 
@@ -50,7 +50,7 @@ These all work exactly the same here. Read `01-calculator/README.md`, `02-elevat
 - Arrays are ordered lists. `.push(x)` adds to the end, `[0]` reads the first item, `.length` counts.
 - `if` and `else` make choices. `===` asks whether two values are exactly equal. `=` puts a value in a box.
 - Functions are steps with a name. `return` sends a value back and stops the function immediately.
-- `for` loops repeat and count. `while` loops repeat for as long as a question stays true.
+- `for` loops repeat and count. `for (const x of list)` walks a list without counting.
 - A boolean is a value that is only ever `true` or `false`.
 - `document.getElementById(id)` finds an element. `.textContent` changes its text.
 - `console.log` shows you what is really happening.
@@ -58,7 +58,7 @@ These all work exactly the same here. Read `01-calculator/README.md`, `02-elevat
 
 ### The big idea: objects
 
-Every value you have used so far has been one simple thing. A number, a piece of text, `true` or `false`, or a list of those.
+The calculator kept one object, and you only ever read two parts out of it. Here objects are the material the game is made of.
 
 A card is not one simple thing. It is a rank **and** a suit, and the two only mean something together.
 
@@ -154,14 +154,7 @@ Keep that true on purpose. `handTotal(playerHand)` is called by `render`, by `is
 
 So imagine it quietly changed something each time it ran. The game would then behave differently depending on how often the screen was redrawn. That is a bug you could search for over a week.
 
-**Text is not a number.** `card.rank` is always a piece of text, even for a number card:
-
-```js
-"7" + 1         // "71", because "7" is text, so JavaScript joins them
-Number("7") + 1 // 8, because Number() converts the text first
-```
-
-Forget `Number()` and you get a total like `"05710"` instead of 22. So if a total looks like all the cards joined end to end, that is the reason.
+**Text is not a number**, and the calculator's `Number()` trap is waiting for you again. `card.rank` is always a piece of text, even for a number card. Forget `Number()` and you get a total like `"05710"` instead of 22. So if a total looks like all the cards joined end to end, that is the reason.
 
 ### The one interesting rule: aces
 
@@ -263,24 +256,11 @@ Under every face-up card is a small line that reads `worth 10`. That is your `ca
 
 It is there for two reasons. You can see your own function working on every card at once. And a wrong answer becomes obvious, instead of hiding inside a total.
 
-Sounds work exactly as they did in hangman. Five of them are made once, near the top of the given code, then reused:
-
-```js
-const dealSound = new Audio("assets/deal.wav");
-
-function playSound(sound) {
-  sound.currentTime = 0;      // rewind, in case it is still playing
-  sound.play().catch(() => {});
-}
-```
-
-`currentTime = 0` rewinds the sound, so it can play twice in a row as cards come out. The `.catch` ignores the browser's refusal to play sound before you have clicked the page once.
+Sounds work exactly as they did in hangman, and `playSound` is the same function. There are five of them here instead of three: dealing, hitting, winning, losing and busting.
 
 ### Finding your mistakes
 
-Use the same method as the last three projects. Right-click the page, choose Inspect, then click the Console tab.
-
-The table itself tells you a lot. Check these four things, in this order:
+The console works as it always has. But this table tells you more than the console does, because four of your functions are printed on the felt while you play. Check these four things, in this order:
 
 1. **The deck count and the ribbon** tell you about the deck. A count of 52 with four clean stripes means `buildDeck` works and `shuffleDeck` does not. A count below 52 means the loops are missing some pairings.
 2. **The `worth` lines** tell you about `cardValue`, one card at a time, and you print nothing yourself.

@@ -174,9 +174,6 @@ The practice buttons light up, and the request counter counts, even before your 
 
 ### Finding your mistakes
 
-Use the same method as the calculator. Right-click the page, choose Inspect, then click the Console tab.
+The console works exactly as it did in the calculator, so open it the same way.
 
-- Anything you print with `console.log("waitingList is", waitingList);` appears there.
-- Errors appear in red, with a file name and a line number. Read them.
-
-The transition log on the page helps you too. When the car does the wrong thing, read the log. It shows you the exact path your machine took, one state at a time.
+What is new here is that the page keeps a log of its own. When the car does the wrong thing, read the transition log before you print anything. It shows you the exact path your machine took, one state at a time, which is usually the answer already.
