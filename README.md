@@ -28,12 +28,26 @@ A five-floor building with a working elevator. The call buttons light up and sta
 
 Files: `02-elevator/elevator.html`, `02-elevator/styles.css`, `02-elevator/elevator.js`.
 
+### Hangman
+
+A word game drawn on sketchbook paper. Guess a letter at a time; every wrong guess adds another pencil stroke to the drawing, and after six the round is over. The page gives you the paper, the drawing and the A-Z letter rail. You build the word display, the letter checking, and the win and lose decisions.
+
+Files: `03-hangman/hangman.html`, `03-hangman/styles.css`, `03-hangman/hangman.js`.
+
+### Blackjack
+
+A game of blackjack on a green felt table. Get closer to 21 than the dealer without going past it. The page gives you the table, the cards and the chips. You build the deck, the shuffle, the card values, the totals, the dealer's rule, and the decision about who won.
+
+Files: `04-blackjack/blackjack.html`, `04-blackjack/styles.css`, `04-blackjack/blackjack.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smaller program. You meet the core ideas one at a time: remembering values, listening for clicks, and updating the screen.
 2. **Then move to the elevator.** It is a bigger machine. You combine those ideas, add a queue, and keep a whole machine in a consistent state.
+3. **Then hangman.** Strings, loops and booleans, and the idea underneath both earlier projects: everything on screen is worked out from a little memory.
+4. **Then blackjack.** Objects, randomness, and rules with several cases, on a program that is always in one named phase.
 
-New projects will appear here over time. The path for now is calculator first, elevator second.
+New projects will appear here over time. `ROADMAP.md` has the whole path, and `showcase.html` is the map.
 
 ## Getting started
 

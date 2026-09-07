@@ -30,11 +30,9 @@ The elevator teaches:
 - State transitions
 - Smooth movement with `requestAnimationFrame`
 
-## Recommended project sequence
-
 ### 3. Hangman
 
-Hangman is the next project because it remains a simple webpage while adding richer rules.
+Hangman remains a simple webpage while adding richer rules.
 
 It teaches:
 
@@ -62,7 +60,11 @@ It teaches:
 - Rules with several cases
 - State transitions
 
-Useful states include `dealing`, `playerTurn`, `dealerTurn`, and `finished`.
+The phases are `dealing`, `playerTurn`, `dealerTurn`, and `finished`.
+
+Deferred on purpose: betting, blackjack paying 3:2, splitting, doubling down, insurance, and a multi-deck shoe.
+
+## Recommended project sequence
 
 ### 5. Battleship
 

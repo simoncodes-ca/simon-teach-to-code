@@ -1,0 +1,341 @@
+/* ============================================================
+   Simon's Blackjack — the green baize.
+   One felt table seen from above. Cards are cream, the rail is
+   polished wood, and brass is reserved for numbers that matter:
+   the totals, the deck count, the result.
+   ============================================================ */
+
+:root {
+  --felt: #14614a;
+  --felt-deep: #0c3f31;
+  --felt-lit: #1d7a5d;
+  --rail: #4a2f1c;
+  --rail-lit: #7d5330;
+  --brass: #dcae55;
+  --brass-deep: #a67c2e;
+  --card: #f7f2e6;
+  --card-edge: #d9cfb8;
+  --card-back: #8d2f2a;
+  --ink: #23272b;
+  --ink-soft: #5d6266;
+  --suit-red: #b3312b;
+  --cream: #ece2cc;
+  --cream-dim: #a9bdb1;
+  --win: #7fd6a4;
+  --lose: #e8836f;
+  --display: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--cream);
+  background: var(--rail) radial-gradient(ellipse at 50% 42%, var(--rail-lit) 0%, var(--rail) 62%, #2c1b0f 100%);
+  container-type: size;
+}
+
+/* The table: one felt surface. Every region is placed as a % of this
+   frame, so the whole table scales together like a single photograph. */
+.table {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    url("assets/plates/felt.png") repeat,
+    radial-gradient(ellipse at 50% 34%, var(--felt-lit) 0%, var(--felt) 46%, var(--felt-deep) 100%);
+  background-size: 256px 256px, cover;
+  border: 1.1cqw solid var(--rail-lit);
+  border-radius: 3cqw;
+  box-shadow:
+    inset 0 0 0 0.28cqw var(--brass-deep),
+    inset 0 0.9cqh 6cqh rgba(0, 0, 0, .34),
+    0 3cqh 7cqh rgba(0, 0, 0, .5);
+  overflow: hidden;
+}
+
+/* The betting arc painted on the felt, the way a real table has one. */
+.arc {
+  position: absolute;
+  left: 7%; top: 46%; width: 59%; height: 58%;
+  border: 0.22cqw solid rgba(220, 174, 85, .28);
+  border-radius: 50%;
+  clip-path: inset(0 0 46% 0);
+  pointer-events: none;
+}
+
+/* --- Region boxes --- */
+.t-title   { position: absolute; left: 4.5%; top: 4%;    width: 42%; height: 10%; }
+.t-dealer  { position: absolute; left: 5%;   top: 14.5%; width: 63%; height: 25%; }
+.t-phase   { position: absolute; left: 5%;   top: 41.5%; width: 63%; height: 6%; }
+.t-player  { position: absolute; left: 5%;   top: 49%;   width: 63%; height: 26%; }
+.t-status  { position: absolute; left: 5%;   top: 76.5%; width: 63%; height: 6%; }
+.t-actions { position: absolute; left: 5%;   top: 83%;   width: 63%; height: 13%; }
+.t-shoe    { position: absolute; left: 71.5%; top: 15%;  width: 25%; height: 62%; }
+.t-result  { position: absolute; left: 69.5%; top: 66%;  width: 29%; }
+
+/* --- Title --- */
+.t-title h1 {
+  font-family: var(--display);
+  font-size: 3.4cqw;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+  text-shadow: 0 0.25cqh 0.6cqh rgba(0, 0, 0, .45);
+}
+.t-rule {
+  margin-top: 0.5cqh;
+  font-size: 1.25cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+/* --- A seat: name, cards, total --- */
+.seat { display: grid; grid-template-rows: auto 1fr auto; justify-items: center; }
+.seat-name {
+  font-size: 1.3cqw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.hand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6cqh 0.9cqw;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.total {
+  min-height: 2.6cqh;
+  font-family: var(--display);
+  font-size: 2.1cqw;
+  color: var(--brass);
+}
+.total.bust { color: var(--lose); }
+.total:empty::after { content: "\00a0"; }
+
+/* --- One card, with the value it is worth printed underneath --- */
+.card-slot { display: grid; justify-items: center; gap: 0.5cqh; }
+.card {
+  position: relative;
+  width: 6.6cqw;
+  aspect-ratio: 5 / 7;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, #fffdf6 0%, var(--card) 46%, var(--card-edge) 100%);
+  border-radius: 0.7cqw;
+  box-shadow: 0 0.6cqh 1.4cqh rgba(0, 0, 0, .38), inset 0 0 0 0.1cqw rgba(0, 0, 0, .08);
+  color: var(--ink);
+  font-family: var(--display);
+}
+.card .pip { font-size: 3.1cqw; line-height: 1; }
+.card .corner {
+  position: absolute;
+  left: 0.5cqw; top: 0.5cqh;
+  font-size: 1.5cqw;
+  line-height: 1.05;
+  text-align: center;
+}
+.card .corner .s { display: block; font-size: 1.15cqw; }
+.card.red { color: var(--suit-red); }
+/* The dealer's hole card: face down until the dealer's turn. */
+.card.back {
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .1) 0 0.35cqw, transparent 0.35cqw 0.7cqw),
+    linear-gradient(160deg, #a03c35 0%, var(--card-back) 55%, #6d211d 100%);
+  box-shadow: 0 0.6cqh 1.4cqh rgba(0, 0, 0, .38), inset 0 0 0 0.28cqw var(--card);
+}
+.worth {
+  font-size: 1.05cqw;
+  letter-spacing: 0.06em;
+  color: var(--cream-dim);
+}
+
+/* Cards arrive by sliding in from the shoe; the hole card turns over. */
+@keyframes deal-in {
+  from { opacity: 0; transform: translate(9cqw, -4cqh) rotate(14deg); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes flip-up {
+  0%   { transform: rotateY(90deg); }
+  100% { transform: rotateY(0deg); }
+}
+.card-slot.dealing { animation: deal-in .38s cubic-bezier(.2, .8, .3, 1) both; }
+.card-slot.flipping .card { animation: flip-up .34s ease-out both; }
+
+/* --- The phase line: the state machine, said out loud --- */
+.t-phase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7cqw;
+  font-size: 1.2cqw;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.t-phase b {
+  padding: 0.5cqh 1cqw;
+  color: var(--felt-deep);
+  background: var(--brass);
+  border-radius: 1cqw;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+/* --- Status line --- */
+.t-status {
+  display: grid;
+  place-items: center;
+  font-size: 1.5cqw;
+  color: var(--cream);
+}
+.t-status.bad { color: var(--lose); }
+
+/* --- The result plaque --- */
+.t-result {
+  padding: 1.6cqh 2cqw;
+  font-family: var(--display);
+  font-size: 2.1cqw;
+  text-align: center;
+  color: var(--cream);
+  background: rgba(12, 63, 49, .93);
+  border: 0.22cqw solid var(--brass);
+  border-radius: 1.2cqw;
+  box-shadow: 0 1.6cqh 4cqh rgba(0, 0, 0, .5);
+  transform: rotate(-1.4deg);
+}
+.t-result.win { color: var(--win); }
+.t-result.lose { color: var(--lose); }
+
+/* --- The chip buttons --- */
+.t-actions { display: flex; align-items: center; justify-content: center; gap: 2.2cqw; }
+.chip {
+  width: 9.4cqw;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  font-family: var(--label);
+  font-size: 1.5cqw;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  cursor: pointer;
+  background:
+    radial-gradient(circle, var(--chip-face) 0 61%, transparent 61%),
+    repeating-conic-gradient(from 9deg, rgba(255, 255, 255, .85) 0deg 10deg, transparent 10deg 45deg),
+    radial-gradient(circle, var(--chip-face) 0 61%, var(--chip-rim) 61% 100%);
+  box-shadow: 0 0.9cqh 1.8cqh rgba(0, 0, 0, .42), inset 0 0 0 0.3cqw rgba(255, 255, 255, .22);
+  transition: transform .15s ease-out, box-shadow .15s ease-out;
+}
+.chip-hit   { --chip-face: #b5352c; --chip-rim: #7f221b; }
+.chip-stand { --chip-face: #2a5b96; --chip-rim: #1a3a63; }
+.chip-deal  { --chip-face: #3b3f45; --chip-rim: #22262a; }
+.chip:hover:not(:disabled) { transform: translateY(-0.8cqh); box-shadow: 0 1.8cqh 2.8cqh rgba(0, 0, 0, .48), inset 0 0 0 0.3cqw rgba(255, 255, 255, .3); }
+.chip:active:not(:disabled) { transform: translateY(-0.2cqh); }
+.chip:focus-visible { outline: 0.3cqw solid var(--brass); outline-offset: 0.4cqw; }
+.chip:disabled { opacity: .34; cursor: default; }
+
+/* --- The shoe and the ribbon that shows the deck's order --- */
+.t-shoe { display: grid; align-content: center; justify-items: center; gap: 1cqh; }
+.shoe {
+  display: grid;
+  place-items: center;
+  width: 11cqw;
+  aspect-ratio: 5 / 7;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, .1) 0 0.35cqw, transparent 0.35cqw 0.7cqw),
+    linear-gradient(160deg, #a03c35 0%, var(--card-back) 55%, #6d211d 100%);
+  border-radius: 0.7cqw;
+  /* the stack: two more cards peeking out behind the top one */
+  box-shadow:
+    0.5cqw 0.9cqh 0 -0.1cqw #6d211d,
+    0.9cqw 1.7cqh 0 -0.2cqw #551916,
+    0 1.6cqh 3cqh rgba(0, 0, 0, .45),
+    inset 0 0 0 0.28cqw var(--card);
+}
+.shoe-count {
+  font-family: var(--display);
+  font-size: 3cqw;
+  color: var(--card);
+  text-shadow: 0 0.3cqh 0.6cqh rgba(0, 0, 0, .6);
+}
+.shoe-label, .ribbon-label {
+  font-size: 1.1cqw;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--cream-dim);
+}
+.ribbon {
+  width: 100%;
+  height: 4.4cqh;
+  margin-top: 2cqh;
+  background: var(--card);
+  border-radius: 0.4cqw;
+  box-shadow: inset 0 0 0 0.1cqw rgba(0, 0, 0, .25);
+}
+.ribbon-label b { color: var(--cream); font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-slot.dealing, .card-slot.flipping .card { animation: none; }
+  .chip { transition: none; }
+}
+
+/* --- Narrow screens: the table stands up into one column --- */
+@media (max-width: 820px) {
+  body { display: block; overflow: auto; }
+  .table {
+    width: 100%;
+    min-height: 100vh;
+    aspect-ratio: auto;
+    padding: 7vw 5vw 10vw;
+    border-radius: 0;
+    border-width: 2vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5vw;
+    align-content: start;
+  }
+  .arc { display: none; }
+  .t-title, .t-dealer, .t-phase, .t-player, .t-status, .t-actions, .t-shoe, .t-result {
+    position: static;
+    width: auto;
+    height: auto;
+  }
+  .t-title { order: 1; }
+  .t-title h1 { font-size: 9cqw; }
+  .t-rule { font-size: 3.1cqw; }
+  .t-phase { order: 2; font-size: 3cqw; }
+  .t-dealer { order: 3; }
+  .t-player { order: 4; }
+  .seat { gap: 2vw; }
+  .seat-name { font-size: 3.2cqw; }
+  .hand { flex-wrap: wrap; gap: 2vw; }
+  .card { width: 17vw; border-radius: 2vw; }
+  .card .pip { font-size: 8vw; }
+  .card .corner { font-size: 4vw; left: 1.4vw; top: 1vw; }
+  .card .corner .s { font-size: 3vw; }
+  .worth { font-size: 2.8cqw; }
+  .total { font-size: 5.4cqw; min-height: 0; }
+  .t-status { order: 5; font-size: 3.6cqw; min-height: 5vw; }
+  .t-actions { order: 6; gap: 6vw; }
+  .chip { width: 22vw; font-size: 3.6cqw; }
+  .t-shoe { order: 7; gap: 3vw; }
+  .shoe { width: 26vw; }
+  .shoe-count { font-size: 8vw; }
+  .shoe-label, .ribbon-label { font-size: 2.8cqw; }
+  .ribbon { height: 6vw; }
+  .t-result { order: 0; font-size: 6.5cqw; padding: 3vw; }
+}
