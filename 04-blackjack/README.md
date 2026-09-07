@@ -116,7 +116,7 @@ So the order is: spades, ace to king. Then hearts, ace to king. Then diamonds, t
 
 `for (const x of list)` is the shorter version of the counting loop you used in hangman. Use it when you want each item and do not care about its position. Use `for (let i = 0; ...)` when you need the position as well.
 
-This shape is worth learning properly. The next project is Battleship, and a grid is rows inside columns.
+This shape is worth learning properly. The next project is Battleship, and a grid is a list of rows with the squares inside each row.
 
 ### Randomness, and seeing it happen
 

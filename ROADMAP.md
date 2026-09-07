@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the four finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the five finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -78,11 +78,31 @@ The phases are `dealing`, `playerTurn`, `dealerTurn`, and `finished`.
 
 We left these out on purpose: betting, blackjack paying 3:2, splitting, doubling down, insurance, and a multi-deck shoe.
 
+### 5. Battleship
+
+Battleship is the first project with a map. It is still an ordinary webpage.
+
+- Two-dimensional arrays
+- Rows, columns, and coordinates
+- Nested loops that build data
+- Random placement by guessing and checking
+- Overlap checking
+- Turn-taking
+- Hidden information
+- Game phases
+
+Each sea keeps two grids, `ships` and `shots`, because a hit square holds a ship and a shot at the same time. One grid of letters would have made that one fact instead of two.
+
+Hidden information is the second lesson. `enemySea.ships` sits in memory the whole game. One `false` passed to the drawing code is the only thing keeping it off the screen.
+
+We left these out on purpose: an enemy that hunts around its last hit, diagonal ships, a salvo variant, hot-seat two-player, and a score across games.
+
+Battleship teaches maps made of cells. Later projects turn those cells into terrain, buildings, units, resources, and movement areas.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 5 | Battleship | Grids as two-dimensional arrays |
 | 6 | Paint app | Canvas and pointer events |
 | 7 | Balloon shooting | A game loop and time-based movement |
 | 8 | Parachuter | Many entities, and sprites as plain data |
@@ -102,32 +122,6 @@ We left these out on purpose: betting, blackjack paying 3:2, splitting, doubling
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 5. Battleship
-
-Battleship is the first project with a map. It is still an ordinary webpage.
-
-- Two-dimensional arrays
-- Rows, columns, and coordinates
-- Nested loops
-- Random placement
-- Overlap checking
-- Turn-taking
-- Hidden information
-- Game phases
-
-Stages:
-
-1. Display an empty grid.
-2. Let the player choose a square.
-3. Place one ship by hand.
-4. Detect hits and misses.
-5. Add several ships.
-6. Add a computer opponent that picks a square.
-7. Place the computer's ships at random.
-8. Add sinking and win detection.
-
-Battleship teaches maps made of cells. Later projects turn those cells into terrain, buildings, units, resources, and movement areas.
 
 ### 6. Paint app with undo
 

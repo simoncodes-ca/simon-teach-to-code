@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Battleship</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="table">
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="t-title">
+      <h1>Simon&rsquo;s Battleship</h1>
+      <p class="t-rule">Ten by ten &middot; Five ships &middot; Sink them all</p>
+    </header>
+
+    <div class="t-bearing" aria-label="The square under your cursor">
+      <span class="bearing-label">bearing</span>
+      <b class="bearing-value" id="bearing">&mdash;&mdash;</b>
+    </div>
+
+    <section class="t-target board" aria-label="Enemy waters">
+      <p class="board-name">Enemy waters</p>
+      <div class="frame">
+        <span class="corner" aria-hidden="true"></span>
+        <div class="labels cols" id="targetCols" aria-hidden="true"></div>
+        <div class="labels rows" id="targetRows" aria-hidden="true"></div>
+        <div class="grid" id="targetGrid"></div>
+      </div>
+    </section>
+
+    <section class="t-home board" aria-label="Your fleet">
+      <p class="board-name">Your fleet</p>
+      <div class="frame">
+        <span class="corner" aria-hidden="true"></span>
+        <div class="labels cols" id="homeCols" aria-hidden="true"></div>
+        <div class="labels rows" id="homeRows" aria-hidden="true"></div>
+        <div class="grid" id="homeGrid"></div>
+      </div>
+    </section>
+
+    <aside class="t-roster">
+      <p class="roster-title" id="rosterTitle">The fleet</p>
+      <ul class="roster" id="roster"></ul>
+    </aside>
+
+    <div class="t-log" aria-label="Signal log">
+      <p class="log-title">Signal log</p>
+      <ol class="log" id="log" aria-live="polite"></ol>
+    </div>
+
+    <p class="t-phase" id="phase" aria-live="polite"></p>
+    <p class="t-status" id="status" aria-live="polite"></p>
+    <p class="t-result" id="result" hidden></p>
+
+    <div class="t-actions">
+      <button class="key" id="rotate" type="button" aria-keyshortcuts="r">Rotate <kbd aria-hidden="true">R</kbd></button>
+      <button class="key" id="scatter" type="button">Scatter</button>
+      <button class="key key-go" id="newGame" type="button">New game</button>
+    </div>
+  </main>
+  <script src="battleship.js"></script>
+</body>
+</html>

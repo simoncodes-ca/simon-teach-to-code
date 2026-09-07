@@ -52,23 +52,31 @@ The page gives you the table, the cards and the chips. You write the deck, the s
 
 Files: `04-blackjack/blackjack.html`, `04-blackjack/styles.css`, `04-blackjack/blackjack.js`.
 
+### Battleship
+
+Two seas on a plotting table. You can see your own fleet. You cannot see theirs. You take it in turns to fire one shot until one fleet is gone.
+
+The page gives you the table, the charts and the pegs. You write the grid, the ship placing, and the firing. You also write the rule for when a ship has sunk, and the enemy's turn.
+
+Files: `05-battleship/battleship.html`, `05-battleship/styles.css`, `05-battleship/battleship.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
 2. **Then build the elevator.** It is a bigger machine. You use those same ideas, add a queue, and keep the whole machine in one sensible state.
 3. **Then build hangman.** You learn strings, loops and true/false values. You also learn the idea under both earlier projects: everything on the screen comes from a small amount of memory.
 4. **Then build blackjack.** You learn objects, randomness, and rules with several cases. The program is always in one named phase.
+5. **Then build battleship.** You learn maps. A grid is a list of rows, and each row is a list of squares. You also learn how a program keeps a secret from you.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-The next four projects stay ordinary web pages, then the pictures start to move.
+The next three projects stay ordinary web pages, then the pictures start to move.
 
-1. **Battleship.** Your first map. You learn grids, coordinates and turns.
-2. **Paint app.** Your first canvas. You draw with the mouse, then add undo.
-3. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
-4. **Parachuter.** Many things moving at once, each one with its own rules.
+1. **Paint app.** Your first canvas. You draw with the mouse, then add undo.
+2. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
+3. **Parachuter.** Many things moving at once, each one with its own rules.
 
 After those, you rebuild a game you already finished using Phaser, a real game library. You will be able to point at every part the library replaced.
 

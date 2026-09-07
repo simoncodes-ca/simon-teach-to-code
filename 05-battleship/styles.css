@@ -1,0 +1,466 @@
+/* ============================================================
+   Simon's Battleship — the plotting table.
+   A wardroom table seen from above: oiled teak, a brass edge,
+   and two sea charts under glass. Pegs are red for a hit and
+   white for a miss, the way the box game does it.
+   ============================================================ */
+
+:root {
+  --sea: #103c50;
+  --sea-deep: #08222f;
+  --sea-lit: #17586f;
+  --sea-line: rgba(233, 223, 199, .13);
+  --teak: #2c2016;
+  --teak-lit: #4d3826;
+  --teak-deep: #180f08;
+  --brass: #d6a95c;
+  --brass-deep: #97702f;
+  --chart: #e9dfc7;
+  --chart-dim: #9fb0ac;
+  --steel: #84949b;
+  --steel-dark: #4d5c63;
+  --peg-red: #cf4438;
+  --peg-white: #f4efe3;
+  --sig: #86cfc0;
+  --win: #7fd6a4;
+  --lose: #e8836f;
+  --display: "Futura", "Century Gothic", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--chart);
+  background: var(--teak-deep) radial-gradient(ellipse at 50% 40%, var(--teak-lit) 0%, var(--teak) 58%, var(--teak-deep) 100%);
+  container-type: size;
+}
+
+/* The table: one teak surface. Every region is placed as a % of this
+   frame, so the whole table scales together like one photograph. */
+.table {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    repeating-linear-gradient(92deg,
+      rgba(255, 255, 255, .035) 0 1px,
+      rgba(0, 0, 0, .05) 1px 3px,
+      rgba(255, 255, 255, 0) 3px 9px),
+    radial-gradient(ellipse at 46% 30%, var(--teak-lit) 0%, var(--teak) 52%, var(--teak-deep) 100%);
+  border: 1.1cqw solid var(--teak-lit);
+  border-radius: 1.2cqw;
+  box-shadow:
+    inset 0 0 0 0.26cqw var(--brass-deep),
+    inset 0 1cqh 6cqh rgba(0, 0, 0, .38),
+    0 3cqh 7cqh rgba(0, 0, 0, .55);
+  overflow: hidden;
+}
+
+/* A faint sheen across the whole table, as if it were varnished. */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 246, 224, .07) 0%, rgba(255, 246, 224, 0) 34%, rgba(0, 0, 0, .12) 100%);
+}
+
+/* --- Region boxes --- */
+.t-title   { position: absolute; left: 4.5%;  top: 3.4%;  width: 46%;   height: 9%; }
+.t-bearing { position: absolute; left: 55.5%; top: 3.4%;  width: 40%;   height: 9%; }
+.t-target  { position: absolute; left: 4.5%;  top: 14%;   width: 46%;   height: 69%; }
+.t-home    { position: absolute; left: 55.5%; top: 14%;   width: 26%;   height: 40%; }
+.t-roster  { position: absolute; left: 83%;   top: 14%;   width: 12.5%; height: 40%; }
+.t-log     { position: absolute; left: 55.5%; top: 56%;   width: 40%;   height: 22%; }
+.t-phase   { position: absolute; left: 55.5%; top: 79.5%; width: 40%;   height: 5%; }
+.t-status  { position: absolute; left: 4.5%;  top: 84.5%; width: 46%;   height: 6%; }
+.t-actions { position: absolute; left: 55.5%; top: 85%;   width: 40%;   height: 11%; }
+.t-result  { position: absolute; left: 6%;    top: 41%;   width: 43%; }
+
+/* --- Title --- */
+.t-title h1 {
+  font-family: var(--display);
+  font-size: 3.1cqw;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--chart);
+  text-shadow: 0 0.25cqh 0.7cqh rgba(0, 0, 0, .6);
+}
+.t-rule {
+  margin-top: 0.6cqh;
+  font-size: 1.2cqw;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* --- The bearing plate: the square under your cursor --- */
+.t-bearing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4cqw;
+  padding: 0 1.8cqw;
+  border-radius: 0.6cqw;
+  background: linear-gradient(168deg, #b98f45 0%, #8a6528 58%, #6d4d1c 100%);
+  box-shadow:
+    inset 0 0.2cqh 0.5cqh rgba(255, 240, 205, .5),
+    inset 0 -0.3cqh 0.7cqh rgba(0, 0, 0, .4),
+    0 0.6cqh 1.4cqh rgba(0, 0, 0, .45);
+}
+.bearing-label {
+  font-size: 1.1cqw;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(38, 24, 8, .75);
+}
+.bearing-value {
+  min-width: 6.2cqw;
+  font-family: var(--mono);
+  font-size: 3.4cqw;
+  font-weight: 700;
+  line-height: 1;
+  text-align: right;
+  color: #241706;
+  text-shadow: 0 0.14cqh 0 rgba(255, 240, 205, .35);
+}
+
+/* --- A board: a name, then a square chart under glass --- */
+.board { display: flex; flex-direction: column; align-items: stretch; }
+.board-name {
+  margin-bottom: 0.8cqh;
+  text-align: center;
+  font-size: 1.25cqw;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.frame {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  padding: 2.5cqw 0 0 2.5cqw;
+}
+
+.labels {
+  position: absolute;
+  display: grid;
+  font-family: var(--mono);
+  font-size: 1.15cqw;
+  letter-spacing: 0.04em;
+  color: var(--chart-dim);
+}
+.labels span { display: grid; place-items: center; }
+.cols { left: 2.5cqw; right: 0; top: 0; height: 2.5cqw; grid-template-columns: repeat(10, 1fr); }
+.rows { left: 0; top: 2.5cqw; bottom: 0; width: 2.5cqw; grid-template-rows: repeat(10, 1fr); }
+
+/* The chart itself: deep water under a sheet of glass. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  width: 100%;
+  height: 100%;
+  gap: 0.12cqw;
+  padding: 0.35cqw;
+  border-radius: 0.4cqw;
+  background:
+    linear-gradient(151deg, rgba(255, 255, 255, .09) 0%, rgba(255, 255, 255, 0) 40%),
+    repeating-linear-gradient(74deg,
+      rgba(255, 255, 255, .028) 0 2px,
+      rgba(0, 0, 0, .03) 2px 6px),
+    radial-gradient(ellipse at 38% 24%, var(--sea-lit) 0%, var(--sea) 48%, var(--sea-deep) 100%);
+  box-shadow:
+    inset 0 0 0 0.18cqw var(--brass-deep),
+    inset 0 0.6cqh 2.4cqh rgba(0, 0, 0, .5),
+    0 0.9cqh 2.2cqh rgba(0, 0, 0, .45);
+}
+
+.cell {
+  position: relative;
+  padding: 0;
+  border: 0.06cqw solid var(--sea-line);
+  border-radius: 0.14cqw;
+  background: rgba(255, 255, 255, .015);
+  font: inherit;
+  color: inherit;
+  cursor: default;
+}
+.grid.live .cell:not(:disabled) { cursor: crosshair; }
+.grid.live .cell:not(:disabled):hover { background: rgba(233, 223, 199, .12); }
+.cell:focus-visible { outline: 0.24cqw solid var(--brass); outline-offset: -0.24cqw; z-index: 2; }
+
+/* Your own ships: riveted steel plate. */
+.cell.ship {
+  background: linear-gradient(158deg, var(--steel) 0%, var(--steel-dark) 100%);
+  border-color: rgba(0, 0, 0, .3);
+  box-shadow: inset 0 0.1cqh 0.2cqh rgba(255, 255, 255, .3);
+}
+.cell.ship.dead {
+  background: linear-gradient(158deg, #7c4038 0%, #3f1e19 100%);
+}
+
+/* The pegs. A miss is white, a hit is red — as in the box game. */
+.cell.miss::after,
+.cell.hit::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 46%; height: 46%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+/* Only a peg drawn for the first time drops into place. */
+.cell.fresh::after { animation: peg .22s ease-out; }
+.cell.miss::after {
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, var(--peg-white) 45%, #b9b2a2 100%);
+  box-shadow: 0 0.16cqh 0.3cqh rgba(0, 0, 0, .5);
+}
+.cell.hit::after {
+  background: radial-gradient(circle at 34% 30%, #ff8b73 0%, var(--peg-red) 46%, #7c231b 100%);
+  box-shadow: 0 0.16cqh 0.34cqh rgba(0, 0, 0, .55), 0 0 1.2cqh rgba(207, 68, 56, .55);
+}
+@keyframes peg {
+  from { transform: translate(-50%, -50%) scale(2.1); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+}
+
+/* Where a ship would land if you clicked here. */
+.cell.ghost-ok {
+  background: rgba(134, 207, 192, .45);
+  border-color: var(--sig);
+}
+.cell.ghost-bad {
+  background: rgba(207, 68, 56, .42);
+  border-color: var(--peg-red);
+}
+
+/* The enemy taking aim, for the moment before the shell lands. */
+.cell.aim::before {
+  content: "";
+  position: absolute;
+  inset: -0.1cqw;
+  border: 0.24cqw solid var(--peg-red);
+  border-radius: 50%;
+  animation: aim .8s ease-out infinite;
+}
+@keyframes aim {
+  from { transform: scale(1.9); opacity: 0; }
+  60%  { opacity: 1; }
+  to   { transform: scale(.9);  opacity: .5; }
+}
+
+/* --- The roster: which ships are still afloat --- */
+.roster-title {
+  margin-bottom: 0.8cqh;
+  font-size: 1.15cqw;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.roster { display: grid; align-content: start; gap: 1.1cqh; list-style: none; padding: 0; }
+.roster li {
+  padding: 0.7cqh 0.7cqw;
+  border-left: 0.3cqw solid var(--brass-deep);
+  border-radius: 0.2cqw;
+  background: rgba(8, 34, 47, .45);
+}
+.roster .name {
+  display: block;
+  font-size: 1.05cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chart);
+}
+.roster .hull { display: flex; gap: 0.16cqw; margin-top: 0.5cqh; }
+.roster .hull i {
+  flex: 1;
+  height: 0.9cqh;
+  border-radius: 0.1cqw;
+  background: var(--steel);
+}
+.roster li.next { border-left-color: var(--sig); background: rgba(134, 207, 192, .16); }
+.roster li.done { opacity: .5; }
+.roster li.done .hull i { background: var(--steel-dark); }
+.roster li.gone { border-left-color: var(--peg-red); }
+.roster li.gone .name { color: var(--lose); text-decoration: line-through; }
+.roster li.gone .hull i { background: #6d2b24; }
+
+/* --- The signal log --- */
+.log-title {
+  margin-bottom: 0.6cqh;
+  font-size: 1.05cqw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+.log {
+  height: calc(100% - 3cqh);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2cqh;
+  margin: 0;
+  padding: 0.7cqh 1cqw;
+  list-style: none;
+  border-radius: 0.4cqw;
+  background: rgba(8, 34, 47, .5);
+  box-shadow: inset 0 0 0 0.1cqw rgba(233, 223, 199, .12);
+  font-family: var(--mono);
+  font-size: 1.15cqw;
+  line-height: 1.5;
+  color: var(--chart-dim);
+}
+.log li b { color: var(--chart); font-weight: 400; }
+.log li.hit b { color: var(--lose); }
+.log li.sunk { color: var(--brass); }
+.log li:first-child { color: var(--chart); }
+
+/* --- Phase and status --- */
+.t-phase { display: flex; align-items: center; gap: 0.8cqw; }
+.t-phase span {
+  font-size: 1.05cqw;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--chart-dim);
+}
+.t-phase b {
+  padding: 0.4cqh 1cqw;
+  border-radius: 2cqw;
+  background: rgba(214, 169, 92, .16);
+  box-shadow: inset 0 0 0 0.1cqw var(--brass-deep);
+  font-size: 1.2cqw;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--brass);
+}
+.t-status {
+  display: flex;
+  align-items: center;
+  font-size: 1.35cqw;
+  color: var(--chart);
+}
+.t-status.bad { color: var(--lose); }
+
+/* --- The result plaque --- */
+.t-result {
+  padding: 2.4cqh 2cqw;
+  border-radius: 0.6cqw;
+  background: linear-gradient(168deg, rgba(20, 12, 5, .93) 0%, rgba(10, 6, 2, .95) 100%);
+  box-shadow: inset 0 0 0 0.2cqw var(--brass-deep), 0 1.6cqh 4cqh rgba(0, 0, 0, .6);
+  font-family: var(--display);
+  font-size: 2.5cqw;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--chart);
+  animation: plaque .3s ease-out;
+}
+.t-result.win  { color: var(--win); }
+.t-result.lose { color: var(--lose); }
+@keyframes plaque {
+  from { transform: scale(.9); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+/* --- The keys --- */
+.t-actions { display: flex; align-items: center; gap: 1.2cqw; }
+.key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 6.4cqh;
+  border: 0;
+  border-radius: 0.5cqw;
+  background: linear-gradient(172deg, #5b6a72 0%, #33424a 62%, #223037 100%);
+  box-shadow:
+    inset 0 0.25cqh 0.4cqh rgba(255, 255, 255, .26),
+    inset 0 -0.35cqh 0.5cqh rgba(0, 0, 0, .45),
+    0 0.7cqh 1.4cqh rgba(0, 0, 0, .45);
+  font-family: var(--display);
+  font-size: 1.4cqw;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--chart);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  background: linear-gradient(172deg, #d8b063 0%, #a97c2e 62%, #7d5a1c 100%);
+  color: #211504;
+}
+/* The key cap on a button, so the shortcut is where the action is. Sized
+   in em, so it follows whatever the button's own font size turns out to be. */
+.key kbd {
+  margin-left: 0.75em;
+  padding: 0.1em 0.45em;
+  border: 0.075em solid rgba(233, 223, 199, .4);
+  border-radius: 0.25em;
+  background: rgba(8, 34, 47, .45);
+  box-shadow: inset 0 0.09em 0 rgba(255, 255, 255, .18);
+  font-family: var(--mono);
+  font-size: 0.82em;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--chart);
+}
+.key:hover:not(:disabled) { transform: translateY(-0.4cqh); }
+.key:active:not(:disabled) { transform: translateY(0.2cqh); box-shadow: inset 0 0.3cqh 0.6cqh rgba(0, 0, 0, .5); }
+.key:focus-visible { outline: 0.3cqw solid var(--brass); outline-offset: 0.3cqw; }
+.key:disabled { opacity: .34; cursor: not-allowed; }
+
+/* --- Standing up on a narrow screen --- */
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  body { overflow: visible; place-items: start center; }
+  .table {
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px 16px 32px;
+    border-width: 8px;
+    border-radius: 10px;
+  }
+  .table > * { position: static !important; width: 100% !important; height: auto !important; left: auto; top: auto; }
+  .t-title h1 { font-size: 2rem; }
+  .t-rule, .bearing-label, .board-name, .roster-title, .log-title, .t-phase span { font-size: .7rem; }
+  .t-bearing { height: 62px !important; border-radius: 8px; padding: 0 16px; }
+  .bearing-value { font-size: 2rem; min-width: 4ch; }
+  .frame { width: 100%; height: auto; padding: 22px 0 0 22px; }
+  .cols { left: 22px; height: 22px; }
+  .rows { top: 22px; width: 22px; }
+  .labels, .log, .roster .name, .t-phase b { font-size: .72rem; }
+  .grid { aspect-ratio: 1; height: auto; border-radius: 4px; padding: 3px; gap: 1px; }
+  .roster { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+  .roster .hull i { height: 6px; }
+  .log { height: 150px; font-size: .74rem; padding: 8px 10px; }
+  .t-status { font-size: .95rem; }
+  .t-result { order: -1; font-size: 1.3rem; padding: 16px; }
+  .t-actions { gap: 10px; }
+  .key { height: 48px; font-size: .8rem; border-radius: 6px; }
+  .cell.miss::after, .cell.hit::after { box-shadow: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell.fresh::after, .t-result { animation: none; }
+  .cell.aim::before { animation: none; opacity: 1; transform: scale(1); }
+  .key { transition: none; }
+}
