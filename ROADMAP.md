@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the six finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the seven finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -119,11 +119,32 @@ We left these out on purpose: layers, a fill tool, shapes and straight lines, zo
 
 Canvas connects webpage programs to game graphics.
 
+### 7. Balloon shooting game
+
+The balloon stall is the first game that runs on its own. It is still an ordinary webpage.
+
+- Game loops
+- Time-based movement
+- Velocity and gravity
+- Angles and trigonometry
+- Collision detection
+- Adding and removing objects
+- Score, lives, and restarting
+
+Every project before this one waited for a click. This one does not wait. A `requestAnimationFrame` loop measures how long the last frame took, hands that number to the game, and draws everything again — sixty times a second, whether anyone touches the page or not.
+
+The rule the project exists to teach is one line long. **Move a thing by its speed multiplied by the time that passed.** Never move it a fixed number of pixels per frame. That version runs at double speed on a 120Hz screen, and it makes gravity a special case instead of a consequence.
+
+Time-based movement then buys three things at once. Gravity is one line that adds to `vy`. Slow motion is one multiplier on `seconds`, and none of the nine stubs has to know. And the game plays the same on every machine.
+
+The second lesson is that a game is two lists that things enter and leave. Balloons arrive on a timer and leave at the top. Darts arrive on a click and leave at the bottom. Deciding when a thing is finished is a real function with a real name, and the loop that removes them counts backwards for a reason.
+
+We left these out on purpose: wind, bouncing darts, a limited number of darts, points that vary by balloon size, and rising difficulty. Several kinds of entity moving by different rules is project 8, and it is the next thing this game wants.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 7 | Balloon shooting | A game loop and time-based movement |
 | 8 | Parachuter | Many entities, and sprites as plain data |
 | 9 | Phaser remake | What a game library replaces |
 | 10 | Aliens | A game built on the library |
@@ -141,31 +162,6 @@ Canvas connects webpage programs to game graphics.
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 7. Balloon shooting game
-
-This is the first game that animates on its own.
-
-- Game loops
-- Time-based movement
-- Velocity and gravity
-- Angles and trigonometry
-- Collision detection
-- Adding and removing objects
-- Score, lives, and restarting
-
-Stages:
-
-1. Draw one balloon.
-2. Make the balloon move.
-3. Add a projectile.
-4. Aim with the mouse.
-5. Detect a hit.
-6. Add several balloons.
-7. Add gravity.
-8. Add score, lives, and a restart state.
-
-The game moves things by elapsed time. It does not move things a fixed number of pixels per frame.
 
 ### 8. Parachuter game
 

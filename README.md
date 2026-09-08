@@ -68,6 +68,16 @@ The page gives you the bench, the paints and the keys. You write the drawing its
 
 Files: `06-paint/paint.html`, `06-paint/styles.css`, `06-paint/paint.js`.
 
+### Balloon stall
+
+A shooting stall on the pier at dusk. Balloons float up out of the sea. A brass cannon follows your mouse, and a dart arcs towards whatever you clicked.
+
+The page gives you the stall, the sky and the keys. You write the balloons, the aiming and the darts. You also write the rule for a hit, and what a fresh game looks like.
+
+This is the first program that keeps going when you do nothing. Everything in it moves by the time that passed, not by a fixed number of pixels.
+
+Files: `07-balloons/balloons.html`, `07-balloons/styles.css`, `07-balloons/balloons.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -76,16 +86,17 @@ Files: `06-paint/paint.html`, `06-paint/styles.css`, `06-paint/paint.js`.
 4. **Then build blackjack.** You learn objects, randomness, and rules with several cases. The program is always in one named phase.
 5. **Then build battleship.** You learn maps. A grid is a list of rows, and each row is a list of squares. You also learn how a program keeps a secret from you.
 6. **Then build the paint app.** You learn the canvas, and you learn that it forgets everything. You keep the drawing yourself, and undo comes free.
+7. **Then build the balloon stall.** You learn the game loop. Everything moves by time, and gravity turns out to be one line.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-The canvas is in place, so the pictures start to move.
+The pictures move now, so the games get bigger.
 
-1. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
-2. **Parachuter.** Many things moving at once, each one with its own rules.
-3. **Phaser remake.** The same game again with a game library, so you can see what it replaces.
+1. **Parachuter.** Many things moving at once, each one with its own rules.
+2. **Phaser remake.** The same game again with a game library, so you can see what it replaces.
+3. **Aliens.** The first new game built on that library.
 
 The remake is a comparison, not a bigger game. You will be able to point at every part the library replaced.
 

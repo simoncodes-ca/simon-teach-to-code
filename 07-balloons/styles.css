@@ -1,0 +1,372 @@
+/* ============================================================
+   Simon's Balloon Stall — a shooting gallery on the pier.
+   A striped canvas awning over a painted timber stall, a row
+   of bulbs along the top, and the dusk sky behind it. Only the
+   balloons and the bulbs are bright.
+   ============================================================ */
+
+:root {
+  --timber: #4a2f22;
+  --timber-lit: #6f4a33;
+  --timber-deep: #22140e;
+  --stripe-a: #8f2f2c;
+  --stripe-b: #f0e2c6;
+  --board: #2b3a52;
+  --board-lit: #43587a;
+  --board-deep: #16202f;
+  --brass: #c9922e;
+  --brass-lit: #eec870;
+  --brass-dark: #7d5713;
+  --bulb: #ffd98a;
+  --canvas-cream: #efe3c8;
+  --ink: #23180f;
+  --go: #e0562f;
+  --display: "Futura", "Century Gothic", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--ink);
+  background: #0d0b12 radial-gradient(ellipse at 50% 22%, #2a2338 0%, #16121e 52%, #0a080e 100%);
+  container-type: size;
+}
+
+/* The stall: one frontage. Every region is placed as a % of this frame,
+   so the whole thing scales together like one photograph. */
+.stall {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(255, 255, 255, .05) 0 2px,
+      rgba(0, 0, 0, .10) 2px 5px,
+      rgba(255, 255, 255, 0) 5px 26px),
+    linear-gradient(179deg, var(--timber-lit) 0%, var(--timber) 34%, var(--timber-deep) 100%);
+  border: 1.1cqw solid var(--timber-lit);
+  border-radius: 1cqw;
+  box-shadow:
+    inset 0 0 0 0.22cqw rgba(0, 0, 0, .3),
+    inset 0 1cqh 6cqh rgba(0, 0, 0, .3),
+    0 3cqh 7cqh rgba(0, 0, 0, .6);
+  overflow: hidden;
+}
+
+/* The string of bulbs along the very top of the stall. */
+.bulbs {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3.4%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 1.7cqw 62%,
+      #fff2cf 0 0.28cqw,
+      var(--bulb) 0.28cqw 0.46cqw,
+      rgba(255, 217, 138, .34) 0.46cqw 0.95cqw,
+      rgba(255, 217, 138, 0) 0.95cqw 100%) 0 0 / 3.4cqw 100% repeat-x,
+    linear-gradient(180deg, rgba(0, 0, 0, .5) 0 22%, rgba(0, 0, 0, 0) 22%);
+}
+
+/* --- Region boxes --- */
+.s-valance { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.4%; }
+.s-sky     { position: absolute; left: 4%;  top: 13.4%; width: 61%; height: 74%; }
+.s-status  { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.s-ledge   { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The awning valance across the top --- */
+.s-valance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6cqw;
+  padding: 0 1.8cqw 1.9cqh;
+  color: #3b1b18;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--stripe-a) 0 2.6cqw,
+      var(--stripe-b) 2.6cqw 5.2cqw) 0 100% / 100% 1.9cqh no-repeat,
+    linear-gradient(179deg, #fdf4de 0%, var(--stripe-b) 62%, #d9c8a4 100%);
+  border-radius: 0.2cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.6cqh rgba(255, 255, 255, .7),
+    0 0.6cqh 1.4cqh rgba(0, 0, 0, .5);
+}
+.valance-name {
+  flex: none;
+  white-space: nowrap;
+  color: var(--stripe-a);
+  font-family: var(--display);
+  font-size: 1.8cqw;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.valance-read {
+  display: flex;
+  align-items: baseline;
+  gap: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 1.9cqw;
+  font-weight: 700;
+}
+.valance-read b { min-width: 3.4cqw; text-align: right; }
+.valance-read i { font-style: normal; opacity: .55; }
+.valance-count {
+  white-space: nowrap;
+  font-size: 1.05cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.valance-count b { font-family: var(--mono); font-size: 1.3cqw; }
+
+/* --- The sky, seen through the stall's window --- */
+.s-sky { display: grid; place-items: center; }
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  max-height: 100%;
+  background: var(--board-deep);
+  border: 0.5cqw solid var(--timber-lit);
+  border-radius: 0.4cqw;
+  box-shadow:
+    inset 0 0 0 0.14cqw rgba(0, 0, 0, .5),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .55);
+}
+
+#sky {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* Evening light in the corners of the window. It is a CSS layer over
+   the canvas, so it never lands in the game's own pixels. */
+.dusk {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 42%, rgba(255, 255, 255, .06) 0%, rgba(0, 0, 0, 0) 46%, rgba(0, 0, 0, .32) 100%);
+}
+
+/* --- The status line, chalked under the window --- */
+.s-status {
+  display: flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 1.3cqw;
+  color: rgba(240, 226, 198, .8);
+}
+
+/* --- The ledge: the counter you stand at --- */
+.s-ledge {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6cqh;
+  padding: 1.6cqh 1.4cqw;
+  border-radius: 0.8cqw;
+  color: var(--canvas-cream);
+  background:
+    linear-gradient(163deg, rgba(255, 255, 255, .12) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(180deg, var(--board-lit) 0%, var(--board) 48%, var(--board-deep) 100%);
+  box-shadow:
+    inset 0 0 0 0.16cqw rgba(255, 255, 255, .16),
+    inset 0 -0.8cqh 2cqh rgba(0, 0, 0, .4),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .5);
+}
+
+.panel { display: flex; flex-direction: column; gap: 0.9cqh; }
+.panel-title {
+  font-size: 1.05cqw;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(240, 226, 198, .58);
+}
+
+/* The aim dial: the cannon's angle, drawn on its own. */
+.panel-aim #dial {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  border-radius: 0.4cqw;
+  background: #101827;
+  box-shadow:
+    inset 0 0 0 0.12cqw rgba(0, 0, 0, .6),
+    inset 0 0.4cqh 1.2cqh rgba(0, 0, 0, .4);
+}
+
+/* Lives, drawn as balloons on a string. */
+.hearts { display: flex; gap: 0.6cqw; }
+.heart {
+  width: 1.9cqw;
+  height: 2.4cqw;
+  border-radius: 50% 50% 46% 46%;
+  background: radial-gradient(circle at 34% 30%, #ff9c8c 0%, var(--go) 52%, #8f2f18 100%);
+  box-shadow: 0 0.3cqh 0.6cqh rgba(0, 0, 0, .45);
+}
+.heart-gone {
+  background: none;
+  box-shadow: inset 0 0 0 0.12cqw rgba(240, 226, 198, .35);
+}
+
+/* The figures: the numbers the game keeps. */
+.figures { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8cqh 0.8cqw; }
+.figures > div {
+  padding: 0.7cqh 0.7cqw;
+  border-radius: 0.4cqw;
+  background: rgba(0, 0, 0, .3);
+  box-shadow: inset 0 0 0 0.1cqw rgba(255, 255, 255, .1);
+}
+.figures dt {
+  font-size: 0.85cqw;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(240, 226, 198, .55);
+}
+.figures dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.8cqw;
+  font-weight: 700;
+  color: var(--brass-lit);
+}
+
+/* Normal speed or slow motion. */
+.tools { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6cqw; }
+.tool, .key {
+  padding: 1.1cqh 0;
+  border: none;
+  border-radius: 0.4cqw;
+  cursor: pointer;
+  font-family: var(--display);
+  font-size: 1.25cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2c1f14;
+  background: linear-gradient(178deg, var(--stripe-b) 0%, #cdbb99 100%);
+  box-shadow:
+    inset 0 0.2cqh 0.4cqh rgba(255, 255, 255, .8),
+    0 0.5cqh 1cqh rgba(0, 0, 0, .4);
+  transition: transform .1s ease, filter .1s ease;
+}
+.tool:hover, .key:hover:not(:disabled) { filter: brightness(1.08); }
+.tool:active, .key:active:not(:disabled) { transform: translateY(0.3cqh); }
+.tool[aria-pressed="true"] {
+  color: var(--bulb);
+  background: linear-gradient(178deg, #4a3a22 0%, #251a0e 100%);
+  box-shadow: inset 0 0.3cqh 0.8cqh rgba(0, 0, 0, .6);
+}
+
+/* The three things worth knowing, printed on the counter. */
+.panel-rules { flex: 1; min-height: 0; }
+.rules {
+  margin: 0;
+  padding-left: 1.1cqw;
+  font-size: 1.05cqw;
+  line-height: 1.5;
+  color: rgba(239, 227, 200, .72);
+}
+.rules li { margin-bottom: 0.7cqh; }
+.rules li::marker { color: var(--brass); }
+
+.panel-keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6cqw;
+  margin-top: auto;
+}
+.key kbd {
+  margin-left: 0.4cqw;
+  padding: 0.1cqh 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  background: rgba(0, 0, 0, .14);
+}
+.key-go {
+  color: #fff2e2;
+  background: linear-gradient(178deg, #f2794f 0%, var(--go) 58%, #9c3417 100%);
+}
+.key:disabled { opacity: .38; cursor: default; box-shadow: none; }
+
+/* Narrow windows: the stall stands up into one column and the page
+   scrolls. The window stays 4:3 and full width; the counter becomes a
+   stack of panels under it. */
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  body { overflow: visible; place-items: start center; }
+  .stall {
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 26px 14px 28px;
+    border-width: 8px;
+    border-radius: 10px;
+  }
+  .stall > * { position: static !important; width: 100% !important; height: auto !important; left: auto; top: auto; }
+  .bulbs {
+    position: absolute !important;
+    height: 14px !important;
+    background:
+      radial-gradient(circle at 10px 62%,
+        #fff2cf 0 2.5px, var(--bulb) 2.5px 4px,
+        rgba(255, 217, 138, .34) 4px 8px,
+        rgba(255, 217, 138, 0) 8px 100%) 0 0 / 28px 100% repeat-x,
+      linear-gradient(180deg, rgba(0, 0, 0, .5) 0 22%, rgba(0, 0, 0, 0) 22%);
+  }
+  .s-valance {
+    order: 1;
+    min-height: 56px;
+    padding: 10px 14px 14px;
+    border-radius: 3px;
+    gap: 10px;
+    flex-wrap: wrap;
+    background:
+      repeating-linear-gradient(90deg, var(--stripe-a) 0 20px, var(--stripe-b) 20px 40px) 0 100% / 100% 12px no-repeat,
+      linear-gradient(179deg, #fdf4de 0%, var(--stripe-b) 62%, #d9c8a4 100%);
+  }
+  .s-sky { order: 2; }
+  .s-status { order: 3; }
+  .s-ledge { order: 4; }
+  .valance-name { font-size: .95rem; padding: 2px 8px; }
+  .valance-read { font-size: 1.1rem; padding: 2px 8px; }
+  .valance-read b { min-width: 4ch; }
+  .valance-count { font-size: .62rem; padding: 3px 8px; }
+  .valance-count b { font-size: .78rem; }
+  .frame { width: 100%; max-height: none; border-width: 5px; }
+  .s-status { font-size: .9rem; margin-top: -4px; }
+  .s-ledge { gap: 14px; padding: 14px; border-radius: 8px; }
+  .panel-title { font-size: .62rem; }
+  .panel-aim #dial { border-radius: 4px; }
+  .hearts { gap: 8px; }
+  .heart { width: 22px; height: 28px; }
+  .figures { gap: 8px; }
+  .figures dt { font-size: .58rem; }
+  .figures dd { font-size: 1.1rem; }
+  .panel-rules { flex: none; }
+  .rules { font-size: .8rem; padding-left: 18px; }
+  .rules li { margin-bottom: 4px; }
+  .tools, .panel-keys { gap: 10px; }
+  .tool, .key { height: 48px; padding: 0; font-size: .8rem; border-radius: 6px; }
+  .key kbd { font-size: .65rem; padding: 2px 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool, .key { transition: none; }
+}
