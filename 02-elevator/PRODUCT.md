@@ -39,7 +39,7 @@ Most programming tutorials for children are either toy scripts with no product, 
 - One named `state` variable holding exactly the eight states above; every transition is one visible line in the event log.
 - A visible state-and-floor readout, live state-machine diagram, pending-request feedback, and transition log.
 - Smooth car motion belongs in a per-frame JavaScript stub. The supplied car image moves as one piece; CSS door-panel animation is deferred.
-- Graduated hints per stub in comments: a gentle nudge, then a stronger hint, then the answer if he chooses to read it — all in the single `elevator.js`.
+- Graduated hints per stub in comments: a gentle nudge, then a stronger hint, then a pointer to the answer key — one comment block at the bottom of `elevator.js`, grouped by function, so the answers are there without sitting under his nose.
 
 **Explicitly deferred:** direction-aware pickup, door sensors, CSS door-panel animation, more floors, and theming beyond the LEGO construction control board.
 

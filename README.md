@@ -1,39 +1,96 @@
 # Teach to Code
 
-This is how Simon would teach his kids to code. 
+This is how Simon teaches his kids to code.
 
-Here you will findd fun coding experiments for somebody new to coding. Every project is a small, real thing that comes to life as you write the code that makes it work.
+Every project here is a small, real program. The page is already built. You write the code that makes it work.
 
 ## How it works
 
-Each project gives you a finished web page. The HTML holds the buttons and layout. The CSS holds the look. You never need to edit those two files.
+Each project gives you a finished web page. The HTML file holds the buttons and the layout. The CSS file decides how everything looks. You never edit those two files.
 
-The JavaScript file is yours. It starts as a skeleton: every function has a name, a plain-language description, and hints. You fill the functions in, one at a time, in file order. Each one you finish makes something new happen on screen.
+The JavaScript file is yours. Some of its functions are empty. Each empty function has a name, a description in plain words, and hints.
 
-There is nothing to install. Open the HTML file in a browser and the JavaScript file in a text editor, side by side. Edit the JavaScript, save, and refresh the browser to see your change.
+Write those functions one at a time, in the order they appear in the file. Each function you finish makes something new happen on the screen.
+
+For every project on this page, you install nothing. Open the HTML file in a browser. Open the JavaScript file in a text editor. Put the two windows side by side. Change the JavaScript, save it, then refresh the browser page.
 
 ## The projects
 
 ### Calculator
 
-A working calculator: digits, a decimal point, `+ - × ÷`, equals, and clear. The page gives you the buttons. You build the memory (what the calculator remembers between presses), the display, and the arithmetic.
+A calculator that adds, subtracts, multiplies and divides. It also keeps a list of everything you typed.
+
+The page gives you the buttons. You write three things. You write the memory, which is what the calculator remembers between presses. You write the display. You write the arithmetic.
 
 Files: `01-calculator/calculator.html`, `01-calculator/styles.css`, `01-calculator/calculator.js`.
 
-There is also a second skin, `calculator-anna.html`, that dresses the same page differently and shares the same JavaScript. It shows how the look and the logic live apart.
+The project has a second page, `calculator-anna.html`. It looks different but runs the same JavaScript. It shows you that how a page looks and what a page does are two separate things.
 
 ### Elevator
 
-A five-floor building with a working elevator. The call buttons light up and stay lit. The car travels between floors and opens its doors. The page gives you the building, the buttons, and a live diagram. You build the queue of floor requests and the state machine that decides what happens next. A state machine is a program that is always in exactly one named state, like `doorsOpen` or `movingUp`.
+A five-floor building with a working elevator. The call buttons light up and stay lit. The car travels between floors and opens its doors.
+
+The page gives you the building, the buttons and a live diagram. You write the queue of floor requests. You also write the state machine that decides what happens next.
+
+A state machine is a program that is always in exactly one named state, such as `doorsOpen` or `movingUp`.
 
 Files: `02-elevator/elevator.html`, `02-elevator/styles.css`, `02-elevator/elevator.js`.
 
+### Hangman
+
+A word game drawn on sketchbook paper. You guess one letter at a time. Every wrong guess adds another pencil stroke to the drawing. After six wrong guesses the round ends.
+
+The page gives you the paper, the drawing and the row of letters. You write the word display, the letter checking, and the decisions about winning and losing.
+
+Files: `03-hangman/hangman.html`, `03-hangman/styles.css`, `03-hangman/hangman.js`.
+
+### Blackjack
+
+A game of blackjack on a green table. You want a total closer to 21 than the dealer, without going past 21.
+
+The page gives you the table, the cards and the chips. You write the deck, the shuffle, the card values and the totals. You also write the dealer's rule and the decision about who won.
+
+Files: `04-blackjack/blackjack.html`, `04-blackjack/styles.css`, `04-blackjack/blackjack.js`.
+
+### Battleship
+
+Two seas on a plotting table. You can see your own fleet. You cannot see theirs. You take it in turns to fire one shot until one fleet is gone.
+
+The page gives you the table, the charts and the pegs. You write the grid, the ship placing, and the firing. You also write the rule for when a ship has sunk, and the enemy's turn.
+
+Files: `05-battleship/battleship.html`, `05-battleship/styles.css`, `05-battleship/battleship.js`.
+
 ## Suggested learning path
 
-1. **Start with the calculator.** It is the smaller program. You meet the core ideas one at a time: remembering values, listening for clicks, and updating the screen.
-2. **Then move to the elevator.** It is a bigger machine. You combine those ideas, add a queue, and keep a whole machine in a consistent state.
+1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
+2. **Then build the elevator.** It is a bigger machine. You use those same ideas, add a queue, and keep the whole machine in one sensible state.
+3. **Then build hangman.** You learn strings, loops and true/false values. You also learn the idea under both earlier projects: everything on the screen comes from a small amount of memory.
+4. **Then build blackjack.** You learn objects, randomness, and rules with several cases. The program is always in one named phase.
+5. **Then build battleship.** You learn maps. A grid is a list of rows, and each row is a list of squares. You also learn how a program keeps a secret from you.
 
-New projects will appear here over time. The path for now is calculator first, elevator second.
+More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
+
+## What comes next
+
+The next three projects stay ordinary web pages, then the pictures start to move.
+
+1. **Paint app.** Your first canvas. You draw with the mouse, then add undo.
+2. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
+3. **Parachuter.** Many things moving at once, each one with its own rules.
+
+After those, you rebuild a game you already finished using Phaser, a real game library. You will be able to point at every part the library replaced.
+
+The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
+
+### Three moments where the rules change
+
+Three projects on the trail change how you work, not just what you build.
+
+- **Project 14.** You split one finished game into several files. You also learn git.
+- **Project 15.** You write a second program, a server, so two computers can share one score table.
+- **Project 17.** You move to TypeScript. From here you install things, and the page needs a build step before it runs.
+
+Every project before 14 stays one JavaScript file that you open by double-clicking. That is on purpose. One file is the easiest way to start.
 
 ## Getting started
 

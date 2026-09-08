@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Blackjack</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="table">
+    <div class="arc" aria-hidden="true"></div>
+    <header class="t-title">
+      <h1>Simon&rsquo;s Blackjack</h1>
+      <p class="t-rule">Dealer stands on 17 &middot; Blackjack pays even</p>
+    </header>
+
+    <section class="t-dealer seat" aria-label="Dealer's hand">
+      <p class="seat-name">Dealer</p>
+      <div class="hand" id="dealerHand"></div>
+      <p class="total" id="dealerTotal" aria-live="polite"></p>
+    </section>
+
+    <section class="t-player seat" aria-label="Your hand">
+      <p class="seat-name">You</p>
+      <div class="hand" id="playerHand"></div>
+      <p class="total" id="playerTotal" aria-live="polite"></p>
+    </section>
+
+    <aside class="t-shoe" aria-label="The deck">
+      <div class="shoe" id="shoe"><span class="shoe-count" id="deckCount">0</span></div>
+      <p class="shoe-label">cards in the deck</p>
+      <svg class="ribbon" id="ribbon" viewBox="0 0 520 34" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <p class="ribbon-label">the deck, in order &mdash; <b>red</b> and <b>black</b></p>
+    </aside>
+
+    <p class="t-phase" id="phase" aria-live="polite"></p>
+    <p class="t-status" id="status" aria-live="polite"></p>
+    <p class="t-result" id="result" hidden></p>
+
+    <div class="t-actions">
+      <button class="chip chip-hit" id="hit" type="button">Hit</button>
+      <button class="chip chip-stand" id="stand" type="button">Stand</button>
+      <button class="chip chip-deal" id="deal" type="button">New deal</button>
+    </div>
+  </main>
+  <script src="blackjack.js"></script>
+</body>
+</html>

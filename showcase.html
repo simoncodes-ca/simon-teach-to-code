@@ -23,7 +23,7 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; background: var(--night); }
+    html { scroll-behavior: smooth; background: var(--night); overflow-x: clip; }
     body {
       margin: 0;
       min-width: 320px;
@@ -138,7 +138,7 @@
       grid-template-columns: repeat(12, 1fr);
       grid-auto-rows: minmax(52px, auto);
       gap: 14px 18px;
-      min-height: 1080px;
+      min-height: 1300px;
     }
     .landmark { position: relative; z-index: 1; scroll-margin-top: 86px; }
     .landmark:nth-child(1) { grid-column: 1 / span 4; grid-row: 1 / span 3; }
@@ -149,18 +149,22 @@
     .landmark:nth-child(6) { grid-column: 1 / span 4; grid-row: 16 / span 3; }
     .landmark:nth-child(7) { grid-column: 5 / span 4; grid-row: 19 / span 3; }
     .landmark:nth-child(8) { grid-column: 9 / span 4; grid-row: 22 / span 3; }
-.landmark:nth-child(9) { grid-column: 3 / span 4; grid-row: 25 / span 3; }
-.landmark:nth-child(10) { grid-column: 7 / span 4; grid-row: 28 / span 3; }
-.landmark:nth-child(11) { grid-column: 1 / span 4; grid-row: 31 / span 3; }
-.landmark:nth-child(12) { grid-column: 5 / span 4; grid-row: 34 / span 3; }
-.landmark:nth-child(13) { grid-column: 9 / span 4; grid-row: 37 / span 3; }
-.landmark:nth-child(14) { grid-column: 3 / span 4; grid-row: 40 / span 3; }
-.landmark:nth-child(15) { grid-column: 7 / span 4; grid-row: 43 / span 3; }
-.landmark:nth-child(16) { grid-column: 1 / span 4; grid-row: 46 / span 3; }
-.landmark:nth-child(17) { grid-column: 5 / span 4; grid-row: 49 / span 3; }
-.landmark:nth-child(18) { grid-column: 9 / span 4; grid-row: 52 / span 3; }
-.landmark:nth-child(19) { grid-column: 3 / span 4; grid-row: 55 / span 3; }
-.landmark--final { grid-column: 4 / span 6; grid-row: 58 / span 4; }
+    .landmark:nth-child(9) { grid-column: 3 / span 4; grid-row: 25 / span 3; }
+    .landmark:nth-child(10) { grid-column: 7 / span 4; grid-row: 28 / span 3; }
+    .landmark:nth-child(11) { grid-column: 1 / span 4; grid-row: 31 / span 3; }
+    .landmark:nth-child(12) { grid-column: 5 / span 4; grid-row: 34 / span 3; }
+    .landmark:nth-child(13) { grid-column: 9 / span 4; grid-row: 37 / span 3; }
+    .landmark:nth-child(14) { grid-column: 3 / span 4; grid-row: 40 / span 3; }
+    .landmark:nth-child(15) { grid-column: 7 / span 4; grid-row: 43 / span 3; }
+    .landmark:nth-child(16) { grid-column: 1 / span 4; grid-row: 46 / span 3; }
+    .landmark:nth-child(17) { grid-column: 5 / span 4; grid-row: 49 / span 3; }
+    .landmark:nth-child(18) { grid-column: 9 / span 4; grid-row: 52 / span 3; }
+    .landmark:nth-child(19) { grid-column: 3 / span 4; grid-row: 55 / span 3; }
+    .landmark:nth-child(20) { grid-column: 7 / span 4; grid-row: 58 / span 3; }
+    .landmark:nth-child(21) { grid-column: 1 / span 4; grid-row: 61 / span 3; }
+    .landmark:nth-child(22) { grid-column: 5 / span 4; grid-row: 64 / span 3; }
+    .landmark:nth-child(23) { grid-column: 9 / span 4; grid-row: 67 / span 3; }
+    .landmark--final { grid-column: 4 / span 6; grid-row: 70 / span 4; }
 
     .card {
       display: flex;
@@ -270,18 +274,22 @@
       <a href="#project-06"><span>06</span>Paint</a>
       <a href="#project-07"><span>07</span>Balloons</a>
       <a href="#project-08"><span>08</span>Parachuter</a>
-      <a href="#project-09"><span>09</span>Library</a>
+      <a href="#project-09"><span>09</span>Phaser</a>
       <a href="#project-10"><span>10</span>Aliens</a>
-      <a href="#project-11"><span>11</span>Tic-tac-toe</a>
-      <a href="#project-12"><span>12</span>Maze</a>
-      <a href="#project-13"><span>13</span>Helicopter</a>
-      <a href="#project-14"><span>14</span>Tank</a>
-      <a href="#project-15"><span>15</span>Map editor</a>
-      <a href="#project-16"><span>16</span>Units</a>
-      <a href="#project-17"><span>17</span>Resources</a>
-      <a href="#project-18"><span>18</span>Queue</a>
-      <a href="#project-19"><span>19</span>Enemy AI</a>
-      <a href="#project-final"><span>★</span>RTS</a>
+      <a href="#project-11"><span>11</span>Maze</a>
+      <a href="#project-12"><span>12</span>Scrolling</a>
+      <a href="#project-13"><span>13</span>Runner</a>
+      <a href="#project-14"><span>14</span>Many files</a>
+      <a href="#project-15"><span>15</span>Server</a>
+      <a href="#project-16"><span>16</span>Tank</a>
+      <a href="#project-17"><span>17</span>TypeScript</a>
+      <a href="#project-18"><span>18</span>Map editor</a>
+      <a href="#project-19"><span>19</span>Units</a>
+      <a href="#project-20"><span>20</span>Pathfinding</a>
+      <a href="#project-21"><span>21</span>Resources</a>
+      <a href="#project-22"><span>22</span>Queue</a>
+      <a href="#project-23"><span>23</span>Enemy AI</a>
+      <a href="#project-final"><span>★</span>Strategy</a>
     </nav>
 
     <section class="trail-map" aria-labelledby="trail-heading">
@@ -294,23 +302,27 @@
         <div class="landmark"><a class="card" href="01-calculator/calculator.html"><div class="card__top"><span class="number">01 / FIRST STEPS</span><span class="status">Ready</span></div><h2>Calculator</h2><p>Make buttons remember numbers and update a page when you click.</p><div class="skills"><span>Variables</span><span>Functions</span><span>Events</span></div><span class="launch">Open project →</span></a></div>
         <div class="landmark"><a class="card" href="02-elevator/elevator.html"><div class="card__top"><span class="number">02 / MOVING PARTS</span><span class="status">Ready</span></div><h2>Elevator</h2><p>Build a state machine that queues requests and moves between floors.</p><div class="skills"><span>Queues</span><span>Timers</span><span>Animation</span></div><span class="launch">Open project →</span></a></div>
         <div class="landmark"><a class="card" href="03-hangman/hangman.html"><div class="card__top"><span class="number">03 / WORDS</span><span class="status">Ready</span></div><h2>Hangman</h2><p>Use strings, loops, and validation to make a word game.</p><div class="skills"><span>Strings</span><span>Loops</span><span>Rules</span></div><span class="launch">Open project →</span></a></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">04 / DECK</span><span class="status">Coming Soon</span></div><h2>Blackjack</h2><p>Model cards, shuffle a deck, and make decisions from rules.</p><div class="skills"><span>Objects</span><span>Arrays</span><span>Randomness</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">05 / MAPS</span><span class="status">Coming Soon</span></div><h2>Battleship</h2><p>Place ships on a grid and discover coordinates, turns, and hidden information.</p><div class="skills"><span>2D arrays</span><span>Coordinates</span><span>Collision</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">06 / CANVAS</span><span class="status">Coming Soon</span></div><h2>Paint app with undo</h2><p>Draw with pointer events, then keep a history so undo and redo work.</p><div class="skills"><span>Canvas</span><span>Pointer events</span><span>History</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">07 / PHYSICS</span><span class="status">Coming Soon</span></div><h2>Balloon shooting game</h2><p>Animate objects through time, gravity, angles, and collisions.</p><div class="skills"><span>Game loops</span><span>Velocity</span><span>Gravity</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">08 / ENTITIES</span><span class="status">Coming Soon</span></div><h2>Parachuter game</h2><p>Update, collide, remove, and draw many moving entities at once.</p><div class="skills"><span>Spawning</span><span>Counters</span><span>Game over</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">09 / CHECKPOINT</span><span class="status">Coming Soon</span></div><h2>Game library remake</h2><p>Rebuild the balloon or parachuter game and compare what the library replaces.</p><div class="skills"><span>Sprites</span><span>Scenes</span><span>Asset handling</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">10 / WAVES</span><span class="status">Coming Soon</span></div><h2>Aliens game</h2><p>Control a player, fire bullets, and grow a reusable game structure.</p><div class="skills"><span>Keyboard</span><span>Formations</span><span>Waves</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">11 / SMALL GRID</span><span class="status">Coming Soon</span></div><h2>Tic-tac-toe</h2><p>Track board state, turns, wins, and a simple computer decision.</p><div class="skills"><span>Board state</span><span>Turns</span><span>Decisions</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">12 / MAZE</span><span class="status">Coming Soon</span></div><h2>Maze game</h2><p>Represent a map as data and restrict movement with walls.</p><div class="skills"><span>Grid maps</span><span>Collision</span><span>Movement</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">13 / WORLD</span><span class="status">Coming Soon</span></div><h2>2D helicopter game</h2><p>Connect world coordinates, a scrolling camera, and continuous physics.</p><div class="skills"><span>Scrolling</span><span>Camera</span><span>Terrain</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">14 / AIM</span><span class="status">Coming Soon</span></div><h2>Top-down tank game</h2><p>Move, aim, fire, and handle obstacles, health, and damage.</p><div class="skills"><span>Projectiles</span><span>Obstacles</span><span>Health</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">15 / EDITOR</span><span class="status">Coming Soon</span></div><h2>Map editor</h2><p>Edit terrain on a grid, then save and load the map data.</p><div class="skills"><span>Editing</span><span>Terrain</span><span>Saving</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">16 / COMMAND</span><span class="status">Coming Soon</span></div><h2>Unit selection game</h2><p>Select one unit or many, then send them to a destination.</p><div class="skills"><span>Selection</span><span>Commands</span><span>Movement</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">17 / GATHER</span><span class="status">Coming Soon</span></div><h2>Resource gathering game</h2><p>Coordinate workers, resources, production, and progress over time.</p><div class="skills"><span>Workers</span><span>Resources</span><span>Progress</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">18 / QUEUE</span><span class="status">Coming Soon</span></div><h2>Building and production queue</h2><p>Model build times, prerequisites, and enabled or disabled actions.</p><div class="skills"><span>Queues</span><span>Prerequisites</span><span>State</span></div></article></div>
-        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">19 / OPPONENT</span><span class="status">Coming Soon</span></div><h2>Simple enemy AI</h2><p>Choose targets, patrol, attack, and find a path across the map.</p><div class="skills"><span>Targets</span><span>Patrol</span><span>Pathfinding</span></div></article></div>
-        <div class="landmark landmark--final"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">THE HORIZON</span><span class="status">Coming Soon</span></div><h2>Small strategy game</h2><p>A small map, two teams, two unit types, one resource, one building, one queue, and one win condition.</p><div class="skills"><span>Maps</span><span>Units</span><span>Strategy</span></div></article></div>
+        <div class="landmark"><a class="card" href="04-blackjack/blackjack.html"><div class="card__top"><span class="number">04 / DECK</span><span class="status">Ready</span></div><h2>Blackjack</h2><p>Model cards as objects, shuffle a deck, and settle a round from rules.</p><div class="skills"><span>Objects</span><span>Randomness</span><span>Phases</span></div><span class="launch">Open project →</span></a></div>
+        <div class="landmark"><a class="card" href="05-battleship/battleship.html"><div class="card__top"><span class="number">05 / MAPS</span><span class="status">Ready</span></div><h2>Battleship</h2><p>Place ships on a grid. Learn coordinates, turns, and hidden information.</p><div class="skills"><span>2D arrays</span><span>Coordinates</span><span>Turns</span></div><span class="launch">Open project →</span></a></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">06 / CANVAS</span><span class="status">Coming Soon</span></div><h2>Paint app with undo</h2><p>Draw with pointer events. Keep a history so undo and redo work.</p><div class="skills"><span>Canvas</span><span>Pointer events</span><span>History</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">07 / PHYSICS</span><span class="status">Coming Soon</span></div><h2>Balloon shooting game</h2><p>Move objects through time. Add gravity, angles, and collisions.</p><div class="skills"><span>Game loops</span><span>Velocity</span><span>Gravity</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">08 / ENTITIES</span><span class="status">Coming Soon</span></div><h2>Parachuter game</h2><p>Update, collide, remove, and draw many moving things at once.</p><div class="skills"><span>Entities</span><span>Spawning</span><span>Sprites</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">09 / CHECKPOINT</span><span class="status">Coming Soon</span></div><h2>Phaser remake</h2><p>Rebuild the parachuter game with Phaser. See what the library replaces.</p><div class="skills"><span>Phaser</span><span>Scenes</span><span>Assets</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">10 / WAVES</span><span class="status">Coming Soon</span></div><h2>Aliens game</h2><p>Control a player, fire bullets, and face wave after wave.</p><div class="skills"><span>Keyboard</span><span>Formations</span><span>Waves</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">11 / MAZE</span><span class="status">Coming Soon</span></div><h2>Maze game</h2><p>Store a map as data and stop the player walking through walls.</p><div class="skills"><span>Grid maps</span><span>Tile collision</span><span>Movement</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">12 / WORLD</span><span class="status">Coming Soon</span></div><h2>Scrolling world</h2><p>Make the world bigger than the screen and move a camera across it.</p><div class="skills"><span>World space</span><span>Camera</span><span>Terrain</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">13 / DISTANCE</span><span class="status">Coming Soon</span></div><h2>Endless runner</h2><p>Generate obstacles forever. Save the best score so it survives a refresh.</p><div class="skills"><span>Generation</span><span>Difficulty</span><span>Saving</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">14 / CUTOVER</span><span class="status">Coming Soon</span></div><h2>One program, many files</h2><p>Split a finished game into several files. Then learn git.</p><div class="skills"><span>File structure</span><span>Scripts</span><span>Git</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">15 / CUTOVER</span><span class="status">Coming Soon</span></div><h2>Client and server</h2><p>Build a score table two computers share. Learn requests and await.</p><div class="skills"><span>Server</span><span>fetch</span><span>async</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">16 / AIM</span><span class="status">Coming Soon</span></div><h2>Top-down tank game</h2><p>Move, aim, and fire. Handle obstacles, health, and damage.</p><div class="skills"><span>Projectiles</span><span>Obstacles</span><span>Health</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">17 / CUTOVER</span><span class="status">Coming Soon</span></div><h2>TypeScript</h2><p>Rewrite the tank game with types. Meet npm and a build step.</p><div class="skills"><span>Types</span><span>npm</span><span>Build step</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">18 / EDITOR</span><span class="status">Coming Soon</span></div><h2>Map editor</h2><p>Edit terrain on a grid, then save and load it. Write your first tests.</p><div class="skills"><span>Content as data</span><span>Saving</span><span>Tests</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">19 / COMMAND</span><span class="status">Coming Soon</span></div><h2>Unit selection</h2><p>Select one unit or many, then send them somewhere.</p><div class="skills"><span>Selection</span><span>Commands</span><span>Movement</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">20 / ROUTES</span><span class="status">Coming Soon</span></div><h2>Pathfinding</h2><p>Find a route from one cell to another, around walls.</p><div class="skills"><span>Search</span><span>A*</span><span>Grids</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">21 / GATHER</span><span class="status">Coming Soon</span></div><h2>Resources</h2><p>Send workers to gather. Watch counters and progress bars fill.</p><div class="skills"><span>Workers</span><span>Resources</span><span>Progress</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">22 / QUEUE</span><span class="status">Coming Soon</span></div><h2>Building and production</h2><p>Model build times, prerequisites, and buttons that switch off.</p><div class="skills"><span>Queues</span><span>Prerequisites</span><span>State</span></div></article></div>
+        <div class="landmark"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">23 / OPPONENT</span><span class="status">Coming Soon</span></div><h2>Enemy AI</h2><p>Choose a target, patrol the map, and attack when close.</p><div class="skills"><span>Targets</span><span>Patrol</span><span>Attack</span></div></article></div>
+        <div class="landmark landmark--final"><article class="card card--disabled" aria-disabled="true"><div class="card__top"><span class="number">THE HORIZON</span><span class="status">Coming Soon</span></div><h2>Small strategy game</h2><p>One small map, two teams, two unit types, one resource, one building, one queue, one way to win.</p><div class="skills"><span>Maps</span><span>Units</span><span>Strategy</span></div></article></div>
       </div>
     </section>
 
@@ -319,7 +331,7 @@
   </main>
   <script>
     document.querySelectorAll('.landmark').forEach((landmark, index) => {
-      landmark.id = index === 19 ? 'project-final' : `project-${String(index + 1).padStart(2, '0')}`;
+      landmark.id = index === 23 ? 'project-final' : `project-${String(index + 1).padStart(2, '0')}`;
     });
   </script>
 </body>

@@ -218,12 +218,12 @@ body {
   opacity: 0.9;
 }
 .stamp-lose {
-  left: 12%; top: 42%;
+  left: 12%; top: 14%;
   font-size: 3.6cqw;
   background: color-mix(in srgb, var(--paper) 72%, transparent);
 }
 .stamp-win {
-  left: 60%; top: 20%;
+  left: 62%; top: 6%;
   font-size: 2.6cqw;
 }
 
