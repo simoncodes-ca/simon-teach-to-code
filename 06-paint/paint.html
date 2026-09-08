@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Paint</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="bench">
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="b-tape">
+      <span class="tape-name">Simon&rsquo;s Paint</span>
+      <span class="tape-read" aria-label="The point under your cursor">
+        <b id="pointX">&mdash;</b><i>,</i><b id="pointY">&mdash;</b>
+      </span>
+      <span class="tape-count" aria-label="How many strokes are on the paper">
+        <b id="strokeCount">0</b> strokes &middot; <b id="undoneCount">0</b> undone
+      </span>
+    </div>
+
+    <section class="b-paper" aria-label="The paper">
+      <div class="sheet">
+        <span class="tab tab-tl" aria-hidden="true"></span>
+        <span class="tab tab-tr" aria-hidden="true"></span>
+        <span class="tab tab-bl" aria-hidden="true"></span>
+        <span class="tab tab-br" aria-hidden="true"></span>
+        <canvas id="paper" width="1024" height="768" aria-label="Drawing area"></canvas>
+        <div class="tooth" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="b-ledge">
+      <div class="panel panel-preview">
+        <p class="panel-title">Brush</p>
+        <canvas id="preview" width="320" height="120" aria-hidden="true"></canvas>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Paint</p>
+        <div class="pans" id="pans" role="group" aria-label="Colours"></div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Nib</p>
+        <div class="nibs" id="nibs" role="group" aria-label="Brush sizes"></div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Tool</p>
+        <div class="tools">
+          <button class="tool" id="brushTool" type="button" aria-pressed="true">Brush</button>
+          <button class="tool" id="eraserTool" type="button" aria-pressed="false">Eraser</button>
+        </div>
+      </div>
+
+      <div class="panel panel-history">
+        <p class="panel-title">History</p>
+        <div class="ticks" id="ticks" aria-hidden="true"></div>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key" id="undo" type="button" aria-keyshortcuts="Control+z">Undo <kbd aria-hidden="true">Z</kbd></button>
+        <button class="key" id="redo" type="button" aria-keyshortcuts="Control+y">Redo <kbd aria-hidden="true">Y</kbd></button>
+        <button class="key" id="clear" type="button">Clear</button>
+        <button class="key key-go" id="save" type="button">Save</button>
+      </div>
+    </aside>
+
+    <p class="b-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="paint.js"></script>
+</body>
+</html>

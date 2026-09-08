@@ -60,6 +60,14 @@ The page gives you the table, the charts and the pegs. You write the grid, the s
 
 Files: `05-battleship/battleship.html`, `05-battleship/styles.css`, `05-battleship/battleship.js`.
 
+### Paint
+
+A sheet of paper taped to a drawing board, a tin of ten paints and four nibs. You draw with the mouse. Then you take it back: undo, redo, and clear the whole sheet.
+
+The page gives you the bench, the paints and the keys. You write the drawing itself, and the history that makes undo possible. A canvas remembers nothing, so the program has to remember every stroke.
+
+Files: `06-paint/paint.html`, `06-paint/styles.css`, `06-paint/paint.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -67,18 +75,19 @@ Files: `05-battleship/battleship.html`, `05-battleship/styles.css`, `05-battlesh
 3. **Then build hangman.** You learn strings, loops and true/false values. You also learn the idea under both earlier projects: everything on the screen comes from a small amount of memory.
 4. **Then build blackjack.** You learn objects, randomness, and rules with several cases. The program is always in one named phase.
 5. **Then build battleship.** You learn maps. A grid is a list of rows, and each row is a list of squares. You also learn how a program keeps a secret from you.
+6. **Then build the paint app.** You learn the canvas, and you learn that it forgets everything. You keep the drawing yourself, and undo comes free.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-The next three projects stay ordinary web pages, then the pictures start to move.
+The canvas is in place, so the pictures start to move.
 
-1. **Paint app.** Your first canvas. You draw with the mouse, then add undo.
-2. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
-3. **Parachuter.** Many things moving at once, each one with its own rules.
+1. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
+2. **Parachuter.** Many things moving at once, each one with its own rules.
+3. **Phaser remake.** The same game again with a game library, so you can see what it replaces.
 
-After those, you rebuild a game you already finished using Phaser, a real game library. You will be able to point at every part the library replaced.
+The remake is a comparison, not a bigger game. You will be able to point at every part the library replaced.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

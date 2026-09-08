@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the five finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the six finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -99,11 +99,30 @@ We left these out on purpose: an enemy that hunts around its last hit, diagonal 
 
 Battleship teaches maps made of cells. Later projects turn those cells into terrain, buildings, units, resources, and movement areas.
 
+### 6. Paint app with undo
+
+The paint app is the first project that draws. It is still an ordinary webpage.
+
+- Canvas drawing
+- Pointer events
+- Screen coordinates and canvas coordinates
+- Drawing lines and shapes
+- Keeping input separate from drawing
+- History stacks
+- Undo and redo
+
+A canvas is a sheet of pixels, and it remembers nothing. Paint on it and the paint is simply there — so the program keeps every stroke in a list of its own and draws the whole picture again on every mouse move. That is the same `render()` as every project before it, and it is what makes undo possible at all.
+
+Undo and redo are then two lists and four lines. Clear is undo in a loop, which is why a cleared sheet can be brought back stroke by stroke. The eraser is the brush loaded with the paper's own colour, so none of the nine stubs has to know an eraser exists.
+
+We left these out on purpose: layers, a fill tool, shapes and straight lines, zoom and pan, pressure-sensitive width, and saving a drawing so it survives a refresh — that last one is project 13's lesson.
+
+Canvas connects webpage programs to game graphics.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 6 | Paint app | Canvas and pointer events |
 | 7 | Balloon shooting | A game loop and time-based movement |
 | 8 | Parachuter | Many entities, and sprites as plain data |
 | 9 | Phaser remake | What a game library replaces |
@@ -122,32 +141,6 @@ Battleship teaches maps made of cells. Later projects turn those cells into terr
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 6. Paint app with undo
-
-The paint app teaches Canvas before anything moves on its own.
-
-- Canvas drawing
-- Pointer events
-- Screen coordinates and canvas coordinates
-- Drawing lines and shapes
-- Keeping input separate from drawing
-- History stacks
-- Undo and redo
-
-Stages:
-
-1. Draw a dot.
-2. Draw while dragging.
-3. Change the brush size.
-4. Change the colour.
-5. Add an eraser.
-6. Clear the canvas.
-7. Add undo.
-8. Add redo.
-9. Save the drawing as an image.
-
-Canvas connects webpage programs to game graphics.
 
 ### 7. Balloon shooting game
 
