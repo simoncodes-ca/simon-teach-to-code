@@ -78,6 +78,16 @@ This is the first program that keeps going when you do nothing. Everything in it
 
 Files: `07-balloons/balloons.html`, `07-balloons/styles.css`, `07-balloons/balloons.js`.
 
+### Parachuter
+
+A gun post on a ridge at first light. Planes cross the sky and drop paratroopers. Each one falls, opens a chute, lands, then walks at your post.
+
+The page gives you the post, the sky and the keys. You write the troopers, their three states, the shells and the explosions. You also write the rule for two boxes touching.
+
+This is the first game with four kinds of thing in it, and each kind moves by its own rule. Every one of them is the same shape of object.
+
+Files: `08-parachuters/parachuters.html`, `08-parachuters/styles.css`, `08-parachuters/parachuters.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -87,6 +97,7 @@ Files: `07-balloons/balloons.html`, `07-balloons/styles.css`, `07-balloons/ballo
 5. **Then build battleship.** You learn maps. A grid is a list of rows, and each row is a list of squares. You also learn how a program keeps a secret from you.
 6. **Then build the paint app.** You learn the canvas, and you learn that it forgets everything. You keep the drawing yourself, and undo comes free.
 7. **Then build the balloon stall.** You learn the game loop. Everything moves by time, and gravity turns out to be one line.
+8. **Then build the lookout post.** You learn sprites. Four kinds of thing move at once, and one of them changes its mind twice on the way down.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
@@ -94,9 +105,9 @@ More projects will appear here over time. `ROADMAP.md` lists all of them. `showc
 
 The pictures move now, so the games get bigger.
 
-1. **Parachuter.** Many things moving at once, each one with its own rules.
-2. **Phaser remake.** The same game again with a game library, so you can see what it replaces.
-3. **Aliens.** The first new game built on that library.
+1. **Phaser remake.** The lookout post again, built with a game library.
+2. **Aliens.** The first new game built on that library.
+3. **Maze.** A map kept as data, and walls you cannot walk through.
 
 The remake is a comparison, not a bigger game. You will be able to point at every part the library replaced.
 

@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the seven finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the eight finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -141,11 +141,36 @@ The second lesson is that a game is two lists that things enter and leave. Ballo
 
 We left these out on purpose: wind, bouncing darts, a limited number of darts, points that vary by balloon size, and rising difficulty. Several kinds of entity moving by different rules is project 8, and it is the next thing this game wants.
 
+### 8. Parachuter game
+
+The lookout post is the first game with more than one kind of thing in it. It is still an ordinary webpage.
+
+- Lists of entities
+- Sprites as plain data
+- Timed spawning
+- Different movement rules
+- A state machine inside a sprite
+- Ground and landing detection
+- Box-to-box collision
+- Several animations at the same time
+- Game-over conditions
+
+Project 7 held two lists that moved by two rules. This one holds four, and the four rules are deliberately unlike each other. A plane crosses in a straight line. A shell crosses far faster and never falls. An explosion never moves at all, it only grows. And a trooper changes his rule twice on the way down.
+
+The idea the project exists to teach is that **a sprite is a plain object, and every moving thing is the same shape of object**: `{ kind, x, y, w, h, vx, vy, state }`. Because they all match, one `moveSprite` moves planes and shells, and one `hitsSprite` checks a shell against a trooper and against a plane without asking which is which. That has to be visible before Phaser hides it at project 9.
+
+The second lesson is the state inside the sprite. A trooper is `falling`, then `chute`, then `walking`, and one word decides which rule moves him this frame. It is the elevator's state machine from project 2, multiplied by the length of a list. The learner writes it as two functions on purpose: `moveTrooper` moves and never decides, `nextTrooperState` decides and never moves.
+
+The third lesson is quieter, and the wiring holds it. Work that happens every frame and work that happens once at a transition belong in different places.
+
+x and y move from the middle of a circle to the top left corner of a box here, which catches everybody out once. The collision test changes with it, from a distance to a rectangle overlap.
+
+We left these out on purpose: troopers who shoot back, a chute that can be shot away, wind, points that vary by drop height, and rising difficulty. Sprites loaded from image files wait for project 9, where the library loads them.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 8 | Parachuter | Many entities, and sprites as plain data |
 | 9 | Phaser remake | What a game library replaces |
 | 10 | Aliens | A game built on the library |
 | 11 | Maze | Tile collision |
@@ -162,35 +187,6 @@ We left these out on purpose: wind, bouncing darts, a limited number of darts, p
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 8. Parachuter game
-
-Several things move at once, and each one moves differently. The game has an airplane, paratroopers, a turret, bullets, and explosions.
-
-- Lists of entities
-- Timed spawning
-- Different movement rules
-- Ground and landing detection
-- Several animations at the same time
-- Game-over conditions
-- Keeping updating separate from drawing
-- Sprites as data: an image, a position, a size, and a movement state
-
-A sprite is still a plain object. It has `x`, `y`, a width, a height, a velocity, and a state such as `falling` or `landed`. A small `drawSprite` function draws it.
-
-One possible rule: three paratroopers that land near the turret destroy it.
-
-The loop:
-
-```text
-update all objects
-check collisions
-remove finished objects
-draw all sprites
-check whether the game has ended
-```
-
-This project must make the sprite idea visible before a library hides it. The same data drives movement, collision checks, and drawing.
 
 ### 9. Phaser remake
 

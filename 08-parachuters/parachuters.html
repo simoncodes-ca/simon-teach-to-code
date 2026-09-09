@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Lookout Post</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="post">
+    <div class="p-plate">
+      <span class="plate-rivets" aria-hidden="true"></span>
+      <span class="plate-name">Simon&rsquo;s Lookout Post</span>
+      <span class="plate-read" aria-label="The angle your gun is pointing">
+        <b id="angleRead">&mdash;</b><i>&deg;</i>
+      </span>
+      <span class="plate-read" aria-label="Score">
+        <b id="scoreRead">0</b><i>pts</i>
+      </span>
+    </div>
+
+    <section class="p-sky" aria-label="The sky over the lookout post">
+      <div class="frame">
+        <canvas id="sky" width="1024" height="768" aria-label="The lookout post"></canvas>
+        <div class="glare" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="p-rack">
+      <div class="panel panel-states">
+        <p class="panel-title">Troopers</p>
+        <ul class="states">
+          <li><span class="state-name">Falling</span><span class="bar"><i id="fallBar"></i></span><b id="fallCount">0</b></li>
+          <li><span class="state-name">Chute</span><span class="bar"><i id="chuteBar"></i></span><b id="chuteCount">0</b></li>
+          <li><span class="state-name">Walking</span><span class="bar"><i id="walkBar"></i></span><b id="walkCount">0</b></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-post">
+        <p class="panel-title">The post</p>
+        <div class="sandbags" id="sandbags" role="img" aria-label="How much of the post is left"></div>
+      </div>
+
+      <div class="panel panel-figures">
+        <p class="panel-title">The four lists</p>
+        <dl class="figures">
+          <div><dt>Planes</dt><dd id="planeCount">0</dd></div>
+          <div><dt>Troopers</dt><dd id="trooperCount">0</dd></div>
+          <div><dt>Shells</dt><dd id="bulletCount">0</dd></div>
+          <div><dt>Booms</dt><dd id="boomCount">0</dd></div>
+        </dl>
+      </div>
+
+      <div class="panel panel-speed">
+        <p class="panel-title">Clock</p>
+        <div class="tools">
+          <button class="tool" id="normalSpeed" type="button" aria-pressed="true">Normal</button>
+          <button class="tool" id="slowSpeed" type="button" aria-pressed="false">Slow&nbsp;motion</button>
+        </div>
+      </div>
+
+      <div class="panel panel-orders">
+        <p class="panel-title">Orders</p>
+        <ul class="orders">
+          <li>Aim with the mouse. Click to fire.</li>
+          <li>A shell flies straight. It never falls.</li>
+          <li>Three troopers reaching the post takes it.</li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Space">Start <kbd aria-hidden="true">Space</kbd></button>
+        <button class="key" id="again" type="button">Play again</button>
+      </div>
+    </aside>
+
+    <p class="p-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="parachuters.js"></script>
+</body>
+</html>
