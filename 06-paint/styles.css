@@ -1,0 +1,391 @@
+/* ============================================================
+   Simon's Paint — the studio bench.
+   A birch drawing board on a walnut bench: one sheet of cream
+   paper taped down at the corners, and a zinc tin of gouache
+   pans on the ledge beside it. The only bright colours on the
+   page are the paint itself.
+   ============================================================ */
+
+:root {
+  --bench: #3a2b21;
+  --bench-lit: #5b4335;
+  --bench-deep: #1d1610;
+  --board: #c6a880;
+  --board-lit: #e3c69c;
+  --board-deep: #93744c;
+  --paper: #f6f0e2;
+  --paper-shade: #ded3bb;
+  --tape: #efd49a;
+  --ink: #2a2622;
+  --zinc: #b3ada1;
+  --zinc-lit: #d8d2c6;
+  --zinc-dark: #6e6960;
+  --go: #2f8b86;
+  --display: "Futura", "Century Gothic", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--ink);
+  background: var(--bench-deep) radial-gradient(ellipse at 50% 38%, var(--bench-lit) 0%, var(--bench) 56%, var(--bench-deep) 100%);
+  container-type: size;
+}
+
+/* The bench: one surface. Every region is placed as a % of this frame,
+   so the whole studio scales together like one photograph. */
+.bench {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    repeating-linear-gradient(91deg,
+      rgba(255, 255, 255, .04) 0 1px,
+      rgba(0, 0, 0, .06) 1px 3px,
+      rgba(255, 255, 255, 0) 3px 11px),
+    radial-gradient(ellipse at 42% 26%, var(--board-lit) 0%, var(--board) 50%, var(--board-deep) 100%);
+  border: 1.1cqw solid var(--bench-lit);
+  border-radius: 1cqw;
+  box-shadow:
+    inset 0 0 0 0.22cqw rgba(0, 0, 0, .25),
+    inset 0 1cqh 6cqh rgba(0, 0, 0, .22),
+    0 3cqh 7cqh rgba(0, 0, 0, .55);
+  overflow: hidden;
+}
+
+/* Light falling across the board from the window on the left. */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(112deg, rgba(255, 250, 235, .16) 0%, rgba(255, 250, 235, 0) 38%, rgba(0, 0, 0, .16) 100%);
+}
+
+/* --- Region boxes --- */
+.b-tape   { position: absolute; left: 4%;  top: 3.2%;  width: 61%; height: 7.4%; }
+.b-paper  { position: absolute; left: 4%;  top: 12.4%; width: 61%; height: 75%; }
+.b-status { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.b-ledge  { position: absolute; left: 68%; top: 3.2%;  width: 28%; height: 92.4%; }
+
+/* --- The strip of masking tape along the top --- */
+.b-tape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2cqw;
+  padding: 0 2cqw;
+  color: rgba(52, 38, 20, .82);
+  background:
+    repeating-linear-gradient(97deg,
+      rgba(255, 255, 255, .16) 0 2px,
+      rgba(0, 0, 0, .02) 2px 5px),
+    linear-gradient(178deg, #f2dcaa 0%, var(--tape) 55%, #dcbe86 100%);
+  border-radius: 0.2cqw;
+  transform: rotate(-0.25deg);
+  box-shadow: 0 0.5cqh 1.2cqh rgba(0, 0, 0, .3);
+}
+.tape-name {
+  font-family: var(--display);
+  font-size: 2.1cqw;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.tape-read {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3cqw;
+  font-family: var(--mono);
+  font-size: 1.9cqw;
+  font-weight: 700;
+}
+.tape-read b { min-width: 3.4cqw; text-align: right; }
+.tape-read i { font-style: normal; opacity: .55; }
+.tape-count {
+  font-size: 1.15cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.tape-count b { font-family: var(--mono); font-size: 1.35cqw; }
+
+/* --- The paper, taped to the board --- */
+.b-paper { display: grid; place-items: center; }
+
+.sheet {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  max-height: 100%;
+  background: var(--paper);
+  box-shadow:
+    0 1.2cqh 3cqh rgba(0, 0, 0, .4),
+    0 0.2cqh 0.5cqh rgba(0, 0, 0, .25);
+}
+
+#paper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* The paper's tooth: a faint grain sitting over the drawing. It is a
+   CSS layer, not part of the canvas, so a saved picture comes out clean. */
+.tooth {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(63deg,
+      rgba(120, 100, 70, .05) 0 1px,
+      rgba(255, 255, 255, 0) 1px 3px),
+    repeating-linear-gradient(153deg,
+      rgba(120, 100, 70, .04) 0 1px,
+      rgba(255, 255, 255, 0) 1px 4px),
+    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, .5) 0%, rgba(214, 199, 170, .28) 100%);
+  mix-blend-mode: multiply;
+}
+
+/* Four corners of masking tape holding the sheet down. */
+.tab {
+  position: absolute;
+  width: 7%;
+  height: 5.5%;
+  background: linear-gradient(176deg, rgba(255, 246, 220, .92) 0%, rgba(233, 208, 152, .88) 100%);
+  box-shadow: 0 0.3cqh 0.7cqh rgba(0, 0, 0, .25);
+}
+.tab-tl { left: -2.2%; top: -1.6%; transform: rotate(-42deg); }
+.tab-tr { right: -2.2%; top: -1.6%; transform: rotate(42deg); }
+.tab-bl { left: -2.2%; bottom: -1.6%; transform: rotate(42deg); }
+.tab-br { right: -2.2%; bottom: -1.6%; transform: rotate(-42deg); }
+
+/* --- The status line, pencilled under the paper --- */
+.b-status {
+  display: flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 1.3cqw;
+  color: rgba(42, 34, 22, .78);
+}
+
+/* --- The ledge: the tin of paints and the keys --- */
+.b-ledge {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6cqh;
+  padding: 1.6cqh 1.4cqw;
+  border-radius: 0.8cqw;
+  background:
+    linear-gradient(163deg, rgba(255, 255, 255, .22) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(180deg, var(--zinc-lit) 0%, var(--zinc) 46%, var(--zinc-dark) 100%);
+  box-shadow:
+    inset 0 0 0 0.16cqw rgba(255, 255, 255, .3),
+    inset 0 -0.8cqh 2cqh rgba(0, 0, 0, .3),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .45);
+}
+
+.panel { display: flex; flex-direction: column; gap: 0.9cqh; }
+.panel-title {
+  font-size: 1.05cqw;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(38, 34, 26, .66);
+}
+
+/* The brush preview: a sample stroke, in the paint you have picked. */
+.panel-preview #preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 8 / 3;
+  border-radius: 0.4cqw;
+  background: var(--paper);
+  box-shadow:
+    inset 0 0 0 0.12cqw rgba(0, 0, 0, .3),
+    inset 0 0.4cqh 1.2cqh rgba(0, 0, 0, .18);
+}
+
+/* The pans of gouache, two rows of five. */
+.pans {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.6cqw;
+}
+.pan {
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: 0.3cqw;
+  cursor: pointer;
+  background: var(--pan);
+  box-shadow:
+    inset 0 0.5cqh 1cqh rgba(0, 0, 0, .45),
+    inset 0 0 0 0.1cqw rgba(0, 0, 0, .35),
+    0 0.3cqh 0.6cqh rgba(0, 0, 0, .3);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.pan:hover { transform: translateY(-0.4cqh); }
+.pan[aria-pressed="true"] {
+  transform: translateY(-0.5cqh);
+  box-shadow:
+    inset 0 0.5cqh 1cqh rgba(0, 0, 0, .35),
+    0 0 0 0.28cqw var(--paper),
+    0 0.6cqh 1.2cqh rgba(0, 0, 0, .4);
+}
+
+/* The nibs: four sizes, drawn as the dot they make. */
+.nibs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6cqw; }
+.nib {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: 0.3cqw;
+  cursor: pointer;
+  background: linear-gradient(178deg, rgba(255, 255, 255, .5) 0%, rgba(255, 255, 255, .08) 100%);
+  box-shadow: inset 0 0 0 0.1cqw rgba(0, 0, 0, .28);
+}
+.nib i {
+  display: block;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--ink);
+}
+.nib:hover { background: rgba(255, 255, 255, .6); }
+.nib[aria-pressed="true"] {
+  background: var(--paper);
+  box-shadow: inset 0 0 0 0.12cqw rgba(0, 0, 0, .45), 0 0.4cqh 0.9cqh rgba(0, 0, 0, .3);
+}
+
+/* The history strip: one tick per stroke. A solid tick is on the paper,
+   a hollow one is waiting on the undo pile. It is the two lists in the
+   memory, drawn. */
+.panel-history { flex: 1; min-height: 0; }
+.ticks {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.4cqw;
+  padding: 1cqh 0.7cqw;
+  border-radius: 0.4cqw;
+  background: var(--paper);
+  box-shadow:
+    inset 0 0 0 0.12cqw rgba(0, 0, 0, .3),
+    inset 0 0.4cqh 1cqh rgba(0, 0, 0, .16);
+  overflow: hidden;
+}
+.tick {
+  width: 0.55cqw;
+  height: 2.4cqh;
+  border-radius: 0.3cqw;
+  background: var(--tick);
+  box-shadow: inset 0 0 0 0.08cqw rgba(0, 0, 0, .25);
+}
+.tick-gone {
+  background: transparent;
+  box-shadow: inset 0 0 0 0.1cqw rgba(0, 0, 0, .3);
+}
+
+/* Brush or eraser. */
+.tools { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6cqw; }
+.tool, .key {
+  padding: 1.1cqh 0;
+  border: none;
+  border-radius: 0.4cqw;
+  cursor: pointer;
+  font-family: var(--display);
+  font-size: 1.25cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2c261c;
+  background: linear-gradient(178deg, #f0ece2 0%, #cfc9bb 100%);
+  box-shadow:
+    inset 0 0.2cqh 0.4cqh rgba(255, 255, 255, .8),
+    0 0.5cqh 1cqh rgba(0, 0, 0, .32);
+  transition: transform .1s ease, filter .1s ease;
+}
+.tool:hover, .key:hover:not(:disabled) { filter: brightness(1.07); }
+.tool:active, .key:active:not(:disabled) { transform: translateY(0.3cqh); }
+.tool[aria-pressed="true"] {
+  color: var(--paper);
+  background: linear-gradient(178deg, #4b453a 0%, #2f2b23 100%);
+  box-shadow: inset 0 0.3cqh 0.8cqh rgba(0, 0, 0, .5);
+}
+
+.panel-keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6cqw;
+  margin-top: auto;
+}
+.key kbd {
+  margin-left: 0.4cqw;
+  padding: 0.1cqh 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  background: rgba(0, 0, 0, .12);
+}
+.key-go {
+  color: var(--paper);
+  background: linear-gradient(178deg, #3fa8a2 0%, var(--go) 60%, #226b67 100%);
+}
+.key:disabled { opacity: .38; cursor: default; box-shadow: none; }
+
+/* Narrow windows: the bench stands up into one column and the page
+   scrolls. The paper stays 4:3 and full width; the ledge becomes a row
+   of panels under it. */
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  body { overflow: visible; place-items: start center; }
+  .bench {
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px 14px 28px;
+    border-width: 8px;
+    border-radius: 10px;
+  }
+  .bench > * { position: static !important; width: 100% !important; height: auto !important; left: auto; top: auto; }
+  .b-tape { order: 1; min-height: 56px; padding: 10px 14px; border-radius: 3px; gap: 12px; }
+  .b-paper { order: 2; }
+  .b-status { order: 3; }
+  .b-ledge { order: 4; }
+  .tape-name { font-size: .95rem; }
+  .tape-read { font-size: 1.1rem; }
+  .tape-read b { min-width: 3ch; }
+  .tape-count { font-size: .62rem; }
+  .tape-count b { font-size: .78rem; }
+  .sheet { width: 100%; max-height: none; }
+  .b-status { font-size: .9rem; margin-top: -4px; }
+  .b-ledge { gap: 14px; padding: 14px; border-radius: 8px; }
+  .panel-title { font-size: .62rem; }
+  .panel-preview #preview { border-radius: 4px; }
+  .pans, .nibs { gap: 8px; }
+  .pan, .nib { border-radius: 4px; }
+  .panel-history { flex: none; }
+  .ticks { gap: 5px; min-height: 60px; padding: 8px 10px; border-radius: 4px; }
+  .tick { width: 6px; height: 20px; border-radius: 3px; }
+  .tools, .panel-keys { gap: 10px; }
+  .tool, .key { height: 48px; padding: 0; font-size: .8rem; border-radius: 6px; }
+  .key kbd { font-size: .65rem; padding: 2px 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pan, .tool, .key { transition: none; }
+}

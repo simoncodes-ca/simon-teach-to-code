@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the five finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the nine finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -99,14 +99,104 @@ We left these out on purpose: an enemy that hunts around its last hit, diagonal 
 
 Battleship teaches maps made of cells. Later projects turn those cells into terrain, buildings, units, resources, and movement areas.
 
+### 6. Paint app with undo
+
+The paint app is the first project that draws. It is still an ordinary webpage.
+
+- Canvas drawing
+- Pointer events
+- Screen coordinates and canvas coordinates
+- Drawing lines and shapes
+- Keeping input separate from drawing
+- History stacks
+- Undo and redo
+
+A canvas is a sheet of pixels, and it remembers nothing. Paint on it and the paint is simply there — so the program keeps every stroke in a list of its own and draws the whole picture again on every mouse move. That is the same `render()` as every project before it, and it is what makes undo possible at all.
+
+Undo and redo are then two lists and four lines. Clear is undo in a loop, which is why a cleared sheet can be brought back stroke by stroke. The eraser is the brush loaded with the paper's own colour, so none of the nine stubs has to know an eraser exists.
+
+We left these out on purpose: layers, a fill tool, shapes and straight lines, zoom and pan, pressure-sensitive width, and saving a drawing so it survives a refresh — that last one is project 13's lesson.
+
+Canvas connects webpage programs to game graphics.
+
+### 7. Balloon shooting game
+
+The balloon stall is the first game that runs on its own. It is still an ordinary webpage.
+
+- Game loops
+- Time-based movement
+- Velocity and gravity
+- Angles and trigonometry
+- Collision detection
+- Adding and removing objects
+- Score, lives, and restarting
+
+Every project before this one waited for a click. This one does not wait. A `requestAnimationFrame` loop measures how long the last frame took, hands that number to the game, and draws everything again — sixty times a second, whether anyone touches the page or not.
+
+The rule the project exists to teach is one line long. **Move a thing by its speed multiplied by the time that passed.** Never move it a fixed number of pixels per frame. That version runs at double speed on a 120Hz screen, and it makes gravity a special case instead of a consequence.
+
+Time-based movement then buys three things at once. Gravity is one line that adds to `vy`. Slow motion is one multiplier on `seconds`, and none of the nine stubs has to know. And the game plays the same on every machine.
+
+The second lesson is that a game is two lists that things enter and leave. Balloons arrive on a timer and leave at the top. Darts arrive on a click and leave at the bottom. Deciding when a thing is finished is a real function with a real name, and the loop that removes them counts backwards for a reason.
+
+We left these out on purpose: wind, bouncing darts, a limited number of darts, points that vary by balloon size, and rising difficulty. Several kinds of entity moving by different rules is project 8, and it is the next thing this game wants.
+
+### 8. Parachuter game
+
+The lookout post is the first game with more than one kind of thing in it. It is still an ordinary webpage.
+
+- Lists of entities
+- Sprites as plain data
+- Timed spawning
+- Different movement rules
+- A state machine inside a sprite
+- Ground and landing detection
+- Box-to-box collision
+- Several animations at the same time
+- Game-over conditions
+
+Project 7 held two lists that moved by two rules. This one holds four, and the four rules are deliberately unlike each other. A plane crosses in a straight line. A shell crosses far faster and never falls. An explosion never moves at all, it only grows. And a trooper changes his rule twice on the way down.
+
+The idea the project exists to teach is that **a sprite is a plain object, and every moving thing is the same shape of object**: `{ kind, x, y, w, h, vx, vy, state }`. Because they all match, one `moveSprite` moves planes and shells, and one `hitsSprite` checks a shell against a trooper and against a plane without asking which is which. That has to be visible before Phaser hides it at project 9.
+
+The second lesson is the state inside the sprite. A trooper is `falling`, then `chute`, then `walking`, and one word decides which rule moves him this frame. It is the elevator's state machine from project 2, multiplied by the length of a list. The learner writes it as two functions on purpose: `moveTrooper` moves and never decides, `nextTrooperState` decides and never moves.
+
+The third lesson is quieter, and the wiring holds it. Work that happens every frame and work that happens once at a transition belong in different places.
+
+x and y move from the middle of a circle to the top left corner of a box here, which catches everybody out once. The collision test changes with it, from a distance to a rectangle overlap.
+
+We left these out on purpose: troopers who shoot back, a chute that can be shot away, wind, points that vary by drop height, and rising difficulty. Sprites loaded from image files wait for project 9, where the library loads them.
+
+### 9. Phaser remake
+
+The lookout post again, rebuilt on Phaser. It is the first project that uses a library, and the first that loads its pictures from files.
+
+- Library timing and the game loop
+- Library sprites and asset handling
+- Groups, overlaps and tweens
+- Comparing hand-written code with library code
+- Telling a helpful abstraction from hidden complexity
+
+The game is one Simon had already finished, and nothing in it changed. Same rules, same numbers, same sounds, same art — the PNG files were made by running project 8's own drawing code once and saving what came out. Every difference he can see is a difference the library made, because nothing else was allowed to move.
+
+Nine functions became eight, and the eight are a few lines each. `frame()`, `moveSprite`, `hitsSprite` and its two loops, `updateBoom` and `skyPoint` are all gone. The rack beside the window crosses them off by name, so the saving is on the page rather than only in the README.
+
+The idea that runs through every stub is that **you speak once, at the moment things change, instead of every frame.** `moveTrooper` ran sixty times a second. `openChute` runs once, and Phaser carries the result forward for ever. That is project 8's split between per-frame work and transition work, now enforced by the tool.
+
+The second lesson is the cost, and it gets equal billing. Slow motion got harder: one multiplier became three clocks set three different ways, one of them inverted. Retiring a shell that has left the sky is still a hand-written loop, because Phaser has no opinion about the edge of the world. Both sit in the given wiring, commented as such. A learner who takes away only "libraries do the work" has learned the wrong half.
+
+**Phaser, not p5.** p5 removes browser plumbing that Simon had already written twice by this point. That comparison is real, but it is small, and he would leave p5 as soon as he needed scenes, cameras and asset loading. One library, learned once, lasting to the end of the list.
+
+`phaser.min.js` is vendored next to the HTML. A library must not drag the build step forward, and the build step arrives at project 17.
+
+Two settings in the Phaser config exist only to keep the page double-clickable. Phaser refuses to guess a renderer when handed a canvas of our own, and its usual image loading uses XHR, which a browser blocks on a `file://` page. Both are commented in the file.
+
+We left these out on purpose: Phaser's own sound system, a second scene for the title card, and tweens on anything but the explosion. All three are in the README as the good things to try next.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 6 | Paint app | Canvas and pointer events |
-| 7 | Balloon shooting | A game loop and time-based movement |
-| 8 | Parachuter | Many entities, and sprites as plain data |
-| 9 | Phaser remake | What a game library replaces |
 | 10 | Aliens | A game built on the library |
 | 11 | Maze | Tile collision |
 | 12 | Scrolling world | Camera and world coordinates |
@@ -122,102 +212,6 @@ Battleship teaches maps made of cells. Later projects turn those cells into terr
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 6. Paint app with undo
-
-The paint app teaches Canvas before anything moves on its own.
-
-- Canvas drawing
-- Pointer events
-- Screen coordinates and canvas coordinates
-- Drawing lines and shapes
-- Keeping input separate from drawing
-- History stacks
-- Undo and redo
-
-Stages:
-
-1. Draw a dot.
-2. Draw while dragging.
-3. Change the brush size.
-4. Change the colour.
-5. Add an eraser.
-6. Clear the canvas.
-7. Add undo.
-8. Add redo.
-9. Save the drawing as an image.
-
-Canvas connects webpage programs to game graphics.
-
-### 7. Balloon shooting game
-
-This is the first game that animates on its own.
-
-- Game loops
-- Time-based movement
-- Velocity and gravity
-- Angles and trigonometry
-- Collision detection
-- Adding and removing objects
-- Score, lives, and restarting
-
-Stages:
-
-1. Draw one balloon.
-2. Make the balloon move.
-3. Add a projectile.
-4. Aim with the mouse.
-5. Detect a hit.
-6. Add several balloons.
-7. Add gravity.
-8. Add score, lives, and a restart state.
-
-The game moves things by elapsed time. It does not move things a fixed number of pixels per frame.
-
-### 8. Parachuter game
-
-Several things move at once, and each one moves differently. The game has an airplane, paratroopers, a turret, bullets, and explosions.
-
-- Lists of entities
-- Timed spawning
-- Different movement rules
-- Ground and landing detection
-- Several animations at the same time
-- Game-over conditions
-- Keeping updating separate from drawing
-- Sprites as data: an image, a position, a size, and a movement state
-
-A sprite is still a plain object. It has `x`, `y`, a width, a height, a velocity, and a state such as `falling` or `landed`. A small `drawSprite` function draws it.
-
-One possible rule: three paratroopers that land near the turret destroy it.
-
-The loop:
-
-```text
-update all objects
-check collisions
-remove finished objects
-draw all sprites
-check whether the game has ended
-```
-
-This project must make the sprite idea visible before a library hides it. The same data drives movement, collision checks, and drawing.
-
-### 9. Phaser remake
-
-Remake the parachuter game with Phaser. This project compares two versions of one game. Simon should be able to point at each part the library replaced.
-
-- Library timing and the game loop
-- Library sprites and asset handling
-- Scenes
-- Comparing hand-written code with library code
-- Telling a helpful abstraction from hidden complexity
-
-**Use Phaser, not p5.** p5 removes browser plumbing that Simon will have written twice by project 9. That comparison is real, but it is small. He would then leave p5 as soon as he needs scenes, cameras, and asset loading. Phaser means he learns one library instead of two.
-
-Keep a copy of `phaser.min.js` next to the HTML file. The library must not force the build step to arrive early. The build step arrives at project 17.
-
-Remake a game Simon has already finished. Never introduce a library and a new game at the same time.
 
 ### 10. Aliens game
 

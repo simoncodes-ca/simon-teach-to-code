@@ -43,7 +43,7 @@ const calculator = {
 
 /* Everything the user has entered, in order, for the buffer column to
    show — one line per item, top to bottom.
-   Example: after typing 12 + 8 this might hold: ["12", "+", "8"] */
+   Example: after typing 12 + 8 this might hold: ['12', '+', '8'] */
 const entered = [];
 
 
@@ -59,10 +59,10 @@ const entered = [];
 /**
  * Put a value into the big number at the top of the card.
  *
- * The element you want is the one with id "display".
+ * The element you want is the one with id 'display'.
  * Look up: document.getElementById  and  .textContent
  *
- * @param {string} value  what to show, for example "12" or "0"
+ * @param {string} value  what to show, for example '12' or '0'
  */
 function showOnDisplay(value) {
   // TODO
@@ -71,14 +71,14 @@ function showOnDisplay(value) {
 /**
  * Redraw the buffer column so it matches the `entered` array.
  *
- * The column is the element with id "buffer" — the tall panel standing
+ * The column is the element with id 'buffer' — the tall panel standing
  * beside the calculator. It is always visible. Each thing in `entered`
  * becomes its own LINE inside it, stacked top to bottom in the order
  * it was typed.
  *
- * A line is a <div> with the class "buffer__line". Operators get an
- * extra class, "buffer__line--operator", which colours them pink.
- * There is also "buffer__line--active" for the term being typed right
+ * A line is a <div> with the class 'buffer__line'. Operators get an
+ * extra class, 'buffer__line--operator', which colours them pink.
+ * There is also 'buffer__line--active' for the term being typed right
  * now, if you want to show that.
  *
  * Questions to think about:
@@ -86,7 +86,7 @@ function showOnDisplay(value) {
  *   - How do you tell a number apart from an operator?
  *   - What should it show when nothing has been entered yet?
  *     (there is already a "Nothing entered yet" span with the id
- *      "buffer-empty" — you could keep it, or replace it)
+ *      'buffer-empty' — you could keep it, or replace it)
  *   - If the list gets longer than the panel, what should happen?
  *     (the panel already scrolls; is scrolling enough?)
  *
@@ -114,7 +114,7 @@ function renderBuffer() {
  *   - you just pressed +. The next digit should start a NEW number,
  *     not get stuck on the end of the old one.
  *
- * @param {string} digit  a single character, "0" through "9"
+ * @param {string} digit  a single character, '0' through '9'
  */
 function pressDigit(digit) {
   // TODO
@@ -147,7 +147,7 @@ function pressDecimal() {
  *   - what if the user presses + and then changes their mind and
  *     presses - instead?
  *
- * @param {string} operator  one of "+", "-", "*", "/"
+ * @param {string} operator  one of '+', '-', '*', '/'
  */
 function pressOperator(operator) {
   // TODO
@@ -186,14 +186,14 @@ function pressClear() {
  * one to test: give it two numbers and an operator, check what comes back.
  *
  * Think about:
- *   - the two values arrive as text ("12"), not as numbers (12).
- *     "12" + "3" is "123" in JavaScript, which is not what you want.
+ *   - the two values arrive as text ('12'), not as numbers (12).
+ *     '12' + '3' is '123' in JavaScript, which is not what you want.
  *     Look up: Number()  or  parseFloat()
  *   - dividing by zero. JavaScript will happily hand you Infinity.
  *     What should the person using the calculator see instead?
  *
  * @param   {string} left      the number entered first
- * @param   {string} operator  "+", "-", "*" or "/"
+ * @param   {string} operator  '+', '-', '*' or '/'
  * @param   {string} right     the number entered second
  * @returns {string}           the answer, ready to show
  */
@@ -267,7 +267,7 @@ function playClickSound() {
  * Run the action for a button id, play the click sound, and make
  * the tile look pressed.
  *
- * @param {string} id  a button id, for example "btn-7"
+ * @param {string} id  a button id, for example 'btn-7'
  */
 function activate(id) {
   const action = BUTTONS[id];

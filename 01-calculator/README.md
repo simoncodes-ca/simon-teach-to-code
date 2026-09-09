@@ -24,7 +24,7 @@ Inside `calculator.js` you will find empty functions marked `// TODO`. Write the
 - How those boxes get their looks, using CSS
 - How JavaScript finds a box on the page and changes it while you watch
 - How a program remembers things between button presses
-- Why the text `"12"` and the number `12` are different, and what goes wrong when you confuse them
+- Why the text `'12'` and the number `12` are different, and what goes wrong when you confuse them
 - How to find your own mistakes with `console.log`
 
 ## Good to know
@@ -72,15 +72,15 @@ Three classes matter for the column:
 A variable is a labelled box that holds a value. You put a value in, and it stays there until you replace it.
 
 ```js
-let current = "12";   // make a box called current, and put "12" in it
-current = "123";      // take the old value out, and put "123" in
+let current = '12';   // make a box called current, and put '12' in it
+current = '123';      // take the old value out, and put '123' in
 ```
 
 `let` makes a box whose contents can change. `const` makes a box whose value cannot be replaced.
 
 Every value has a type. Three types matter here:
 
-- A **string** is text. It has quotes around it, like `"12"`.
+- A **string** is text. It has quotes around it, like `'12'`.
 - A **number** is for maths, like `12`.
 - A **boolean** is either `true` or `false`.
 
@@ -90,20 +90,20 @@ An **object** is one value with named parts:
 
 ```js
 const calculator = {
-  left: "",       // the number typed before the operator
-  operator: "",   // the operator waiting to be used
+  left: '',       // the number typed before the operator
+  operator: '',   // the operator waiting to be used
 };
 
-calculator.left = "12";   // set the left part to "12"
+calculator.left = '12';   // set the left part to '12'
 ```
 
 An **array** is a numbered list that keeps its order:
 
 ```js
 const entered = [];       // an empty list
-entered.push("12");       // add to the end. The list is now ["12"]
-entered.push("+");        // the list is now ["12", "+"]
-entered[0];               // the first item, which is "12"
+entered.push('12');       // add to the end. The list is now ['12']
+entered.push('+');        // the list is now ['12', '+']
+entered[0];               // the first item, which is '12'
 entered.length;           // how many items there are, which is 2
 ```
 
@@ -113,10 +113,10 @@ A function is a set of steps with a name. You write the steps once. Then you run
 
 ```js
 function greet(name) {
-  return "Hello, " + name;
+  return 'Hello, ' + name;
 }
 
-greet("Anna");   // returns "Hello, Anna"
+greet('Anna');   // returns 'Hello, Anna'
 ```
 
 - `name` is a **parameter**. The caller passes a value in through the brackets.
@@ -128,7 +128,7 @@ greet("Anna");   // returns "Hello, Anna"
 Programs make choices. `if` runs steps only when a question is true. `else` runs different steps when the question is false.
 
 ```js
-if (current === "0") {
+if (current === '0') {
   current = digit;             // replace a single 0 instead of adding to it
 } else {
   current = current + digit;   // add the new digit to the end
@@ -144,23 +144,23 @@ The browser keeps a live list of everything on the page. JavaScript can read tha
 Here are the tools you need. In this code, `document` means the whole page.
 
 ```js
-const screen = document.getElementById("display");
-// find the element whose id is "display"
+const screen = document.getElementById('display');
+// find the element whose id is 'display'
 
-screen.textContent = "12";
+screen.textContent = '12';
 // replace the text inside it
 
-screen.classList.add("buffer__line--operator");
+screen.classList.add('buffer__line--operator');
 // add another class to it
 
-screen.classList.remove("buffer__line--operator");
+screen.classList.remove('buffer__line--operator');
 // remove that class again
 
-const line = document.createElement("div");
+const line = document.createElement('div');
 // make a new, empty div. It is not on the page yet.
 
-line.textContent = "12";
-line.classList.add("buffer__line");
+line.textContent = '12';
+line.classList.add('buffer__line');
 
 screen.append(line);
 // put the new line inside screen, at the bottom
@@ -176,19 +176,19 @@ This difference causes more calculator bugs than anything else.
 The `+` sign joins two strings end to end. That is exactly what you want while someone is typing a number:
 
 ```js
-"1" + "2"   // gives "12", not 3. Joining is correct while typing.
+'1' + '2'   // gives '12', not 3. Joining is correct while typing.
 ```
 
 But joining is wrong once the calculator has to do the maths:
 
 ```js
-"12" + "3"   // gives "123", not 15
+'12' + '3'   // gives '123', not 15
 ```
 
 `Number()` turns a string of digits into a real number:
 
 ```js
-Number("12") + Number("3")   // gives 15
+Number('12') + Number('3')   // gives 15
 ```
 
 `calculate()` receives both of its values as strings. Converting them is part of its job.
@@ -201,7 +201,7 @@ Decide what the person using the calculator should see instead. You make that ch
 
 Open the console first. Right-click the page, choose Inspect, then click the Console tab.
 
-- Anything you print with `console.log("current is", current);` appears there.
+- Anything you print with `console.log('current is', current);` appears there.
 - Errors appear there too, in red. Each error gives a file name and a line number. Read them, because they tell you more than you expect.
 
 When a function does the wrong thing, add a `console.log` inside it. Print the value you are unsure about. Refresh the page and press a key. Now you can see what the function really received.

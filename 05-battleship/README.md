@@ -63,9 +63,9 @@ A list can hold anything. It can hold numbers, it can hold objects — and it ca
 
 ```js
 const grid = [
-  ["", "", ""],
-  ["", "", ""],
-  ["", "", ""]
+  ['', '', ''],
+  ['', '', ''],
+  ['', '', '']
 ];
 ```
 
@@ -101,11 +101,11 @@ So make the row **inside** the outer loop. A new one, every time round.
 
 You have seen `null` before without being told what it is. It is a value that means "nothing here on purpose".
 
-The ships grid starts out full of `null`, and a square holds `null` until a ship is written into it. That is different from `""`, the empty piece of text the shots grid starts with. Two different kinds of empty, for two different questions:
+The ships grid starts out full of `null`, and a square holds `null` until a ship is written into it. That is different from `''`, the empty piece of text the shots grid starts with. Two different kinds of empty, for two different questions:
 
 ```js
 sea.ships[3][5] === null    // is this water?
-sea.shots[3][5] === ""      // has nobody fired here?
+sea.shots[3][5] === ''      // has nobody fired here?
 ```
 
 Using one blank for both would work, and it would also mean that "no ship" and "no shot" were the same fact. They are not, and a bug that mixes them up is very hard to see.
@@ -119,7 +119,7 @@ So one grid cannot do it. Each sea keeps two:
 ```js
 const sea = {
   ships: [...],   // a ship's name, or null
-  shots: [...]    // "hit", "miss", or ""
+  shots: [...]    // 'hit', 'miss', or ''
 };
 ```
 

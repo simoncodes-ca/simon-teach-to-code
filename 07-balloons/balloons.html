@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Balloon Stall</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="stall">
+    <div class="bulbs" aria-hidden="true"></div>
+
+    <div class="s-valance">
+      <span class="valance-name">Simon&rsquo;s Balloon Stall</span>
+      <span class="valance-read" aria-label="The angle your cannon is pointing">
+        <b id="angleRead">&mdash;</b><i>&deg;</i>
+      </span>
+      <span class="valance-count" aria-label="Score and lives">
+        <b id="scoreRead">0</b> popped &middot; <b id="escapedRead">0</b> escaped
+      </span>
+    </div>
+
+    <section class="s-sky" aria-label="The sky over the pier">
+      <div class="frame">
+        <canvas id="sky" width="1024" height="768" aria-label="The shooting gallery"></canvas>
+        <div class="dusk" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="s-ledge">
+      <div class="panel panel-aim">
+        <p class="panel-title">Aim</p>
+        <canvas id="dial" width="320" height="140" aria-hidden="true"></canvas>
+      </div>
+
+      <div class="panel panel-lives">
+        <p class="panel-title">Lives</p>
+        <div class="hearts" id="hearts" role="img" aria-label="Lives left"></div>
+      </div>
+
+      <div class="panel panel-figures">
+        <p class="panel-title">Figures</p>
+        <dl class="figures">
+          <div><dt>Score</dt><dd id="scoreBig">0</dd></div>
+          <div><dt>In the sky</dt><dd id="balloonCount">0</dd></div>
+          <div><dt>In the air</dt><dd id="dartCount">0</dd></div>
+          <div><dt>Escaped</dt><dd id="escapedBig">0</dd></div>
+        </dl>
+      </div>
+
+      <div class="panel panel-speed">
+        <p class="panel-title">Clock</p>
+        <div class="tools">
+          <button class="tool" id="normalSpeed" type="button" aria-pressed="true">Normal</button>
+          <button class="tool" id="slowSpeed" type="button" aria-pressed="false">Slow&nbsp;motion</button>
+        </div>
+      </div>
+
+      <div class="panel panel-rules">
+        <p class="panel-title">The stall</p>
+        <ul class="rules">
+          <li>Aim with the mouse. Click to fire.</li>
+          <li>A dart falls as it flies, so aim above a far balloon.</li>
+          <li>Three balloons may escape. Then the stall closes.</li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Space">Start <kbd aria-hidden="true">Space</kbd></button>
+        <button class="key" id="again" type="button">Play again</button>
+      </div>
+    </aside>
+
+    <p class="s-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="balloons.js"></script>
+</body>
+</html>

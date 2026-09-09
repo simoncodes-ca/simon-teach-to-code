@@ -65,16 +65,16 @@ A card is not one simple thing. It is a rank **and** a suit, and the two only me
 An **object** is a value with named parts. You write it inside curly brackets:
 
 ```js
-const card = { rank: "7", suit: SUITS[1] };
+const card = { rank: '7', suit: SUITS[1] };
 ```
 
 You read a part out with a dot:
 
 ```js
-card.rank            // "7"
+card.rank            // '7'
 card.suit            // the whole hearts object
-card.suit.symbol     // "♥"
-card.suit.colour     // "red"
+card.suit.symbol     // '♥'
+card.suit.colour     // 'red'
 ```
 
 Look at `card.suit.symbol`. The suit is itself an object, so you follow the dots one step at a time. From the card, to its suit, to that suit's symbol. Read it from left to right, like an address.
@@ -83,14 +83,14 @@ Why use objects at all? Because the other way is to carry two variables everywhe
 
 ```js
 // without objects: two lists that must never drift apart
-const ranks = ["7", "K", "A"];
-const suits = ["♥", "♠", "♦"];
+const ranks = ['7', 'K', 'A'];
+const suits = ['♥', '♠', '♦'];
 
 // with objects: one list, and each item is complete
 const hand = [
-  { rank: "7", suit: hearts },
-  { rank: "K", suit: spades },
-  { rank: "A", suit: diamonds }
+  { rank: '7', suit: hearts },
+  { rank: 'K', suit: spades },
+  { rank: 'A', suit: diamonds }
 ];
 ```
 
@@ -154,7 +154,7 @@ Keep that true on purpose. `handTotal(playerHand)` is called by `render`, by `is
 
 So imagine it quietly changed something each time it ran. The game would then behave differently depending on how often the screen was redrawn. That is a bug you could search for over a week.
 
-**Text is not a number**, and the calculator's `Number()` trap is waiting for you again. `card.rank` is always a piece of text, even for a number card. Forget `Number()` and you get a total like `"05710"` instead of 22. So if a total looks like all the cards joined end to end, that is the reason.
+**Text is not a number**, and the calculator's `Number()` trap is waiting for you again. `card.rank` is always a piece of text, even for a number card. Forget `Number()` and you get a total like `'05710'` instead of 22. So if a total looks like all the cards joined end to end, that is the reason.
 
 ### The one interesting rule: aces
 
@@ -190,11 +190,11 @@ That split is worth noticing. `sumCards` does the boring part and `handTotal` do
 `decideWinner` asks five questions in a fixed order:
 
 ```js
-if (isBust(playerHand)) return "dealer";
-if (isBust(dealerHand)) return "player";
-if (handTotal(playerHand) > handTotal(dealerHand)) return "player";
-if (handTotal(playerHand) < handTotal(dealerHand)) return "dealer";
-return "push";
+if (isBust(playerHand)) return 'dealer';
+if (isBust(dealerHand)) return 'player';
+if (handTotal(playerHand) > handTotal(dealerHand)) return 'player';
+if (handTotal(playerHand) < handTotal(dealerHand)) return 'dealer';
+return 'push';
 ```
 
 Every line is `if ... return`, and none of them needs an `else`. That is because `return` leaves the function immediately.
@@ -210,7 +210,7 @@ So when you write a chain of cases, ask what happens if two of them are true at 
 The elevator had a `state` variable and moved between names like `doorsOpen` and `movingUp`. Blackjack has the same idea under a different word:
 
 ```js
-let phase = "finished";   // "dealing", "playerTurn", "dealerTurn" or "finished"
+let phase = 'finished';   // 'dealing', 'playerTurn', 'dealerTurn' or 'finished'
 ```
 
 A round moves through those names in order. The phase is printed on the felt, so you can watch it happen:
@@ -224,14 +224,14 @@ dealing  ->  playerTurn  ->  dealerTurn  ->  finished
 `renderActions`, in the given code, is why the phase earns its own variable:
 
 ```js
-const myTurn = phase === "playerTurn";
+const myTurn = phase === 'playerTurn';
 hitBtn.disabled = !myTurn || deck.length === 0;
 standBtn.disabled = !myTurn;
 ```
 
 The chips are not switched on and off by the code that deals, or hits, or settles. They ask the phase instead.
 
-So when your `handleHit` writes `phase = "finished"`, it never touches a button. Yet both chips go dead, because the next `render()` asks the phase and gets a new answer.
+So when your `handleHit` writes `phase = 'finished'`, it never touches a button. Yet both chips go dead, because the next `render()` asks the phase and gets a new answer.
 
 That is why you have one line to get right instead of five. It is the same reason hangman worked the whole screen out from three variables. Set the memory, and let the screen follow.
 

@@ -1,0 +1,380 @@
+/* ============================================================
+   Simon's Lookout Post — a field gun post on a ridge at dawn.
+   Stamped steel and olive paint, stencilled labels, amber
+   gauges. Only the sky behind the window has any weather in it.
+   ============================================================ */
+
+:root {
+  --olive: #4a5340;
+  --olive-lit: #6b7550;
+  --olive-deep: #232a1e;
+  --steel: #5d666e;
+  --steel-lit: #98a2aa;
+  --steel-deep: #23292f;
+  --canvas: #ded2ae;
+  --canvas-dim: rgba(222, 210, 174, .6);
+  --amber: #f0a833;
+  --amber-lit: #ffd68e;
+  --amber-dark: #7a5410;
+  --signal: #c8452c;
+  --ink: #1b2016;
+  --display: "Stencil", "Futura", "Century Gothic", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--ink);
+  background: #0e1210 radial-gradient(ellipse at 50% 24%, #263025 0%, #151a15 54%, #080b09 100%);
+  container-type: size;
+}
+
+/* The post: one steel frontage. Every region is placed as a % of this
+   frame, so the whole thing scales together like one photograph. */
+.post {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    repeating-linear-gradient(114deg,
+      rgba(255, 255, 255, .035) 0 1px,
+      rgba(0, 0, 0, .06) 1px 3px,
+      rgba(255, 255, 255, 0) 3px 22px),
+    linear-gradient(176deg, var(--olive-lit) 0%, var(--olive) 38%, var(--olive-deep) 100%);
+  border: 1.1cqw solid var(--olive-lit);
+  border-radius: 0.6cqw;
+  box-shadow:
+    inset 0 0 0 0.22cqw rgba(0, 0, 0, .34),
+    inset 0 1cqh 6cqh rgba(0, 0, 0, .3),
+    0 3cqh 7cqh rgba(0, 0, 0, .62);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.p-plate  { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.4%; }
+.p-sky    { position: absolute; left: 4%;  top: 13.4%; width: 61%; height: 74%; }
+.p-status { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.p-rack   { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The stamped steel name plate across the top --- */
+.p-plate {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqw;
+  padding: 0 1.8cqw;
+  color: var(--steel-deep);
+  background:
+    linear-gradient(176deg, #b9c1c6 0%, #8d959b 44%, #666e75 100%);
+  border-radius: 0.3cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.6cqh rgba(255, 255, 255, .55),
+    inset 0 -0.5cqh 1cqh rgba(0, 0, 0, .3),
+    0 0.6cqh 1.4cqh rgba(0, 0, 0, .5);
+}
+/* Four rivets, one in each corner of the plate. */
+.plate-rivets {
+  position: absolute;
+  inset: 0.9cqh 0.7cqw;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, #cdd4d8 0 0.2cqw, #6d757c 0.2cqw 0.3cqw, rgba(0, 0, 0, 0) 0.3cqw) 0    0    / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 50% 50%, #cdd4d8 0 0.2cqw, #6d757c 0.2cqw 0.3cqw, rgba(0, 0, 0, 0) 0.3cqw) 100% 0    / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 50% 50%, #cdd4d8 0 0.2cqw, #6d757c 0.2cqw 0.3cqw, rgba(0, 0, 0, 0) 0.3cqw) 0    100% / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 50% 50%, #cdd4d8 0 0.2cqw, #6d757c 0.2cqw 0.3cqw, rgba(0, 0, 0, 0) 0.3cqw) 100% 100% / 1cqw 1cqw no-repeat;
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 1.9cqw;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 0.14cqh 0 rgba(255, 255, 255, .5);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3cqw;
+  padding: 0.5cqh 0.8cqw;
+  border-radius: 0.3cqw;
+  color: var(--amber-lit);
+  background: #1b2026;
+  box-shadow: inset 0 0.3cqh 0.9cqh rgba(0, 0, 0, .7);
+  font-family: var(--mono);
+  font-size: 1.7cqw;
+  font-weight: 700;
+}
+.plate-read b { min-width: 3.4cqw; text-align: right; }
+.plate-read i {
+  font-style: normal;
+  font-size: 0.95cqw;
+  letter-spacing: 0.1em;
+  opacity: .6;
+}
+
+/* --- The sky, seen through the post's window --- */
+.p-sky { display: grid; place-items: center; }
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  max-height: 100%;
+  background: var(--steel-deep);
+  border: 0.5cqw solid var(--steel);
+  border-radius: 0.3cqw;
+  box-shadow:
+    inset 0 0 0 0.14cqw rgba(0, 0, 0, .6),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .55);
+}
+
+#sky {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* Morning light across the glass. It is a CSS layer over the canvas,
+   so it never lands in the game's own pixels. */
+.glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(102deg, rgba(255, 255, 255, .07) 0 16%, rgba(255, 255, 255, 0) 34%),
+    radial-gradient(ellipse at 50% 44%, rgba(255, 255, 255, .04) 0%, rgba(0, 0, 0, 0) 48%, rgba(0, 0, 0, .3) 100%);
+}
+
+/* --- The status line, chalked under the window --- */
+.p-status {
+  display: flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 1.3cqw;
+  color: var(--canvas-dim);
+}
+
+/* --- The rack: the painted panel of instruments beside the window --- */
+.p-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqh;
+  padding: 1.6cqh 1.4cqw;
+  border-radius: 0.6cqw;
+  color: var(--canvas);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, 0) 42%),
+    linear-gradient(180deg, #4f5a44 0%, #3a4333 50%, #202619 100%);
+  box-shadow:
+    inset 0 0 0 0.16cqw rgba(255, 255, 255, .14),
+    inset 0 -0.8cqh 2cqh rgba(0, 0, 0, .42),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .5);
+}
+
+.panel { display: flex; flex-direction: column; gap: 0.9cqh; }
+.panel-title {
+  font-size: 1.05cqw;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(222, 210, 174, .55);
+}
+
+/* The three trooper states, each with a bar and a count. The picture
+   of the state machine, kept where you can watch it. */
+.states { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7cqh; }
+.states li {
+  display: grid;
+  grid-template-columns: 5.4cqw 1fr 2.2cqw;
+  align-items: center;
+  gap: 0.6cqw;
+}
+.state-name {
+  font-size: 0.9cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(222, 210, 174, .8);
+}
+.bar {
+  height: 1cqh;
+  border-radius: 0.5cqh;
+  background: rgba(0, 0, 0, .42);
+  box-shadow: inset 0 0 0 0.08cqw rgba(255, 255, 255, .1);
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber-dark), var(--amber));
+}
+.states b {
+  font-family: var(--mono);
+  font-size: 1.2cqw;
+  text-align: right;
+  color: var(--amber-lit);
+}
+
+/* The post itself, drawn as three sandbags. One goes for each trooper
+   that reaches it. */
+.sandbags { display: flex; gap: 0.6cqw; }
+.sandbag {
+  width: 2.6cqw;
+  height: 1.7cqw;
+  border-radius: 0.7cqw;
+  background: linear-gradient(168deg, #cbb98a 0%, #9a8757 62%, #6a5b34 100%);
+  box-shadow: 0 0.3cqh 0.6cqh rgba(0, 0, 0, .45);
+}
+.sandbag-gone {
+  background: none;
+  box-shadow: inset 0 0 0 0.12cqw rgba(222, 210, 174, .3);
+}
+
+/* The four lists, counted. */
+.figures { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8cqh 0.8cqw; }
+.figures > div {
+  padding: 0.6cqh 0.7cqw;
+  border-radius: 0.3cqw;
+  background: rgba(0, 0, 0, .32);
+  box-shadow: inset 0 0 0 0.1cqw rgba(255, 255, 255, .09);
+}
+.figures dt {
+  font-size: 0.82cqw;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(222, 210, 174, .55);
+}
+.figures dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.7cqw;
+  font-weight: 700;
+  color: var(--amber-lit);
+}
+
+/* Normal speed or slow motion. */
+.tools { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6cqw; }
+.tool, .key {
+  padding: 1.1cqh 0;
+  border: none;
+  border-radius: 0.3cqw;
+  cursor: pointer;
+  font-family: var(--display);
+  font-size: 1.2cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #22271d;
+  background: linear-gradient(178deg, #d6cba8 0%, #a89c78 100%);
+  box-shadow:
+    inset 0 0.2cqh 0.4cqh rgba(255, 255, 255, .7),
+    0 0.5cqh 1cqh rgba(0, 0, 0, .42);
+  transition: transform .1s ease, filter .1s ease;
+}
+.tool:hover, .key:hover:not(:disabled) { filter: brightness(1.08); }
+.tool:active, .key:active:not(:disabled) { transform: translateY(0.3cqh); }
+.tool[aria-pressed="true"] {
+  color: var(--amber-lit);
+  background: linear-gradient(178deg, #2f3527 0%, #171c13 100%);
+  box-shadow: inset 0 0.3cqh 0.8cqh rgba(0, 0, 0, .62);
+}
+
+/* The three things worth knowing, stencilled on the rack. */
+.panel-orders { flex: 1; min-height: 0; }
+.orders {
+  margin: 0;
+  padding-left: 1.1cqw;
+  font-size: 1.02cqw;
+  line-height: 1.5;
+  color: rgba(222, 210, 174, .72);
+}
+.orders li { margin-bottom: 0.7cqh; }
+.orders li::marker { color: var(--amber); }
+
+.panel-keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6cqw;
+  margin-top: auto;
+}
+.key kbd {
+  margin-left: 0.4cqw;
+  padding: 0.1cqh 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  background: rgba(0, 0, 0, .16);
+}
+.key-go {
+  color: #fff0e6;
+  background: linear-gradient(178deg, #e0664a 0%, var(--signal) 58%, #8c2716 100%);
+}
+.key:disabled { opacity: .38; cursor: default; box-shadow: none; }
+
+/* Narrow windows: the post stands up into one column and the page
+   scrolls. The window stays 4:3 and full width; the rack becomes a
+   stack of panels under it. */
+@media (max-width: 900px) {
+  html, body { height: auto; }
+  body { overflow: visible; place-items: start center; }
+  .post {
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: normal;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px 14px 28px;
+    border-width: 8px;
+    border-radius: 10px;
+  }
+  .post > * { position: static !important; width: 100% !important; height: auto !important; left: auto; top: auto; }
+  .p-plate {
+    order: 1;
+    min-height: 56px;
+    padding: 10px 14px;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-radius: 4px;
+  }
+  .plate-rivets { display: none; }
+  .plate-name { font-size: 1rem; }
+  .plate-read { font-size: 1.1rem; padding: 4px 10px; }
+  .plate-read b { min-width: 4ch; }
+  .plate-read i { font-size: .62rem; }
+  .p-sky { order: 2; }
+  .p-status { order: 3; font-size: .9rem; margin-top: -4px; }
+  .p-rack { order: 4; gap: 14px; padding: 14px; border-radius: 8px; }
+  .frame { width: 100%; max-height: none; border-width: 5px; }
+  .panel-title { font-size: .62rem; }
+  .states li { grid-template-columns: 64px 1fr 26px; gap: 8px; }
+  .state-name { font-size: .66rem; }
+  .bar { height: 8px; border-radius: 4px; }
+  .states b { font-size: .85rem; }
+  .sandbags { gap: 8px; }
+  .sandbag { width: 34px; height: 22px; border-radius: 11px; }
+  .figures { gap: 8px; }
+  .figures dt { font-size: .56rem; }
+  .figures dd { font-size: 1.1rem; }
+  .panel-orders { flex: none; }
+  .orders { font-size: .8rem; padding-left: 18px; }
+  .orders li { margin-bottom: 4px; }
+  .tools, .panel-keys { gap: 10px; }
+  .tool, .key { height: 48px; padding: 0; font-size: .78rem; border-radius: 6px; }
+  .key kbd { font-size: .65rem; padding: 2px 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool, .key { transition: none; }
+}

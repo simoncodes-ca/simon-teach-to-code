@@ -34,23 +34,23 @@
 /* A suit is an object: a thing with named parts, written inside { }.
    These four are the only suits there will ever be. */
 const SUITS = [
-  { symbol: "♠", name: "spades",   colour: "black" },
-  { symbol: "♥", name: "hearts",   colour: "red" },
-  { symbol: "♦", name: "diamonds", colour: "red" },
-  { symbol: "♣", name: "clubs",    colour: "black" }
+  { symbol: '♠', name: 'spades',   colour: 'black' },
+  { symbol: '♥', name: 'hearts',   colour: 'red' },
+  { symbol: '♦', name: 'diamonds', colour: 'red' },
+  { symbol: '♣', name: 'clubs',    colour: 'black' }
 ];
 
-const RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
 /* A card is an object too, and it is made of exactly two parts:
-     { rank: "7", suit: SUITS[1] }
-   That card is the seven of hearts. card.rank is "7", card.suit is the
+     { rank: '7', suit: SUITS[1] }
+   That card is the seven of hearts. card.rank is '7', card.suit is the
    whole hearts object, and card.suit.symbol is the little heart shape. */
 
 let deck = [];              // the cards not dealt yet, top card at the END
 let playerHand = [];        // your cards, an array of card objects
 let dealerHand = [];        // the dealer's cards
-let phase = "finished";     // "dealing", "playerTurn", "dealerTurn" or "finished"
+let phase = 'finished';     // 'dealing', 'playerTurn', 'dealerTurn' or 'finished'
 
 const BUST_AT = 21;         // go past this and the hand is dead
 const DEALER_STANDS_ON = 17; // the dealer takes cards until it reaches this
@@ -166,10 +166,10 @@ function drawCard() {
  *   J, Q and K      are worth 10
  *   2 to 10         are worth the number printed on them
  *
- * Gentle hint: card.rank is a piece of text like "A", "10" or "K", never
+ * Gentle hint: card.rank is a piece of text like 'A', '10' or 'K', never
  *   a number. Three cases, so two ifs and a last line for the rest.
- * Stronger hint: "7" is text and 7 is a number, and they are not the
- *   same thing. Number("7") turns the text into the number.
+ * Stronger hint: '7' is text and 7 is a number, and they are not the
+ *   same thing. Number('7') turns the text into the number.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Every card on the table has a small line under it saying what it is
@@ -219,7 +219,7 @@ function sumCards(hand) {
  * Gentle hint: sumCards has already done the adding. What is left is to
  *   count how many aces are in the hand, then bring the total down.
  * Stronger hint: walk the hand and add one to `aces` for each card whose
- *   rank is "A". Then a `while` loop: while the total is too big AND
+ *   rank is 'A'. Then a `while` loop: while the total is too big AND
  *   there is still an ace left at 11, take off 10 and one from the ace
  *   count.
  * Stuck? The answer key is at the bottom of this file.
@@ -306,14 +306,14 @@ function isBust(hand) {
 
 /**
  * Who won? Return one of exactly three pieces of text:
- *   "player", "dealer" or "push"   ("push" means a draw — nobody wins)
+ *   'player', 'dealer' or 'push'   ('push' means a draw — nobody wins)
  *
  * The cases, in this order:
- *   1. You went bust             -> "dealer" (even if the dealer also went bust)
- *   2. The dealer went bust      -> "player"
- *   3. Your total is higher      -> "player"
- *   4. The dealer's is higher    -> "dealer"
- *   5. The totals are equal      -> "push"
+ *   1. You went bust             -> 'dealer' (even if the dealer also went bust)
+ *   2. The dealer went bust      -> 'player'
+ *   3. Your total is higher      -> 'player'
+ *   4. The dealer's is higher    -> 'dealer'
+ *   5. The totals are equal      -> 'push'
  *
  * The order matters. Case 1 has to come first, because a burst hand
  * loses even if its number is bigger — that is the whole point of
@@ -333,8 +333,8 @@ function isBust(hand) {
  * plaque in the middle of the table.
  */
 function decideWinner() {
-  // TODO: return "player", "dealer" or "push".
-  return "";
+  // TODO: return 'player', 'dealer' or 'push'.
+  return '';
 }
 
 /**
@@ -345,14 +345,14 @@ function decideWinner() {
  *   1. Take the top card off the deck with drawCard() and push it onto
  *      the end of playerHand.
  *   2. Call render() so the new card appears.
- *   3. If playerHand is now bust, move phase to "finished" and call
+ *   3. If playerHand is now bust, move phase to 'finished' and call
  *      settleRound(). Standing is not the only way a round can end.
  *
  * Gentle hint: handleStand, a little way down in the wiring, is the same
  *   shape as this and is already written. Read it first.
  * Stronger hint: phase is just a variable holding a piece of text.
  *   Changing the round from your turn to over is one line:
- *   phase = "finished";
+ *   phase = 'finished';
  * Stuck? The answer key is at the bottom of this file.
  *
  * drawCard() is your own, from earlier up this file. render() repaints
@@ -377,40 +377,40 @@ function handleHit() {
    it shows how your eight functions get used — but leave it alone.
    --------------------------------------------------------------------- */
 
-let statusMessage = "";
+let statusMessage = '';
 let holeHidden = true;          // is the dealer's second card still face down?
 let holeWasHidden = true;       // was it face down on the previous render?
 let flippedThisRender = false;  // true for the one render that turns it over
 let dealtCounts = { player: 0, dealer: 0 };
 let dealerTimer = null;
 
-const dealerHandEl = document.getElementById("dealerHand");
-const playerHandEl = document.getElementById("playerHand");
-const dealerTotalEl = document.getElementById("dealerTotal");
-const playerTotalEl = document.getElementById("playerTotal");
-const deckCountEl = document.getElementById("deckCount");
-const ribbonEl = document.getElementById("ribbon");
-const phaseEl = document.getElementById("phase");
-const statusEl = document.getElementById("status");
-const resultEl = document.getElementById("result");
-const hitBtn = document.getElementById("hit");
-const standBtn = document.getElementById("stand");
-const dealBtn = document.getElementById("deal");
+const dealerHandEl = document.getElementById('dealerHand');
+const playerHandEl = document.getElementById('playerHand');
+const dealerTotalEl = document.getElementById('dealerTotal');
+const playerTotalEl = document.getElementById('playerTotal');
+const deckCountEl = document.getElementById('deckCount');
+const ribbonEl = document.getElementById('ribbon');
+const phaseEl = document.getElementById('phase');
+const statusEl = document.getElementById('status');
+const resultEl = document.getElementById('result');
+const hitBtn = document.getElementById('hit');
+const standBtn = document.getElementById('stand');
+const dealBtn = document.getElementById('deal');
 
 const PHASE_LABELS = {
-  dealing: "Dealing",
-  playerTurn: "Your turn",
+  dealing: 'Dealing',
+  playerTurn: 'Your turn',
   dealerTurn: "Dealer's turn",
-  finished: "Round over"
+  finished: 'Round over'
 };
 
 /* The sounds. One Audio element is made for each, once, and reused —
    calling play() again just restarts it from the beginning. */
-const shuffleSound = new Audio("assets/shuffle.wav");
-const dealSound = new Audio("assets/deal.wav");
-const winSound = new Audio("assets/win.wav");
-const loseSound = new Audio("assets/lose.wav");
-const pushSound = new Audio("assets/push.wav");
+const shuffleSound = new Audio('assets/shuffle.wav');
+const dealSound = new Audio('assets/deal.wav');
+const winSound = new Audio('assets/win.wav');
+const loseSound = new Audio('assets/lose.wav');
+const pushSound = new Audio('assets/push.wav');
 
 function playSound(sound) {
   sound.currentTime = 0;
@@ -426,8 +426,8 @@ function render() {
   // animated, then forget it again.
   flippedThisRender = holeWasHidden && !holeHidden;
   holeWasHidden = holeHidden;
-  renderHand(dealerHandEl, dealerHand, "dealer", holeHidden);
-  renderHand(playerHandEl, playerHand, "player", false);
+  renderHand(dealerHandEl, dealerHand, 'dealer', holeHidden);
+  renderHand(playerHandEl, playerHand, 'player', false);
   renderTotals();
   renderShoe();
   renderRibbon();
@@ -438,66 +438,66 @@ function render() {
 }
 
 function makeCardSlot(card, faceDown) {
-  const slot = document.createElement("div");
-  slot.className = "card-slot";
-  const el = document.createElement("div");
-  el.className = "card";
+  const slot = document.createElement('div');
+  slot.className = 'card-slot';
+  const el = document.createElement('div');
+  el.className = 'card';
   if (faceDown) {
-    el.classList.add("back");
-    el.setAttribute("aria-label", "a face-down card");
+    el.classList.add('back');
+    el.setAttribute('aria-label', 'a face-down card');
   } else {
-    if (card.suit.colour === "red") el.classList.add("red");
-    const corner = document.createElement("span");
-    corner.className = "corner";
-    corner.innerHTML = card.rank + "<span class='s'>" + card.suit.symbol + "</span>";
-    const pip = document.createElement("span");
-    pip.className = "pip";
+    if (card.suit.colour === 'red') el.classList.add('red');
+    const corner = document.createElement('span');
+    corner.className = 'corner';
+    corner.innerHTML = card.rank + "<span class='s'>" + card.suit.symbol + '</span>';
+    const pip = document.createElement('span');
+    pip.className = 'pip';
     pip.textContent = card.suit.symbol;
     el.append(corner, pip);
-    el.setAttribute("aria-label", card.rank + " of " + card.suit.name);
+    el.setAttribute('aria-label', card.rank + ' of ' + card.suit.name);
   }
   slot.appendChild(el);
-  const worth = document.createElement("span");
-  worth.className = "worth";
+  const worth = document.createElement('span');
+  worth.className = 'worth';
   // The little line under each card is your cardValue, shown out loud.
-  worth.textContent = faceDown ? " " : "worth " + cardValue(card);
+  worth.textContent = faceDown ? ' ' : 'worth ' + cardValue(card);
   slot.appendChild(worth);
   return slot;
 }
 
 function renderHand(el, hand, seat, hideSecond) {
   const alreadyShown = dealtCounts[seat];
-  el.textContent = "";
+  el.textContent = '';
   hand.forEach((card, index) => {
     if (!card) return;                       // a gap can only appear mid-deal
     const faceDown = hideSecond && index === 1;
     const slot = makeCardSlot(card, faceDown);
-    if (index >= alreadyShown) slot.classList.add("dealing");
-    else if (seat === "dealer" && index === 1 && !faceDown && flippedThisRender) {
-      slot.classList.add("flipping");
+    if (index >= alreadyShown) slot.classList.add('dealing');
+    else if (seat === 'dealer' && index === 1 && !faceDown && flippedThisRender) {
+      slot.classList.add('flipping');
     }
     el.appendChild(slot);
   });
   dealtCounts[seat] = hand.length;
 }
 
-/* A total, plus the word "bust" when your isBust says the hand is dead. */
+/* A total, plus the word 'bust' when your isBust says the hand is dead. */
 function showTotal(el, hand) {
   const dead = isBust(hand);
-  el.textContent = handTotal(hand) + (dead ? " — bust" : "");
-  el.classList.toggle("bust", dead);
+  el.textContent = handTotal(hand) + (dead ? ' — bust' : '');
+  el.classList.toggle('bust', dead);
 }
 
 function renderTotals() {
   if (playerHand.length) showTotal(playerTotalEl, playerHand);
-  else { playerTotalEl.textContent = ""; playerTotalEl.classList.remove("bust"); }
+  else { playerTotalEl.textContent = ''; playerTotalEl.classList.remove('bust'); }
   if (!dealerHand.length) {
-    dealerTotalEl.textContent = "";
-    dealerTotalEl.classList.remove("bust");
+    dealerTotalEl.textContent = '';
+    dealerTotalEl.classList.remove('bust');
   } else if (holeHidden) {
     // Hidden information: with a card face down, only the up card counts.
-    dealerTotalEl.textContent = sumCards(dealerHand.slice(0, 1)) + " + ?";
-    dealerTotalEl.classList.remove("bust");
+    dealerTotalEl.textContent = sumCards(dealerHand.slice(0, 1)) + ' + ?';
+    dealerTotalEl.classList.remove('bust');
   } else {
     showTotal(dealerTotalEl, dealerHand);
   }
@@ -508,39 +508,39 @@ function renderTotals() {
    blackjack — so this shows you the shuffle without giving anything
    away. */
 function renderRibbon() {
-  ribbonEl.textContent = "";
+  ribbonEl.textContent = '';
   const width = 520 / 52;
   deck.forEach((card, index) => {
-    const tick = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    tick.setAttribute("x", String(index * width + 0.8));
-    tick.setAttribute("y", "4");
-    tick.setAttribute("width", String(width - 1.6));
-    tick.setAttribute("height", "26");
-    tick.setAttribute("rx", "1.4");
-    tick.setAttribute("fill", card.suit.colour === "red" ? "#b3312b" : "#23272b");
+    const tick = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    tick.setAttribute('x', String(index * width + 0.8));
+    tick.setAttribute('y', '4');
+    tick.setAttribute('width', String(width - 1.6));
+    tick.setAttribute('height', '26');
+    tick.setAttribute('rx', '1.4');
+    tick.setAttribute('fill', card.suit.colour === 'red' ? '#b3312b' : '#23272b');
     ribbonEl.appendChild(tick);
   });
 }
 
 function renderPhase() {
-  phaseEl.innerHTML = "";
-  const label = document.createElement("span");
-  label.textContent = "phase";
-  const value = document.createElement("b");
+  phaseEl.innerHTML = '';
+  const label = document.createElement('span');
+  label.textContent = 'phase';
+  const value = document.createElement('b');
   value.textContent = PHASE_LABELS[phase] || phase;
   phaseEl.append(label, value);
 }
 
 function renderStatus() {
   statusEl.textContent = statusMessage;
-  statusEl.classList.toggle("bad", statusMessage.startsWith("Fill in"));
+  statusEl.classList.toggle('bad', statusMessage.startsWith('Fill in'));
 }
 
 function renderActions() {
-  const myTurn = phase === "playerTurn";
+  const myTurn = phase === 'playerTurn';
   hitBtn.disabled = !myTurn || deck.length === 0;
   standBtn.disabled = !myTurn;
-  dealBtn.disabled = phase === "dealing" || phase === "dealerTurn";
+  dealBtn.disabled = phase === 'dealing' || phase === 'dealerTurn';
 }
 
 /* --- Running a round --- */
@@ -549,7 +549,7 @@ function renderActions() {
    your turn, turns the dealer's hidden card over, and hands the round to
    the dealer. */
 function handleStand() {
-  phase = "dealerTurn";
+  phase = 'dealerTurn';
   revealHoleCard();
   render();
   runDealerTurn();
@@ -560,7 +560,7 @@ function handleStand() {
 function runDealerTurn() {
   clearTimeout(dealerTimer);
   dealerTimer = setTimeout(() => {
-    if (phase !== "dealerTurn") return;
+    if (phase !== 'dealerTurn') return;
     if (dealerShouldHit(dealerHand) && deck.length > 0) {
       const card = drawCard();
       if (card) dealerHand.push(card);
@@ -568,7 +568,7 @@ function runDealerTurn() {
       render();
       runDealerTurn();
     } else {
-      phase = "finished";
+      phase = 'finished';
       settleRound();
     }
   }, 700);
@@ -577,24 +577,24 @@ function runDealerTurn() {
 function settleRound() {
   revealHoleCard();
   const winner = decideWinner();
-  if (winner === "player") {
-    resultEl.textContent = isBust(dealerHand) ? "Dealer bust — you win" : "You win";
-    resultEl.className = "t-result win";
+  if (winner === 'player') {
+    resultEl.textContent = isBust(dealerHand) ? 'Dealer bust — you win' : 'You win';
+    resultEl.className = 't-result win';
     playSound(winSound);
-  } else if (winner === "dealer") {
-    resultEl.textContent = isBust(playerHand) ? "Bust — dealer wins" : "Dealer wins";
-    resultEl.className = "t-result lose";
+  } else if (winner === 'dealer') {
+    resultEl.textContent = isBust(playerHand) ? 'Bust — dealer wins' : 'Dealer wins';
+    resultEl.className = 't-result lose';
     playSound(loseSound);
-  } else if (winner === "push") {
-    resultEl.textContent = "Push — nobody wins";
-    resultEl.className = "t-result";
+  } else if (winner === 'push') {
+    resultEl.textContent = 'Push — nobody wins';
+    resultEl.className = 't-result';
     playSound(pushSound);
   } else {
-    resultEl.textContent = "Fill in decideWinner() to find out who won";
-    resultEl.className = "t-result";
+    resultEl.textContent = 'Fill in decideWinner() to find out who won';
+    resultEl.className = 't-result';
   }
   resultEl.hidden = false;
-  statusMessage = "Press New deal to play again.";
+  statusMessage = 'Press New deal to play again.';
   render();
 }
 
@@ -610,14 +610,14 @@ function startRound() {
   resultEl.hidden = true;
 
   if (deck.length < 4) {
-    phase = "finished";
-    statusMessage = "Fill in buildDeck() in blackjack.js!";
+    phase = 'finished';
+    statusMessage = 'Fill in buildDeck() in blackjack.js!';
     render();
     return;
   }
 
-  phase = "dealing";
-  statusMessage = "";
+  phase = 'dealing';
+  statusMessage = '';
   playSound(shuffleSound);
   render();
 
@@ -631,8 +631,8 @@ function startRound() {
       if (card) hand.push(card);
       playSound(dealSound);
       if (step === order.length - 1) {
-        phase = "playerTurn";
-        statusMessage = "Hit for another card, or stand to stop.";
+        phase = 'playerTurn';
+        statusMessage = 'Hit for another card, or stand to stop.';
       }
       render();
     }, 260 * (step + 1));
@@ -643,20 +643,20 @@ function startRound() {
    click, so a chip keeps working however you choose to write its
    function. Handing the name straight to addEventListener would freeze
    whichever version existed when the page loaded. */
-hitBtn.addEventListener("click", () => handleHit());
-standBtn.addEventListener("click", () => handleStand());
-dealBtn.addEventListener("click", () => startRound());
+hitBtn.addEventListener('click', () => handleHit());
+standBtn.addEventListener('click', () => handleStand());
+dealBtn.addEventListener('click', () => startRound());
 
 /* Typing a #demo hash onto an already-open page only changes the address;
    the script does not run again. Reloading makes the demos work whether
    you edit the address bar or open the link fresh. */
-window.addEventListener("hashchange", () => location.reload());
+window.addEventListener('hashchange', () => location.reload());
 
 /* Demo states keep the finished look inspectable before the stubs are
    filled in. The picture is drawn by buildDeck, renderShoe, cardValue,
    sumCards, handTotal and isBust, so the demo needs working ones — these
    stand-ins are for the picture only, never for the game. */
-if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) {
+if (['#demo', '#demo-win', '#demo-lose', '#demo-bust'].includes(location.hash)) {
   const demoSuits = { S: SUITS[0], H: SUITS[1], D: SUITS[2], C: SUITS[3] };
   const card = (rank, suit) => ({ rank: rank, suit: demoSuits[suit] });
 
@@ -665,24 +665,24 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
   }
   deck = buildDeck();
   renderShoe();
-  if (deckCountEl.textContent !== "52") {
+  if (deckCountEl.textContent !== '52') {
     renderShoe = () => { deckCountEl.textContent = String(deck.length); };
   }
-  if (cardValue(card("K", "S")) !== 10) {
-    cardValue = (c) => (c.rank === "A" ? 11 : "JQK".includes(c.rank) ? 10 : Number(c.rank));
+  if (cardValue(card('K', 'S')) !== 10) {
+    cardValue = (c) => (c.rank === 'A' ? 11 : 'JQK'.includes(c.rank) ? 10 : Number(c.rank));
   }
-  if (sumCards([card("K", "S"), card("3", "H")]) !== 13) {
+  if (sumCards([card('K', 'S'), card('3', 'H')]) !== 13) {
     sumCards = (hand) => hand.reduce((sum, c) => sum + cardValue(c), 0);
   }
-  if (handTotal([card("A", "S"), card("K", "H"), card("5", "D")]) !== 16) {
+  if (handTotal([card('A', 'S'), card('K', 'H'), card('5', 'D')]) !== 16) {
     handTotal = (hand) => {
       let total = sumCards(hand);
-      let aces = hand.filter((c) => c.rank === "A").length;
+      let aces = hand.filter((c) => c.rank === 'A').length;
       while (total > BUST_AT && aces > 0) { total -= 10; aces -= 1; }
       return total;
     };
   }
-  if (isBust([card("K", "S"), card("Q", "H"), card("5", "D")]) !== true) {
+  if (isBust([card('K', 'S'), card('Q', 'H'), card('5', 'D')]) !== true) {
     isBust = (hand) => handTotal(hand) > BUST_AT;
   }
 
@@ -697,40 +697,40 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
     shuffleDeck(deck);
   }
   deck.length = 38;                           // as if a few hands had been played
-  playerHand = [card("A", "S"), card("7", "H")];
-  dealerHand = [card("9", "D"), card("4", "C")];
-  phase = "playerTurn";
-  statusMessage = "Hit for another card, or stand to stop.";
+  playerHand = [card('A', 'S'), card('7', 'H')];
+  dealerHand = [card('9', 'D'), card('4', 'C')];
+  phase = 'playerTurn';
+  statusMessage = 'Hit for another card, or stand to stop.';
 
-  if (location.hash === "#demo-win") {
-    playerHand = [card("K", "S"), card("9", "H")];
-    dealerHand = [card("10", "D"), card("7", "C")];
-    phase = "finished";
+  if (location.hash === '#demo-win') {
+    playerHand = [card('K', 'S'), card('9', 'H')];
+    dealerHand = [card('10', 'D'), card('7', 'C')];
+    phase = 'finished';
     holeHidden = false;
-    resultEl.textContent = "You win";
-    resultEl.className = "t-result win";
+    resultEl.textContent = 'You win';
+    resultEl.className = 't-result win';
     resultEl.hidden = false;
-    statusMessage = "Press New deal to play again.";
+    statusMessage = 'Press New deal to play again.';
   }
-  if (location.hash === "#demo-lose") {
-    playerHand = [card("8", "S"), card("9", "H")];
-    dealerHand = [card("10", "D"), card("9", "C")];
-    phase = "finished";
+  if (location.hash === '#demo-lose') {
+    playerHand = [card('8', 'S'), card('9', 'H')];
+    dealerHand = [card('10', 'D'), card('9', 'C')];
+    phase = 'finished';
     holeHidden = false;
-    resultEl.textContent = "Dealer wins";
-    resultEl.className = "t-result lose";
+    resultEl.textContent = 'Dealer wins';
+    resultEl.className = 't-result lose';
     resultEl.hidden = false;
-    statusMessage = "Press New deal to play again.";
+    statusMessage = 'Press New deal to play again.';
   }
-  if (location.hash === "#demo-bust") {
-    playerHand = [card("K", "S"), card("Q", "H"), card("5", "D")];
-    dealerHand = [card("10", "D"), card("6", "C")];
-    phase = "finished";
+  if (location.hash === '#demo-bust') {
+    playerHand = [card('K', 'S'), card('Q', 'H'), card('5', 'D')];
+    dealerHand = [card('10', 'D'), card('6', 'C')];
+    phase = 'finished';
     holeHidden = false;
-    resultEl.textContent = "Bust — dealer wins";
-    resultEl.className = "t-result lose";
+    resultEl.textContent = 'Bust — dealer wins';
+    resultEl.className = 't-result lose';
     resultEl.hidden = false;
-    statusMessage = "Press New deal to play again.";
+    statusMessage = 'Press New deal to play again.';
   }
   holeWasHidden = holeHidden;
   render();
@@ -777,8 +777,8 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
 
    --- cardValue(card) ---
 
-     if (card.rank === "A") return 11;
-     if (card.rank === "J" || card.rank === "Q" || card.rank === "K") return 10;
+     if (card.rank === 'A') return 11;
+     if (card.rank === 'J' || card.rank === 'Q' || card.rank === 'K') return 10;
      return Number(card.rank);
 
 
@@ -792,7 +792,7 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
    --- handTotal(hand) ---
 
      for (const card of hand) {
-       if (card.rank === "A") aces = aces + 1;
+       if (card.rank === 'A') aces = aces + 1;
      }
      while (total > BUST_AT && aces > 0) {
        total = total - 10;
@@ -817,11 +817,11 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
 
    --- decideWinner() ---
 
-     if (isBust(playerHand)) return "dealer";
-     if (isBust(dealerHand)) return "player";
-     if (handTotal(playerHand) > handTotal(dealerHand)) return "player";
-     if (handTotal(playerHand) < handTotal(dealerHand)) return "dealer";
-     return "push";
+     if (isBust(playerHand)) return 'dealer';
+     if (isBust(dealerHand)) return 'player';
+     if (handTotal(playerHand) > handTotal(dealerHand)) return 'player';
+     if (handTotal(playerHand) < handTotal(dealerHand)) return 'dealer';
+     return 'push';
 
 
    --- handleHit() ---
@@ -829,7 +829,7 @@ if (["#demo", "#demo-win", "#demo-lose", "#demo-bust"].includes(location.hash)) 
      playerHand.push(drawCard());
      render();
      if (isBust(playerHand)) {
-       phase = "finished";
+       phase = 'finished';
        settleRound();
      }
 

@@ -7,7 +7,7 @@
 
    A good order to work in:
       1. makeGrid           — build a ten by ten grid
-      2. cellName           — turn a row and a column into "C7"
+      2. cellName           — turn a row and a column into 'C7'
       3. shipCells          — which squares would a ship cover?
       4. canPlace           — would it actually fit there?
       5. placeShip          — put the ship on the sea
@@ -37,28 +37,28 @@
    A sea holds two grids of exactly that shape:
 
        sea.ships   what is floating here — a ship's name, or null
-       sea.shots   what has been fired here — "hit", "miss", or ""
+       sea.shots   what has been fired here — 'hit', 'miss', or ''
 
    Two grids, not one, because a square can hold a ship AND a shot at
    the same time. That is what a hit is.
    --------------------------------------------------------------------- */
 
 const SIZE = 10;                     // ten rows and ten columns
-const COLUMNS = "ABCDEFGHIJ";        // the letter across the top of each column
+const COLUMNS = 'ABCDEFGHIJ';        // the letter across the top of each column
 
 /* The fleet. Each ship is an object with a name and a length, the same
    way a card was an object with a rank and a suit. 17 squares in all. */
 const FLEET = [
-  { name: "Carrier",    length: 5 },
-  { name: "Battleship", length: 4 },
-  { name: "Cruiser",    length: 3 },
-  { name: "Submarine",  length: 3 },
-  { name: "Destroyer",  length: 2 }
+  { name: 'Carrier',    length: 5 },
+  { name: 'Battleship', length: 4 },
+  { name: 'Cruiser',    length: 3 },
+  { name: 'Submarine',  length: 3 },
+  { name: 'Destroyer',  length: 2 }
 ];
 
 let enemySea = { ships: [], shots: [] };  // their ships, and the shots you fired
 let yourSea  = { ships: [], shots: [] };  // your ships, and the shots they fired
-let phase = "placing";      // "placing", "yourTurn", "enemyTurn" or "finished"
+let phase = 'placing';      // 'placing', 'yourTurn', 'enemyTurn' or 'finished'
 let nextShip = 0;           // which ship in FLEET you are placing right now
 let across = true;          // true lays a ship left to right, false top to bottom
 let enemyAim = null;        // the square the enemy is about to fire at
@@ -76,7 +76,7 @@ let enemyAim = null;        // the square the enemy is about to fire at
  * Build one ten by ten grid, with the same value in every square.
  *
  * It hands back a list of SIZE rows, and each row is a list of SIZE
- * squares. So makeGrid("") gives a grid of 100 empty pieces of text,
+ * squares. So makeGrid('') gives a grid of 100 empty pieces of text,
  * and makeGrid(null) gives a grid of 100 nothings.
  *
  * Gentle hint: you are building a list of lists. The outer loop makes
@@ -101,9 +101,9 @@ function makeGrid(fill) {
 /**
  * Turn a row number and a column number into the name of that square.
  *
- *   cellName(0, 0)   is "A1"
- *   cellName(6, 2)   is "C7"
- *   cellName(9, 9)   is "J10"
+ *   cellName(0, 0)   is 'A1'
+ *   cellName(6, 2)   is 'C7'
+ *   cellName(9, 9)   is 'J10'
  *
  * The letter comes from the column and the number comes from the row.
  * People count from 1, but a list counts from 0, so row 6 is called 7.
@@ -121,7 +121,7 @@ function makeGrid(fill) {
  */
 function cellName(row, col) {
   // TODO: return the letter for this column joined to the number for this row.
-  return "";
+  return '';
 }
 
 /**
@@ -245,34 +245,34 @@ function placeFleetAtRandom(sea) {
 
 /**
  * Fire one shot into a sea. Return one of exactly three pieces of text:
- *   "hit"     there was a ship there
- *   "miss"    there was not
- *   "again"   that square has already been fired at
+ *   'hit'     there was a ship there
+ *   'miss'    there was not
+ *   'again'   that square has already been fired at
  *
  * The shot has to be recorded in `sea.shots` as well as reported, or the
  * peg never appears and the same square can be fired at for ever.
  *
  * The cases, in this order:
- *   1. this square already holds a shot   -> "again", and change nothing
- *   2. no ship here                       -> write "miss", return "miss"
- *   3. otherwise                          -> write "hit", return "hit"
+ *   1. this square already holds a shot   -> 'again', and change nothing
+ *   2. no ship here                       -> write 'miss', return 'miss'
+ *   3. otherwise                          -> write 'hit', return 'hit'
  *
- * Gentle hint: an untouched square holds "", an empty piece of text.
+ * Gentle hint: an untouched square holds '', an empty piece of text.
  *   A square with no ship holds null.
  * Stronger hint: `return` leaves the function at once, so each case is
  *   one or two lines and none of them needs an `else`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Order matters here the same way it did when blackjack settled a round.
- * Put the "again" case second and a second shot at a hit square counts
+ * Put the 'again' case second and a second shot at a hit square counts
  * as a fresh hit, and a three-square ship sinks to one lucky peg.
  *
  * This is the one you have been waiting for. Click enemy waters and a
  * peg goes in — white for a miss, red for a hit.
  */
 function fireAt(sea, row, col) {
-  // TODO: record the shot and return "hit", "miss" or "again".
-  return "";
+  // TODO: record the shot and return 'hit', 'miss' or 'again'.
+  return '';
 }
 
 /**
@@ -284,7 +284,7 @@ function fireAt(sea, row, col) {
  * Gentle hint: you have to look at all 100 squares, so this is a loop
  *   inside a loop — the same shape as makeGrid.
  * Stronger hint: `sea.ships[row][col] === ship.name` and
- *   `sea.shots[row][col] === "hit"` both have to be true of a square
+ *   `sea.shots[row][col] === 'hit'` both have to be true of a square
  *   before you count it.
  * Stuck? The answer key is at the bottom of this file.
  *
@@ -327,7 +327,7 @@ function allSunk(sea) {
  *
  * The enemy fires at random, but it is not allowed to waste a turn on a
  * square it has already fired at. So keep guessing until you find one
- * where `sea.shots[row][col]` is still "".
+ * where `sea.shots[row][col]` is still ''.
  *
  * Return null if there is nowhere left. The last line does that already,
  * and the counted loop makes sure you reach it instead of spinning for
@@ -363,23 +363,23 @@ function enemyChoice(sea) {
  * Four jobs, in this order:
  *   1. Fire into yourSea at enemyAim.row and enemyAim.col, and keep what
  *      fireAt hands back.
- *   2. Report it: addShot("Enemy", yourSea, enemyAim.row, enemyAim.col,
+ *   2. Report it: addShot('Enemy', yourSea, enemyAim.row, enemyAim.col,
  *      result) writes the log line, plays the sound, and announces any
  *      ship that has just gone down.
- *   3. If allSunk(yourSea) is true, set phase to "finished" and call
- *      finish("enemy"). Stop there — the turn does not come back to you.
- *   4. Otherwise set phase back to "yourTurn", clear enemyAim by setting
+ *   3. If allSunk(yourSea) is true, set phase to 'finished' and call
+ *      finish('enemy'). Stop there — the turn does not come back to you.
+ *   4. Otherwise set phase back to 'yourTurn', clear enemyAim by setting
  *      it to null, and call render().
  *
  * Gentle hint: `takeShot`, in the wiring below, is your half of exactly
  *   this and is already written. Read it first — this is the same four
  *   jobs with the seas the other way round.
- * Stronger hint: `return` after finish("enemy") is what stops jobs 3 and
+ * Stronger hint: `return` after finish('enemy') is what stops jobs 3 and
  *   4 both running. Without it the game ends and then hands you a turn.
  * Stuck? The answer key is at the bottom of this file.
  *
  * enemyChoice never picks a square twice, so this one never has to deal
- * with an "again".
+ * with an 'again'.
  *
  * Notice you never switch a single button on or off. render() reads the
  * phase and works the buttons out, so setting phase is the only thing
@@ -399,9 +399,9 @@ function handleEnemyShot() {
    it shows how your eleven functions get used — but leave it alone.
    --------------------------------------------------------------------- */
 
-let statusMessage = "";
+let statusMessage = '';
 let logLines = [];              // newest first
-let hoverSide = "";             // which chart your cursor is on: "home", "target" or neither
+let hoverSide = '';             // which chart your cursor is on: 'home', 'target' or neither
 let hoverRow = -1;              // the square your cursor is on, or -1
 let hoverCol = -1;
 let reportedSunk = [];          // ships already announced, so we say it once
@@ -409,37 +409,37 @@ let freshPeg = null;            // the one peg allowed to drop into place
 let freshTimer = null;
 let enemyTimer = null;
 
-const targetGridEl = document.getElementById("targetGrid");
-const homeGridEl = document.getElementById("homeGrid");
-const targetColsEl = document.getElementById("targetCols");
-const targetRowsEl = document.getElementById("targetRows");
-const homeColsEl = document.getElementById("homeCols");
-const homeRowsEl = document.getElementById("homeRows");
-const bearingEl = document.getElementById("bearing");
-const rosterEl = document.getElementById("roster");
-const rosterTitleEl = document.getElementById("rosterTitle");
-const logEl = document.getElementById("log");
-const phaseEl = document.getElementById("phase");
-const statusEl = document.getElementById("status");
-const resultEl = document.getElementById("result");
-const rotateBtn = document.getElementById("rotate");
-const scatterBtn = document.getElementById("scatter");
-const newGameBtn = document.getElementById("newGame");
+const targetGridEl = document.getElementById('targetGrid');
+const homeGridEl = document.getElementById('homeGrid');
+const targetColsEl = document.getElementById('targetCols');
+const targetRowsEl = document.getElementById('targetRows');
+const homeColsEl = document.getElementById('homeCols');
+const homeRowsEl = document.getElementById('homeRows');
+const bearingEl = document.getElementById('bearing');
+const rosterEl = document.getElementById('roster');
+const rosterTitleEl = document.getElementById('rosterTitle');
+const logEl = document.getElementById('log');
+const phaseEl = document.getElementById('phase');
+const statusEl = document.getElementById('status');
+const resultEl = document.getElementById('result');
+const rotateBtn = document.getElementById('rotate');
+const scatterBtn = document.getElementById('scatter');
+const newGameBtn = document.getElementById('newGame');
 
 const PHASE_LABELS = {
-  placing: "Placing your fleet",
-  yourTurn: "Your turn",
+  placing: 'Placing your fleet',
+  yourTurn: 'Your turn',
   enemyTurn: "Enemy's turn",
-  finished: "Game over"
+  finished: 'Game over'
 };
 
 /* The sounds. One Audio element is made for each, once, and reused. */
-const placeSound = new Audio("assets/place.wav");
-const splashSound = new Audio("assets/splash.wav");
-const hitSound = new Audio("assets/hit.wav");
-const sunkSound = new Audio("assets/sunk.wav");
-const winSound = new Audio("assets/win.wav");
-const loseSound = new Audio("assets/lose.wav");
+const placeSound = new Audio('assets/place.wav');
+const splashSound = new Audio('assets/splash.wav');
+const hitSound = new Audio('assets/hit.wav');
+const sunkSound = new Audio('assets/sunk.wav');
+const winSound = new Audio('assets/win.wav');
+const loseSound = new Audio('assets/lose.wav');
 
 function playSound(sound) {
   sound.currentTime = 0;
@@ -500,11 +500,11 @@ function render() {
 }
 
 function renderBoard(el, sea, showShips) {
-  el.textContent = "";
-  const side = showShips ? "home" : "target";
-  const firing = !showShips && phase === "yourTurn";
-  const laying = showShips && phase === "placing";
-  el.classList.toggle("live", firing || laying);
+  el.textContent = '';
+  const side = showShips ? 'home' : 'target';
+  const firing = !showShips && phase === 'yourTurn';
+  const laying = showShips && phase === 'placing';
+  el.classList.toggle('live', firing || laying);
 
   // The ghost of the ship you are about to lay down.
   let ghost = [];
@@ -519,40 +519,40 @@ function renderBoard(el, sea, showShips) {
 
   for (let row = 0; row < sea.shots.length; row += 1) {
     for (let col = 0; col < sea.shots[row].length; col += 1) {
-      const cell = document.createElement("button");
-      cell.type = "button";
-      cell.className = "cell";
+      const cell = document.createElement('button');
+      cell.type = 'button';
+      cell.className = 'cell';
       cell.disabled = !firing && !laying;
 
       const name = sea.ships[row] ? sea.ships[row][col] : null;
       const mark = sea.shots[row][col];
-      let says = cellName(row, col) || (row + 1) + " across, " + (col + 1) + " down";
+      let says = cellName(row, col) || (row + 1) + ' across, ' + (col + 1) + ' down';
 
       // Your own ships are visible. Theirs are not, and that is the game.
       if (showShips && name) {
-        cell.classList.add("ship");
-        says = says + ", " + name;
+        cell.classList.add('ship');
+        says = says + ', ' + name;
         if (isSunk(sea, shipByName(name))) {
-          cell.classList.add("dead");
-          says = says + " sunk";
+          cell.classList.add('dead');
+          says = says + ' sunk';
         }
       }
-      if (mark === "hit") { cell.classList.add("hit"); says = says + ", hit"; }
-      if (mark === "miss") { cell.classList.add("miss"); says = says + ", miss"; }
+      if (mark === 'hit') { cell.classList.add('hit'); says = says + ', hit'; }
+      if (mark === 'miss') { cell.classList.add('miss'); says = says + ', miss'; }
       if (freshPeg && freshPeg.side === side && freshPeg.row === row && freshPeg.col === col) {
-        cell.classList.add("fresh");
+        cell.classList.add('fresh');
       }
-      if (inCells(ghost, row, col)) cell.classList.add(ghostFits ? "ghost-ok" : "ghost-bad");
+      if (inCells(ghost, row, col)) cell.classList.add(ghostFits ? 'ghost-ok' : 'ghost-bad');
       if (showShips && enemyAim && enemyAim.row === row && enemyAim.col === col) {
-        cell.classList.add("aim");
+        cell.classList.add('aim');
       }
 
-      cell.setAttribute("aria-label", says);
-      cell.addEventListener("click", () => {
+      cell.setAttribute('aria-label', says);
+      cell.addEventListener('click', () => {
         if (firing) takeShot(row, col);
         if (laying) handlePlace(row, col);
       });
-      cell.addEventListener("mouseenter", () => setHover(side, row, col));
+      cell.addEventListener('mouseenter', () => setHover(side, row, col));
       el.appendChild(cell);
     }
   }
@@ -570,9 +570,9 @@ function setHover(side, row, col) {
    letters and numbers around a chart never change. */
 function renderLabels() {
   const fill = (el, texts) => {
-    el.textContent = "";
+    el.textContent = '';
     for (const text of texts) {
-      const span = document.createElement("span");
+      const span = document.createElement('span');
       span.textContent = text;
       el.appendChild(span);
     }
@@ -591,41 +591,41 @@ function renderLabels() {
 
 /* The brass plate: your cellName, read out loud. */
 function renderBearing() {
-  const name = hoverRow >= 0 ? cellName(hoverRow, hoverCol) : "";
-  bearingEl.textContent = name || "——";
+  const name = hoverRow >= 0 ? cellName(hoverRow, hoverCol) : '';
+  bearingEl.textContent = name || '——';
 }
 
 /* While you are placing, the roster is your fleet and the next ship is
    lit. Once the battle starts it becomes the enemy fleet, and the only
    thing it can honestly tell you is which ships have gone down. */
 function renderRoster() {
-  const battle = phase !== "placing";
-  rosterTitleEl.textContent = battle ? "Enemy fleet" : "Ships to place";
-  rosterEl.textContent = "";
+  const battle = phase !== 'placing';
+  rosterTitleEl.textContent = battle ? 'Enemy fleet' : 'Ships to place';
+  rosterEl.textContent = '';
   FLEET.forEach((ship, index) => {
-    const li = document.createElement("li");
+    const li = document.createElement('li');
     if (battle) {
-      if (isSunk(enemySea, ship)) li.classList.add("gone");
+      if (isSunk(enemySea, ship)) li.classList.add('gone');
     } else if (index === nextShip) {
-      li.classList.add("next");
+      li.classList.add('next');
     } else if (index < nextShip) {
-      li.classList.add("done");
+      li.classList.add('done');
     }
-    const name = document.createElement("span");
-    name.className = "name";
+    const name = document.createElement('span');
+    name.className = 'name';
     name.textContent = ship.name;
-    const hull = document.createElement("span");
-    hull.className = "hull";
-    for (let i = 0; i < ship.length; i += 1) hull.appendChild(document.createElement("i"));
+    const hull = document.createElement('span');
+    hull.className = 'hull';
+    for (let i = 0; i < ship.length; i += 1) hull.appendChild(document.createElement('i'));
     li.append(name, hull);
     rosterEl.appendChild(li);
   });
 }
 
 function renderLog() {
-  logEl.textContent = "";
+  logEl.textContent = '';
   logLines.slice(0, 6).forEach((line) => {
-    const li = document.createElement("li");
+    const li = document.createElement('li');
     if (line.kind) li.className = line.kind;
     li.textContent = line.text;
     logEl.appendChild(li);
@@ -633,22 +633,22 @@ function renderLog() {
 }
 
 function renderPhase() {
-  phaseEl.textContent = "";
-  const label = document.createElement("span");
-  label.textContent = "phase";
-  const value = document.createElement("b");
+  phaseEl.textContent = '';
+  const label = document.createElement('span');
+  label.textContent = 'phase';
+  const value = document.createElement('b');
   value.textContent = PHASE_LABELS[phase] || phase;
   phaseEl.append(label, value);
 }
 
 function renderStatus() {
   statusEl.textContent = statusMessage;
-  statusEl.classList.toggle("bad", statusMessage.startsWith("Fill in"));
+  statusEl.classList.toggle('bad', statusMessage.startsWith('Fill in'));
 }
 
 function renderActions() {
-  rotateBtn.disabled = phase !== "placing";
-  scatterBtn.disabled = phase !== "placing";
+  rotateBtn.disabled = phase !== 'placing';
+  scatterBtn.disabled = phase !== 'placing';
 }
 
 /* Every render builds all 200 squares again, and moving the mouse
@@ -664,26 +664,26 @@ function dropPeg(side, row, col) {
 }
 
 function addLog(text, kind) {
-  logLines.unshift({ text: text, kind: kind || "" });
+  logLines.unshift({ text: text, kind: kind || '' });
 }
 
 /* One shot, written into the log and played out loud, then any ship that
    has just gone down is announced — once, however many times we ask. */
 function addShot(who, sea, row, col, result) {
-  const where = cellName(row, col) || "a square";
-  dropPeg(who === "You" ? "target" : "home", row, col);
-  if (result === "hit") {
-    addLog(who + " fired at " + where + " — HIT", "hit");
+  const where = cellName(row, col) || 'a square';
+  dropPeg(who === 'You' ? 'target' : 'home', row, col);
+  if (result === 'hit') {
+    addLog(who + ' fired at ' + where + ' — HIT', 'hit');
     playSound(hitSound);
   } else {
-    addLog(who + " fired at " + where + " — miss", "");
+    addLog(who + ' fired at ' + where + ' — miss', '');
     playSound(splashSound);
   }
   for (const ship of FLEET) {
-    const key = who + ":" + ship.name;
+    const key = who + ':' + ship.name;
     if (reportedSunk.indexOf(key) === -1 && isSunk(sea, ship)) {
       reportedSunk.push(key);
-      addLog((who === "You" ? "Enemy " : "Your ") + ship.name + " SUNK", "sunk");
+      addLog((who === 'You' ? 'Enemy ' : 'Your ') + ship.name + ' SUNK', 'sunk');
       playSound(sunkSound);
     }
   }
@@ -697,18 +697,18 @@ function handlePlace(row, col) {
   const ship = FLEET[nextShip];
   const cells = shipCells(ship, row, col, across);
   if (cells.length === 0) {
-    statusMessage = "Fill in shipCells() so a ship knows which squares it covers.";
+    statusMessage = 'Fill in shipCells() so a ship knows which squares it covers.';
     render();
     return;
   }
   if (!canPlace(yourSea, cells)) {
-    statusMessage = "The " + ship.name + " will not fit there. Try another square, or press R to rotate it.";
+    statusMessage = 'The ' + ship.name + ' will not fit there. Try another square, or press R to rotate it.';
     render();
     return;
   }
   placeShip(yourSea, ship, cells);
   if (yourSea.ships[cells[0].row][cells[0].col] !== ship.name) {
-    statusMessage = "Fill in placeShip() so the ship stays where you put it.";
+    statusMessage = 'Fill in placeShip() so the ship stays where you put it.';
     render();
     return;
   }
@@ -718,7 +718,7 @@ function handlePlace(row, col) {
     startBattle();
     return;
   }
-  statusMessage = "Now place your " + FLEET[nextShip].name + ". Press R to turn it.";
+  statusMessage = 'Now place your ' + FLEET[nextShip].name + '. Press R to turn it.';
   render();
 }
 
@@ -726,7 +726,7 @@ function scatterYourFleet() {
   yourSea.ships = makeGrid(null);
   placeFleetAtRandom(yourSea);
   if (!fleetIsPlaced(yourSea)) {
-    statusMessage = "Fill in placeFleetAtRandom() to scatter your fleet.";
+    statusMessage = 'Fill in placeFleetAtRandom() to scatter your fleet.';
     nextShip = 0;
     render();
     return;
@@ -739,15 +739,15 @@ function scatterYourFleet() {
 function startBattle() {
   enemySea.ships = makeGrid(null);
   placeFleetAtRandom(enemySea);
-  phase = "yourTurn";
-  hoverSide = "";
+  phase = 'yourTurn';
+  hoverSide = '';
   hoverRow = -1;
   hoverCol = -1;
   if (fleetIsPlaced(enemySea)) {
-    addLog("Battle stations. Enemy fleet is at sea.", "sunk");
-    statusMessage = "Click a square in enemy waters to fire.";
+    addLog('Battle stations. Enemy fleet is at sea.', 'sunk');
+    statusMessage = 'Click a square in enemy waters to fire.';
   } else {
-    statusMessage = "Fill in placeFleetAtRandom() so the enemy has a fleet to sink.";
+    statusMessage = 'Fill in placeFleetAtRandom() so the enemy has a fleet to sink.';
   }
   render();
 }
@@ -756,24 +756,24 @@ function startBattle() {
    same four jobs with the two seas the other way round. */
 function takeShot(row, col) {
   const result = fireAt(enemySea, row, col);
-  if (result === "again") {
-    statusMessage = "You have already fired at " + cellName(row, col) + ".";
+  if (result === 'again') {
+    statusMessage = 'You have already fired at ' + cellName(row, col) + '.';
     render();
     return;
   }
-  if (result !== "hit" && result !== "miss") {
-    statusMessage = "Fill in fireAt() so your shots land.";
+  if (result !== 'hit' && result !== 'miss') {
+    statusMessage = 'Fill in fireAt() so your shots land.';
     render();
     return;
   }
-  addShot("You", enemySea, row, col, result);
+  addShot('You', enemySea, row, col, result);
   if (allSunk(enemySea)) {
-    phase = "finished";
-    finish("you");
+    phase = 'finished';
+    finish('you');
     return;
   }
-  phase = "enemyTurn";
-  statusMessage = "";
+  phase = 'enemyTurn';
+  statusMessage = '';
   render();
   runEnemyTurn();
 }
@@ -784,21 +784,21 @@ function runEnemyTurn() {
   clearTimeout(enemyTimer);
   enemyAim = enemyChoice(yourSea);
   if (!enemyAim) {
-    statusMessage = "Fill in enemyChoice() so the enemy can pick a square.";
-    phase = "yourTurn";
+    statusMessage = 'Fill in enemyChoice() so the enemy can pick a square.';
+    phase = 'yourTurn';
     render();
     return;
   }
-  statusMessage = "Enemy is aiming at " + (cellName(enemyAim.row, enemyAim.col) || "you") + "…";
+  statusMessage = 'Enemy is aiming at ' + (cellName(enemyAim.row, enemyAim.col) || 'you') + '…';
   render();
   enemyTimer = setTimeout(() => {
-    if (phase !== "enemyTurn") return;
+    if (phase !== 'enemyTurn') return;
     handleEnemyShot();
-    if (phase === "enemyTurn") {
+    if (phase === 'enemyTurn') {
       // handleEnemyShot has not been written yet, so the turn is handed
       // back rather than left hanging.
-      statusMessage = "Fill in handleEnemyShot() so the enemy can fire.";
-      phase = "yourTurn";
+      statusMessage = 'Fill in handleEnemyShot() so the enemy can fire.';
+      phase = 'yourTurn';
       enemyAim = null;
       render();
     }
@@ -808,29 +808,29 @@ function runEnemyTurn() {
 function finish(winner) {
   clearTimeout(enemyTimer);
   enemyAim = null;
-  if (winner === "you") {
-    resultEl.textContent = "Enemy fleet sunk — you win";
-    resultEl.className = "t-result win";
+  if (winner === 'you') {
+    resultEl.textContent = 'Enemy fleet sunk — you win';
+    resultEl.className = 't-result win';
     playSound(winSound);
   } else {
-    resultEl.textContent = "Your fleet is gone — you lose";
-    resultEl.className = "t-result lose";
+    resultEl.textContent = 'Your fleet is gone — you lose';
+    resultEl.className = 't-result lose';
     playSound(loseSound);
   }
   resultEl.hidden = false;
-  statusMessage = "Press New game to play again.";
+  statusMessage = 'Press New game to play again.';
   render();
 }
 
 function newGame() {
   clearTimeout(enemyTimer);
-  enemySea = { ships: makeGrid(null), shots: makeGrid("") };
-  yourSea = { ships: makeGrid(null), shots: makeGrid("") };
-  phase = "placing";
+  enemySea = { ships: makeGrid(null), shots: makeGrid('') };
+  yourSea = { ships: makeGrid(null), shots: makeGrid('') };
+  phase = 'placing';
   nextShip = 0;
   across = true;
   enemyAim = null;
-  hoverSide = "";
+  hoverSide = '';
   hoverRow = -1;
   hoverCol = -1;
   logLines = [];
@@ -840,35 +840,35 @@ function newGame() {
   resultEl.hidden = true;
 
   if (yourSea.shots.length !== SIZE) {
-    statusMessage = "Fill in makeGrid() in battleship.js to draw the charts!";
+    statusMessage = 'Fill in makeGrid() in battleship.js to draw the charts!';
   } else {
-    addLog("New game. Place your fleet.", "");
-    statusMessage = "Place your " + FLEET[0].name + ". Rotate — or the R key — turns it, Scatter places them all.";
+    addLog('New game. Place your fleet.', '');
+    statusMessage = 'Place your ' + FLEET[0].name + '. Rotate — or the R key — turns it, Scatter places them all.';
   }
   render();
 }
 
 /* The arrows matter: they look your function up at the moment of the
    click, so a button keeps working however you choose to write it. */
-rotateBtn.addEventListener("click", () => { across = !across; render(); });
-scatterBtn.addEventListener("click", () => scatterYourFleet());
-newGameBtn.addEventListener("click", () => newGame());
+rotateBtn.addEventListener('click', () => { across = !across; render(); });
+scatterBtn.addEventListener('click', () => scatterYourFleet());
+newGameBtn.addEventListener('click', () => newGame());
 
 /* R also rotates, because a hand on the mouse does not want to travel. */
-document.addEventListener("keydown", (event) => {
-  if (event.key === "r" || event.key === "R") {
-    if (phase === "placing") { across = !across; render(); }
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'r' || event.key === 'R') {
+    if (phase === 'placing') { across = !across; render(); }
   }
 });
 
 /* Leaving a chart clears the bearing plate and the ghost. */
-targetGridEl.addEventListener("mouseleave", () => setHover("", -1, -1));
-homeGridEl.addEventListener("mouseleave", () => setHover("", -1, -1));
+targetGridEl.addEventListener('mouseleave', () => setHover('', -1, -1));
+homeGridEl.addEventListener('mouseleave', () => setHover('', -1, -1));
 
 /* Typing a #demo hash onto an already-open page only changes the address;
    the script does not run again. Reloading makes the demos work whether
    you edit the address bar or open the link fresh. */
-window.addEventListener("hashchange", () => location.reload());
+window.addEventListener('hashchange', () => location.reload());
 
 renderLabels();
 
@@ -876,7 +876,7 @@ renderLabels();
    filled in. The picture is drawn by nearly every function in this file,
    so the demo needs working ones — these stand-ins are for the picture
    only, never for the game. */
-if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash)) {
+if (['#demo', '#demo-placing', '#demo-win', '#demo-lose'].includes(location.hash)) {
   if (makeGrid(0).length !== SIZE) {
     makeGrid = (fill) => {
       const rows = [];
@@ -888,7 +888,7 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
       return rows;
     };
   }
-  if (cellName(6, 2) !== "C7") cellName = (row, col) => COLUMNS[col] + (row + 1);
+  if (cellName(6, 2) !== 'C7') cellName = (row, col) => COLUMNS[col] + (row + 1);
   if (shipCells(FLEET[2], 0, 0, true).length !== 3) {
     shipCells = (ship, row, col, going) => {
       const cells = [];
@@ -898,7 +898,7 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
       return cells;
     };
   }
-  const emptySea = { ships: makeGrid(null), shots: makeGrid("") };
+  const emptySea = { ships: makeGrid(null), shots: makeGrid('') };
   if (canPlace(emptySea, shipCells(FLEET[0], 0, 0, true)) !== true) {
     canPlace = (sea, cells) => {
       for (const cell of cells) {
@@ -914,7 +914,7 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
       for (const cell of cells) sea.ships[cell.row][cell.col] = ship.name;
     };
   }
-  const scatterSea = { ships: makeGrid(null), shots: makeGrid("") };
+  const scatterSea = { ships: makeGrid(null), shots: makeGrid('') };
   placeFleetAtRandom(scatterSea);
   if (!fleetIsPlaced(scatterSea)) {
     placeFleetAtRandom = (sea) => {
@@ -930,16 +930,16 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
       }
     };
   }
-  const shotSea = { ships: makeGrid(null), shots: makeGrid("") };
-  if (fireAt(shotSea, 0, 0) !== "miss" || fireAt(shotSea, 0, 0) !== "again") {
+  const shotSea = { ships: makeGrid(null), shots: makeGrid('') };
+  if (fireAt(shotSea, 0, 0) !== 'miss' || fireAt(shotSea, 0, 0) !== 'again') {
     fireAt = (sea, row, col) => {
-      if (sea.shots[row][col] !== "") return "again";
-      if (sea.ships[row][col] === null) { sea.shots[row][col] = "miss"; return "miss"; }
-      sea.shots[row][col] = "hit";
-      return "hit";
+      if (sea.shots[row][col] !== '') return 'again';
+      if (sea.ships[row][col] === null) { sea.shots[row][col] = 'miss'; return 'miss'; }
+      sea.shots[row][col] = 'hit';
+      return 'hit';
     };
   }
-  const sunkSea = { ships: makeGrid(null), shots: makeGrid("") };
+  const sunkSea = { ships: makeGrid(null), shots: makeGrid('') };
   placeShip(sunkSea, FLEET[4], shipCells(FLEET[4], 0, 0, true));
   fireAt(sunkSea, 0, 0);
   fireAt(sunkSea, 0, 1);
@@ -948,7 +948,7 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
       let hits = 0;
       for (let row = 0; row < SIZE; row += 1) {
         for (let col = 0; col < SIZE; col += 1) {
-          if (sea.ships[row][col] === ship.name && sea.shots[row][col] === "hit") hits += 1;
+          if (sea.ships[row][col] === ship.name && sea.shots[row][col] === 'hit') hits += 1;
         }
       }
       return hits === ship.length;
@@ -956,13 +956,13 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
   }
 
   // A game a few turns in, so every part of the table has something in it.
-  enemySea = { ships: makeGrid(null), shots: makeGrid("") };
-  yourSea = { ships: makeGrid(null), shots: makeGrid("") };
+  enemySea = { ships: makeGrid(null), shots: makeGrid('') };
+  yourSea = { ships: makeGrid(null), shots: makeGrid('') };
   placeFleetAtRandom(enemySea);
   placeFleetAtRandom(yourSea);
   logLines = [];
   reportedSunk = [];
-  phase = "yourTurn";
+  phase = 'yourTurn';
   nextShip = FLEET.length;
 
   const demoShots = (sea, who, count) => {
@@ -977,32 +977,32 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
     for (let tries = 0; tries < 400; tries += 1) {
       const row = Math.floor(Math.random() * SIZE);
       const col = Math.floor(Math.random() * SIZE);
-      if (sea.shots[row][col] === "") return { row: row, col: col };
+      if (sea.shots[row][col] === '') return { row: row, col: col };
     }
     return null;
   };
 
-  if (location.hash === "#demo") {
-    demoShots(enemySea, "You", 16);
-    demoShots(yourSea, "Enemy", 15);
-    statusMessage = "Click a square in enemy waters to fire.";
+  if (location.hash === '#demo') {
+    demoShots(enemySea, 'You', 16);
+    demoShots(yourSea, 'Enemy', 15);
+    statusMessage = 'Click a square in enemy waters to fire.';
   }
-  if (location.hash === "#demo-placing") {
-    yourSea = { ships: makeGrid(null), shots: makeGrid("") };
+  if (location.hash === '#demo-placing') {
+    yourSea = { ships: makeGrid(null), shots: makeGrid('') };
     placeShip(yourSea, FLEET[0], shipCells(FLEET[0], 1, 2, true));
     placeShip(yourSea, FLEET[1], shipCells(FLEET[1], 5, 6, false));
-    phase = "placing";
+    phase = 'placing';
     nextShip = 2;
-    hoverSide = "home";
+    hoverSide = 'home';
     hoverRow = 7;
     hoverCol = 1;
     logLines = [];
-    addLog("New game. Place your fleet.", "");
-    statusMessage = "Now place your " + FLEET[2].name + ". Press R to turn it.";
+    addLog('New game. Place your fleet.', '');
+    statusMessage = 'Now place your ' + FLEET[2].name + '. Press R to turn it.';
   }
-  if (location.hash === "#demo-win" || location.hash === "#demo-lose") {
-    const loser = location.hash === "#demo-win" ? enemySea : yourSea;
-    const who = location.hash === "#demo-win" ? "You" : "Enemy";
+  if (location.hash === '#demo-win' || location.hash === '#demo-lose') {
+    const loser = location.hash === '#demo-win' ? enemySea : yourSea;
+    const who = location.hash === '#demo-win' ? 'You' : 'Enemy';
     for (let row = 0; row < SIZE; row += 1) {
       for (let col = 0; col < SIZE; col += 1) {
         if (loser.ships[row][col] !== null) {
@@ -1011,14 +1011,14 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
         }
       }
     }
-    demoShots(location.hash === "#demo-win" ? yourSea : enemySea, who === "You" ? "Enemy" : "You", 14);
-    phase = "finished";
-    resultEl.textContent = location.hash === "#demo-win"
-      ? "Enemy fleet sunk — you win"
-      : "Your fleet is gone — you lose";
-    resultEl.className = location.hash === "#demo-win" ? "t-result win" : "t-result lose";
+    demoShots(location.hash === '#demo-win' ? yourSea : enemySea, who === 'You' ? 'Enemy' : 'You', 14);
+    phase = 'finished';
+    resultEl.textContent = location.hash === '#demo-win'
+      ? 'Enemy fleet sunk — you win'
+      : 'Your fleet is gone — you lose';
+    resultEl.className = location.hash === '#demo-win' ? 't-result win' : 't-result lose';
     resultEl.hidden = false;
-    statusMessage = "Press New game to play again.";
+    statusMessage = 'Press New game to play again.';
   }
   render();
 } else {
@@ -1091,20 +1091,20 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
 
    --- fireAt(sea, row, col) ---
 
-     if (sea.shots[row][col] !== "") return "again";
+     if (sea.shots[row][col] !== '') return 'again';
      if (sea.ships[row][col] === null) {
-       sea.shots[row][col] = "miss";
-       return "miss";
+       sea.shots[row][col] = 'miss';
+       return 'miss';
      }
-     sea.shots[row][col] = "hit";
-     return "hit";
+     sea.shots[row][col] = 'hit';
+     return 'hit';
 
 
    --- isSunk(sea, ship) ---
 
      for (let row = 0; row < SIZE; row += 1) {
        for (let col = 0; col < SIZE; col += 1) {
-         if (sea.ships[row][col] === ship.name && sea.shots[row][col] === "hit") {
+         if (sea.ships[row][col] === ship.name && sea.shots[row][col] === 'hit') {
            hits = hits + 1;
          }
        }
@@ -1125,7 +1125,7 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
      (inside the tries loop)
      const row = Math.floor(Math.random() * SIZE);
      const col = Math.floor(Math.random() * SIZE);
-     if (sea.shots[row][col] === "") {
+     if (sea.shots[row][col] === '') {
        return { row: row, col: col };
      }
 
@@ -1133,13 +1133,13 @@ if (["#demo", "#demo-placing", "#demo-win", "#demo-lose"].includes(location.hash
    --- handleEnemyShot() ---
 
      const result = fireAt(yourSea, enemyAim.row, enemyAim.col);
-     addShot("Enemy", yourSea, enemyAim.row, enemyAim.col, result);
+     addShot('Enemy', yourSea, enemyAim.row, enemyAim.col, result);
      if (allSunk(yourSea)) {
-       phase = "finished";
-       finish("enemy");
+       phase = 'finished';
+       finish('enemy');
        return;
      }
-     phase = "yourTurn";
+     phase = 'yourTurn';
      enemyAim = null;
      render();
 

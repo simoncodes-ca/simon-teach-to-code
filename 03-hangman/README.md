@@ -39,7 +39,7 @@ These all work exactly the same here. Read `01-calculator/README.md` or `02-elev
 - Arrays are ordered lists. `.push(x)` adds to the end, `[0]` reads the first item, `.length` counts, and `.includes(x)` asks whether something is in the list.
 - `if` and `else` make choices. `===` asks whether two values are exactly equal. `=` puts a value in a box.
 - Functions are steps with a name. Parameters come in through the brackets. `return` sends a value back.
-- `document.getElementById(id)` finds an element. `.textContent` changes its text. `.classList.add("name")` adds a class to it.
+- `document.getElementById(id)` finds an element. `.textContent` changes its text. `.classList.add('name')` adds a class to it.
 - `console.log` shows you what is really happening.
 - Template strings use backticks, like `` `${mistakes} wrong guesses` ``.
 
@@ -48,7 +48,7 @@ These all work exactly the same here. Read `01-calculator/README.md` or `02-elev
 The elevator had one `state` variable, and you watched it move from name to name. Hangman has three pieces of memory, and no state names at all:
 
 ```js
-let secretWord = "";        // the word being guessed
+let secretWord = '';        // the word being guessed
 let guessedLetters = [];    // every letter pressed this round
 let mistakes = 0;           // how many of those were wrong
 ```
@@ -74,26 +74,26 @@ There is another way to write this kind of game. You tell each part of the page 
 A string is text in quotes. It is more than a single lump of letters. You can reach inside it.
 
 ```js
-const word = "DRAGON";
+const word = 'DRAGON';
 
 word.length          // 6, which is how many characters it has
-word[0]              // "D". Characters are numbered from ZERO.
-word[5]              // "N". The last one is always at length - 1.
-word.includes("A")   // true. It asks whether that character is anywhere inside.
-word.includes("Z")   // false
+word[0]              // 'D'. Characters are numbered from ZERO.
+word[5]              // 'N'. The last one is always at length - 1.
+word.includes('A')   // true. It asks whether that character is anywhere inside.
+word.includes('Z')   // false
 ```
 
 Strings join together with `+`, exactly as they did in the calculator:
 
 ```js
-let display = "";
-display = display + "_";   // "_"
-display = display + "R";   // "_R"
+let display = '';
+display = display + '_';   // '_'
+display = display + 'R';   // '_R'
 ```
 
 `buildWordDisplay` grows its answer that way. It starts with nothing, then adds one character for each letter of the word.
 
-Every word in `WORDS` is in CAPITALS. Every letter in the row is a capital too. That is a deliberate choice. In JavaScript `"a" === "A"` is `false`, so keeping everything in one case saves you from a bug that is very annoying to find.
+Every word in `WORDS` is in CAPITALS. Every letter in the row is a capital too. That is a deliberate choice. In JavaScript `'a' === 'A'` is `false`, so keeping everything in one case saves you from a bug that is very annoying to find.
 
 ### Loops: doing the same thing to every letter
 
@@ -135,7 +135,7 @@ A boolean is a value that is only ever `true` or `false`. Four of your seven fun
 The `!` mark reverses a boolean:
 
 ```js
-const found = word.includes("Z");   // false
+const found = word.includes('Z');   // false
 if (!found) {
   // this runs when found is false
 }
@@ -171,7 +171,7 @@ Guessing **Z** again, when you already guessed Z, is an **invalid** move. It is 
 
 ```js
 if (isLetterAlreadyGuessed(letter)) {
-  statusMessage = "You already tried that one.";
+  statusMessage = 'You already tried that one.';
   render();
   return;                // leave now, so none of the rest runs
 }
@@ -211,7 +211,7 @@ Each line is given a dashed pattern with one enormous gap. Then the line is push
 That is all `showPart(id)` does. It adds one class:
 
 ```js
-part.classList.add("drawn");
+part.classList.add('drawn');
 ```
 
 So "drawing the hangman" is not drawing at all. The picture is already complete, and always was. The game only chooses how much of it has slid into view.
@@ -227,7 +227,7 @@ The `APPROVED` and `SCRAPPED` stamps are ordinary elements. They start with `hid
 Sounds work the same way as the elevator's button beep. Three of them are made once, near the top of the given code, then reused:
 
 ```js
-const winSound = new Audio("assets/win.wav");
+const winSound = new Audio('assets/win.wav');
 
 function playSound(sound) {
   sound.currentTime = 0;      // rewind, in case it is still playing

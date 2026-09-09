@@ -60,6 +60,44 @@ The page gives you the table, the charts and the pegs. You write the grid, the s
 
 Files: `05-battleship/battleship.html`, `05-battleship/styles.css`, `05-battleship/battleship.js`.
 
+### Paint
+
+A sheet of paper taped to a drawing board, a tin of ten paints and four nibs. You draw with the mouse. Then you take it back: undo, redo, and clear the whole sheet.
+
+The page gives you the bench, the paints and the keys. You write the drawing itself, and the history that makes undo possible. A canvas remembers nothing, so the program has to remember every stroke.
+
+Files: `06-paint/paint.html`, `06-paint/styles.css`, `06-paint/paint.js`.
+
+### Balloon stall
+
+A shooting stall on the pier at dusk. Balloons float up out of the sea. A brass cannon follows your mouse, and a dart arcs towards whatever you clicked.
+
+The page gives you the stall, the sky and the keys. You write the balloons, the aiming and the darts. You also write the rule for a hit, and what a fresh game looks like.
+
+This is the first program that keeps going when you do nothing. Everything in it moves by the time that passed, not by a fixed number of pixels.
+
+Files: `07-balloons/balloons.html`, `07-balloons/styles.css`, `07-balloons/balloons.js`.
+
+### Parachuter
+
+A gun post on a ridge at first light. Planes cross the sky and drop paratroopers. Each one falls, opens a chute, lands, then walks at your post.
+
+The page gives you the post, the sky and the keys. You write the troopers, their three states, the shells and the explosions. You also write the rule for two boxes touching.
+
+This is the first game with four kinds of thing in it, and each kind moves by its own rule. Every one of them is the same shape of object.
+
+Files: `08-parachuters/parachuters.html`, `08-parachuters/styles.css`, `08-parachuters/parachuters.js`.
+
+### Phaser remake
+
+The lookout post again. Same planes, same troopers, same three sandbags. This time a library called Phaser writes most of it.
+
+The page gives you the post and the library. You write eight small functions. Each one has a bigger one in project 8 to compare it with, and the comparison is the point.
+
+Nine functions become eight, and the eight are a few lines each. The loop, the moving and the collision test all come free. Two things get harder, and the file says which two.
+
+Files: `09-phaser/remake.html`, `09-phaser/styles.css`, `09-phaser/remake.js`, `09-phaser/phaser.min.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -67,18 +105,20 @@ Files: `05-battleship/battleship.html`, `05-battleship/styles.css`, `05-battlesh
 3. **Then build hangman.** You learn strings, loops and true/false values. You also learn the idea under both earlier projects: everything on the screen comes from a small amount of memory.
 4. **Then build blackjack.** You learn objects, randomness, and rules with several cases. The program is always in one named phase.
 5. **Then build battleship.** You learn maps. A grid is a list of rows, and each row is a list of squares. You also learn how a program keeps a secret from you.
+6. **Then build the paint app.** You learn the canvas, and you learn that it forgets everything. You keep the drawing yourself, and undo comes free.
+7. **Then build the balloon stall.** You learn the game loop. Everything moves by time, and gravity turns out to be one line.
+8. **Then build the lookout post.** You learn sprites. Four kinds of thing move at once, and one of them changes its mind twice on the way down.
+9. **Then build it again with Phaser.** You learn what a library is. You also learn what it takes away, and what it makes harder.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-The next three projects stay ordinary web pages, then the pictures start to move.
+You have a library now, so the games get bigger.
 
-1. **Paint app.** Your first canvas. You draw with the mouse, then add undo.
-2. **Balloon shooting.** Your first game that animates itself. You learn gravity and collisions.
-3. **Parachuter.** Many things moving at once, each one with its own rules.
-
-After those, you rebuild a game you already finished using Phaser, a real game library. You will be able to point at every part the library replaced.
+1. **Aliens.** The first new game built on Phaser, with a keyboard instead of a mouse.
+2. **Maze.** A map kept as data, and walls you cannot walk through.
+3. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

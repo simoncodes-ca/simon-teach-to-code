@@ -26,14 +26,14 @@
    --------------------------------------------------------------------- */
 
 const WORDS = [
-  "ELEPHANT", "GUITAR", "WINDOW", "BICYCLE", "DRAGON",
-  "MONKEY", "PLANET", "ROCKET", "WINTER", "ORANGE",
-  "CASTLE", "SPIDER", "FLOWER", "BRIDGE", "THUNDER",
-  "JUNGLE", "PIRATE", "GALAXY", "MAGNET", "VOLCANO",
-  "PENGUIN", "LAPTOP", "SANDWICH", "PUZZLE"
+  'ELEPHANT', 'GUITAR', 'WINDOW', 'BICYCLE', 'DRAGON',
+  'MONKEY', 'PLANET', 'ROCKET', 'WINTER', 'ORANGE',
+  'CASTLE', 'SPIDER', 'FLOWER', 'BRIDGE', 'THUNDER',
+  'JUNGLE', 'PIRATE', 'GALAXY', 'MAGNET', 'VOLCANO',
+  'PENGUIN', 'LAPTOP', 'SANDWICH', 'PUZZLE'
 ];
 
-let secretWord = "";        // the word being guessed, in CAPITALS
+let secretWord = '';        // the word being guessed, in CAPITALS
 let guessedLetters = [];    // every letter pressed this round, right or wrong
 let mistakes = 0;           // how many wrong guesses so far
 
@@ -57,18 +57,18 @@ const MAX_MISTAKES = 6;     // six wrong guesses and the round is lost
  *   Math.floor() to chop off the decimal part.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Return the word as a string. While this returns "", the page shows a
+ * Return the word as a string. While this returns '', the page shows a
  * reminder instead of a round.
  */
 function pickRandomWord() {
   // TODO: return one random word from WORDS.
-  return "";
+  return '';
 }
 
 /**
  * Build the row of blanks, with the guessed letters filled in.
  *
- * For the word "DRAGON" with ["A", "R", "S"] guessed, return "_RA___".
+ * For the word 'DRAGON' with ['A', 'R', 'S'] guessed, return '_RA___'.
  * Every letter of the word gets exactly one character in the result, so
  * the string you return is always the same length as the word.
  *
@@ -82,10 +82,10 @@ function pickRandomWord() {
  * works you will see letters appear in the blanks.
  */
 function buildWordDisplay(word, guessedLetters) {
-  let display = "";
+  let display = '';
   for (let i = 0; i < word.length; i = i + 1) {
-    // TODO: replace "_" with the right character for this position.
-    display = display + "_";
+    // TODO: replace '_' with the right character for this position.
+    display = display + '_';
   }
   return display;
 }
@@ -134,7 +134,7 @@ function drawNextPart(mistakeCount) {
  *   you can stop straight away — return false from inside the loop.
  * Stuck? The answer key is at the bottom of this file.
  *
- * A word with a repeated letter, like "PUZZLE", still works: guessing "Z"
+ * A word with a repeated letter, like 'PUZZLE', still works: guessing 'Z'
  * once satisfies both positions, because both ask the same question.
  */
 function isWordComplete() {
@@ -197,22 +197,22 @@ function handleGuess(letter) {
    --------------------------------------------------------------------- */
 
 let roundActive = false;
-let statusMessage = "";
-const wordEl = document.getElementById("word");
-const statusEl = document.getElementById("status");
-const railEl = document.getElementById("rail");
-const tallyEl = document.getElementById("tally");
-const stampWin = document.getElementById("stampWin");
-const stampLose = document.getElementById("stampLose");
-const newWordBtn = document.getElementById("newWord");
-const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-const PART_IDS = ["part-head", "part-body", "part-arm-left", "part-arm-right", "part-leg-left", "part-leg-right"];
+let statusMessage = '';
+const wordEl = document.getElementById('word');
+const statusEl = document.getElementById('status');
+const railEl = document.getElementById('rail');
+const tallyEl = document.getElementById('tally');
+const stampWin = document.getElementById('stampWin');
+const stampLose = document.getElementById('stampLose');
+const newWordBtn = document.getElementById('newWord');
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const PART_IDS = ['part-head', 'part-body', 'part-arm-left', 'part-arm-right', 'part-leg-left', 'part-leg-right'];
 
 /* The sounds. One Audio element is made for each, once, and reused —
    calling play() again just restarts it from the beginning. */
-const newGameSound = new Audio("assets/new-game.wav");
-const winSound = new Audio("assets/win.wav");
-const loseSound = new Audio("assets/lose.wav");
+const newGameSound = new Audio('assets/new-game.wav');
+const winSound = new Audio('assets/win.wav');
+const loseSound = new Audio('assets/lose.wav');
 
 function playSound(sound) {
   sound.currentTime = 0;
@@ -222,11 +222,11 @@ function playSound(sound) {
 }
 
 for (const letter of LETTERS) {
-  const button = document.createElement("button");
-  button.type = "button";
+  const button = document.createElement('button');
+  button.type = 'button';
   button.textContent = letter;
-  button.addEventListener("click", () => {
-    statusMessage = "";
+  button.addEventListener('click', () => {
+    statusMessage = '';
     handleGuess(letter);
   });
   railEl.appendChild(button);
@@ -235,11 +235,11 @@ for (const letter of LETTERS) {
 function showPart(id) {
   const part = document.getElementById(id);
   if (!part) return;
-  part.classList.add("drawn");
+  part.classList.add('drawn');
 }
 
 function resetDrawing() {
-  for (const id of PART_IDS) document.getElementById(id).classList.remove("drawn");
+  for (const id of PART_IDS) document.getElementById(id).classList.remove('drawn');
 }
 
 function render() {
@@ -250,59 +250,59 @@ function render() {
 }
 
 function renderWord() {
-  wordEl.textContent = "";
+  wordEl.textContent = '';
   const display = buildWordDisplay(secretWord, guessedLetters);
   const roundLost = !roundActive && isGameOver();
   for (let i = 0; i < secretWord.length; i = i + 1) {
-    const slot = document.createElement("span");
-    slot.className = "slot";
-    const revealed = display[i] !== undefined && display[i] !== "_";
+    const slot = document.createElement('span');
+    slot.className = 'slot';
+    const revealed = display[i] !== undefined && display[i] !== '_';
     if (revealed || roundLost) {
-      const visible = document.createElement("span");
-      visible.className = revealed ? "letter" : "letter missed";
+      const visible = document.createElement('span');
+      visible.className = revealed ? 'letter' : 'letter missed';
       visible.textContent = secretWord[i];
       slot.appendChild(visible);
     }
     wordEl.appendChild(slot);
   }
-  wordEl.setAttribute("aria-label", "The hidden word: " + display.split("").join(" "));
+  wordEl.setAttribute('aria-label', 'The hidden word: ' + display.split('').join(' '));
 }
 
 function renderRail() {
   for (const button of railEl.children) {
     const letter = button.textContent;
-    button.classList.toggle("hit", guessedLetters.includes(letter) && secretWord.includes(letter));
-    button.classList.toggle("miss", guessedLetters.includes(letter) && !secretWord.includes(letter));
+    button.classList.toggle('hit', guessedLetters.includes(letter) && secretWord.includes(letter));
+    button.classList.toggle('miss', guessedLetters.includes(letter) && !secretWord.includes(letter));
     button.disabled = !roundActive;
   }
-  railEl.classList.toggle("done", !roundActive);
+  railEl.classList.toggle('done', !roundActive);
 }
 
 function renderTally() {
-  tallyEl.textContent = "";
+  tallyEl.textContent = '';
   for (let i = 1; i <= mistakes; i = i + 1) {
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    if (i === 5) path.setAttribute("d", "M6 38 Q60 20 132 6");
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    if (i === 5) path.setAttribute('d', 'M6 38 Q60 20 132 6');
     else {
       const x = 12 + (i - 1) * 32;
-      path.setAttribute("d", `M${x} 6 Q${x + 2} 24 ${x - 1} 40`);
+      path.setAttribute('d', `M${x} 6 Q${x + 2} 24 ${x - 1} 40`);
     }
-    path.setAttribute("pathLength", "1");
+    path.setAttribute('pathLength', '1');
     tallyEl.appendChild(path);
-    requestAnimationFrame(() => path.classList.add("drawn"));
+    requestAnimationFrame(() => path.classList.add('drawn'));
   }
 }
 
 function renderStatus() {
-  statusEl.textContent = statusMessage || (roundActive ? `${mistakes} wrong guesses` : "");
-  statusEl.classList.toggle("bad", Boolean(statusMessage));
+  statusEl.textContent = statusMessage || (roundActive ? `${mistakes} wrong guesses` : '');
+  statusEl.classList.toggle('bad', Boolean(statusMessage));
 }
 
 function finishIfNeeded() {
   if (!roundActive) return;
   if (isWordComplete()) {
     roundActive = false;
-    statusMessage = "You got it! New word?";
+    statusMessage = 'You got it! New word?';
     stampWin.hidden = false;
     playSound(winSound);
     render();
@@ -319,8 +319,8 @@ function startRound() {
   secretWord = pickRandomWord();
   guessedLetters = [];
   mistakes = 0;
-  roundActive = secretWord !== "";
-  statusMessage = roundActive ? "" : "Fill in STUB 1 in hangman.js!";
+  roundActive = secretWord !== '';
+  statusMessage = roundActive ? '' : 'Fill in STUB 1 in hangman.js!';
   stampWin.hidden = true;
   stampLose.hidden = true;
   resetDrawing();
@@ -328,16 +328,16 @@ function startRound() {
   render();
 }
 
-newWordBtn.addEventListener("click", startRound);
+newWordBtn.addEventListener('click', startRound);
 
 // Demo states keep the visual comp inspectable before the learner fills
 // stubs. The word row is drawn from buildWordDisplay and isGameOver, so
 // the demo needs working ones — these stand-ins are for the comp only,
 // never for the game.
-if (["#demo", "#demo-win", "#demo-lose"].includes(location.hash)) {
-  if (buildWordDisplay("AB", ["A"]) !== "A_") {
+if (['#demo', '#demo-win', '#demo-lose'].includes(location.hash)) {
+  if (buildWordDisplay('AB', ['A']) !== 'A_') {
     buildWordDisplay = (word, guessed) =>
-      word.split("").map((ch) => (guessed.includes(ch) ? ch : "_")).join("");
+      word.split('').map((ch) => (guessed.includes(ch) ? ch : '_')).join('');
   }
   mistakes = MAX_MISTAKES;               // probe: does isGameOver notice?
   const gameOverWorks = isGameOver() === true;
@@ -345,19 +345,19 @@ if (["#demo", "#demo-win", "#demo-lose"].includes(location.hash)) {
   if (!gameOverWorks) {
     isGameOver = () => mistakes >= MAX_MISTAKES;
   }
-  secretWord = "ELEPHANT";
-  guessedLetters = ["R", "S", "O", "E", "P", "H", "N", "T"];
+  secretWord = 'ELEPHANT';
+  guessedLetters = ['R', 'S', 'O', 'E', 'P', 'H', 'N', 'T'];
   mistakes = 3;
   roundActive = true;
   for (let i = 0; i < mistakes; i = i + 1) showPart(PART_IDS[i]);
-  if (location.hash === "#demo-win") {
-    guessedLetters = ["R", "E", "L", "P", "H", "A", "N", "T"];
+  if (location.hash === '#demo-win') {
+    guessedLetters = ['R', 'E', 'L', 'P', 'H', 'A', 'N', 'T'];
     roundActive = false;
-    statusMessage = "You got it! New word?";
+    statusMessage = 'You got it! New word?';
     stampWin.hidden = false;
   }
-  if (location.hash === "#demo-lose") {
-    guessedLetters = ["R", "S", "O", "I", "U", "M"];
+  if (location.hash === '#demo-lose') {
+    guessedLetters = ['R', 'S', 'O', 'I', 'U', 'M'];
     mistakes = 6;
     for (const id of PART_IDS) showPart(id);
     stampLose.hidden = false;
@@ -384,10 +384,10 @@ if (["#demo", "#demo-win", "#demo-lose"].includes(location.hash)) {
 
    --- buildWordDisplay(word, guessedLetters) ---
 
-     inside the loop, instead of display = display + "_":
+     inside the loop, instead of display = display + '_':
 
      if (guessedLetters.includes(word[i])) display = display + word[i];
-     else display = display + "_";
+     else display = display + '_';
 
 
    --- isLetterAlreadyGuessed(letter) ---
@@ -416,7 +416,7 @@ if (["#demo", "#demo-win", "#demo-lose"].includes(location.hash)) {
    --- handleGuess(letter) ---
 
      if (isLetterAlreadyGuessed(letter)) {
-       statusMessage = "You already tried " + letter;
+       statusMessage = 'You already tried ' + letter;
        render();
        return;
      }
