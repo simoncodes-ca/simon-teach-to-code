@@ -564,7 +564,7 @@ function reportEmptyFunctions(seconds, watchedBalloon, balloonWasAt, watchedDart
   } else if (darts.length >= 30) {
     say('dartIsGone() is still empty, so the darts are never taken away.');
   } else if (darted >= 8 && score === 0) {
-    say('Darts going straight through the balloons? hits() is still empty.');
+    say('Still no pops. If the darts are passing straight through, check hits().');
   } else if (score > 0 || balloons.length > 0) {
     say(scoreLine());
   }

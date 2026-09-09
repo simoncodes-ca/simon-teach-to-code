@@ -751,7 +751,7 @@ function reportEmptyFunctions(seconds, watched, watchedWasAt) {
   } else if (bullets.length >= 16) {
     say('bulletIsGone() is still empty, so the shells are never taken away.');
   } else if (fired >= 10 && score === 0) {
-    say('Shells going straight through? hitsSprite() is still empty.');
+    say('Still no hits. If the shells are passing straight through, check hitsSprite().');
   } else if (boomsMissing) {
     say('makeBoom() is still empty, so nothing blows up.');
   } else if (booms.length >= 5) {
