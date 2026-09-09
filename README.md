@@ -88,6 +88,16 @@ This is the first game with four kinds of thing in it, and each kind moves by it
 
 Files: `08-parachuters/parachuters.html`, `08-parachuters/styles.css`, `08-parachuters/parachuters.js`.
 
+### Phaser remake
+
+The lookout post again. Same planes, same troopers, same three sandbags. This time a library called Phaser writes most of it.
+
+The page gives you the post and the library. You write eight small functions. Each one has a bigger one in project 8 to compare it with, and the comparison is the point.
+
+Nine functions become eight, and the eight are a few lines each. The loop, the moving and the collision test all come free. Two things get harder, and the file says which two.
+
+Files: `09-phaser/remake.html`, `09-phaser/styles.css`, `09-phaser/remake.js`, `09-phaser/phaser.min.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -98,18 +108,17 @@ Files: `08-parachuters/parachuters.html`, `08-parachuters/styles.css`, `08-parac
 6. **Then build the paint app.** You learn the canvas, and you learn that it forgets everything. You keep the drawing yourself, and undo comes free.
 7. **Then build the balloon stall.** You learn the game loop. Everything moves by time, and gravity turns out to be one line.
 8. **Then build the lookout post.** You learn sprites. Four kinds of thing move at once, and one of them changes its mind twice on the way down.
+9. **Then build it again with Phaser.** You learn what a library is. You also learn what it takes away, and what it makes harder.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-The pictures move now, so the games get bigger.
+You have a library now, so the games get bigger.
 
-1. **Phaser remake.** The lookout post again, built with a game library.
-2. **Aliens.** The first new game built on that library.
-3. **Maze.** A map kept as data, and walls you cannot walk through.
-
-The remake is a comparison, not a bigger game. You will be able to point at every part the library replaced.
+1. **Aliens.** The first new game built on Phaser, with a keyboard instead of a mouse.
+2. **Maze.** A map kept as data, and walls you cannot walk through.
+3. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

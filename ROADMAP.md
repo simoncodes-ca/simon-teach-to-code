@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the eight finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the nine finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -167,11 +167,36 @@ x and y move from the middle of a circle to the top left corner of a box here, w
 
 We left these out on purpose: troopers who shoot back, a chute that can be shot away, wind, points that vary by drop height, and rising difficulty. Sprites loaded from image files wait for project 9, where the library loads them.
 
+### 9. Phaser remake
+
+The lookout post again, rebuilt on Phaser. It is the first project that uses a library, and the first that loads its pictures from files.
+
+- Library timing and the game loop
+- Library sprites and asset handling
+- Groups, overlaps and tweens
+- Comparing hand-written code with library code
+- Telling a helpful abstraction from hidden complexity
+
+The game is one Simon had already finished, and nothing in it changed. Same rules, same numbers, same sounds, same art — the PNG files were made by running project 8's own drawing code once and saving what came out. Every difference he can see is a difference the library made, because nothing else was allowed to move.
+
+Nine functions became eight, and the eight are a few lines each. `frame()`, `moveSprite`, `hitsSprite` and its two loops, `updateBoom` and `skyPoint` are all gone. The rack beside the window crosses them off by name, so the saving is on the page rather than only in the README.
+
+The idea that runs through every stub is that **you speak once, at the moment things change, instead of every frame.** `moveTrooper` ran sixty times a second. `openChute` runs once, and Phaser carries the result forward for ever. That is project 8's split between per-frame work and transition work, now enforced by the tool.
+
+The second lesson is the cost, and it gets equal billing. Slow motion got harder: one multiplier became three clocks set three different ways, one of them inverted. Retiring a shell that has left the sky is still a hand-written loop, because Phaser has no opinion about the edge of the world. Both sit in the given wiring, commented as such. A learner who takes away only "libraries do the work" has learned the wrong half.
+
+**Phaser, not p5.** p5 removes browser plumbing that Simon had already written twice by this point. That comparison is real, but it is small, and he would leave p5 as soon as he needed scenes, cameras and asset loading. One library, learned once, lasting to the end of the list.
+
+`phaser.min.js` is vendored next to the HTML. A library must not drag the build step forward, and the build step arrives at project 17.
+
+Two settings in the Phaser config exist only to keep the page double-clickable. Phaser refuses to guess a renderer when handed a canvas of our own, and its usual image loading uses XHR, which a browser blocks on a `file://` page. Both are commented in the file.
+
+We left these out on purpose: Phaser's own sound system, a second scene for the title card, and tweens on anything but the explosion. All three are in the README as the good things to try next.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 9 | Phaser remake | What a game library replaces |
 | 10 | Aliens | A game built on the library |
 | 11 | Maze | Tile collision |
 | 12 | Scrolling world | Camera and world coordinates |
@@ -187,22 +212,6 @@ We left these out on purpose: troopers who shoot back, a chute that can be shot 
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 9. Phaser remake
-
-Remake the parachuter game with Phaser. This project compares two versions of one game. Simon should be able to point at each part the library replaced.
-
-- Library timing and the game loop
-- Library sprites and asset handling
-- Scenes
-- Comparing hand-written code with library code
-- Telling a helpful abstraction from hidden complexity
-
-**Use Phaser, not p5.** p5 removes browser plumbing that Simon will have written twice by project 9. That comparison is real, but it is small. He would then leave p5 as soon as he needs scenes, cameras, and asset loading. Phaser means he learns one library instead of two.
-
-Keep a copy of `phaser.min.js` next to the HTML file. The library must not force the build step to arrive early. The build step arrives at project 17.
-
-Remake a game Simon has already finished. Never introduce a library and a new game at the same time.
 
 ### 10. Aliens game
 
