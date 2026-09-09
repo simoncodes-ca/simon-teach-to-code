@@ -81,8 +81,8 @@ const last = strokes.pop();    // takes the LAST item off, and hands it to you
 A canvas is one element with nothing inside it. You do not add things to it. You paint on it.
 
 ```js
-const paper = document.getElementById("paper");
-const pen = paper.getContext("2d");    // the thing that actually draws
+const paper = document.getElementById('paper');
+const pen = paper.getContext('2d');    // the thing that actually draws
 ```
 
 `pen` is called the context. Think of it as the brush that is held over that canvas. Every drawing instruction goes through it.
@@ -96,7 +96,7 @@ That sounds like a problem. The next section is the answer to it.
 The paper cannot remember, so the program remembers instead. Your program keeps every stroke as an object.
 
 ```js
-{ colour: "#c8402f", size: 10, points: [ {x: 40, y: 90}, {x: 41, y: 92}, ... ] }
+{ colour: '#c8402f', size: 10, points: [ {x: 40, y: 90}, {x: 41, y: 92}, ... ] }
 ```
 
 A stroke holds three things. It holds a colour. It holds a thickness. It holds every point the mouse passed through.

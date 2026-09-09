@@ -78,6 +78,7 @@ Repetition is not kindness here. It buries the one new idea the project exists t
 These hold everywhere, in every project:
 
 - Relative asset paths throughout — the repo deploys to GitHub Pages from its root on every push to `main`.
+- **Single quotes for JavaScript strings** — in the code, and in every code sample the learner copies from: stub hints, answer keys, comments, READMEs. A string holding an apostrophe or a single quote keeps double quotes rather than an escape: `"Dealer's turn"`, `"26px 'Trebuchet MS', sans-serif"`. English quotation in prose stays double too — `means "first in, first out"` quotes a phrase, it does not show a string. HTML attributes and CSS keep their usual double quotes.
 - Sounds follow one pattern: build the `Audio` object once, reuse it, rewind with `currentTime = 0`, and swallow the pre-interaction autoplay refusal with `.catch(() => {})`.
 - No framework beyond the one library a project's `PRODUCT.md` names.
 

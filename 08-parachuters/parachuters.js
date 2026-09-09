@@ -34,8 +34,8 @@
    object. Nothing clever. It carries where it is, how big it is, how
    fast it is going, and what it is doing:
 
-       { kind: "trooper", x: 480, y: 210, w: 26, h: 34,
-         vx: 0, vy: 140, state: "falling" }
+       { kind: 'trooper', x: 480, y: 210, w: 26, h: 34,
+         vx: 0, vy: 140, state: 'falling' }
 
    Read those parts one at a time.
 
@@ -50,14 +50,14 @@
        state   what this thing is doing right now, as a word
 
    `state` is the part this project is really about. A trooper is
-   "falling", then "chute", then "walking". One word decides which rule
+   'falling', then 'chute', then 'walking'. One word decides which rule
    moves him. That is a state machine, the same idea as the elevator in
    project 2, living inside a sprite.
 
    An explosion is a sprite too, but a smaller one. It has no velocity
    and no state, because it never moves and never changes its mind:
 
-       { kind: "boom", x: 480, y: 210, radius: 14, life: 0.45 }
+       { kind: 'boom', x: 480, y: 210, radius: 14, life: 0.45 }
 
    A sprite only carries what it needs.
    --------------------------------------------------------------------- */
@@ -123,14 +123,14 @@ let aim = -Math.PI / 2;          // the angle the gun points, in radians. This i
  * He leaves the plane with no speed of his own. Gravity gives him all
  * of it, one frame at a time, so `vx` and `vy` both start at 0.
  *
- * He starts in the "falling" state. His chute is still packed.
+ * He starts in the 'falling' state. His chute is still packed.
  *
  * Gentle hint: build the trooper object described up in the memory. It
  *   needs kind, x, y, w, h, vx, vy and state. Work out x from the
  *   plane's middle.
- * Stronger hint: `return { kind: "trooper",
+ * Stronger hint: `return { kind: 'trooper',
  *   x: plane.x + plane.w / 2 - TROOPER_W / 2, y: plane.y + plane.h,
- *   w: TROOPER_W, h: TROOPER_H, vx: 0, vy: 0, state: "falling" };`
+ *   w: TROOPER_W, h: TROOPER_H, vx: 0, vy: 0, state: 'falling' };`
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start. Planes cross the sky and troopers appear under them.
@@ -154,9 +154,9 @@ function makeTrooper(plane) {
  * His `state` says which rule he is under right now, so this function
  * asks that first and then does one of three things:
  *
- *     "falling"   gravity pulls on him, and he speeds up
- *     "chute"     he comes down at CHUTE_SPEED, and never faster
- *     "walking"   he walks sideways, at the post
+ *     'falling'   gravity pulls on him, and he speeds up
+ *     'chute'     he comes down at CHUTE_SPEED, and never faster
+ *     'walking'   he walks sideways, at the post
  *
  * The falling rule is the dart from project 7. Add gravity to `vy`, and
  * move `y` by `vy`.
@@ -172,9 +172,9 @@ function makeTrooper(plane) {
  *
  * Nothing here changes the state. Changing it is the next function.
  *
- * Gentle hint: `if (trooper.state === "falling") { ... } else if
- *   (trooper.state === "chute") { ... } else if (trooper.state ===
- *   "walking") { ... }`. Two lines in the first, one in each of the
+ * Gentle hint: `if (trooper.state === 'falling') { ... } else if
+ *   (trooper.state === 'chute') { ... } else if (trooper.state ===
+ *   'walking') { ... }`. Two lines in the first, one in each of the
  *   others.
  * Stronger hint: falling is `trooper.vy += GRAVITY * seconds;` then
  *   `trooper.y += trooper.vy * seconds;`. Chute is
@@ -200,8 +200,8 @@ function moveTrooper(trooper, seconds) {
  * There are two changes to look for, and they only happen in one
  * direction:
  *
- *     "falling" turns into "chute"     once he is past CHUTE_AT
- *     "chute"   turns into "walking"   once his feet touch GROUND
+ *     'falling' turns into 'chute'     once he is past CHUTE_AT
+ *     'chute'   turns into 'walking'   once his feet touch GROUND
  *
  * His feet are at the bottom of his box, which is `trooper.y +
  * trooper.h`. His head is at `trooper.y`.
@@ -213,9 +213,9 @@ function moveTrooper(trooper, seconds) {
  * Gentle hint: two `if` lines, each one checking the state and the
  *   height together with `&&`. Then `return trooper.state;` at the end
  *   for every other case.
- * Stronger hint: `if (trooper.state === "falling" && trooper.y >
- *   CHUTE_AT) return "chute";` then `if (trooper.state === "chute" &&
- *   trooper.y + trooper.h >= GROUND) return "walking";` then
+ * Stronger hint: `if (trooper.state === 'falling' && trooper.y >
+ *   CHUTE_AT) return 'chute';` then `if (trooper.state === 'chute' &&
+ *   trooper.y + trooper.h >= GROUND) return 'walking';` then
  *   `return trooper.state;`
  * Stuck? The answer key is at the bottom of this file.
  *
@@ -248,7 +248,7 @@ function nextTrooperState(trooper) {
  *
  * Gentle hint: check the state first, then the distance. Use Math.abs
  *   so it works from either side.
- * Stronger hint: `return trooper.state === "walking" &&
+ * Stronger hint: `return trooper.state === 'walking' &&
  *   Math.abs(trooper.x + trooper.w / 2 - POST.x) < REACH;`
  * Stuck? The answer key is at the bottom of this file.
  *
@@ -285,10 +285,10 @@ function reachedThePost(trooper) {
  *   with cosine and sine, each times BULLET_SPEED. That part is
  *   exactly project 7.
  * Stronger hint: `const start = muzzlePoint(angle);` then
- *   `return { kind: "bullet", x: start.x - BULLET_W / 2,
+ *   `return { kind: 'bullet', x: start.x - BULLET_W / 2,
  *   y: start.y - BULLET_H / 2, w: BULLET_W, h: BULLET_H,
  *   vx: Math.cos(angle) * BULLET_SPEED, vy: Math.sin(angle) *
- *   BULLET_SPEED, state: "flying" };`
+ *   BULLET_SPEED, state: 'flying' };`
  * Stuck? The answer key is at the bottom of this file.
  *
  * Click on the sky and a shell streaks out of the barrel in a straight
@@ -383,7 +383,7 @@ function hitsSprite(a, b) {
  * only needs to know where it is, how big it is now, and how much
  * longer it has:
  *
- *     { kind: "boom", x: 480, y: 210, radius: 14, life: BOOM_LIFE }
+ *     { kind: 'boom', x: 480, y: 210, radius: 14, life: BOOM_LIFE }
  *
  * `radius` starts small and gets bigger. `life` starts at BOOM_LIFE and
  * counts down to zero, and the wiring throws the boom away when it gets
@@ -395,7 +395,7 @@ function hitsSprite(a, b) {
  *
  * Gentle hint: one return, with the four parts above in it. Start the
  *   radius at about 14 so the first frame is already visible.
- * Stronger hint: `return { kind: "boom", x: x, y: y, radius: 14,
+ * Stronger hint: `return { kind: 'boom', x: x, y: y, radius: 14,
  *   life: BOOM_LIFE };`
  * Stuck? The answer key is at the bottom of this file.
  *
@@ -449,34 +449,34 @@ function updateBoom(boom, seconds) {
    not change it.
    --------------------------------------------------------------------- */
 
-const sky = document.getElementById("sky");
-const pen = sky.getContext("2d");
-const angleReadEl = document.getElementById("angleRead");
-const scoreReadEl = document.getElementById("scoreRead");
-const fallCountEl = document.getElementById("fallCount");
-const chuteCountEl = document.getElementById("chuteCount");
-const walkCountEl = document.getElementById("walkCount");
-const fallBarEl = document.getElementById("fallBar");
-const chuteBarEl = document.getElementById("chuteBar");
-const walkBarEl = document.getElementById("walkBar");
-const sandbagsEl = document.getElementById("sandbags");
-const planeCountEl = document.getElementById("planeCount");
-const trooperCountEl = document.getElementById("trooperCount");
-const bulletCountEl = document.getElementById("bulletCount");
-const boomCountEl = document.getElementById("boomCount");
-const normalBtn = document.getElementById("normalSpeed");
-const slowBtn = document.getElementById("slowSpeed");
-const startBtn = document.getElementById("start");
-const againBtn = document.getElementById("again");
-const statusEl = document.getElementById("status");
+const sky = document.getElementById('sky');
+const pen = sky.getContext('2d');
+const angleReadEl = document.getElementById('angleRead');
+const scoreReadEl = document.getElementById('scoreRead');
+const fallCountEl = document.getElementById('fallCount');
+const chuteCountEl = document.getElementById('chuteCount');
+const walkCountEl = document.getElementById('walkCount');
+const fallBarEl = document.getElementById('fallBar');
+const chuteBarEl = document.getElementById('chuteBar');
+const walkBarEl = document.getElementById('walkBar');
+const sandbagsEl = document.getElementById('sandbags');
+const planeCountEl = document.getElementById('planeCount');
+const trooperCountEl = document.getElementById('trooperCount');
+const bulletCountEl = document.getElementById('bulletCount');
+const boomCountEl = document.getElementById('boomCount');
+const normalBtn = document.getElementById('normalSpeed');
+const slowBtn = document.getElementById('slowSpeed');
+const startBtn = document.getElementById('start');
+const againBtn = document.getElementById('again');
+const statusEl = document.getElementById('status');
 
 /* The sounds. One Audio object per sound, made once and used again. */
-const fireSound = new Audio("assets/fire.wav");
-const boomSound = new Audio("assets/boom.wav");
-const chuteSound = new Audio("assets/chute.wav");
-const breachSound = new Audio("assets/breach.wav");
-const overSound = new Audio("assets/over.wav");
-const startSound = new Audio("assets/start.wav");
+const fireSound = new Audio('assets/fire.wav');
+const boomSound = new Audio('assets/boom.wav');
+const chuteSound = new Audio('assets/chute.wav');
+const breachSound = new Audio('assets/breach.wav');
+const overSound = new Audio('assets/over.wav');
+const startSound = new Audio('assets/start.wav');
 
 function playSound(sound) {
   sound.currentTime = 0;
@@ -484,7 +484,7 @@ function playSound(sound) {
 }
 
 /* Things the loop needs that are not part of the game itself. */
-let phase = "waiting";          // "waiting", "playing", "paused" or "over"
+let phase = 'waiting';          // 'waiting', 'playing', 'paused' or 'over'
 let timeScale = 1;              // 1 is normal. Slow motion makes it 0.3
 let previous = 0;               // the time the last frame happened
 let planeTimer = 0.8;           // seconds until the next plane
@@ -495,7 +495,7 @@ let fellThrough = 0;            // troopers who dropped straight through the gro
 let troopersMissing = false;    // true once a plane tried to drop nothing
 let bulletsMissing = false;     // true once the gun tried to fire nothing
 let boomsMissing = false;       // true once a hit happened with no explosion
-let message = "";
+let message = '';
 
 function say(text) {
   if (text === message) return;
@@ -546,16 +546,16 @@ function clampAim(angle) {
 
 /* Is this really a sprite? An empty function hands back null instead. */
 function isSprite(thing) {
-  return thing !== null && typeof thing === "object"
-    && typeof thing.x === "number" && typeof thing.y === "number"
-    && typeof thing.w === "number" && typeof thing.h === "number";
+  return thing !== null && typeof thing === 'object'
+    && typeof thing.x === 'number' && typeof thing.y === 'number'
+    && typeof thing.w === 'number' && typeof thing.h === 'number';
 }
 
 /* Is this really an explosion? The same question, asked about makeBoom. */
 function isBoom(thing) {
-  return thing !== null && typeof thing === "object"
-    && typeof thing.x === "number" && typeof thing.y === "number"
-    && typeof thing.radius === "number" && typeof thing.life === "number";
+  return thing !== null && typeof thing === 'object'
+    && typeof thing.x === 'number' && typeof thing.y === 'number'
+    && typeof thing.radius === 'number' && typeof thing.life === 'number';
 }
 
 /* A plane, built for you. It is the one sprite you do not have to make,
@@ -567,14 +567,14 @@ function makePlane() {
   const speed = randomBetween(96, 150);
   const w = 132;
   return {
-    kind: "plane",
+    kind: 'plane',
     x: fromLeft ? -w : WIDTH,
     y: randomBetween(74, 208),
     w: w,
     h: 38,
     vx: fromLeft ? speed : -speed,
     vy: 0,
-    state: "flying",
+    state: 'flying',
     dropsLeft: Math.round(randomBetween(1, 3)),
     dropTimer: randomBetween(0.5, 1.2)
   };
@@ -594,7 +594,7 @@ function frame(now) {
   let seconds = (now - previous) / 1000;
   previous = now;
   if (seconds > 0.05) seconds = 0.05;
-  if (phase === "playing") update(seconds * timeScale);
+  if (phase === 'playing') update(seconds * timeScale);
   render();
 }
 
@@ -638,7 +638,7 @@ function update(seconds) {
   for (const trooper of troopers) moveTrooper(trooper, seconds);
   for (const trooper of troopers) {
     const next = nextTrooperState(trooper);
-    if (typeof next === "string" && next !== trooper.state) changeState(trooper, next);
+    if (typeof next === 'string' && next !== trooper.state) changeState(trooper, next);
   }
 
   /* Troopers who made it to the post take a sandbag with them. */
@@ -691,7 +691,7 @@ function update(seconds) {
 
   /* The explosions grow and burn down. The dead ones leave the list. */
   for (const boom of booms) updateBoom(boom, seconds);
-  booms = booms.filter((boom) => typeof boom.life === "number" && boom.life > 0);
+  booms = booms.filter((boom) => typeof boom.life === 'number' && boom.life > 0);
 
   reportEmptyFunctions(seconds, watched, watchedWasAt);
 }
@@ -702,10 +702,10 @@ function update(seconds) {
 function changeState(trooper, next) {
   trooper.state = next;
   fellThrough = 0;
-  if (next === "chute") {
+  if (next === 'chute') {
     trooper.vy = 0;
     playSound(chuteSound);
-  } else if (next === "walking") {
+  } else if (next === 'walking') {
     trooper.vx = 0;
     trooper.vy = 0;
     trooper.y = GROUND - trooper.h;
@@ -726,36 +726,36 @@ function loseBag() {
   playSound(breachSound);
   if (bags <= 0) {
     bags = 0;
-    phase = "over";
+    phase = 'over';
     playSound(overSound);
-    say("The post is gone. Press Play again.");
+    say('The post is gone. Press Play again.');
   }
 }
 
 /* The status line under the window names whichever function is still
    empty. It is the fastest way to see where you are. */
 function reportEmptyFunctions(seconds, watched, watchedWasAt) {
-  if (watched && watched.y === watchedWasAt && watched.state !== "walking") stillTroopers += seconds;
+  if (watched && watched.y === watchedWasAt && watched.state !== 'walking') stillTroopers += seconds;
   else stillTroopers = 0;
 
   if (troopersMissing) {
-    say("makeTrooper() is still empty, so the planes drop nothing.");
+    say('makeTrooper() is still empty, so the planes drop nothing.');
   } else if (stillTroopers > 0.7) {
-    say("moveTrooper() is still empty, so the troopers hang in the air.");
+    say('moveTrooper() is still empty, so the troopers hang in the air.');
   } else if (fellThrough > 0) {
-    say("nextTrooperState() is still empty, so no chute ever opens.");
+    say('nextTrooperState() is still empty, so no chute ever opens.');
   } else if (countAtThePost() >= 2 && bags === START_BAGS) {
-    say("reachedThePost() is still empty, so nobody ever arrives.");
+    say('reachedThePost() is still empty, so nobody ever arrives.');
   } else if (bulletsMissing) {
-    say("makeBullet() is still empty, so the gun has nothing to fire.");
+    say('makeBullet() is still empty, so the gun has nothing to fire.');
   } else if (bullets.length >= 16) {
-    say("bulletIsGone() is still empty, so the shells are never taken away.");
+    say('bulletIsGone() is still empty, so the shells are never taken away.');
   } else if (fired >= 10 && score === 0) {
-    say("Shells going straight through? hitsSprite() is still empty.");
+    say('Shells going straight through? hitsSprite() is still empty.');
   } else if (boomsMissing) {
-    say("makeBoom() is still empty, so nothing blows up.");
+    say('makeBoom() is still empty, so nothing blows up.');
   } else if (booms.length >= 5) {
-    say("updateBoom() is still empty, so the explosions never go out.");
+    say('updateBoom() is still empty, so the explosions never go out.');
   } else if (score > 0 || troopers.length > 0) {
     say(scoreLine());
   }
@@ -764,7 +764,7 @@ function reportEmptyFunctions(seconds, watched, watchedWasAt) {
 function countAtThePost() {
   let total = 0;
   for (const trooper of troopers) {
-    if (trooper.state === "walking" && Math.abs(trooper.x + trooper.w / 2 - POST.x) < REACH) total += 1;
+    if (trooper.state === 'walking' && Math.abs(trooper.x + trooper.w / 2 - POST.x) < REACH) total += 1;
   }
   return total;
 }
@@ -778,8 +778,8 @@ function countState(state) {
 }
 
 function scoreLine() {
-  if (score === 0) return "No hits yet. Aim with the mouse, click to fire.";
-  return score === 1 ? "1 point." : score + " points.";
+  if (score === 0) return 'No hits yet. Aim with the mouse, click to fire.';
+  return score === 1 ? '1 point.' : score + ' points.';
 }
 
 /* --- Drawing the sky ---
@@ -801,15 +801,15 @@ for (let i = 0; i < 9; i += 1) {
 
 function drawBackdrop() {
   const dawn = pen.createLinearGradient(0, 0, 0, GROUND);
-  dawn.addColorStop(0, "#1d2b52");
-  dawn.addColorStop(0.42, "#5c7ba6");
-  dawn.addColorStop(0.78, "#d59a68");
-  dawn.addColorStop(1, "#f6dca6");
+  dawn.addColorStop(0, '#1d2b52');
+  dawn.addColorStop(0.42, '#5c7ba6');
+  dawn.addColorStop(0.78, '#d59a68');
+  dawn.addColorStop(1, '#f6dca6');
   pen.fillStyle = dawn;
   pen.fillRect(0, 0, WIDTH, GROUND);
 
   for (const cloud of CLOUDS) {
-    pen.fillStyle = "rgba(255, 250, 240, " + cloud.alpha + ")";
+    pen.fillStyle = 'rgba(255, 250, 240, ' + cloud.alpha + ')';
     pen.beginPath();
     pen.ellipse(cloud.x, cloud.y, cloud.size * 2.1, cloud.size * 0.5, 0, 0, Math.PI * 2);
     pen.fill();
@@ -819,7 +819,7 @@ function drawBackdrop() {
   }
 
   /* The far ridge, in silhouette. */
-  pen.fillStyle = "#3b4a4a";
+  pen.fillStyle = '#3b4a4a';
   pen.beginPath();
   pen.moveTo(0, GROUND);
   pen.lineTo(0, GROUND - 46);
@@ -832,13 +832,13 @@ function drawBackdrop() {
 
   /* The ground the troopers land on. */
   const earth = pen.createLinearGradient(0, GROUND, 0, HEIGHT);
-  earth.addColorStop(0, "#4f5b34");
-  earth.addColorStop(1, "#28301c");
+  earth.addColorStop(0, '#4f5b34');
+  earth.addColorStop(1, '#28301c');
   pen.fillStyle = earth;
   pen.fillRect(0, GROUND, WIDTH, HEIGHT - GROUND);
-  pen.fillStyle = "rgba(255, 238, 190, .2)";
+  pen.fillStyle = 'rgba(255, 238, 190, .2)';
   pen.fillRect(0, GROUND, WIDTH, 3);
-  pen.strokeStyle = "rgba(24, 30, 16, .5)";
+  pen.strokeStyle = 'rgba(24, 30, 16, .5)';
   pen.lineWidth = 2;
   for (let x = 12; x < WIDTH; x += 27) {
     const tall = 6 + (x % 13);
@@ -856,7 +856,7 @@ function drawPost(angle) {
   /* The aiming line, out along the barrel. */
   pen.save();
   pen.setLineDash([6, 12]);
-  pen.strokeStyle = "rgba(255, 236, 190, .3)";
+  pen.strokeStyle = 'rgba(255, 236, 190, .3)';
   pen.lineWidth = 2;
   pen.beginPath();
   pen.moveTo(muzzle.x, muzzle.y);
@@ -866,20 +866,20 @@ function drawPost(angle) {
 
   /* The barrel, drawn before the bags so it sits behind the front row. */
   pen.save();
-  pen.lineCap = "round";
-  pen.strokeStyle = "#2f3729";
+  pen.lineCap = 'round';
+  pen.strokeStyle = '#2f3729';
   pen.lineWidth = 20;
   pen.beginPath();
   pen.moveTo(POST.x, POST.y);
   pen.lineTo(muzzle.x, muzzle.y);
   pen.stroke();
-  pen.strokeStyle = "#59634a";
+  pen.strokeStyle = '#59634a';
   pen.lineWidth = 13;
   pen.beginPath();
   pen.moveTo(POST.x, POST.y);
   pen.lineTo(muzzle.x, muzzle.y);
   pen.stroke();
-  pen.strokeStyle = "rgba(255, 244, 214, .38)";
+  pen.strokeStyle = 'rgba(255, 244, 214, .38)';
   pen.lineWidth = 3;
   pen.beginPath();
   pen.moveTo(POST.x + Math.cos(angle) * 20, POST.y + Math.sin(angle) * 20);
@@ -895,21 +895,21 @@ function drawPost(angle) {
   ];
   for (const row of rows) {
     for (let x = POST.x - row.half; x < POST.x + row.half; x += 34) {
-      pen.fillStyle = "#a08e5d";
+      pen.fillStyle = '#a08e5d';
       roundedBox(x, row.y, 32, 17, 8);
       pen.fill();
-      pen.fillStyle = "rgba(255, 244, 206, .22)";
+      pen.fillStyle = 'rgba(255, 244, 206, .22)';
       roundedBox(x + 2, row.y + 2, 28, 5, 3);
       pen.fill();
     }
   }
 
   /* The hub the gun turns on. */
-  pen.fillStyle = "#78826a";
+  pen.fillStyle = '#78826a';
   pen.beginPath();
   pen.arc(POST.x, POST.y, 15, 0, Math.PI * 2);
   pen.fill();
-  pen.fillStyle = "#2f3729";
+  pen.fillStyle = '#2f3729';
   pen.beginPath();
   pen.arc(POST.x, POST.y, 6, 0, Math.PI * 2);
   pen.fill();
@@ -929,9 +929,9 @@ function roundedBox(x, y, w, h, r) {
    through this one function. */
 function drawSprite(sprite) {
   if (!isSprite(sprite)) return;
-  if (sprite.kind === "plane") drawPlane(sprite);
-  else if (sprite.kind === "trooper") drawTrooper(sprite);
-  else if (sprite.kind === "bullet") drawBullet(sprite);
+  if (sprite.kind === 'plane') drawPlane(sprite);
+  else if (sprite.kind === 'trooper') drawTrooper(sprite);
+  else if (sprite.kind === 'bullet') drawBullet(sprite);
 }
 
 function drawPlane(plane) {
@@ -944,7 +944,7 @@ function drawPlane(plane) {
   pen.scale(facing, 1);
 
   /* The tail fin. */
-  pen.fillStyle = "#3f4a38";
+  pen.fillStyle = '#3f4a38';
   pen.beginPath();
   pen.moveTo(-66, 2);
   pen.lineTo(-52, -20);
@@ -953,25 +953,25 @@ function drawPlane(plane) {
   pen.fill();
 
   /* The body. */
-  pen.fillStyle = "#5b6650";
+  pen.fillStyle = '#5b6650';
   roundedBox(-66, -8, 128, 18, 9);
   pen.fill();
-  pen.fillStyle = "rgba(255, 246, 214, .22)";
+  pen.fillStyle = 'rgba(255, 246, 214, .22)';
   roundedBox(-62, -6, 118, 5, 3);
   pen.fill();
 
   /* The wing, under the body. */
-  pen.fillStyle = "#414c3a";
+  pen.fillStyle = '#414c3a';
   roundedBox(-16, 6, 56, 9, 4);
   pen.fill();
 
   /* The cockpit glass. */
-  pen.fillStyle = "#bcd6e2";
+  pen.fillStyle = '#bcd6e2';
   roundedBox(34, -6, 20, 9, 4);
   pen.fill();
 
   /* The propeller, spinning too fast to see. */
-  pen.strokeStyle = "rgba(230, 236, 220, .45)";
+  pen.strokeStyle = 'rgba(230, 236, 220, .45)';
   pen.lineWidth = 3;
   pen.beginPath();
   pen.ellipse(64, 1, 3, 20, 0, 0, Math.PI * 2);
@@ -984,19 +984,19 @@ function drawTrooper(trooper) {
   const cx = trooper.x + trooper.w / 2;
   const top = trooper.y;
 
-  if (trooper.state === "chute") {
+  if (trooper.state === 'chute') {
     /* The canopy, and the lines down to his shoulders. */
-    pen.fillStyle = "#d8cba6";
+    pen.fillStyle = '#d8cba6';
     pen.beginPath();
     pen.arc(cx, top - 6, 30, Math.PI, Math.PI * 2);
     pen.closePath();
     pen.fill();
-    pen.fillStyle = "rgba(120, 96, 60, .3)";
+    pen.fillStyle = 'rgba(120, 96, 60, .3)';
     pen.beginPath();
     pen.arc(cx, top - 6, 30, Math.PI * 1.5, Math.PI * 2);
     pen.closePath();
     pen.fill();
-    pen.strokeStyle = "rgba(232, 224, 198, .8)";
+    pen.strokeStyle = 'rgba(232, 224, 198, .8)';
     pen.lineWidth = 1.4;
     for (const side of [-1, 1]) {
       pen.beginPath();
@@ -1007,25 +1007,25 @@ function drawTrooper(trooper) {
   }
 
   /* The body. */
-  pen.fillStyle = "#54603f";
+  pen.fillStyle = '#54603f';
   roundedBox(trooper.x + 4, top + 12, trooper.w - 8, trooper.h - 14, 4);
   pen.fill();
 
   /* The helmet and the face under it. */
-  pen.fillStyle = "#c9a97e";
+  pen.fillStyle = '#c9a97e';
   pen.beginPath();
   pen.arc(cx, top + 9, 6, 0, Math.PI * 2);
   pen.fill();
-  pen.fillStyle = "#3f4a30";
+  pen.fillStyle = '#3f4a30';
   pen.beginPath();
   pen.arc(cx, top + 8, 7.5, Math.PI, Math.PI * 2);
   pen.fill();
 
-  pen.strokeStyle = "#3f4a30";
+  pen.strokeStyle = '#3f4a30';
   pen.lineWidth = 3.5;
-  pen.lineCap = "round";
+  pen.lineCap = 'round';
 
-  if (trooper.state === "falling") {
+  if (trooper.state === 'falling') {
     /* Arms and legs thrown out, because nothing is holding him up. */
     for (const side of [-1, 1]) {
       pen.beginPath();
@@ -1037,7 +1037,7 @@ function drawTrooper(trooper) {
       pen.lineTo(cx + side * 12, top + 38);
       pen.stroke();
     }
-  } else if (trooper.state === "chute") {
+  } else if (trooper.state === 'chute') {
     /* Hanging in the harness, legs together. */
     for (const side of [-1, 1]) {
       pen.beginPath();
@@ -1073,15 +1073,15 @@ function drawBullet(bullet) {
   const cx = bullet.x + bullet.w / 2;
   const cy = bullet.y + bullet.h / 2;
 
-  pen.strokeStyle = "rgba(255, 214, 142, .8)";
+  pen.strokeStyle = 'rgba(255, 214, 142, .8)';
   pen.lineWidth = 3;
-  pen.lineCap = "round";
+  pen.lineCap = 'round';
   pen.beginPath();
   pen.moveTo(cx - Math.cos(along) * 22, cy - Math.sin(along) * 22);
   pen.lineTo(cx, cy);
   pen.stroke();
 
-  pen.fillStyle = "#fff2cf";
+  pen.fillStyle = '#fff2cf';
   pen.beginPath();
   pen.arc(cx, cy, 3.5, 0, Math.PI * 2);
   pen.fill();
@@ -1094,15 +1094,15 @@ function drawBoom(boom) {
   pen.save();
   pen.globalAlpha = left;
   const fire = pen.createRadialGradient(boom.x, boom.y, 0, boom.x, boom.y, boom.radius);
-  fire.addColorStop(0, "rgba(255, 246, 214, .95)");
-  fire.addColorStop(0.45, "rgba(255, 176, 62, .75)");
-  fire.addColorStop(1, "rgba(190, 62, 26, 0)");
+  fire.addColorStop(0, 'rgba(255, 246, 214, .95)');
+  fire.addColorStop(0.45, 'rgba(255, 176, 62, .75)');
+  fire.addColorStop(1, 'rgba(190, 62, 26, 0)');
   pen.fillStyle = fire;
   pen.beginPath();
   pen.arc(boom.x, boom.y, boom.radius, 0, Math.PI * 2);
   pen.fill();
 
-  pen.strokeStyle = "rgba(255, 226, 168, .7)";
+  pen.strokeStyle = 'rgba(255, 226, 168, .7)';
   pen.lineWidth = 2.5;
   pen.beginPath();
   pen.arc(boom.x, boom.y, boom.radius * 0.92, 0, Math.PI * 2);
@@ -1112,31 +1112,31 @@ function drawBoom(boom) {
 
 /* The card that covers the sky before the game and after it. */
 function drawCurtain() {
-  pen.fillStyle = "rgba(10, 14, 10, .64)";
+  pen.fillStyle = 'rgba(10, 14, 10, .64)';
   pen.fillRect(0, 0, WIDTH, HEIGHT);
-  pen.textAlign = "center";
-  pen.fillStyle = "#ded2ae";
+  pen.textAlign = 'center';
+  pen.fillStyle = '#ded2ae';
   pen.font = "700 60px 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 
-  if (phase === "waiting") {
-    pen.fillText("LOOKOUT POST", WIDTH / 2, 296);
+  if (phase === 'waiting') {
+    pen.fillText('LOOKOUT POST', WIDTH / 2, 296);
     pen.font = "26px 'Trebuchet MS', sans-serif";
-    pen.fillText("Aim with the mouse. Click to fire.", WIDTH / 2, 358);
-    pen.fillText("Three troopers reaching the post takes it.", WIDTH / 2, 398);
-    pen.fillStyle = "#ffd68e";
-    pen.fillText("Press Start", WIDTH / 2, 468);
-  } else if (phase === "paused") {
-    pen.fillText("PAUSED", WIDTH / 2, 360);
+    pen.fillText('Aim with the mouse. Click to fire.', WIDTH / 2, 358);
+    pen.fillText('Three troopers reaching the post takes it.', WIDTH / 2, 398);
+    pen.fillStyle = '#ffd68e';
+    pen.fillText('Press Start', WIDTH / 2, 468);
+  } else if (phase === 'paused') {
+    pen.fillText('PAUSED', WIDTH / 2, 360);
   } else {
-    pen.fillText("POST LOST", WIDTH / 2, 296);
+    pen.fillText('POST LOST', WIDTH / 2, 296);
     pen.font = "34px 'Trebuchet MS', sans-serif";
-    pen.fillStyle = "#ffd68e";
-    pen.fillText(score === 1 ? "1 point" : score + " points", WIDTH / 2, 368);
+    pen.fillStyle = '#ffd68e';
+    pen.fillText(score === 1 ? '1 point' : score + ' points', WIDTH / 2, 368);
     pen.font = "26px 'Trebuchet MS', sans-serif";
-    pen.fillStyle = "#ded2ae";
-    pen.fillText("Press Play again", WIDTH / 2, 438);
+    pen.fillStyle = '#ded2ae';
+    pen.fillText('Press Play again', WIDTH / 2, 438);
   }
-  pen.textAlign = "left";
+  pen.textAlign = 'left';
 }
 
 /* The whole picture, drawn again from the memory, every frame. */
@@ -1147,7 +1147,7 @@ function render() {
   drawPost(aim);
   for (const bullet of bullets) drawSprite(bullet);
   for (const boom of booms) drawBoom(boom);
-  if (phase !== "playing") drawCurtain();
+  if (phase !== 'playing') drawCurtain();
   renderStates();
   renderFigures();
   renderBags();
@@ -1156,11 +1156,11 @@ function render() {
 
 /* The Troopers panel: the state machine, counted and drawn as bars. */
 function renderStates() {
-  const counts = [countState("falling"), countState("chute"), countState("walking")];
+  const counts = [countState('falling'), countState('chute'), countState('walking')];
   const els = [[fallCountEl, fallBarEl], [chuteCountEl, chuteBarEl], [walkCountEl, walkBarEl]];
   for (let i = 0; i < 3; i += 1) {
     els[i][0].textContent = counts[i];
-    els[i][1].style.width = Math.min(100, counts[i] * 20) + "%";
+    els[i][1].style.width = Math.min(100, counts[i] * 20) + '%';
   }
 }
 
@@ -1175,22 +1175,22 @@ function renderFigures() {
 
 function renderBags() {
   if (sandbagsEl.children.length !== START_BAGS) {
-    sandbagsEl.textContent = "";
+    sandbagsEl.textContent = '';
     for (let i = 0; i < START_BAGS; i += 1) {
-      sandbagsEl.appendChild(document.createElement("span"));
+      sandbagsEl.appendChild(document.createElement('span'));
     }
   }
   for (let i = 0; i < START_BAGS; i += 1) {
-    sandbagsEl.children[i].className = i < bags ? "sandbag" : "sandbag sandbag-gone";
+    sandbagsEl.children[i].className = i < bags ? 'sandbag' : 'sandbag sandbag-gone';
   }
 }
 
 function renderKeys() {
-  startBtn.disabled = phase === "over";
-  startBtn.firstChild.nodeValue = phase === "playing" ? "Pause " : "Start ";
-  againBtn.disabled = phase === "waiting";
-  normalBtn.setAttribute("aria-pressed", String(timeScale === 1));
-  slowBtn.setAttribute("aria-pressed", String(timeScale !== 1));
+  startBtn.disabled = phase === 'over';
+  startBtn.firstChild.nodeValue = phase === 'playing' ? 'Pause ' : 'Start ';
+  againBtn.disabled = phase === 'waiting';
+  normalBtn.setAttribute('aria-pressed', String(timeScale === 1));
+  slowBtn.setAttribute('aria-pressed', String(timeScale !== 1));
 }
 
 /* --- The mouse ---
@@ -1205,21 +1205,21 @@ function skyPoint(event) {
   };
 }
 
-sky.addEventListener("pointermove", (event) => {
+sky.addEventListener('pointermove', (event) => {
   aim = clampAim(aimAngle(POST, skyPoint(event)));
 });
 
-sky.addEventListener("pointerdown", (event) => {
+sky.addEventListener('pointerdown', (event) => {
   aim = clampAim(aimAngle(POST, skyPoint(event)));
   fire();
 });
 
 function fire() {
-  if (phase !== "playing" || cooldown > 0) return;
+  if (phase !== 'playing' || cooldown > 0) return;
   const bullet = makeBullet(aim);
   bulletsMissing = !isSprite(bullet);
   if (bulletsMissing) {
-    say("makeBullet() is still empty, so the gun has nothing to fire.");
+    say('makeBullet() is still empty, so the gun has nothing to fire.');
     return;
   }
   bullets.push(bullet);
@@ -1248,36 +1248,36 @@ function resetGame() {
   planeTimer = 0.8;
 }
 
-startBtn.addEventListener("click", () => {
-  if (phase === "playing") {
-    phase = "paused";
-    say("Paused.");
+startBtn.addEventListener('click', () => {
+  if (phase === 'playing') {
+    phase = 'paused';
+    say('Paused.');
   } else {
-    if (phase === "waiting") playSound(startSound);
-    phase = "playing";
-    say("Aim with the mouse. Click to fire.");
+    if (phase === 'waiting') playSound(startSound);
+    phase = 'playing';
+    say('Aim with the mouse. Click to fire.');
   }
 });
 
-againBtn.addEventListener("click", () => {
+againBtn.addEventListener('click', () => {
   resetGame();
-  phase = "playing";
+  phase = 'playing';
   playSound(startSound);
-  say("A fresh watch. Aim with the mouse.");
+  say('A fresh watch. Aim with the mouse.');
 });
 
-normalBtn.addEventListener("click", () => {
+normalBtn.addEventListener('click', () => {
   timeScale = 1;
-  say("Normal speed.");
+  say('Normal speed.');
 });
 
-slowBtn.addEventListener("click", () => {
+slowBtn.addEventListener('click', () => {
   timeScale = 0.3;
-  say("Slow motion. Nothing in your code changed, only the clock.");
+  say('Slow motion. Nothing in your code changed, only the clock.');
 });
 
-document.addEventListener("keydown", (event) => {
-  if (event.code === "Space" && !startBtn.disabled) {
+document.addEventListener('keydown', (event) => {
+  if (event.code === 'Space' && !startBtn.disabled) {
     event.preventDefault();
     startBtn.click();
   }
@@ -1285,7 +1285,7 @@ document.addEventListener("keydown", (event) => {
 
 /* Typing #demo onto a page that is already open changes the address
    only. The script does not run again. So the page reloads itself here. */
-window.addEventListener("hashchange", () => location.reload());
+window.addEventListener('hashchange', () => location.reload());
 
 /* --- The demos ---
 
@@ -1293,60 +1293,60 @@ window.addEventListener("hashchange", () => location.reload());
    the game plays properly, so you can see what you are building. The
    stand-ins below fill in whichever functions are still empty. They are
    for the demo picture only. They are never for you. */
-if (location.hash === "#demo" || location.hash === "#demo-over") {
-  const testPlane = { kind: "plane", x: 100, y: 100, w: 132, h: 38, vx: 0, vy: 0, state: "flying" };
-  const testTrooper = { kind: "trooper", x: 100, y: 100, w: TROOPER_W, h: TROOPER_H, vx: 0, vy: 0, state: "falling" };
+if (location.hash === '#demo' || location.hash === '#demo-over') {
+  const testPlane = { kind: 'plane', x: 100, y: 100, w: 132, h: 38, vx: 0, vy: 0, state: 'flying' };
+  const testTrooper = { kind: 'trooper', x: 100, y: 100, w: TROOPER_W, h: TROOPER_H, vx: 0, vy: 0, state: 'falling' };
   moveTrooper(testTrooper, 1);
-  const testBoom = { kind: "boom", x: 0, y: 0, radius: 14, life: BOOM_LIFE };
+  const testBoom = { kind: 'boom', x: 0, y: 0, radius: 14, life: BOOM_LIFE };
   updateBoom(testBoom, 0.1);
 
   if (!isSprite(makeTrooper(testPlane))) {
     makeTrooper = (plane) => ({
-      kind: "trooper",
+      kind: 'trooper',
       x: plane.x + plane.w / 2 - TROOPER_W / 2,
       y: plane.y + plane.h,
       w: TROOPER_W,
       h: TROOPER_H,
       vx: 0,
       vy: 0,
-      state: "falling"
+      state: 'falling'
     });
   }
   if (testTrooper.y === 100) {
     moveTrooper = (trooper, seconds) => {
-      if (trooper.state === "falling") {
+      if (trooper.state === 'falling') {
         trooper.vy += GRAVITY * seconds;
         trooper.y += trooper.vy * seconds;
-      } else if (trooper.state === "chute") {
+      } else if (trooper.state === 'chute') {
         trooper.y += CHUTE_SPEED * seconds;
-      } else if (trooper.state === "walking") {
+      } else if (trooper.state === 'walking') {
         trooper.x += towardsPost(trooper.x) * WALK_SPEED * seconds;
       }
     };
   }
-  if (nextTrooperState({ state: "falling", y: CHUTE_AT + 10, h: TROOPER_H }) !== "chute") {
+  if (nextTrooperState({ state: 'falling', y: CHUTE_AT + 10, h: TROOPER_H }) !== 'chute') {
     nextTrooperState = (trooper) => {
-      if (trooper.state === "falling" && trooper.y > CHUTE_AT) return "chute";
-      if (trooper.state === "chute" && trooper.y + trooper.h >= GROUND) return "walking";
+      if (trooper.state === 'falling' && trooper.y > CHUTE_AT) return 'chute';
+      if (trooper.state === 'chute' && trooper.y + trooper.h >= GROUND) return 'walking';
       return trooper.state;
     };
   }
-  if (reachedThePost({ state: "walking", x: POST.x, w: 0 }) !== true) {
+  if (reachedThePost({ state: 'walking', x: POST.x, w: 0 }) !== true) {
     reachedThePost = (trooper) =>
-      trooper.state === "walking" && Math.abs(trooper.x + trooper.w / 2 - POST.x) < REACH;
+      trooper.state === 'walking' && Math.abs(trooper.x + trooper.w / 2 - POST.x) < REACH;
   }
   if (!isSprite(makeBullet(-Math.PI / 2))) {
     makeBullet = (angle) => {
       const start = muzzlePoint(angle);
       return {
-        kind: "bullet",
+        kind: 'bullet',
         x: start.x - BULLET_W / 2,
         y: start.y - BULLET_H / 2,
         w: BULLET_W,
         h: BULLET_H,
         vx: Math.cos(angle) * BULLET_SPEED,
         vy: Math.sin(angle) * BULLET_SPEED,
-        state: "flying"
+        state: 'flying'
       };
     };
   }
@@ -1358,7 +1358,7 @@ if (location.hash === "#demo" || location.hash === "#demo-over") {
     hitsSprite = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
   }
   if (!isBoom(makeBoom(0, 0))) {
-    makeBoom = (x, y) => ({ kind: "boom", x: x, y: y, radius: 14, life: BOOM_LIFE });
+    makeBoom = (x, y) => ({ kind: 'boom', x: x, y: y, radius: 14, life: BOOM_LIFE });
   }
   if (testBoom.radius === 14) {
     updateBoom = (boom, seconds) => {
@@ -1367,22 +1367,22 @@ if (location.hash === "#demo" || location.hash === "#demo-over") {
     };
   }
 
-  if (location.hash === "#demo-over") {
+  if (location.hash === '#demo-over') {
     score = 23;
     bags = 0;
-    phase = "over";
-    say("Demo: the post fell after three troopers reached it.");
+    phase = 'over';
+    say('Demo: the post fell after three troopers reached it.');
   } else {
     planes.push(makePlane());
     planes[0].x = 120;
     planes[0].y = 110;
     planes[0].vx = 120;
     const placed = [
-      { x: 300, y: 150, state: "falling" },
-      { x: 742, y: 196, state: "falling" },
-      { x: 178, y: 372, state: "chute" },
-      { x: 866, y: 316, state: "chute" },
-      { x: 108, y: GROUND - TROOPER_H, state: "walking" }
+      { x: 300, y: 150, state: 'falling' },
+      { x: 742, y: 196, state: 'falling' },
+      { x: 178, y: 372, state: 'chute' },
+      { x: 866, y: 316, state: 'chute' },
+      { x: 108, y: GROUND - TROOPER_H, state: 'walking' }
     ];
     for (const spot of placed) {
       const trooper = makeTrooper(planes[0]);
@@ -1394,11 +1394,11 @@ if (location.hash === "#demo" || location.hash === "#demo-over") {
     booms.push(makeBoom(700, 300));
     score = 9;
     bags = 2;
-    phase = "playing";
-    say("Demo: the finished game. Aim with the mouse, click to fire.");
+    phase = 'playing';
+    say('Demo: the finished game. Aim with the mouse, click to fire.');
   }
 } else {
-  say("Press Start. The planes drop nothing yet. makeTrooper() changes that.");
+  say('Press Start. The planes drop nothing yet. makeTrooper() changes that.');
 }
 
 requestAnimationFrame(frame);
@@ -1416,39 +1416,39 @@ requestAnimationFrame(frame);
    --- makeTrooper(plane) ---
 
      return {
-       kind: "trooper",
+       kind: 'trooper',
        x: plane.x + plane.w / 2 - TROOPER_W / 2,
        y: plane.y + plane.h,
        w: TROOPER_W,
        h: TROOPER_H,
        vx: 0,
        vy: 0,
-       state: "falling"
+       state: 'falling'
      };
 
 
    --- moveTrooper(trooper, seconds) ---
 
-     if (trooper.state === "falling") {
+     if (trooper.state === 'falling') {
        trooper.vy += GRAVITY * seconds;
        trooper.y += trooper.vy * seconds;
-     } else if (trooper.state === "chute") {
+     } else if (trooper.state === 'chute') {
        trooper.y += CHUTE_SPEED * seconds;
-     } else if (trooper.state === "walking") {
+     } else if (trooper.state === 'walking') {
        trooper.x += towardsPost(trooper.x) * WALK_SPEED * seconds;
      }
 
 
    --- nextTrooperState(trooper) ---
 
-     if (trooper.state === "falling" && trooper.y > CHUTE_AT) return "chute";
-     if (trooper.state === "chute" && trooper.y + trooper.h >= GROUND) return "walking";
+     if (trooper.state === 'falling' && trooper.y > CHUTE_AT) return 'chute';
+     if (trooper.state === 'chute' && trooper.y + trooper.h >= GROUND) return 'walking';
      return trooper.state;
 
 
    --- reachedThePost(trooper) ---
 
-     return trooper.state === "walking"
+     return trooper.state === 'walking'
        && Math.abs(trooper.x + trooper.w / 2 - POST.x) < REACH;
 
 
@@ -1456,14 +1456,14 @@ requestAnimationFrame(frame);
 
      const start = muzzlePoint(angle);
      return {
-       kind: "bullet",
+       kind: 'bullet',
        x: start.x - BULLET_W / 2,
        y: start.y - BULLET_H / 2,
        w: BULLET_W,
        h: BULLET_H,
        vx: Math.cos(angle) * BULLET_SPEED,
        vy: Math.sin(angle) * BULLET_SPEED,
-       state: "flying"
+       state: 'flying'
      };
 
 
@@ -1483,7 +1483,7 @@ requestAnimationFrame(frame);
 
    --- makeBoom(x, y) ---
 
-     return { kind: "boom", x: x, y: y, radius: 14, life: BOOM_LIFE };
+     return { kind: 'boom', x: x, y: y, radius: 14, life: BOOM_LIFE };
 
 
    --- updateBoom(boom, seconds) ---

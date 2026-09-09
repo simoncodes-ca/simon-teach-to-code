@@ -36,7 +36,7 @@
 
    One balloon is an object:
 
-       { x: 300, y: 800, radius: 34, speed: 110, colour: "#ef5b52" }
+       { x: 300, y: 800, radius: 34, speed: 110, colour: '#ef5b52' }
 
    One dart is an object too. It carries a speed of its own, split into
    a sideways part and an up-and-down part:
@@ -63,7 +63,7 @@ const SPAWN_EVERY = 1.15;        // seconds between one balloon and the next
 
 /* The balloons come in seven colours. */
 const BALLOON_COLOURS = [
-  "#ef5b52", "#f59433", "#f4d248", "#45b98a", "#4aa8e0", "#a06bd0", "#ec7aa8"
+  '#ef5b52', '#f59433', '#f4d248', '#45b98a', '#4aa8e0', '#a06bd0', '#ec7aa8'
 ];
 
 let balloons = [];               // every balloon in the sky right now
@@ -377,30 +377,30 @@ function restartGame() {
    not change it.
    --------------------------------------------------------------------- */
 
-const sky = document.getElementById("sky");
-const pen = sky.getContext("2d");
-const dial = document.getElementById("dial");
-const dialPen = dial.getContext("2d");
-const angleReadEl = document.getElementById("angleRead");
-const scoreReadEl = document.getElementById("scoreRead");
-const escapedReadEl = document.getElementById("escapedRead");
-const scoreBigEl = document.getElementById("scoreBig");
-const balloonCountEl = document.getElementById("balloonCount");
-const dartCountEl = document.getElementById("dartCount");
-const escapedBigEl = document.getElementById("escapedBig");
-const heartsEl = document.getElementById("hearts");
-const normalBtn = document.getElementById("normalSpeed");
-const slowBtn = document.getElementById("slowSpeed");
-const startBtn = document.getElementById("start");
-const againBtn = document.getElementById("again");
-const statusEl = document.getElementById("status");
+const sky = document.getElementById('sky');
+const pen = sky.getContext('2d');
+const dial = document.getElementById('dial');
+const dialPen = dial.getContext('2d');
+const angleReadEl = document.getElementById('angleRead');
+const scoreReadEl = document.getElementById('scoreRead');
+const escapedReadEl = document.getElementById('escapedRead');
+const scoreBigEl = document.getElementById('scoreBig');
+const balloonCountEl = document.getElementById('balloonCount');
+const dartCountEl = document.getElementById('dartCount');
+const escapedBigEl = document.getElementById('escapedBig');
+const heartsEl = document.getElementById('hearts');
+const normalBtn = document.getElementById('normalSpeed');
+const slowBtn = document.getElementById('slowSpeed');
+const startBtn = document.getElementById('start');
+const againBtn = document.getElementById('again');
+const statusEl = document.getElementById('status');
 
 /* The sounds. One Audio object per sound, made once and used again. */
-const fireSound = new Audio("assets/fire.wav");
-const popSound = new Audio("assets/pop.wav");
-const escapeSound = new Audio("assets/escape.wav");
-const overSound = new Audio("assets/over.wav");
-const startSound = new Audio("assets/start.wav");
+const fireSound = new Audio('assets/fire.wav');
+const popSound = new Audio('assets/pop.wav');
+const escapeSound = new Audio('assets/escape.wav');
+const overSound = new Audio('assets/over.wav');
+const startSound = new Audio('assets/start.wav');
 
 function playSound(sound) {
   sound.currentTime = 0;
@@ -408,7 +408,7 @@ function playSound(sound) {
 }
 
 /* Things the loop needs that are not part of the game itself. */
-let phase = "waiting";        // "waiting", "playing", "paused" or "over"
+let phase = 'waiting';        // 'waiting', 'playing', 'paused' or 'over'
 let timeScale = 1;            // 1 is normal. Slow motion makes it 0.3
 let previous = 0;             // the time the last frame happened
 let spawnTimer = SPAWN_EVERY; // seconds until the next balloon
@@ -417,7 +417,7 @@ let bursts = [];              // the marks a popped balloon leaves behind
 let darted = 0;               // how many darts have been fired this game
 let stillBalloons = 0;        // how long the balloons have sat still
 let stillDarts = 0;           // how long the darts have sat still
-let message = "";
+let message = '';
 
 function say(text) {
   if (text === message) return;
@@ -445,16 +445,16 @@ function muzzlePoint(angle) {
 
 /* Is this really a balloon? An empty function hands back null instead. */
 function isBalloon(thing) {
-  return thing !== null && typeof thing === "object"
-    && typeof thing.x === "number" && typeof thing.y === "number"
-    && typeof thing.radius === "number";
+  return thing !== null && typeof thing === 'object'
+    && typeof thing.x === 'number' && typeof thing.y === 'number'
+    && typeof thing.radius === 'number';
 }
 
 /* Is this really a dart? The same question, asked about makeDart. */
 function isDart(thing) {
-  return thing !== null && typeof thing === "object"
-    && typeof thing.x === "number" && typeof thing.y === "number"
-    && typeof thing.vx === "number" && typeof thing.vy === "number";
+  return thing !== null && typeof thing === 'object'
+    && typeof thing.x === 'number' && typeof thing.y === 'number'
+    && typeof thing.vx === 'number' && typeof thing.vy === 'number';
 }
 
 /* The cannon is bolted to the deck, so it cannot point downwards. This
@@ -485,7 +485,7 @@ function frame(now) {
   let seconds = (now - previous) / 1000;
   previous = now;
   if (seconds > 0.05) seconds = 0.05;
-  if (phase === "playing") update(seconds * timeScale);
+  if (phase === 'playing') update(seconds * timeScale);
   render();
 }
 
@@ -500,7 +500,7 @@ function update(seconds) {
     if (balloons.length < 40) {
       const balloon = makeBalloon();
       if (isBalloon(balloon)) balloons.push(balloon);
-      else say("makeBalloon() is still empty, so the sky stays empty.");
+      else say('makeBalloon() is still empty, so the sky stays empty.');
     }
   }
 
@@ -556,23 +556,23 @@ function reportEmptyFunctions(seconds, watchedBalloon, balloonWasAt, watchedDart
   else stillDarts = 0;
 
   if (stillBalloons > 0.7) {
-    say("moveBalloon() is still empty, so the balloons are stuck at the bottom.");
+    say('moveBalloon() is still empty, so the balloons are stuck at the bottom.');
   } else if (balloons.length >= 40) {
-    say("hasEscaped() is still empty, so nothing ever leaves the sky.");
+    say('hasEscaped() is still empty, so nothing ever leaves the sky.');
   } else if (stillDarts > 0.7) {
-    say("moveDart() is still empty, so the darts hang at the muzzle.");
+    say('moveDart() is still empty, so the darts hang at the muzzle.');
   } else if (darts.length >= 30) {
-    say("dartIsGone() is still empty, so the darts are never taken away.");
+    say('dartIsGone() is still empty, so the darts are never taken away.');
   } else if (darted >= 8 && score === 0) {
-    say("Darts going straight through the balloons? hits() is still empty.");
+    say('Darts going straight through the balloons? hits() is still empty.');
   } else if (score > 0 || balloons.length > 0) {
     say(scoreLine());
   }
 }
 
 function scoreLine() {
-  if (score === 0) return "No pops yet. Aim with the mouse, click to fire.";
-  return score === 1 ? "One balloon popped." : score + " balloons popped.";
+  if (score === 0) return 'No pops yet. Aim with the mouse, click to fire.';
+  return score === 1 ? 'One balloon popped.' : score + ' balloons popped.';
 }
 
 function loseLife() {
@@ -581,9 +581,9 @@ function loseLife() {
   playSound(escapeSound);
   if (lives <= 0) {
     lives = 0;
-    phase = "over";
+    phase = 'over';
     playSound(overSound);
-    say("All three got away. Press Play again.");
+    say('All three got away. Press Play again.');
   }
 }
 
@@ -603,14 +603,14 @@ for (let i = 0; i < 70; i += 1) {
 
 function drawBackdrop() {
   const dusk = pen.createLinearGradient(0, 0, 0, DECK);
-  dusk.addColorStop(0, "#161f3d");
-  dusk.addColorStop(0.55, "#3c3f6b");
-  dusk.addColorStop(0.86, "#a8567a");
-  dusk.addColorStop(1, "#e8894a");
+  dusk.addColorStop(0, '#161f3d');
+  dusk.addColorStop(0.55, '#3c3f6b');
+  dusk.addColorStop(0.86, '#a8567a');
+  dusk.addColorStop(1, '#e8894a');
   pen.fillStyle = dusk;
   pen.fillRect(0, 0, WIDTH, DECK);
 
-  pen.fillStyle = "rgba(255, 246, 224, .7)";
+  pen.fillStyle = 'rgba(255, 246, 224, .7)';
   for (const star of STARS) {
     pen.beginPath();
     pen.arc(star.x, star.y, star.size, 0, Math.PI * 2);
@@ -619,8 +619,8 @@ function drawBackdrop() {
 
   /* The sun, low over the sea. */
   const glow = pen.createRadialGradient(760, DECK - 40, 10, 760, DECK - 40, 220);
-  glow.addColorStop(0, "rgba(255, 214, 150, .85)");
-  glow.addColorStop(1, "rgba(255, 214, 150, 0)");
+  glow.addColorStop(0, 'rgba(255, 214, 150, .85)');
+  glow.addColorStop(1, 'rgba(255, 214, 150, 0)');
   pen.fillStyle = glow;
   pen.beginPath();
   pen.arc(760, DECK - 40, 220, 0, Math.PI * 2);
@@ -628,15 +628,15 @@ function drawBackdrop() {
 
   /* The sea, and the light lying on it. */
   const sea = pen.createLinearGradient(0, DECK - 96, 0, DECK);
-  sea.addColorStop(0, "#20395c");
-  sea.addColorStop(1, "#122238");
+  sea.addColorStop(0, '#20395c');
+  sea.addColorStop(1, '#122238');
   pen.fillStyle = sea;
   pen.fillRect(0, DECK - 96, WIDTH, 96);
   pen.lineWidth = 2;
   for (let i = 0; i < 8; i += 1) {
     const y = DECK - 88 + i * 12;
     const half = 16 + i * 7;
-    pen.strokeStyle = "rgba(255, 206, 150, " + (0.20 - i * 0.02) + ")";
+    pen.strokeStyle = 'rgba(255, 206, 150, ' + (0.20 - i * 0.02) + ')';
     pen.beginPath();
     pen.moveTo(760 - half, y);
     pen.lineTo(760 + half, y);
@@ -644,9 +644,9 @@ function drawBackdrop() {
   }
 
   /* The deck of the pier. */
-  pen.fillStyle = "#3b2718";
+  pen.fillStyle = '#3b2718';
   pen.fillRect(0, DECK, WIDTH, HEIGHT - DECK);
-  pen.strokeStyle = "rgba(0, 0, 0, .35)";
+  pen.strokeStyle = 'rgba(0, 0, 0, .35)';
   pen.lineWidth = 3;
   for (let x = 0; x <= WIDTH; x += 64) {
     pen.beginPath();
@@ -654,7 +654,7 @@ function drawBackdrop() {
     pen.lineTo(x, HEIGHT);
     pen.stroke();
   }
-  pen.fillStyle = "rgba(255, 214, 150, .16)";
+  pen.fillStyle = 'rgba(255, 214, 150, .16)';
   pen.fillRect(0, DECK, WIDTH, 5);
 }
 
@@ -663,7 +663,7 @@ function drawBalloon(balloon) {
   const r = balloon.radius;
 
   /* The string, trailing below. */
-  pen.strokeStyle = "rgba(255, 246, 224, .5)";
+  pen.strokeStyle = 'rgba(255, 246, 224, .5)';
   pen.lineWidth = 1.6;
   pen.beginPath();
   pen.moveTo(balloon.x, balloon.y + r);
@@ -686,7 +686,7 @@ function drawBalloon(balloon) {
   pen.fill();
 
   /* The shine on it. */
-  pen.fillStyle = "rgba(255, 255, 255, .34)";
+  pen.fillStyle = 'rgba(255, 255, 255, .34)';
   pen.beginPath();
   pen.ellipse(balloon.x - r * 0.3, balloon.y - r * 0.34, r * 0.2, r * 0.3, -0.5, 0, Math.PI * 2);
   pen.fill();
@@ -698,7 +698,7 @@ function drawCannon(angle) {
   /* The aiming line, from the muzzle out along the barrel. */
   pen.save();
   pen.setLineDash([6, 12]);
-  pen.strokeStyle = "rgba(255, 217, 138, .32)";
+  pen.strokeStyle = 'rgba(255, 217, 138, .32)';
   pen.lineWidth = 2;
   pen.beginPath();
   pen.moveTo(muzzle.x, muzzle.y);
@@ -707,7 +707,7 @@ function drawCannon(angle) {
   pen.restore();
 
   /* The mount it is bolted to, drawn first so the barrel sits over it. */
-  pen.fillStyle = "#5a3b16";
+  pen.fillStyle = '#5a3b16';
   pen.beginPath();
   pen.moveTo(CANNON.x - 52, CANNON.y + 40);
   pen.lineTo(CANNON.x + 52, CANNON.y + 40);
@@ -715,25 +715,25 @@ function drawCannon(angle) {
   pen.lineTo(CANNON.x - 26, CANNON.y);
   pen.closePath();
   pen.fill();
-  pen.fillStyle = "rgba(255, 226, 168, .18)";
+  pen.fillStyle = 'rgba(255, 226, 168, .18)';
   pen.fillRect(CANNON.x - 52, CANNON.y + 36, 104, 4);
 
   /* The barrel. */
   pen.save();
-  pen.lineCap = "round";
-  pen.strokeStyle = "#8a5f1a";
+  pen.lineCap = 'round';
+  pen.strokeStyle = '#8a5f1a';
   pen.lineWidth = 30;
   pen.beginPath();
   pen.moveTo(CANNON.x, CANNON.y);
   pen.lineTo(muzzle.x, muzzle.y);
   pen.stroke();
-  pen.strokeStyle = "#c9922e";
+  pen.strokeStyle = '#c9922e';
   pen.lineWidth = 22;
   pen.beginPath();
   pen.moveTo(CANNON.x, CANNON.y);
   pen.lineTo(muzzle.x, muzzle.y);
   pen.stroke();
-  pen.strokeStyle = "rgba(255, 240, 196, .5)";
+  pen.strokeStyle = 'rgba(255, 240, 196, .5)';
   pen.lineWidth = 5;
   pen.beginPath();
   pen.moveTo(CANNON.x + Math.cos(angle) * 22, CANNON.y + Math.sin(angle) * 22);
@@ -742,11 +742,11 @@ function drawCannon(angle) {
   pen.restore();
 
   /* The hub the barrel turns on. */
-  pen.fillStyle = "#eec870";
+  pen.fillStyle = '#eec870';
   pen.beginPath();
   pen.arc(CANNON.x, CANNON.y, 19, 0, Math.PI * 2);
   pen.fill();
-  pen.fillStyle = "#7d5713";
+  pen.fillStyle = '#7d5713';
   pen.beginPath();
   pen.arc(CANNON.x, CANNON.y, 7, 0, Math.PI * 2);
   pen.fill();
@@ -758,15 +758,15 @@ function drawDart(dart) {
   const tailX = dart.x - Math.cos(along) * 20;
   const tailY = dart.y - Math.sin(along) * 20;
 
-  pen.strokeStyle = "#efe3c8";
+  pen.strokeStyle = '#efe3c8';
   pen.lineWidth = 4;
-  pen.lineCap = "round";
+  pen.lineCap = 'round';
   pen.beginPath();
   pen.moveTo(tailX, tailY);
   pen.lineTo(dart.x, dart.y);
   pen.stroke();
 
-  pen.fillStyle = "#ffd98a";
+  pen.fillStyle = '#ffd98a';
   pen.beginPath();
   pen.arc(dart.x, dart.y, 4, 0, Math.PI * 2);
   pen.fill();
@@ -791,31 +791,31 @@ function drawBursts() {
 
 /* The card that covers the sky before the game and after it. */
 function drawCurtain() {
-  pen.fillStyle = "rgba(12, 10, 20, .62)";
+  pen.fillStyle = 'rgba(12, 10, 20, .62)';
   pen.fillRect(0, 0, WIDTH, HEIGHT);
-  pen.textAlign = "center";
-  pen.fillStyle = "#efe3c8";
+  pen.textAlign = 'center';
+  pen.fillStyle = '#efe3c8';
   pen.font = "600 66px 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 
-  if (phase === "waiting") {
-    pen.fillText("BALLOON STALL", WIDTH / 2, 300);
+  if (phase === 'waiting') {
+    pen.fillText('BALLOON STALL', WIDTH / 2, 300);
     pen.font = "26px 'Trebuchet MS', sans-serif";
-    pen.fillText("Aim with the mouse. Click to fire.", WIDTH / 2, 360);
-    pen.fillText("Three balloons may escape. Then the stall closes.", WIDTH / 2, 400);
-    pen.fillStyle = "#ffd98a";
-    pen.fillText("Press Start", WIDTH / 2, 470);
-  } else if (phase === "paused") {
-    pen.fillText("PAUSED", WIDTH / 2, 360);
+    pen.fillText('Aim with the mouse. Click to fire.', WIDTH / 2, 360);
+    pen.fillText('Three balloons may escape. Then the stall closes.', WIDTH / 2, 400);
+    pen.fillStyle = '#ffd98a';
+    pen.fillText('Press Start', WIDTH / 2, 470);
+  } else if (phase === 'paused') {
+    pen.fillText('PAUSED', WIDTH / 2, 360);
   } else {
-    pen.fillText("STALL CLOSED", WIDTH / 2, 300);
+    pen.fillText('STALL CLOSED', WIDTH / 2, 300);
     pen.font = "34px 'Trebuchet MS', sans-serif";
-    pen.fillStyle = "#ffd98a";
-    pen.fillText(score === 1 ? "1 balloon popped" : score + " balloons popped", WIDTH / 2, 372);
+    pen.fillStyle = '#ffd98a';
+    pen.fillText(score === 1 ? '1 balloon popped' : score + ' balloons popped', WIDTH / 2, 372);
     pen.font = "26px 'Trebuchet MS', sans-serif";
-    pen.fillStyle = "#efe3c8";
-    pen.fillText("Press Play again", WIDTH / 2, 440);
+    pen.fillStyle = '#efe3c8';
+    pen.fillText('Press Play again', WIDTH / 2, 440);
   }
-  pen.textAlign = "left";
+  pen.textAlign = 'left';
 }
 
 /* The whole picture, drawn again from the memory, every frame. */
@@ -825,7 +825,7 @@ function render() {
   drawCannon(aim);
   for (const dart of darts) drawDart(dart);
   drawBursts();
-  if (phase !== "playing") drawCurtain();
+  if (phase !== 'playing') drawCurtain();
   drawDial();
   renderFigures();
   renderHearts();
@@ -834,12 +834,12 @@ function render() {
 
 /* The Aim panel: the same angle, drawn on its own. */
 function drawDial() {
-  dialPen.fillStyle = "#101827";
+  dialPen.fillStyle = '#101827';
   dialPen.fillRect(0, 0, dial.width, dial.height);
 
   const cx = dial.width / 2;
   const cy = dial.height - 22;
-  dialPen.strokeStyle = "rgba(239, 227, 200, .22)";
+  dialPen.strokeStyle = 'rgba(239, 227, 200, .22)';
   dialPen.lineWidth = 2;
   dialPen.beginPath();
   dialPen.arc(cx, cy, 96, Math.PI, Math.PI * 2);
@@ -849,15 +849,15 @@ function drawDial() {
   dialPen.lineTo(cx + 108, cy);
   dialPen.stroke();
 
-  dialPen.strokeStyle = "#ffd98a";
+  dialPen.strokeStyle = '#ffd98a';
   dialPen.lineWidth = 7;
-  dialPen.lineCap = "round";
+  dialPen.lineCap = 'round';
   dialPen.beginPath();
   dialPen.moveTo(cx, cy);
   dialPen.lineTo(cx + Math.cos(aim) * 92, cy + Math.sin(aim) * 92);
   dialPen.stroke();
 
-  dialPen.fillStyle = "#c9922e";
+  dialPen.fillStyle = '#c9922e';
   dialPen.beginPath();
   dialPen.arc(cx, cy, 9, 0, Math.PI * 2);
   dialPen.fill();
@@ -876,22 +876,22 @@ function renderFigures() {
 
 function renderHearts() {
   if (heartsEl.children.length !== START_LIVES) {
-    heartsEl.textContent = "";
+    heartsEl.textContent = '';
     for (let i = 0; i < START_LIVES; i += 1) {
-      heartsEl.appendChild(document.createElement("span"));
+      heartsEl.appendChild(document.createElement('span'));
     }
   }
   for (let i = 0; i < START_LIVES; i += 1) {
-    heartsEl.children[i].className = i < lives ? "heart" : "heart heart-gone";
+    heartsEl.children[i].className = i < lives ? 'heart' : 'heart heart-gone';
   }
 }
 
 function renderKeys() {
-  startBtn.disabled = phase === "over";
-  startBtn.firstChild.nodeValue = phase === "playing" ? "Pause " : "Start ";
-  againBtn.disabled = phase === "waiting";
-  normalBtn.setAttribute("aria-pressed", String(timeScale === 1));
-  slowBtn.setAttribute("aria-pressed", String(timeScale !== 1));
+  startBtn.disabled = phase === 'over';
+  startBtn.firstChild.nodeValue = phase === 'playing' ? 'Pause ' : 'Start ';
+  againBtn.disabled = phase === 'waiting';
+  normalBtn.setAttribute('aria-pressed', String(timeScale === 1));
+  slowBtn.setAttribute('aria-pressed', String(timeScale !== 1));
 }
 
 /* --- The mouse --- */
@@ -908,29 +908,29 @@ function skyPoint(event) {
   };
 }
 
-sky.addEventListener("pointermove", (event) => {
+sky.addEventListener('pointermove', (event) => {
   const point = skyPoint(event);
   const angle = aimAngle(CANNON, point);
   /* An empty aimAngle hands back 0 whatever you do, so the barrel never
      moves. That is worth saying out loud. */
-  if (typeof angle !== "number" || !isFinite(angle) || (angle === 0 && point.y !== CANNON.y)) {
-    say("aimAngle() is still empty, so the cannon cannot follow you.");
+  if (typeof angle !== 'number' || !isFinite(angle) || (angle === 0 && point.y !== CANNON.y)) {
+    say('aimAngle() is still empty, so the cannon cannot follow you.');
     return;
   }
   aim = clampAim(angle);
 });
 
-sky.addEventListener("pointerdown", (event) => {
+sky.addEventListener('pointerdown', (event) => {
   const angle = aimAngle(CANNON, skyPoint(event));
-  if (typeof angle === "number" && isFinite(angle)) aim = clampAim(angle);
+  if (typeof angle === 'number' && isFinite(angle)) aim = clampAim(angle);
   fire();
 });
 
 function fire() {
-  if (phase !== "playing" || cooldown > 0) return;
+  if (phase !== 'playing' || cooldown > 0) return;
   const dart = makeDart(aim);
   if (!isDart(dart)) {
-    say("makeDart() is still empty, so the cannon has nothing to fire.");
+    say('makeDart() is still empty, so the cannon has nothing to fire.');
     return;
   }
   darts.push(dart);
@@ -941,43 +941,43 @@ function fire() {
 
 /* --- The keys --- */
 
-startBtn.addEventListener("click", () => {
-  if (phase === "playing") {
-    phase = "paused";
-    say("Paused.");
+startBtn.addEventListener('click', () => {
+  if (phase === 'playing') {
+    phase = 'paused';
+    say('Paused.');
   } else {
-    if (phase === "waiting") playSound(startSound);
-    phase = "playing";
-    say("Aim with the mouse. Click to fire.");
+    if (phase === 'waiting') playSound(startSound);
+    phase = 'playing';
+    say('Aim with the mouse. Click to fire.');
   }
 });
 
-againBtn.addEventListener("click", () => {
+againBtn.addEventListener('click', () => {
   restartGame();
   if (lives !== START_LIVES || score !== 0 || balloons.length !== 0) {
-    say("restartGame() is still empty, so nothing was put back.");
+    say('restartGame() is still empty, so nothing was put back.');
     return;
   }
   bursts = [];
   darted = 0;
   spawnTimer = SPAWN_EVERY;
-  phase = "playing";
+  phase = 'playing';
   playSound(startSound);
-  say("A fresh game. Aim with the mouse.");
+  say('A fresh game. Aim with the mouse.');
 });
 
-normalBtn.addEventListener("click", () => {
+normalBtn.addEventListener('click', () => {
   timeScale = 1;
-  say("Normal speed.");
+  say('Normal speed.');
 });
 
-slowBtn.addEventListener("click", () => {
+slowBtn.addEventListener('click', () => {
   timeScale = 0.3;
-  say("Slow motion. Nothing in your code changed, only the clock.");
+  say('Slow motion. Nothing in your code changed, only the clock.');
 });
 
-document.addEventListener("keydown", (event) => {
-  if (event.code === "Space" && !startBtn.disabled) {
+document.addEventListener('keydown', (event) => {
+  if (event.code === 'Space' && !startBtn.disabled) {
     event.preventDefault();
     startBtn.click();
   }
@@ -985,7 +985,7 @@ document.addEventListener("keydown", (event) => {
 
 /* Typing #demo onto a page that is already open changes the address
    only. The script does not run again. So the page reloads itself here. */
-window.addEventListener("hashchange", () => location.reload());
+window.addEventListener('hashchange', () => location.reload());
 
 /* --- The demos ---
 
@@ -993,8 +993,8 @@ window.addEventListener("hashchange", () => location.reload());
    the game plays properly, so you can see what you are building. The
    stand-ins below fill in whichever functions are still empty. They are
    for the demo picture only. They are never for you. */
-if (location.hash === "#demo" || location.hash === "#demo-over") {
-  const testBalloon = { x: 10, y: 100, radius: 10, speed: 100, colour: "#fff" };
+if (location.hash === '#demo' || location.hash === '#demo-over') {
+  const testBalloon = { x: 10, y: 100, radius: 10, speed: 100, colour: '#fff' };
   moveBalloon(testBalloon, 1);
   const testDart = { x: 0, y: 0, vx: 100, vy: 100 };
   moveDart(testDart, 1);
@@ -1016,7 +1016,7 @@ if (location.hash === "#demo" || location.hash === "#demo-over") {
     hasEscaped = (b) => b.y + b.radius < 0;
   }
   const testAngle = aimAngle({ x: 0, y: 0 }, { x: 0, y: -1 });
-  if (typeof testAngle !== "number" || Math.abs(testAngle + Math.PI / 2) > 0.001) {
+  if (typeof testAngle !== 'number' || Math.abs(testAngle + Math.PI / 2) > 0.001) {
     aimAngle = (from, to) => Math.atan2(to.y - from.y, to.x - from.x);
   }
   if (!isDart(makeDart(-Math.PI / 2))) {
@@ -1043,12 +1043,12 @@ if (location.hash === "#demo" || location.hash === "#demo-over") {
     };
   }
 
-  if (location.hash === "#demo-over") {
+  if (location.hash === '#demo-over') {
     score = 14;
     escaped = 3;
     lives = 0;
-    phase = "over";
-    say("Demo: the stall closed after three balloons got away.");
+    phase = 'over';
+    say('Demo: the stall closed after three balloons got away.');
   } else {
     for (let i = 0; i < 5; i += 1) {
       const balloon = makeBalloon();
@@ -1058,11 +1058,11 @@ if (location.hash === "#demo" || location.hash === "#demo-over") {
     score = 6;
     escaped = 1;
     lives = 2;
-    phase = "playing";
-    say("Demo: the finished game. Aim with the mouse, click to fire.");
+    phase = 'playing';
+    say('Demo: the finished game. Aim with the mouse, click to fire.');
   }
 } else {
-  say("Press Start. Nothing rises yet. Writing makeBalloon() changes that.");
+  say('Press Start. Nothing rises yet. Writing makeBalloon() changes that.');
 }
 
 requestAnimationFrame(frame);

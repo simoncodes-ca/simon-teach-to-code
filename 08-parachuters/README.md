@@ -81,8 +81,8 @@ These all work the same way here. Read `01-calculator/README.md` through `07-bal
 Every moving thing in this game is a **sprite**. The word sounds like a special kind of code. It is an ordinary object, with the same parts every time:
 
 ```js
-{ kind: "trooper", x: 480, y: 210, w: 26, h: 34,
-  vx: 0, vy: 140, state: "falling" }
+{ kind: 'trooper', x: 480, y: 210, w: 26, h: 34,
+  vx: 0, vy: 140, state: 'falling' }
 ```
 
 That is the whole idea. A sprite says where it is, how big it is, how fast it is going, and what it is doing.
@@ -109,7 +109,7 @@ middle across  sprite.x + sprite.w / 2
 
 ### One thing, three rules
 
-A trooper is `"falling"`, then `"chute"`, then `"walking"`. His `state` is a plain word stored inside him.
+A trooper is `'falling'`, then `'chute'`, then `'walking'`. His `state` is a plain word stored inside him.
 
 Two functions share the work, and keeping them apart is the point.
 
@@ -203,7 +203,7 @@ The status line under the window names the empty function. Read it first.
 
 The last two are the good bugs of this project.
 
-A trooper who freezes on landing has no `"walking"` branch in `moveTrooper`. His state changed, and no rule caught him.
+A trooper who freezes on landing has no `'walking'` branch in `moveTrooper`. His state changed, and no rule caught him.
 
 A trooper who walks the wrong way is missing `towardsPost`. `WALK_SPEED` on its own always walks him right, whichever side he landed on.
 
@@ -221,7 +221,7 @@ Press Slow motion, then watch one trooper. His state changes as he passes the ha
 The project stops here on purpose. Each of these is a new rule rather than a new idea, so you already know enough to add them.
 
 - **A trooper who fires back** once he lands, so walking towards you costs him something.
-- **A shot chute**, so a hit above the head turns a `"chute"` trooper back into a `"falling"` one.
+- **A shot chute**, so a hit above the head turns a `'chute'` trooper back into a `'falling'` one.
 - **Wind**, blowing every trooper under a chute sideways as he comes down.
 - **Points for the drop height**, so a trooper caught early is worth more.
 - **More planes as the score climbs**, by making `PLANE_EVERY` a variable instead of a constant.

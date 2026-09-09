@@ -35,7 +35,7 @@ These all work exactly the same here. Read `01-calculator/README.md` again if yo
 
 - `let` and `const` make labelled boxes for values. An object is one value with named parts.
 - Arrays are ordered lists. `.push(x)` adds to the end, `[0]` reads the first item, `.length` counts.
-- Strings are text in quotes. Numbers are for maths. `Number("12")` converts one into the other.
+- Strings are text in quotes. Numbers are for maths. `Number('12')` converts one into the other.
 - `if` and `else` make choices. `===` asks whether two values are exactly equal. `=` puts a value in a box.
 - Functions are steps with a name. Parameters come in through the brackets. `return` sends a value back.
 - `document.getElementById(id)` finds an element by its id. `.textContent` changes its text. `console.log` shows you what is really happening.
@@ -111,7 +111,7 @@ Any HTML attribute that starts with `data-` is a note attached to an element. Ja
 ```
 
 ```js
-const note = button.dataset.floor;   // the string "5"
+const note = button.dataset.floor;   // the string '5'
 const floor = Number(note);          // the number 5
 ```
 
@@ -123,7 +123,7 @@ A template string builds text out of pieces. Use backticks instead of quotes. Pu
 
 ```js
 const floor = 4;
-const message = `Floor ${floor} is waiting.`;   // "Floor 4 is waiting."
+const message = `Floor ${floor} is waiting.`;   // 'Floor 4 is waiting.'
 ```
 
 The transition log builds its lines this way.

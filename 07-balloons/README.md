@@ -90,7 +90,7 @@ function frame(now) {
   requestAnimationFrame(frame);          // do this again before the next frame
   let seconds = (now - previous) / 1000; // how long the last frame took
   previous = now;
-  if (phase === "playing") update(seconds);
+  if (phase === 'playing') update(seconds);
   render();
 }
 ```
