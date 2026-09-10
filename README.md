@@ -98,6 +98,16 @@ Nine functions become eight, and the eight are a few lines each. The loop, the m
 
 Files: `09-phaser/remake.html`, `09-phaser/styles.css`, `09-phaser/remake.js`, `09-phaser/phaser.min.js`.
 
+### Alien Raid
+
+An arcade cabinet in a dark room. A swarm of aliens marches down the screen. You fly along the deck and shoot up at them.
+
+The page gives you the cabinet, the pictures and the keys. You write the steering, the firing, the swarm and the waves. You also write what happens when a bomb finds your ship.
+
+This is the first game you play with the keyboard. It is also the first one where the enemies move as one block, and moving that block is the one job the library refuses to do for you.
+
+Files: `10-aliens/aliens.html`, `10-aliens/styles.css`, `10-aliens/aliens.js`, `10-aliens/phaser.min.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -109,6 +119,7 @@ Files: `09-phaser/remake.html`, `09-phaser/styles.css`, `09-phaser/remake.js`, `
 7. **Then build the balloon stall.** You learn the game loop. Everything moves by time, and gravity turns out to be one line.
 8. **Then build the lookout post.** You learn sprites. Four kinds of thing move at once, and one of them changes its mind twice on the way down.
 9. **Then build it again with Phaser.** You learn what a library is. You also learn what it takes away, and what it makes harder.
+10. **Then build Alien Raid.** You learn the keyboard. You also learn that a formation is one thing, and that a game can get harder without anybody writing a difficulty curve.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
@@ -116,9 +127,9 @@ More projects will appear here over time. `ROADMAP.md` lists all of them. `showc
 
 You have a library now, so the games get bigger.
 
-1. **Aliens.** The first new game built on Phaser, with a keyboard instead of a mouse.
-2. **Maze.** A map kept as data, and walls you cannot walk through.
-3. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
+1. **Maze.** A map kept as data, and walls you cannot walk through.
+2. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
+3. **Endless runner.** Obstacles that never stop coming, and a best score that survives a refresh.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

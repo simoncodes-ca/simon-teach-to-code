@@ -193,11 +193,36 @@ Two settings in the Phaser config exist only to keep the page double-clickable. 
 
 We left these out on purpose: Phaser's own sound system, a second scene for the title card, and tweens on anything but the explosion. All three are in the README as the good things to try next.
 
+### 10. Alien Raid
+
+An arcade cabinet. The first new game built on Phaser, and the first one played with the keyboard.
+
+- Keyboard input
+- Player movement and firing
+- Several enemies, and enemy formations
+- Bullets and collisions
+- Waves
+- Lives and respawning
+- Rising difficulty
+
+Project 9 was a translation, so nothing in it could surprise him. This one has no older version to copy from, and its centre is the one job the library refuses.
+
+The idea the project exists to teach is that **a formation is one thing, not twenty-four things.** The swarm marches, turns at the wall and drops a step in lock-step. Give each alien a velocity of its own and it looks right for ten seconds, then falls apart, because each one turns as it personally reaches the wall. So `marchAliens` moves all of them by hand, every frame, with project 7's `speed × seconds`. It is the clearest example yet of a library doing most of a game and then stopping.
+
+The second lesson is that a difficulty curve can be a sum. The march speed is `MARCH_SLOW * blockSize / aliens.getLength()`, capped. Nobody wrote a curve, and every wave gets frightening on its own as it empties. The bar on the rack measures how far the block really moved, rather than reporting the speed it was asked for, so an empty `marchAliens` leaves it flat.
+
+The third is smaller and is about input. A click is a moment and Phaser delivers it. A key is a state, and has to be asked about on every frame. The `else` that sets the ship's velocity back to zero is the whole lesson, because leaving it out makes the ship drift.
+
+Two things measured in a browser shaped the wiring. Phaser ignores the keyboard while the game lacks focus, and clicking Start leaves the keyboard on the Start button, where the space bar presses it again instead of firing. The canvas therefore takes `tabindex` and the focus when a game begins.
+
+We left these out on purpose: a second kind of alien, bunkers, a passing saucer, bombs from the bottom of a column only, and more than one bomb at a time. All five are in the README as the good things to try next.
+
+The game is keyboard-only. There are no touch controls, so a tablet can show the cabinet but cannot play it.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 10 | Aliens | A game built on the library |
 | 11 | Maze | Tile collision |
 | 12 | Scrolling world | Camera and world coordinates |
 | 13 | Endless runner | Generated obstacles, and saved high scores |
@@ -212,30 +237,6 @@ We left these out on purpose: Phaser's own sound system, a second scene for the 
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 10. Aliens game
-
-This is the first new game built on Phaser.
-
-- Keyboard input
-- Player movement and firing
-- Several enemies, and enemy formations
-- Bullets and collisions
-- Waves
-- Lives and respawning
-- Rising difficulty
-
-Stages:
-
-1. Move a player left and right.
-2. Fire one bullet.
-3. Add one alien.
-4. Destroy the alien.
-5. Add a row of aliens.
-6. Move the aliens as a group.
-7. Add alien bullets.
-8. Add waves.
-9. Add score, lives, and rising difficulty.
 
 ### 11. Maze game
 
