@@ -108,6 +108,16 @@ This is the first game you play with the keyboard. It is also the first one wher
 
 Files: `10-aliens/aliens.html`, `10-aliens/styles.css`, `10-aliens/aliens.js`, `10-aliens/phaser.min.js`.
 
+### The Cheese Vault
+
+A maze in a bank vault. You are a mouse eating the cheese. Cats prowl the corridors.
+
+The page gives you the door, the pictures and the keys. You write the map: how a cell becomes a spot on the screen, how the vault gets built, what counts as a wall, and how the mouse steps from one cell to the next.
+
+This is the first game with walls in it. It is also the first where the level is not a picture. It is twelve lines of characters that the program reads, asks questions of, and changes as you play.
+
+Files: `11-vault/vault.html`, `11-vault/styles.css`, `11-vault/vault.js`, `11-vault/phaser.min.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -120,6 +130,7 @@ Files: `10-aliens/aliens.html`, `10-aliens/styles.css`, `10-aliens/aliens.js`, `
 8. **Then build the lookout post.** You learn sprites. Four kinds of thing move at once, and one of them changes its mind twice on the way down.
 9. **Then build it again with Phaser.** You learn what a library is. You also learn what it takes away, and what it makes harder.
 10. **Then build Alien Raid.** You learn the keyboard. You also learn that a formation is one thing, and that a game can get harder without anybody writing a difficulty curve.
+11. **Then build the cheese vault.** You learn maps. The level is data you can read and change, and one `if` turns out to be every wall in the game.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
@@ -127,9 +138,9 @@ More projects will appear here over time. `ROADMAP.md` lists all of them. `showc
 
 You have a library now, so the games get bigger.
 
-1. **Maze.** A map kept as data, and walls you cannot walk through.
-2. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
-3. **Endless runner.** Obstacles that never stop coming, and a best score that survives a refresh.
+1. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
+2. **Endless runner.** Obstacles that never stop coming, and a best score that survives a refresh.
+3. **Tank game.** Driving, aiming and firing. It is the last step before a strategy game.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

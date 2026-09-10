@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the nine finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the eleven finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -219,11 +219,40 @@ We left these out on purpose: a second kind of alien, bunkers, a passing saucer,
 
 The game is keyboard-only. There are no touch controls, so a tablet can show the cabinet but cannot play it.
 
+### 11. The Cheese Vault
+
+A maze in a bank vault. You are a mouse eating the cheese. Cats prowl the corridors.
+
+- A map stored as data
+- Grid coordinates, and the two functions that translate them
+- Tile collision
+- Movement limits
+- Changing the map as the game runs
+
+Every game so far had a sky. Anything could be anywhere in it, and nothing was ever in the way. This one has walls.
+
+The idea the project exists to teach is that **the map is data**. A level is twelve strings of sixteen characters. A `#` is a wall, a `.` is a crumb, and a space is bare floor. `buildVault` reads those characters and builds what they say.
+
+Because the map is written down, the game can ask it questions. `isWall` looks up one character. `waysOut` asks `isWall` four times. `countCheese` counts the dots. None of those questions can be put to a picture, which is why the five projects before this one used an empty sky.
+
+The map is also the thing that changes. Eating a crumb writes a space over the `.`, and everything else follows from that one line: the counter, the bar, the level ending. A learner who destroys the crumb sprite and leaves the map alone gets a game that looks perfect and never ends. That bug is in the README by name, because it is the shortest proof that the picture is not the truth.
+
+The second lesson is that cells and pixels are two different languages. `middleOf` multiplies by `TILE`. `cellAt` divides by `TILE` and rounds down. Both come first, both are four lines, and the rack shows each one's answer back to the learner. That pair returns at projects 12, 16, 18 and 20.
+
+The third is the split between deciding and moving, which project 8 made with a falling trooper. `startStep` asks the map whether the next cell is free and never moves anybody. `moveThing` slides a thing towards the cell it is aiming at and knows nothing about walls. Walls are what make that split obvious rather than tidy.
+
+**Movement is cell to cell, not pixel by pixel.** The mouse always heads for one neighbouring cell and glides there. A step is allowed or refused before it begins, so the whole of collision is one `if` around one lookup. Pushing a box out of a wall after it has entered one is a different lesson, and the tank game at project 16 is where it belongs.
+
+The cats cost one small function. A cat is the same shape of object as the mouse, so the learner's own `startStep` and `moveThing` move it. Only the chooser differs. `chooseCatWay` throws away the way the cat came from and picks one of the rest at random. An enemy that hunts on purpose waits for project 23.
+
+Lives and levels are given rather than asked for, because project 10 made him write both. All nine stubs are about the map.
+
+We left these out on purpose: a world larger than the screen, generated levels, saved scores, a map the player can edit, and a route found around walls. All five are later projects. Named in the README as good things to try next: a fourth vault, a crumb worth more, a mouse hole, a cat that closes the gap, and a second thing to collect.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 11 | Maze | Tile collision |
 | 12 | Scrolling world | Camera and world coordinates |
 | 13 | Endless runner | Generated obstacles, and saved high scores |
 | 14 | **Cutover: many files** | One program in several files, and git |
@@ -237,12 +266,6 @@ The game is keyboard-only. There are no touch controls, so a tablet can show the
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 11. Maze game
-
-The maze teaches grid maps, walls, movement limits, tile collision, and a map stored as data.
-
-Tile collision is what the tank game needs at project 16. The map-as-data idea returns at project 18.
 
 ### 12. Scrolling world
 
