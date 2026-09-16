@@ -282,11 +282,36 @@ Lives and the loop that builds the cave are given, because projects 10 and 11 ma
 
 We left these out on purpose: fuel, a second cave, a background that scrolls slower than the rock, a camera that looks ahead, and a click that marks a spot in the cave. All five are in the README as good things to try next. The last one needs `toWorld`, the reverse of `toScreen`, which the map editor at project 18 uses for every click.
 
+### 13. Rooftop Run
+
+A courier running across the rooftops at sunset. It is the first game that builds its own world, and the first that remembers anything after the page closes.
+
+- Making a world just ahead of the window
+- Throwing away what is behind
+- A difficulty curve written as a formula
+- A distance score
+- Saving with `localStorage` and `JSON`
+
+The cave at project 12 was 72 columns of characters, typed out by hand, with an end you could fly to. This game has no map at all, because there is no end to write down.
+
+The idea the project exists to teach is that **a world with no end is made a little at a time, just out of sight.** `growTheWorld` runs once a frame. If the last obstacle is still a window ahead, it does nothing. Otherwise it puts one more down, at a distance the learner's own `nextGap` chooses. Forty calls before the run starts fill the first screen, and after that the player never catches it happening.
+
+The second lesson is the half that gets forgotten: a game that never ends has to forget. `forgetOldObstacles` drops what is behind the window. Leave it empty and the game still plays perfectly, so the rack counts the list out loud instead. Measured in a browser, it had reached 25 by 460 metres and was still climbing, while the screen held two.
+
+The third is the difficulty curve, and it is two formulas rather than a script. `runSpeed` adds 0.01 for every pixel run and stops at 700. `nextGap` measures the gap in seconds and turns it into pixels with that same speed. Spacing obstacles in pixels is the bug that proves the point, because a gap that is fair at 300 pixels a second is impossible at 700. The README names it.
+
+Saving arrives last, because this is the first project where Simon wants it. A best score that disappears on a refresh is annoying in a way no explanation of `localStorage` could be. `loadRecord` and `saveRecord` are five lines together, and JSON earns its place because the record is an object rather than a number.
+
+Phaser's camera does the subtraction Simon wrote by hand at project 12. `toScreen` is nowhere in the file, and one line of given wiring stands in for all of it. Parallax was a good thing to try at the end of project 12, and here it is given: two rows of buildings slide at a quarter and a half of the rooftop's speed.
+
+The kinds of obstacle sit in a table, and each one carries a `from` field saying how far into a run it starts turning up. A fourth kind is one more line and no other change. That is the content-as-data idea project 18 is built on, met early and in small.
+
+We left these out on purpose: gaps in the rooftop to fall through, a slide as well as a jump, things to collect, more than one life, and a score table shared between two computers, which is project 15. Named in the README as good things to try next: a fourth kind of obstacle, night falling as you run, a double jump, and a mark on the rooftop where your best run ended.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 13 | Endless runner | Generated obstacles, and saved high scores |
 | 14 | **Cutover: many files** | One program in several files, and git |
 | 15 | **Cutover: client and server** | Two programs that talk, and `await` |
 | 16 | Tank game | The last step before a strategy game |
@@ -298,26 +323,6 @@ We left these out on purpose: fuel, a second cave, a background that scrolls slo
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 13. Endless runner
-
-The same world now generates itself and never ends. We split this from project 12 because generation and difficulty are their own lesson.
-
-- Generating obstacles as the game runs
-- Difficulty curves
-- Designing a game with no end
-- Saving data with `localStorage` and `JSON`
-- High scores and the restart flow
-
-Stages:
-
-1. Generate obstacles ahead of the camera.
-2. Raise the speed gradually.
-3. Add a distance score.
-4. Save the best score, so it survives a refresh.
-5. Add fuel, collectibles, or enemies.
-
-A high score that survives a refresh is the first time Simon wants to save data. Every earlier project would have saved data because we told him to.
 
 ### 14. Cutover: many files
 

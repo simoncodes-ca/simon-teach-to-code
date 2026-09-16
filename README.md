@@ -128,6 +128,16 @@ This is the first world bigger than the window. Every picture in it has two posi
 
 Files: `12-cave/cave.html`, `12-cave/styles.css`, `12-cave/cave.js`, `12-cave/phaser.min.js`.
 
+### Rooftop Run
+
+A courier running across city rooftops at sunset. He never stops and never slows down. All you can do is jump.
+
+The page gives you the handheld, the pictures and the keys. You write the speed he runs at and the jump. You write the two functions that decide how far apart the obstacles go and what each one is. You also write the function that builds the rooftops ahead of you, and the one that throws away the rooftops behind you.
+
+This is the first game with no map. The world is made a few steps before you reach it, and forgotten a few steps after you pass it. It is also the first program of yours that remembers anything after the page closes.
+
+Files: `13-runner/runner.html`, `13-runner/styles.css`, `13-runner/runner.js`, `13-runner/phaser.min.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -142,6 +152,7 @@ Files: `12-cave/cave.html`, `12-cave/styles.css`, `12-cave/cave.js`, `12-cave/ph
 10. **Then build Alien Raid.** You learn the keyboard. You also learn that a formation is one thing, and that a game can get harder without anybody writing a difficulty curve.
 11. **Then build the cheese vault.** You learn maps. The level is data you can read and change, and one `if` turns out to be every wall in the game.
 12. **Then build the cave flyer.** You learn cameras. Screen position is world position minus camera position, and that one subtraction puts the whole cave in the window.
+13. **Then build Rooftop Run.** You learn how a game with no end makes its world as you go, and throws away what you have passed. Your best score is the first thing you write that lives through closing the page.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
@@ -149,7 +160,7 @@ More projects will appear here over time. `ROADMAP.md` lists all of them. `showc
 
 You have a library now, so the games get bigger.
 
-1. **Endless runner.** Obstacles that never stop coming, and a best score that survives a refresh.
+1. **One program, many files.** You split a finished game into several files, and you learn git.
 2. **Tank game.** Driving, aiming and firing. It is the last step before a strategy game.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
