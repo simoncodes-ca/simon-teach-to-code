@@ -1,0 +1,563 @@
+/* ============================================================
+   Cave Flyer. A mine rescue console, seen from the front.
+
+   The console is one box. Every region on it is placed as a
+   percentage of that box, so the whole console scales together
+   like one photograph.
+   ============================================================ */
+
+:root {
+  --hull: #2b2f27;
+  --hull-lit: #454c3e;
+  --hull-deep: #151812;
+  --glass: #07090b;
+  --hazard: #f5b40a;
+  --hazard-dim: rgba(245, 180, 10, .34);
+  --cream: #f1ead6;
+  --cream-dim: rgba(241, 234, 214, .58);
+  --lava: #ff6a2b;
+  --crystal: #62e8ff;
+  --go: #4fe089;
+  --ink: #15160f;
+  --display: "Impact", "Haettenschweiler", "Arial Narrow", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--cream);
+  background: #0a0b08 radial-gradient(ellipse at 50% 14%, #262a20 0%, #15170f 58%, #070805 100%);
+  container-type: size;
+}
+
+/* The console itself. */
+.console {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, .03) 0 0.2cqw, rgba(0, 0, 0, 0) 0.2cqw) 0 0 / 3.1cqw 3.1cqw,
+    linear-gradient(170deg, var(--hull-lit) 0%, var(--hull) 44%, var(--hull-deep) 100%);
+  border: 1.1cqw solid #3a4034;
+  border-radius: 1.6cqw;
+  box-shadow:
+    inset 0 0 0 0.2cqw rgba(0, 0, 0, .5),
+    inset 0 1cqh 7cqh rgba(0, 0, 0, .34),
+    0 3cqh 8cqh rgba(0, 0, 0, .7);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.c-plate  { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.8%; }
+.c-screen { position: absolute; left: 4%;  top: 13.8%; width: 61%; height: 73.6%; }
+.c-status { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.c-rack   { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The nameplate across the top --- */
+.c-plate {
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 0 1.4cqw 0 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(180deg, #ffd04a 0%, var(--hazard) 52%, #c98f00 100%);
+  border-radius: 0.4cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.7cqh rgba(255, 255, 255, .55),
+    inset 0 -0.6cqh 1.2cqh rgba(60, 40, 0, .35),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .55);
+}
+/* Black and yellow warning stripes at the left end of the plate. */
+.plate-stripe {
+  flex: none;
+  align-self: stretch;
+  width: 4cqw;
+  background: repeating-linear-gradient(-45deg, var(--ink) 0 0.8cqw, rgba(0, 0, 0, 0) 0.8cqw 1.6cqw);
+  box-shadow: 0.2cqw 0 0 rgba(0, 0, 0, .25);
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 2.4cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0.14cqh 0 rgba(255, 255, 255, .45);
+}
+.plate-name em {
+  margin-left: 0.4cqw;
+  padding: 0 0.6cqw;
+  border-radius: 0.25cqw;
+  font-style: normal;
+  color: var(--hazard);
+  text-shadow: none;
+  background: var(--ink);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.3cqw;
+  background: rgba(21, 22, 15, .92);
+  box-shadow: inset 0 0 0 0.06cqw rgba(98, 232, 255, .35);
+}
+.plate-read b {
+  min-width: 2.4cqw;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 1.5cqw;
+  color: var(--hazard);
+  text-shadow: 0 0 0.8cqh rgba(245, 180, 10, .6);
+}
+.plate-read i {
+  font-style: normal;
+  font-size: 0.78cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+/* Lives, drawn as little ships on the plate. */
+.lives { flex: none; display: flex; gap: 0.45cqw; }
+.life {
+  width: 1.6cqw;
+  height: 1.1cqw;
+  background: var(--ink);
+  clip-path: polygon(30% 0, 70% 0, 78% 34%, 100% 34%, 100% 78%, 0 78%, 0 34%, 22% 34%);
+}
+.life-gone { background: rgba(21, 22, 15, .22); }
+
+/* --- The camera window into the cave --- */
+.c-screen { display: grid; place-items: center; }
+.glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.6cqw;
+  background: var(--glass);
+  box-shadow:
+    inset 0 0 0 0.5cqw #10120d,
+    inset 0 0 0 0.75cqw rgba(245, 180, 10, .18),
+    inset 0 0 4cqh rgba(0, 0, 0, .9),
+    0 0 4cqh rgba(98, 232, 255, .08);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  image-rendering: pixelated;
+}
+/* A camera picture has faint lines across it. */
+.scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg,
+    rgba(0, 0, 0, .16) 0 1px,
+    rgba(0, 0, 0, 0) 1px 4px);
+}
+/* The four corner marks of a camera viewfinder. */
+.finder {
+  position: absolute;
+  inset: 2.2cqw;
+  pointer-events: none;
+  --mark: rgba(241, 234, 214, .38);
+  background:
+    linear-gradient(var(--mark), var(--mark)) 0 0 / 2.4cqw 0.18cqw no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 0 0 / 0.18cqw 2.4cqw no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 0 / 2.4cqw 0.18cqw no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 0 / 0.18cqw 2.4cqw no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 0 100% / 2.4cqw 0.18cqw no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 0 100% / 0.18cqw 2.4cqw no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 100% / 2.4cqw 0.18cqw no-repeat,
+    linear-gradient(var(--mark), var(--mark)) 100% 100% / 0.18cqw 2.4cqw no-repeat;
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 14%, rgba(255, 255, 255, .05) 0%, rgba(255, 255, 255, 0) 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, .55) 100%);
+}
+
+/* --- The line printed under the window --- */
+.c-status {
+  display: flex;
+  align-items: center;
+  padding: 0 1cqw;
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  letter-spacing: 0.03em;
+  color: var(--crystal);
+  text-shadow: 0 0 0.7cqh rgba(98, 232, 255, .45);
+}
+
+/* --- The rack down the right-hand side --- */
+.c-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqh;
+}
+.panel {
+  padding: 1.1cqh 1cqw 1.3cqh;
+  border-radius: 0.4cqw;
+  background: linear-gradient(178deg, rgba(255, 255, 255, .06) 0%, rgba(0, 0, 0, .28) 100%);
+  box-shadow:
+    inset 0 0 0 0.06cqw rgba(245, 180, 10, .2),
+    0 0.5cqh 1.2cqh rgba(0, 0, 0, .45);
+}
+.panel-title {
+  margin-bottom: 0.9cqh;
+  font-size: 0.78cqw;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hazard);
+}
+
+/* The number wells. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4cqw;
+  margin: 0;
+}
+.wells div {
+  padding: 0.6cqh 0.2cqw;
+  text-align: center;
+  border-radius: 0.25cqw;
+  background: rgba(7, 9, 11, .72);
+}
+.wells dt {
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.wells dd {
+  margin: 0;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 0.98cqw;
+  color: var(--crystal);
+}
+.formula {
+  margin-top: 0.9cqh;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.9cqw;
+  color: var(--hazard);
+}
+
+/* The camera limits: one track per direction, and a marker for the
+   camera on each. */
+.limit {
+  display: grid;
+  grid-template-columns: 1.1cqw 1.2cqw 1fr 2.8cqw;
+  align-items: center;
+  gap: 0.5cqw;
+  margin-top: 0.8cqh;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  color: var(--cream-dim);
+}
+.limit-name { color: var(--hazard); }
+.limit-end:last-child { text-align: right; }
+.track {
+  position: relative;
+  height: 1cqh;
+  border-radius: 0.5cqh;
+  background: rgba(7, 9, 11, .8);
+  box-shadow: inset 0 0 0 0.06cqw rgba(241, 234, 214, .12);
+}
+.track i {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.5cqw;
+  height: 2.4cqh;
+  border-radius: 0.15cqw;
+  transform: translate(-50%, -50%);
+  background: rgba(241, 234, 214, .2);
+}
+.track .inside { background: var(--hazard); box-shadow: 0 0 0.8cqh rgba(245, 180, 10, .6); }
+.track .past { background: var(--lava); box-shadow: 0 0 1cqh rgba(255, 106, 43, .8); }
+
+/* The map of the whole cave. */
+.cave-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.2cqw;
+  background: #0c0f12;
+  image-rendering: pixelated;
+  box-shadow: inset 0 0 0 0.06cqw rgba(241, 234, 214, .1);
+}
+.drawn {
+  margin-top: 0.8cqh;
+  font-size: 0.72cqw;
+  color: var(--cream-dim);
+}
+.drawn b {
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  color: var(--crystal);
+}
+
+/* The instruments: engine lamp, climb gauge, corner lamps. */
+.gauges {
+  display: grid;
+  grid-template-columns: 1fr 1.7fr 1fr;
+  gap: 0.6cqw;
+  align-items: end;
+}
+.gauge-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7cqh;
+}
+.gauge-label {
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.gauge-ends {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+}
+.lamp {
+  width: 2.4cqw;
+  height: 2.4cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #4a4f45 0%, #1d201a 70%);
+  box-shadow: inset 0 0 0 0.12cqw #0d0e0a;
+}
+.lamp-on {
+  background: radial-gradient(circle at 40% 35%, #fff3c4 0%, #ff8a1f 55%, #b73c0c 100%);
+  box-shadow: inset 0 0 0 0.12cqw #0d0e0a, 0 0 1.6cqh rgba(255, 138, 31, .7);
+}
+.climb {
+  position: relative;
+  display: block;
+  align-self: stretch;
+  height: 1.2cqh;
+  margin-bottom: 0.9cqh;
+  border-radius: 0.6cqh;
+  background:
+    linear-gradient(rgba(241, 234, 214, .35), rgba(241, 234, 214, .35)) 50% 0 / 0.1cqw 100% no-repeat,
+    rgba(7, 9, 11, .8);
+  overflow: hidden;
+}
+.climb i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+}
+.climb .climbing { background: var(--crystal); }
+.climb .falling { background: var(--lava); }
+.corners {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9cqw 1.5cqw;
+  padding: 0.5cqw 0.6cqw;
+  border-radius: 0.3cqw;
+  box-shadow: inset 0 0 0 0.12cqw rgba(245, 180, 10, .5);
+}
+.corners i {
+  width: 0.8cqw;
+  height: 0.8cqw;
+  border-radius: 50%;
+  background: rgba(241, 234, 214, .18);
+}
+.corners .corner-air { background: var(--go); box-shadow: 0 0 0.8cqh rgba(79, 224, 137, .6); }
+.corners .corner-rock { background: var(--lava); box-shadow: 0 0 1cqh rgba(255, 106, 43, .8); }
+
+/* --- The instructions --- */
+.orders {
+  margin: 0;
+  padding-left: 1cqw;
+  font-size: 0.82cqw;
+  line-height: 1.7;
+  color: var(--cream-dim);
+}
+.orders kbd {
+  display: inline-block;
+  min-width: 1.5cqw;
+  margin-right: 0.25cqw;
+  padding: 0 0.35cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.82cqw;
+  text-align: center;
+  color: var(--cream);
+  background: rgba(245, 180, 10, .16);
+  box-shadow: inset 0 0 0 0.05cqw rgba(245, 180, 10, .4);
+}
+
+/* --- What each thing is worth --- */
+.scoring {
+  margin: 0.8cqh 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82cqw;
+  color: var(--cream-dim);
+}
+.scoring li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  padding: 0.35cqh 0;
+  border-top: 0.05cqw solid rgba(241, 234, 214, .1);
+}
+.scoring b {
+  font-family: var(--mono);
+  font-size: 1cqw;
+  color: var(--hazard);
+}
+
+/* --- The two keys at the bottom of the rack --- */
+.panel-keys {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqh;
+}
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6cqw;
+  padding: 1.3cqh 0.8cqw;
+  border: none;
+  border-radius: 0.35cqw;
+  font-family: var(--display);
+  font-size: 1.15cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e3e0d2 0%, #aeaa98 100%);
+  box-shadow: 0 0.55cqh 0 #66634f, 0 0.9cqh 1.4cqh rgba(0, 0, 0, .5);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  color: var(--ink);
+  background: linear-gradient(180deg, #ffd04a 0%, #d99a00 100%);
+  box-shadow: 0 0.55cqh 0 #7a5700, 0 0.9cqh 1.8cqh rgba(245, 180, 10, .3);
+}
+.key kbd {
+  padding: 0 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  letter-spacing: 0;
+  background: rgba(0, 0, 0, .18);
+}
+.key:hover:not(:disabled) { transform: translateY(-0.2cqh); }
+.key:active:not(:disabled) {
+  transform: translateY(0.5cqh);
+  box-shadow: 0 0.1cqh 0 #66634f;
+}
+.key:disabled {
+  cursor: default;
+  filter: grayscale(.7);
+  opacity: .45;
+}
+
+:focus-visible { outline: 0.28cqw solid var(--crystal); outline-offset: 0.28cqw; }
+/* The window takes the keyboard once a game starts, so it says so.
+   The outline sits inside the glass, where the frame cannot clip it. */
+#screen:focus-visible { outline: 0.3cqw solid var(--crystal); outline-offset: -0.3cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key { transition: none; }
+  .key:hover:not(:disabled), .key:active:not(:disabled) { transform: none; }
+}
+
+/* --- Narrow screens: the console stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .console {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .c-plate, .c-screen, .c-status, .c-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  /* The status line belongs under the window, whatever the markup
+     order is. */
+  .c-plate { order: 1; }
+  .c-screen { order: 2; }
+  .c-status { order: 3; }
+  .c-rack { order: 4; }
+  .c-plate { flex-wrap: wrap; margin-bottom: 12px; padding: 0 12px 0 0; min-height: 52px; }
+  .plate-stripe { width: 28px; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .panel { padding: 12px 14px 14px; border-radius: 8px; }
+  .panel-title { margin-bottom: 8px; font-size: 11px; }
+  .wells div { padding: 6px 4px; }
+  .wells dd { font-size: 15px; }
+  .wells dt, .gauge-label { font-size: 9px; }
+  .formula { margin-top: 8px; font-size: 14px; }
+  .drawn { margin-top: 8px; font-size: 13px; }
+  .limit { grid-template-columns: 14px 14px 1fr 40px; gap: 8px; margin-top: 10px; font-size: 13px; }
+  .track { height: 8px; border-radius: 4px; }
+  .track i { width: 6px; height: 20px; border-radius: 2px; }
+  .drawn b { font-size: 15px; }
+  .gauges { gap: 10px; }
+  .gauge-cell { gap: 6px; }
+  .lamp { width: 30px; height: 30px; }
+  .climb { height: 10px; margin-bottom: 10px; }
+  .corners { gap: 10px 18px; padding: 6px 8px; }
+  .corners i { width: 10px; height: 10px; }
+  .scoring { margin-top: 8px; }
+  .scoring li { padding: 4px 0; }
+  .panel-keys { gap: 10px; }
+  .key { padding: 12px 10px; box-shadow: 0 4px 0 #66634f, 0 8px 12px rgba(0, 0, 0, .5); }
+  .key-go { box-shadow: 0 4px 0 #7a5700, 0 8px 14px rgba(245, 180, 10, .3); }
+  .plate-name { font-size: 26px; }
+  .plate-read b { font-size: 18px; min-width: 34px; }
+  .plate-read i { font-size: 10px; }
+  .life { width: 20px; height: 14px; }
+  .lives { gap: 5px; }
+  .glass { aspect-ratio: 4 / 3; height: auto; }
+  .c-status { margin: 10px 0 14px; font-size: 13px; }
+  .c-rack { gap: 12px; }
+  .orders, .orders kbd, .scoring { font-size: 13px; }
+  .scoring b { font-size: 16px; }
+  .orders kbd { min-width: 22px; padding: 0 6px; }
+  .key { min-height: 48px; font-size: 16px; }
+  .key kbd { font-size: 12px; }
+  :focus-visible { outline: 3px solid var(--crystal); outline-offset: 3px; }
+  #screen:focus-visible { outline: 3px solid var(--crystal); outline-offset: -3px; }
+}

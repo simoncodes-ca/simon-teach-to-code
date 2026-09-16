@@ -118,6 +118,16 @@ This is the first game with walls in it. It is also the first where the level is
 
 Files: `11-vault/vault.html`, `11-vault/styles.css`, `11-vault/vault.js`, `11-vault/phaser.min.js`.
 
+### Cave Flyer
+
+A little mining ship in a long, dark cave. Gravity pulls it down, and the engine pushes it up. Touch the rock and it breaks.
+
+The page gives you the console, the pictures and the keys. You write the camera: where a rock in the cave shows up in the window, how the camera follows the ship, and how it stops at the ends of the cave. You also write the engine, and the rule for touching rock.
+
+This is the first world bigger than the window. Every picture in it has two positions. One is where it lives in the cave. The other is where it shows up in the window.
+
+Files: `12-cave/cave.html`, `12-cave/styles.css`, `12-cave/cave.js`, `12-cave/phaser.min.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -131,6 +141,7 @@ Files: `11-vault/vault.html`, `11-vault/styles.css`, `11-vault/vault.js`, `11-va
 9. **Then build it again with Phaser.** You learn what a library is. You also learn what it takes away, and what it makes harder.
 10. **Then build Alien Raid.** You learn the keyboard. You also learn that a formation is one thing, and that a game can get harder without anybody writing a difficulty curve.
 11. **Then build the cheese vault.** You learn maps. The level is data you can read and change, and one `if` turns out to be every wall in the game.
+12. **Then build the cave flyer.** You learn cameras. Screen position is world position minus camera position, and that one subtraction puts the whole cave in the window.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
@@ -138,9 +149,8 @@ More projects will appear here over time. `ROADMAP.md` lists all of them. `showc
 
 You have a library now, so the games get bigger.
 
-1. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
-2. **Endless runner.** Obstacles that never stop coming, and a best score that survives a refresh.
-3. **Tank game.** Driving, aiming and firing. It is the last step before a strategy game.
+1. **Endless runner.** Obstacles that never stop coming, and a best score that survives a refresh.
+2. **Tank game.** Driving, aiming and firing. It is the last step before a strategy game.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

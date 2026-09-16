@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Cave Flyer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="console">
+    <div class="c-plate">
+      <span class="plate-stripe" aria-hidden="true"></span>
+      <span class="plate-name">Cave <em>Flyer</em></span>
+      <div class="lives" id="lives" role="img" aria-label="How many ships you have left"></div>
+      <span class="plate-read" aria-label="Score">
+        <b id="scoreRead">0</b><i>pts</i>
+      </span>
+      <span class="plate-read" aria-label="Crystals collected">
+        <i>crystals</i><b id="crystalRead">0/0</b>
+      </span>
+    </div>
+
+    <section class="c-screen" aria-label="The camera in the cave">
+      <div class="glass">
+        <canvas id="screen" width="1024" height="768" tabindex="0" aria-label="The cave, seen from the side. Arrow keys fly the ship"></canvas>
+        <div class="scan" aria-hidden="true"></div>
+        <div class="finder" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="c-rack">
+      <div class="panel panel-where">
+        <p class="panel-title">Where the ship is</p>
+        <dl class="wells">
+          <div><dt>World</dt><dd id="worldRead">&mdash;</dd></div>
+          <div><dt>Camera</dt><dd id="cameraRead">&mdash;</dd></div>
+          <div><dt>Screen</dt><dd id="screenRead">&mdash;</dd></div>
+        </dl>
+        <p class="formula">screen = world &minus; camera</p>
+      </div>
+
+      <div class="panel panel-limits">
+        <p class="panel-title">Camera limits</p>
+        <div class="limit"><span class="limit-name">x</span><span class="limit-end">0</span><span class="track" role="img" aria-label="Camera x, between its smallest and biggest value"><i id="limitX"></i></span><span class="limit-end">3584</span></div>
+        <div class="limit"><span class="limit-name">y</span><span class="limit-end">0</span><span class="track" role="img" aria-label="Camera y, between its smallest and biggest value"><i id="limitY"></i></span><span class="limit-end">384</span></div>
+        <p class="drawn">The marker is the camera. Red means it has left the cave.</p>
+      </div>
+
+      <div class="panel panel-cave">
+        <p class="panel-title">The whole cave</p>
+        <canvas class="cave-map" id="caveMap" width="288" height="72" role="img" aria-label="A map of the whole cave, with a box showing the part the camera can see"></canvas>
+        <p class="drawn">Pictures drawn this frame: <b id="drawnRead">0</b> of <b id="totalRead">0</b></p>
+      </div>
+
+      <div class="panel panel-gauges">
+        <p class="panel-title">Instruments</p>
+        <div class="gauges">
+          <div class="gauge-cell">
+            <span class="lamp" id="thrustLamp" role="img" aria-label="Engine"></span>
+            <span class="gauge-label">Engine</span>
+          </div>
+          <div class="gauge-cell">
+            <span class="climb" role="img" aria-label="How fast the ship is climbing or falling"><i id="climbBar"></i></span>
+            <span class="gauge-label gauge-ends"><span>climb</span><span>fall</span></span>
+          </div>
+          <div class="gauge-cell">
+            <span class="corners" role="img" aria-label="Which corners of the ship are inside the rock">
+              <i id="cornerTL"></i><i id="cornerTR"></i><i id="cornerBL"></i><i id="cornerBR"></i>
+            </span>
+            <span class="gauge-label">Corners</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-orders">
+        <p class="panel-title">Controls</p>
+        <ul class="orders">
+          <li><kbd>&uarr;</kbd> fire the engine</li>
+          <li><kbd>&larr;</kbd><kbd>&rarr;</kbd> fly sideways</li>
+          <li>Gravity never stops. Do not touch the rock.</li>
+        </ul>
+        <ul class="scoring">
+          <li><span>Crystal</span><b>5</b></li>
+          <li><span>Reach the gate</span><b>50</b></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Enter">Start <kbd aria-hidden="true">Enter</kbd></button>
+        <button class="key" id="again" type="button">Play again</button>
+      </div>
+    </aside>
+
+    <p class="c-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="phaser.min.js"></script>
+  <script src="cave.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the eleven finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the twelve finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -249,11 +249,43 @@ Lives and levels are given rather than asked for, because project 10 made him wr
 
 We left these out on purpose: a world larger than the screen, generated levels, saved scores, a map the player can edit, and a route found around walls. All five are later projects. Named in the README as good things to try next: a fourth vault, a crumb worth more, a mouse hole, a cat that closes the gap, and a second thing to collect.
 
+### 12. Cave Flyer
+
+A little mining ship in a long cave. It is the first world bigger than the window.
+
+- World coordinates and screen coordinates
+- A camera that follows the player
+- Keeping the camera inside the world
+- Drawing only what the window can see
+- Gravity and thrust
+- Collision with terrain
+
+The cave is 72 cells by 18. The window shows 16 by 12. So every picture in the game has two positions: where it lives in the cave, and where it lands in the window.
+
+The idea the project exists to teach is one line long. **Screen position is world position minus camera position.** `toScreen` is that line, and it is the first stub. Every rock, crystal and lamp reaches the window through it, so an empty `toScreen` leaves the window dark.
+
+Phaser has a camera that does this subtraction for every sprite. This project leaves it unused on purpose, the way project 10 left the swarm to the learner. Project 13 can use Phaser's camera, and by then Simon knows what it does.
+
+The second lesson is that a camera has edges. `aimCamera` centres the ship, and the two obvious lines show black space past the ends of the cave. Clamping `camera.x` between 0 and `WORLD_WIDTH - WIDTH` fixes it. The README names the black space as a bug to expect.
+
+The third is culling, which means skipping the work for things the window cannot see. The cave holds about 900 pictures, and the window shows about 130. `isOnScreen` is built from `toScreen`. The rack counts the pictures drawn each frame, so the saving is a number Simon watches fall.
+
+Gravity is project 7's line again. Thrust is the same line pointing the other way, and `Phaser.Math.Clamp` limits the result. The ship never stops on its own, and that is what makes it take practice.
+
+Collision with terrain is `isRock`, which is project 11's `cellAt` and `isWall` in one function, fed world pixels. `shipHitsRock` asks it about the four corners of the ship's box. Four corners are enough only because the ship is smaller than a cell, and the README says so.
+
+The best bug in the project is an `isRock` given screen pixels. It works near the start, where the camera sits at 0,0, and crashes the ship in open air further along. The README explains it by name.
+
+The map stays hand-written, and there is only one cave. Generating the world as the game runs is project 13's lesson. Touching rock is a crash, and nothing is pushed back out of a wall. That belongs to the tank game at project 16.
+
+Lives and the loop that builds the cave are given, because projects 10 and 11 made Simon write both.
+
+We left these out on purpose: fuel, a second cave, a background that scrolls slower than the rock, a camera that looks ahead, and a click that marks a spot in the cave. All five are in the README as good things to try next. The last one needs `toWorld`, the reverse of `toScreen`, which the map editor at project 18 uses for every click.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 12 | Scrolling world | Camera and world coordinates |
 | 13 | Endless runner | Generated obstacles, and saved high scores |
 | 14 | **Cutover: many files** | One program in several files, and git |
 | 15 | **Cutover: client and server** | Two programs that talk, and `await` |
@@ -266,29 +298,6 @@ We left these out on purpose: a world larger than the screen, generated levels, 
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 12. Scrolling world
-
-The world is larger than the screen.
-
-- Gravity and thrust
-- Scrolling
-- World coordinates and camera coordinates
-- Collision with terrain
-
-Memorise this relationship:
-
-```text
-screen position = world position - camera position
-```
-
-Stages:
-
-1. Move the vehicle up and down.
-2. Add gravity.
-3. Add walls.
-4. Make the world scroll.
-5. Detect crashes.
 
 ### 13. Endless runner
 
