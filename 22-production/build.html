@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Build Yard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="post">
+    <div class="d-plate">
+      <span class="plate-bolts" aria-hidden="true"></span>
+      <span class="plate-name">Build <em>Yard</em></span>
+      <span class="plate-read plate-map" aria-label="The map the harvesters are on">
+        <i>map</i><b id="mapRead">&mdash;</b>
+      </span>
+      <span class="plate-read plate-credits" aria-label="Credits in the refinery" aria-live="polite">
+        <i>credits</i><b id="creditsRead">&mdash;</b>
+      </span>
+      <span class="plate-read" aria-label="Units on the map">
+        <i>units</i><b id="unitsRead">&mdash;</b>
+      </span>
+    </div>
+
+    <section class="d-screen" aria-label="The map">
+      <div class="board">
+        <canvas id="screen" width="960" height="720" tabindex="0" aria-label="The map, seen from above, with the refinery, the build yard, the buildings you have put up and the units driving about. Pick units and click the ground to send them"></canvas>
+        <div class="glare" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="d-rack">
+      <div class="card card-build">
+        <p class="card-title">Build <span class="card-note">click to buy</span></p>
+        <ul class="build-list" id="buildList" aria-label="Things the yard can build"></ul>
+      </div>
+
+      <div class="card card-queue">
+        <p class="card-title">Queue <span class="card-note">front first</span></p>
+        <dl class="wells">
+          <div><dt>Building</dt><dd id="makingRead">&mdash;</dd></div>
+          <div><dt>Ready in</dt><dd id="waitRead">&mdash;</dd></div>
+        </dl>
+        <ol class="queue" id="queue" aria-label="What the yard is building" aria-live="polite"></ol>
+      </div>
+
+      <div class="card card-refinery">
+        <p class="card-title">Refinery <span class="card-note">cell 4, 10</span></p>
+        <dl class="wells wells-three">
+          <div><dt>Ore a minute</dt><dd id="rateRead">&mdash;</dd></div>
+          <div><dt>Ore left</dt><dd id="leftRead">&mdash;</dd></div>
+          <div><dt>Harvesters</dt><dd id="diggersRead">&mdash;</dd></div>
+        </dl>
+      </div>
+
+      <div class="card card-squad">
+        <p class="card-title">Squad <span class="card-note">click a name to pick it</span></p>
+        <ul class="squad" id="squad" aria-label="The units on the map"></ul>
+      </div>
+
+      <div class="card card-maps">
+        <p class="card-title">Maps <span class="card-note">from the maps folder</span></p>
+        <ul class="map-list" id="mapList" aria-label="Maps to play on"></ul>
+      </div>
+    </aside>
+
+    <p class="d-status" id="status" aria-live="polite"></p>
+  </main>
+  <script type="module" src="game.ts"></script>
+</body>
+</html>
