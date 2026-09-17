@@ -1,0 +1,17 @@
+{
+  "name": "tank-duel-typescript",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check": "tsc"
+  },
+  "dependencies": {
+    "phaser": "3.90.0"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vite": "8.3.0",
+    "vite-plugin-checker": "0.14.5"
+  }
+}

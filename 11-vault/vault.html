@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Cheese Vault</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="vault">
+    <div class="v-plate">
+      <span class="plate-bolts" aria-hidden="true"></span>
+      <span class="plate-name">Cheese <em>Vault</em></span>
+      <span class="plate-read" aria-label="Score">
+        <b id="scoreRead">0</b><i>pts</i>
+      </span>
+      <span class="plate-read" aria-label="Level">
+        <i>level</i><b id="levelRead">1</b>
+      </span>
+    </div>
+
+    <section class="v-screen" aria-label="The vault floor">
+      <div class="glass">
+        <canvas id="screen" width="1024" height="768" tabindex="0" aria-label="The vault floor, seen from above. Arrow keys move the mouse"></canvas>
+        <div class="mesh" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="v-rack">
+      <div class="panel panel-lives">
+        <p class="panel-title">Lives</p>
+        <div class="lives" id="lives" role="img" aria-label="How many lives you have left"></div>
+      </div>
+
+      <div class="panel panel-where">
+        <p class="panel-title">Where you are</p>
+        <dl class="wells">
+          <div><dt>Cell</dt><dd id="cellRead">&mdash;</dd></div>
+          <div><dt>Middle</dt><dd id="pixelRead">&mdash;</dd></div>
+        </dl>
+        <p class="wells-label">The four ways out</p>
+        <div class="compass" role="img" aria-label="Which of the four neighbouring cells are open">
+          <span class="way" id="wayUp">&uarr;</span>
+          <span class="way" id="wayLeft">&larr;</span>
+          <span class="way" id="wayRight">&rarr;</span>
+          <span class="way" id="wayDown">&darr;</span>
+        </div>
+      </div>
+
+      <div class="panel panel-map">
+        <p class="panel-title">The map</p>
+        <dl class="wells wells-three">
+          <div><dt>Cheese</dt><dd id="cheeseLeft">0</dd></div>
+          <div><dt>Walls</dt><dd id="wallCount">0</dd></div>
+          <div><dt>Cats</dt><dd id="catCount">0</dd></div>
+        </dl>
+        <p class="wells-label">Vault emptied</p>
+        <span class="bar"><i id="clearBar"></i></span>
+      </div>
+
+      <div class="panel panel-orders">
+        <p class="panel-title">Controls</p>
+        <ul class="orders">
+          <li><kbd>&larr;</kbd><kbd>&rarr;</kbd><kbd>&uarr;</kbd><kbd>&darr;</kbd> run that way</li>
+          <li>The mouse keeps going until a wall stops it.</li>
+          <li>Eat every crumb to open the next vault.</li>
+        </ul>
+      </div>
+
+      <div class="panel panel-scoring">
+        <p class="panel-title">Scoring</p>
+        <ul class="scoring">
+          <li><span>Crumb</span><b>1</b></li>
+          <li><span>Vault emptied</span><b>10</b></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Enter">Start <kbd aria-hidden="true">Enter</kbd></button>
+        <button class="key" id="again" type="button">Play again</button>
+      </div>
+    </aside>
+
+    <p class="v-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="phaser.min.js"></script>
+  <script src="vault.js"></script>
+</body>
+</html>

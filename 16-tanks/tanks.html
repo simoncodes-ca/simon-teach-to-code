@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Tank Duel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="depot">
+    <div class="d-plate">
+      <span class="plate-rivets" aria-hidden="true"></span>
+      <span class="plate-name">Tank <em>Duel</em></span>
+      <span class="plate-read plate-blue" aria-label="Rounds won by Blue">
+        <i>blue</i><b id="blueWins">0</b>
+      </span>
+      <span class="plate-read" aria-label="Round">
+        <i>round</i><b id="roundRead">1</b>
+      </span>
+      <span class="plate-read plate-red" aria-label="Rounds won by Red">
+        <b id="redWins">0</b><i>red</i>
+      </span>
+    </div>
+
+    <section class="d-screen" aria-label="The arena">
+      <div class="scope">
+        <canvas id="screen" width="1024" height="768" tabindex="0" aria-label="The arena, seen from above. Blue drives with W A S D, Red with the arrow keys"></canvas>
+        <div class="scan" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="d-rack">
+      <div class="panel panel-tank panel-blue">
+        <p class="panel-title">Blue tank</p>
+        <div class="health">
+          <span class="bar bar-health" role="img" aria-label="Blue's health"><i id="blueHealthBar"></i></span>
+          <b id="blueHealth">100</b>
+        </div>
+        <dl class="wells">
+          <div><dt>Heading</dt><dd id="blueHeading">&mdash;</dd></div>
+          <div><dt>Aim</dt><dd id="blueAim">&mdash;</dd></div>
+        </dl>
+        <p class="wells-label">Reload</p>
+        <span class="bar bar-reload"><i id="blueReload"></i></span>
+      </div>
+
+      <div class="panel panel-tank panel-red">
+        <p class="panel-title">Red tank</p>
+        <div class="health">
+          <span class="bar bar-health" role="img" aria-label="Red's health"><i id="redHealthBar"></i></span>
+          <b id="redHealth">100</b>
+        </div>
+        <dl class="wells">
+          <div><dt>Heading</dt><dd id="redHeading">&mdash;</dd></div>
+          <div><dt>Aim</dt><dd id="redAim">&mdash;</dd></div>
+        </dl>
+        <p class="wells-label">Reload</p>
+        <span class="bar bar-reload"><i id="redReload"></i></span>
+      </div>
+
+      <div class="panel panel-shells">
+        <p class="panel-title">Shells</p>
+        <dl class="wells wells-three">
+          <div><dt>Flying</dt><dd id="shellCount">0</dd></div>
+          <div><dt>Bounces</dt><dd id="bounceCount">0</dd></div>
+          <div><dt>Hits</dt><dd id="hitCount">0</dd></div>
+        </dl>
+      </div>
+
+      <div class="panel panel-orders">
+        <p class="panel-title">Controls</p>
+        <table class="orders">
+          <thead>
+            <tr><th scope="col"></th><th scope="col" class="col-blue">Blue</th><th scope="col" class="col-red">Red</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Drive</th><td><kbd>W</kbd><kbd>S</kbd></td><td><kbd>&uarr;</kbd><kbd>&darr;</kbd></td></tr>
+            <tr><th scope="row">Turn</th><td><kbd>A</kbd><kbd>D</kbd></td><td><kbd>&larr;</kbd><kbd>&rarr;</kbd></td></tr>
+            <tr><th scope="row">Turret</th><td><kbd>Q</kbd><kbd>E</kbd></td><td><kbd>,</kbd><kbd>.</kbd></td></tr>
+            <tr><th scope="row">Fire</th><td><kbd>Space</kbd></td><td><kbd>/</kbd></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Enter">Start <kbd aria-hidden="true">Enter</kbd></button>
+        <button class="key" id="again" type="button">Play again</button>
+      </div>
+    </aside>
+
+    <p class="d-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="phaser.min.js"></script>
+  <script src="numbers.js"></script>
+  <script src="arena.js"></script>
+  <script src="tank.js"></script>
+  <script src="shells.js"></script>
+  <script src="rack.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

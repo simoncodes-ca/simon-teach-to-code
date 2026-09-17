@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Rooftop Run</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="console">
+    <div class="c-plate">
+      <span class="plate-tab" aria-hidden="true"></span>
+      <span class="plate-name">Rooftop <em>Run</em></span>
+      <span class="plate-read" aria-label="Metres this run">
+        <b id="distRead">0</b><i>m</i>
+      </span>
+      <span class="plate-read plate-best" aria-label="Best ever">
+        <i>best</i><b id="bestRead">0</b>
+      </span>
+    </div>
+
+    <section class="c-screen" aria-label="The rooftops">
+      <div class="glass">
+        <canvas id="screen" width="1024" height="768" tabindex="0" aria-label="A runner crossing city rooftops. Press up or space to jump"></canvas>
+        <div class="sheen" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="c-rack">
+      <div class="panel">
+        <p class="panel-title">This run</p>
+        <dl class="wells">
+          <div><dt>Metres</dt><dd id="metreRead">0</dd></div>
+          <div><dt>Speed</dt><dd id="speedRead">&mdash;</dd></div>
+        </dl>
+        <div class="gauge-row">
+          <span class="gauge-end">300</span>
+          <span class="track" role="img" aria-label="How fast the runner is going, between the starting speed and the top speed"><i id="speedMark"></i></span>
+          <span class="gauge-end">700</span>
+        </div>
+        <div class="lamps">
+          <span class="lamp-cell"><span class="lamp" id="roofLamp" role="img" aria-label="On the roof"></span><span class="gauge-label">On the roof</span></span>
+          <span class="lamp-cell"><span class="lamp" id="airLamp" role="img" aria-label="In the air"></span><span class="gauge-label">In the air</span></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">The next piece</p>
+        <dl class="wells">
+          <div><dt>Gap</dt><dd id="gapRead">&mdash;</dd></div>
+          <div><dt>Kind</dt><dd id="kindRead">&mdash;</dd></div>
+        </dl>
+        <p class="note">A sample from your <b>nextGap()</b> and <b>pickObstacle()</b>, taken twice a second.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Obstacles in memory</p>
+        <p class="count"><b id="memRead">0</b><span>in the list</span></p>
+        <div class="split">
+          <span>ahead <b id="aheadRead">0</b></span>
+          <span>behind <b id="behindRead">0</b></span>
+        </div>
+        <p class="note">A game with no end has to forget. Behind stays small.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Saved record</p>
+        <dl class="wells">
+          <div><dt>Best</dt><dd id="recBest">&mdash;</dd></div>
+          <div><dt>Runs</dt><dd id="recRuns">&mdash;</dd></div>
+        </dl>
+        <p class="note" id="recNote">Kept in this browser, so it lives through a refresh.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Controls</p>
+        <ul class="orders">
+          <li><kbd>&uarr;</kbd><kbd>space</kbd> jump</li>
+          <li>You run on your own. You only ever jump.</li>
+        </ul>
+        <ul class="scoring">
+          <li><span>One metre</span><b>1</b></li>
+          <li><span>It gets faster</span><b>always</b></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Enter">Start <kbd aria-hidden="true">Enter</kbd></button>
+        <button class="key" id="again" type="button">Run again</button>
+      </div>
+    </aside>
+
+    <p class="c-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="phaser.min.js"></script>
+  <script src="runner.js"></script>
+</body>
+</html>

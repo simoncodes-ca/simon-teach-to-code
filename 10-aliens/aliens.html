@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Alien Raid</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="cab">
+    <div class="c-marquee">
+      <span class="marquee-bolts" aria-hidden="true"></span>
+      <span class="marquee-name">Alien <em>Raid</em></span>
+      <span class="marquee-read" aria-label="Score">
+        <b id="scoreRead">0</b><i>pts</i>
+      </span>
+      <span class="marquee-read" aria-label="Wave">
+        <i>wave</i><b id="waveRead">1</b>
+      </span>
+    </div>
+
+    <section class="c-screen" aria-label="The screen">
+      <div class="tube">
+        <canvas id="screen" width="1024" height="768" tabindex="0" aria-label="The sky above the deck. Arrow keys fly the ship, space fires"></canvas>
+        <div class="scanlines" aria-hidden="true"></div>
+        <div class="curve" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="c-rack">
+      <div class="panel panel-lives">
+        <p class="panel-title">Ships left</p>
+        <div class="lives" id="lives" role="img" aria-label="How many ships you have left"></div>
+      </div>
+
+      <div class="panel panel-swarm">
+        <p class="panel-title">The swarm</p>
+        <dl class="swarm">
+          <div><dt>Left</dt><dd id="alienCount">0</dd></div>
+          <div><dt>Rows</dt><dd id="rowCount">0</dd></div>
+        </dl>
+        <p class="swarm-label">March speed</p>
+        <span class="bar"><i id="marchBar"></i></span>
+      </div>
+
+      <div class="panel panel-figures">
+        <p class="panel-title">The three groups</p>
+        <dl class="figures">
+          <div><dt>Aliens</dt><dd id="alienGroup">0</dd></div>
+          <div><dt>Bolts</dt><dd id="boltCount">0</dd></div>
+          <div><dt>Bombs</dt><dd id="bombCount">0</dd></div>
+        </dl>
+      </div>
+
+      <div class="panel panel-orders">
+        <p class="panel-title">Controls</p>
+        <ul class="orders">
+          <li><kbd>&larr;</kbd><kbd>&rarr;</kbd> fly left and right</li>
+          <li><kbd>Space</kbd> fire</li>
+          <li>Clear every alien to start the next wave.</li>
+        </ul>
+      </div>
+
+      <div class="panel panel-scoring">
+        <p class="panel-title">Scoring</p>
+        <ul class="scoring">
+          <li><span>Alien</span><b>1</b></li>
+          <li><span>Wave cleared</span><b>10</b></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Enter">Start <kbd aria-hidden="true">Enter</kbd></button>
+        <button class="key" id="again" type="button">Play again</button>
+      </div>
+    </aside>
+
+    <p class="c-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="phaser.min.js"></script>
+  <script src="aliens.js"></script>
+</body>
+</html>

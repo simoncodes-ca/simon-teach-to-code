@@ -1,0 +1,430 @@
+/* ============================================================
+   Alien Raid — an arcade cabinet standing in a dark room.
+
+   The cabinet is one box. Every region inside it is placed as a
+   percentage of that box, so the whole machine scales together
+   like one photograph.
+   ============================================================ */
+
+:root {
+  --cab: #2a1e3d;
+  --cab-lit: #43305f;
+  --cab-deep: #150f1f;
+  --tube: #0b0715;
+  --neon: #4ee0ff;
+  --neon-dim: rgba(78, 224, 255, .34);
+  --hot: #ff5fa8;
+  --acid: #7ef29a;
+  --acrylic: #f6efff;
+  --acrylic-dim: rgba(246, 239, 255, .58);
+  --gold: #ffd45e;
+  --ink: #150f1f;
+  --display: "Impact", "Haettenschweiler", "Arial Narrow", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--acrylic);
+  background: #08060d radial-gradient(ellipse at 50% 18%, #1d1430 0%, #100a1c 56%, #05040a 100%);
+  container-type: size;
+}
+
+/* The cabinet itself. */
+.cab {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    repeating-linear-gradient(97deg,
+      rgba(255, 255, 255, .03) 0 1px,
+      rgba(0, 0, 0, .07) 1px 3px,
+      rgba(255, 255, 255, 0) 3px 26px),
+    linear-gradient(172deg, var(--cab-lit) 0%, var(--cab) 42%, var(--cab-deep) 100%);
+  border: 1.1cqw solid var(--cab-lit);
+  border-radius: 1.4cqw;
+  box-shadow:
+    inset 0 0 0 0.2cqw rgba(0, 0, 0, .45),
+    inset 0 1cqh 7cqh rgba(0, 0, 0, .34),
+    0 3cqh 8cqh rgba(0, 0, 0, .7);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.c-marquee { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.8%; }
+.c-screen  { position: absolute; left: 4%;  top: 13.8%; width: 61%; height: 73.6%; }
+.c-status  { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.c-rack    { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The backlit marquee across the top --- */
+.c-marquee {
+  display: flex;
+  align-items: center;
+  gap: 1.4cqw;
+  padding: 0 1.8cqw;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fffdf6 0%, #efe4ff 52%, #cdb9e6 100%);
+  border-radius: 0.5cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.7cqh rgba(255, 255, 255, .9),
+    inset 0 -0.6cqh 1.2cqh rgba(90, 60, 130, .34),
+    0 0 3cqh rgba(120, 220, 255, .3),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .55);
+}
+/* Two bolts holding the marquee on, one at each end. */
+.marquee-bolts {
+  position: absolute;
+  inset: 50% 0.7cqw auto;
+  height: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, #b9a6d0 0 0.22cqw, #6a5a85 0.22cqw 0.32cqw, rgba(0, 0, 0, 0) 0.32cqw) 0    50% / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 50% 50%, #b9a6d0 0 0.22cqw, #6a5a85 0.22cqw 0.32cqw, rgba(0, 0, 0, 0) 0.32cqw) 100% 50% / 1cqw 1cqw no-repeat;
+}
+.marquee-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 2.4cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0.14cqh 0 rgba(255, 255, 255, .8);
+}
+.marquee-name em {
+  margin-left: 0.4cqw;
+  padding: 0 0.6cqw;
+  border-radius: 0.25cqw;
+  font-style: normal;
+  color: #fff4ff;
+  background: linear-gradient(180deg, var(--hot) 0%, #c8306f 100%);
+}
+.marquee-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.35cqw;
+  background: rgba(30, 18, 48, .9);
+  box-shadow: inset 0 0 0 0.06cqw rgba(120, 220, 255, .4);
+}
+.marquee-read b {
+  min-width: 2.4cqw;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 1.5cqw;
+  color: var(--neon);
+  text-shadow: 0 0 0.8cqh rgba(78, 224, 255, .7);
+}
+.marquee-read i {
+  font-style: normal;
+  font-size: 0.78cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acrylic-dim);
+}
+
+/* --- The screen, sunk into the cabinet --- */
+.c-screen { display: grid; place-items: center; }
+.tube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.9cqw;
+  background: var(--tube);
+  box-shadow:
+    inset 0 0 0 0.5cqw #0d0916,
+    inset 0 0 0 0.75cqw rgba(78, 224, 255, .18),
+    inset 0 0 4cqh rgba(0, 0, 0, .9),
+    0 0 4cqh rgba(78, 224, 255, .16);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  image-rendering: pixelated;
+}
+/* A CRT never shows a perfectly flat picture. */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg,
+    rgba(0, 0, 0, .22) 0 1px,
+    rgba(0, 0, 0, 0) 1px 3px);
+  mix-blend-mode: multiply;
+}
+.curve {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(255, 255, 255, .07) 0%, rgba(255, 255, 255, 0) 46%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, .55) 100%);
+}
+
+/* --- The chalked line under the screen --- */
+.c-status {
+  display: flex;
+  align-items: center;
+  padding: 0 1cqw;
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  letter-spacing: 0.03em;
+  color: var(--acid);
+  text-shadow: 0 0 0.7cqh rgba(126, 242, 154, .5);
+}
+
+/* --- The rack down the right-hand side --- */
+.c-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqh;
+}
+.panel {
+  padding: 1.1cqh 1cqw 1.3cqh;
+  border-radius: 0.5cqw;
+  background: linear-gradient(178deg, rgba(255, 255, 255, .07) 0%, rgba(0, 0, 0, .26) 100%);
+  box-shadow:
+    inset 0 0 0 0.06cqw rgba(78, 224, 255, .22),
+    0 0.5cqh 1.2cqh rgba(0, 0, 0, .45);
+}
+.panel-title {
+  margin-bottom: 0.9cqh;
+  font-size: 0.78cqw;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Ships left, drawn as little cyan wedges. */
+.lives { display: flex; gap: 0.6cqw; }
+.life {
+  width: 1.9cqw;
+  height: 1.2cqw;
+  background: var(--neon);
+  box-shadow: 0 0 0.9cqh rgba(78, 224, 255, .7);
+  clip-path: polygon(50% 0, 100% 78%, 78% 100%, 50% 72%, 22% 100%, 0 78%);
+}
+.life-gone {
+  background: rgba(246, 239, 255, .14);
+  box-shadow: none;
+}
+
+/* The two number wells, and the march-speed bar under them. */
+.swarm, .figures {
+  display: grid;
+  gap: 0.5cqw;
+  margin: 0;
+}
+.swarm { grid-template-columns: repeat(2, 1fr); }
+.figures { grid-template-columns: repeat(3, 1fr); }
+.swarm div, .figures div {
+  padding: 0.6cqh 0.4cqw;
+  text-align: center;
+  border-radius: 0.3cqw;
+  background: rgba(11, 7, 21, .72);
+}
+.swarm dt, .figures dt {
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acrylic-dim);
+}
+.swarm dd, .figures dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.5cqw;
+  color: var(--neon);
+}
+.swarm-label {
+  margin: 1cqh 0 0.5cqh;
+  font-size: 0.66cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acrylic-dim);
+}
+.bar {
+  display: block;
+  height: 0.9cqh;
+  border-radius: 0.45cqh;
+  background: rgba(11, 7, 21, .8);
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--acid) 0%, var(--gold) 62%, var(--hot) 100%);
+  transition: width .18s ease-out;
+}
+
+/* --- The instructions --- */
+.orders {
+  margin: 0;
+  padding-left: 1cqw;
+  font-size: 0.82cqw;
+  line-height: 1.7;
+  color: var(--acrylic-dim);
+}
+.orders li { margin-bottom: 0.3cqh; }
+.orders kbd {
+  display: inline-block;
+  min-width: 1.5cqw;
+  margin-right: 0.25cqw;
+  padding: 0 0.35cqw;
+  border-radius: 0.25cqw;
+  font-family: var(--mono);
+  font-size: 0.82cqw;
+  text-align: center;
+  color: var(--acrylic);
+  background: rgba(78, 224, 255, .16);
+  box-shadow: inset 0 0 0 0.05cqw rgba(78, 224, 255, .4);
+}
+
+/* --- What each thing is worth --- */
+.scoring {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82cqw;
+  color: var(--acrylic-dim);
+}
+.scoring li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  padding: 0.35cqh 0;
+}
+.scoring li + li { border-top: 0.05cqw solid rgba(246, 239, 255, .1); }
+.scoring b {
+  font-family: var(--mono);
+  font-size: 1cqw;
+  color: var(--gold);
+}
+
+/* --- The two keys at the bottom of the rack --- */
+.panel-keys {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqh;
+}
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6cqw;
+  padding: 1.3cqh 0.8cqw;
+  border: none;
+  border-radius: 0.45cqw;
+  font-family: var(--display);
+  font-size: 1.15cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e9dcff 0%, #b9a6d0 100%);
+  box-shadow: 0 0.55cqh 0 #6a5a85, 0 0.9cqh 1.4cqh rgba(0, 0, 0, .5);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  color: #fff4ff;
+  background: linear-gradient(180deg, var(--hot) 0%, #c8306f 100%);
+  box-shadow: 0 0.55cqh 0 #7d1a45, 0 0.9cqh 1.8cqh rgba(255, 95, 168, .38);
+}
+.key kbd {
+  padding: 0 0.4cqw;
+  border-radius: 0.25cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  letter-spacing: 0;
+  background: rgba(0, 0, 0, .22);
+}
+.key:hover:not(:disabled) { transform: translateY(-0.2cqh); }
+.key:active:not(:disabled) {
+  transform: translateY(0.5cqh);
+  box-shadow: 0 0.1cqh 0 #6a5a85;
+}
+.key:disabled {
+  cursor: default;
+  filter: grayscale(.7);
+  opacity: .45;
+}
+
+:focus-visible { outline: 0.28cqw solid var(--gold); outline-offset: 0.28cqw; }
+/* The screen takes the keyboard once a game starts, so it says so.
+   The outline sits inside the glass, where the bezel cannot clip it. */
+#screen:focus-visible { outline: 0.3cqw solid var(--gold); outline-offset: -0.3cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key, .bar i { transition: none; }
+  .key:hover:not(:disabled), .key:active:not(:disabled) { transform: none; }
+}
+
+/* --- Narrow screens: the cabinet stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .cab {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .c-marquee, .c-screen, .c-status, .c-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  /* The status line belongs under the screen, whatever the markup
+     order is. */
+  .c-marquee { order: 1; }
+  .c-screen { order: 2; }
+  .c-status { order: 3; }
+  .c-rack { order: 4; }
+  .c-marquee { margin-bottom: 12px; padding: 10px 14px; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .panel { padding: 12px 14px 14px; border-radius: 8px; }
+  .panel-title { margin-bottom: 8px; }
+  .swarm div, .figures div { padding: 6px 4px; }
+  .swarm-label { margin: 10px 0 6px; }
+  .scoring li { padding: 4px 0; }
+  .panel-keys { gap: 10px; }
+  .key { padding: 12px 10px; box-shadow: 0 4px 0 #6a5a85, 0 8px 12px rgba(0, 0, 0, .5); }
+  .key-go { box-shadow: 0 4px 0 #7d1a45, 0 8px 14px rgba(255, 95, 168, .38); }
+  .marquee-name { font-size: 26px; }
+  .marquee-read b { font-size: 18px; min-width: 34px; }
+  .marquee-read i { font-size: 10px; }
+  .tube { aspect-ratio: 4 / 3; height: auto; }
+  .c-status { margin: 10px 0 14px; font-size: 13px; }
+  .c-rack { gap: 12px; }
+  .panel-title { font-size: 11px; }
+  .swarm dd, .figures dd { font-size: 20px; }
+  .swarm dt, .figures dt { font-size: 9px; }
+  .swarm-label, .orders, .orders kbd, .scoring { font-size: 13px; }
+  .scoring b { font-size: 16px; }
+  .orders kbd { min-width: 22px; padding: 0 6px; }
+  .life { width: 28px; height: 18px; }
+  .bar { height: 8px; }
+  .key { min-height: 48px; font-size: 16px; }
+  .key kbd { font-size: 12px; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+}

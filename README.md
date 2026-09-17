@@ -12,7 +12,7 @@ The JavaScript file is yours. Some of its functions are empty. Each empty functi
 
 Write those functions one at a time, in the order they appear in the file. Each function you finish makes something new happen on the screen.
 
-For every project on this page, you install nothing. Open the HTML file in a browser. Open the JavaScript file in a text editor. Put the two windows side by side. Change the JavaScript, save it, then refresh the browser page.
+For projects 1 to 16, you install nothing. Open the HTML file in a browser. Open the JavaScript file in a text editor. Put the two windows side by side. Change the JavaScript, save it, then refresh the browser page.
 
 ## The projects
 
@@ -98,6 +98,96 @@ Nine functions become eight, and the eight are a few lines each. The loop, the m
 
 Files: `09-phaser/remake.html`, `09-phaser/styles.css`, `09-phaser/remake.js`, `09-phaser/phaser.min.js`.
 
+### Alien Raid
+
+An arcade cabinet in a dark room. A swarm of aliens marches down the screen. You fly along the deck and shoot up at them.
+
+The page gives you the cabinet, the pictures and the keys. You write the steering, the firing, the swarm and the waves. You also write what happens when a bomb finds your ship.
+
+This is the first game you play with the keyboard. It is also the first one where the enemies move as one block, and moving that block is the one job the library refuses to do for you.
+
+Files: `10-aliens/aliens.html`, `10-aliens/styles.css`, `10-aliens/aliens.js`, `10-aliens/phaser.min.js`.
+
+### The Cheese Vault
+
+A maze in a bank vault. You are a mouse eating the cheese. Cats prowl the corridors.
+
+The page gives you the door, the pictures and the keys. You write the map: how a cell becomes a spot on the screen, how the vault gets built, what counts as a wall, and how the mouse steps from one cell to the next.
+
+This is the first game with walls in it. It is also the first where the level is not a picture. It is twelve lines of characters that the program reads, asks questions of, and changes as you play.
+
+Files: `11-vault/vault.html`, `11-vault/styles.css`, `11-vault/vault.js`, `11-vault/phaser.min.js`.
+
+### Cave Flyer
+
+A little mining ship in a long, dark cave. Gravity pulls it down, and the engine pushes it up. Touch the rock and it breaks.
+
+The page gives you the console, the pictures and the keys. You write the camera: where a rock in the cave shows up in the window, how the camera follows the ship, and how it stops at the ends of the cave. You also write the engine, and the rule for touching rock.
+
+This is the first world bigger than the window. Every picture in it has two positions. One is where it lives in the cave. The other is where it shows up in the window.
+
+Files: `12-cave/cave.html`, `12-cave/styles.css`, `12-cave/cave.js`, `12-cave/phaser.min.js`.
+
+### Rooftop Run
+
+A courier running across city rooftops at sunset. He never stops and never slows down. All you can do is jump.
+
+The page gives you the handheld, the pictures and the keys. You write the speed he runs at and the jump. You write the two functions that decide how far apart the obstacles go and what each one is. You also write the function that builds the rooftops ahead of you, and the one that throws away the rooftops behind you.
+
+This is the first game with no map. The world is made a few steps before you reach it, and forgotten a few steps after you pass it. It is also the first program of yours that remembers anything after the page closes.
+
+Files: `13-runner/runner.html`, `13-runner/styles.css`, `13-runner/runner.js`, `13-runner/phaser.min.js`.
+
+### One program, many files
+
+Rooftop Run again. Same rooftops, same crates, same sunset. Nothing about the game changed at all.
+
+What changed is the code. One file of 1203 lines became six files, and each one has a single job: the numbers, the best score, the rooftops, the runner, the readouts, and the file that starts everything.
+
+There is nothing to write in this project. You read the six files, you see why each line ended up where it did, and you learn git, which is how a program remembers every version of itself.
+
+The rack down the side counts the jobs each file does while you play.
+
+Files: `14-split/split.html`, `14-split/styles.css`, `14-split/numbers.js`, `14-split/record.js`, `14-split/world.js`, `14-split/runner.js`, `14-split/rack.js`, `14-split/game.js`, `14-split/phaser.min.js`.
+
+### Client and server
+
+Stars fall into a meadow at night. You catch them in a net for thirty seconds. Then your score leaves the computer.
+
+This project has two programs in it. The page is the one you know. The second one is a server, and it runs in a terminal instead of a browser. It holds one score board for everybody who plays.
+
+You write six functions this time, three in each program. The server's three sort the board, check that an arriving score is really a score, and add it to the list. The page's three ask for the board, draw it, and send your own score.
+
+Your best score and mine end up on one list, from two computers. Nothing you have written before could do that.
+
+Files: `15-scores/scores.html`, `15-scores/styles.css`, `15-scores/scores.js`, `15-scores/server.js`, `15-scores/scores.json`, `15-scores/phaser.min.js`.
+
+Start the server first. Open a terminal in `15-scores` and run `node server.js`.
+
+### Tank Duel
+
+Two tanks in a sand yard full of concrete blocks. Two players share one keyboard. Blue drives with W A S D, and Red drives with the arrow keys.
+
+The page gives you the console, the arena and the keys. You write the tank: which way it faces, how it drives, how it stops at a wall, and where its gun points. Then you write the shells: firing, flying, bouncing, and what a hit does to a tank.
+
+This is the first game where things move at any angle. It is also the first where walls stop something that is not on a grid. The tank moves first, then takes back the part of the move that hit.
+
+Files: `16-tanks/tanks.html`, `16-tanks/styles.css`, `16-tanks/numbers.js`, `16-tanks/arena.js`, `16-tanks/tank.js`, `16-tanks/shells.js`, `16-tanks/rack.js`, `16-tanks/game.js`, `16-tanks/phaser.min.js`.
+
+You write eight functions: four in `tank.js`, then four in `shells.js`.
+
+### Tank Duel, with types
+
+Tank Duel again. Same tanks, same blocks, same bouncing shells. Nothing about the duel changed.
+
+What changed is the language. The files are TypeScript now, which is JavaScript with types. A type is a written-down shape, and the computer checks every line against it before the game runs.
+
+Every function already works, because you wrote them all in project 16. You write six types: a point, a tank, a shell, a hit, and the signatures of the eight functions. Every type you finish makes the list of errors shorter, until it is empty.
+
+Files: `17-typescript/tanks.html`, `17-typescript/styles.css`, `17-typescript/numbers.ts`, `17-typescript/arena.ts`, `17-typescript/tank.ts`, `17-typescript/shells.ts`, `17-typescript/rack.ts`, `17-typescript/game.ts`, `17-typescript/package.json`.
+
+This one does not open by double-clicking. Open a terminal in `17-typescript`, run `npm install` once, then run `npm run dev`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -109,16 +199,20 @@ Files: `09-phaser/remake.html`, `09-phaser/styles.css`, `09-phaser/remake.js`, `
 7. **Then build the balloon stall.** You learn the game loop. Everything moves by time, and gravity turns out to be one line.
 8. **Then build the lookout post.** You learn sprites. Four kinds of thing move at once, and one of them changes its mind twice on the way down.
 9. **Then build it again with Phaser.** You learn what a library is. You also learn what it takes away, and what it makes harder.
+10. **Then build Alien Raid.** You learn the keyboard. You also learn that a formation is one thing, and that a game can get harder without anybody writing a difficulty curve.
+11. **Then build the cheese vault.** You learn maps. The level is data you can read and change, and one `if` turns out to be every wall in the game.
+12. **Then build the cave flyer.** You learn cameras. Screen position is world position minus camera position, and that one subtraction puts the whole cave in the window.
+13. **Then build Rooftop Run.** You learn how a game with no end makes its world as you go, and throws away what you have passed. Your best score is the first thing you write that lives through closing the page.
+14. **Then split it into six files.** You write nothing new. You learn where code goes, why the order of the script tags matters, and how git remembers every version of a program.
+15. **Then write a server.** You learn that a server is just a second program, and that two programs only ever ask each other for things. You also learn `await`, which is how a program waits for an answer without freezing.
+16. **Then build Tank Duel.** You learn to drive at any angle, and to stop at a wall by taking back the part of a move that hit. A bounce turns out to be the same trick with one more line.
+17. **Then add types to it.** You learn what a type is, and what it catches before the game runs. You also learn what it cannot catch, and you install your first tools with npm.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-You have a library now, so the games get bigger.
-
-1. **Aliens.** The first new game built on Phaser, with a keyboard instead of a mouse.
-2. **Maze.** A map kept as data, and walls you cannot walk through.
-3. **Scrolling world.** A world bigger than the screen, and a camera moving across it.
+The map editor is next. It is the first program written in TypeScript from the first line, and it brings your first tests.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 
@@ -130,7 +224,7 @@ Three projects on the trail change how you work, not just what you build.
 - **Project 15.** You write a second program, a server, so two computers can share one score table.
 - **Project 17.** You move to TypeScript. From here you install things, and the page needs a build step before it runs.
 
-Every project before 14 stays one JavaScript file that you open by double-clicking. That is on purpose. One file is the easiest way to start.
+Every project up to 13 is one JavaScript file. That is on purpose. One file is the easiest way to start, and project 14 is where you find out what it costs.
 
 ## Getting started
 

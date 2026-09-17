@@ -1,0 +1,467 @@
+/* ============================================================
+   The Cheese Vault — a strongroom door, seen from the front.
+
+   The door is one box. Every region on it is placed as a
+   percentage of that box, so the whole door scales together
+   like one photograph.
+   ============================================================ */
+
+:root {
+  --steel: #3b4655;
+  --steel-lit: #55637a;
+  --steel-deep: #1a212b;
+  --glass: #0d1219;
+  --cheese: #ffc93c;
+  --cheese-dim: rgba(255, 201, 60, .34);
+  --cream: #fff4dc;
+  --cream-dim: rgba(255, 244, 220, .58);
+  --alarm: #ff5f4a;
+  --mint: #8ef0c9;
+  --brass: #d9a441;
+  --ink: #161c25;
+  --display: "Impact", "Haettenschweiler", "Arial Narrow", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--cream);
+  background: #0a0d12 radial-gradient(ellipse at 50% 16%, #1f2937 0%, #131820 58%, #07090d 100%);
+  container-type: size;
+}
+
+/* The door itself. */
+.vault {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    repeating-linear-gradient(91deg,
+      rgba(255, 255, 255, .035) 0 1px,
+      rgba(0, 0, 0, .06) 1px 2px,
+      rgba(255, 255, 255, 0) 2px 18px),
+    linear-gradient(168deg, var(--steel-lit) 0%, var(--steel) 46%, var(--steel-deep) 100%);
+  border: 1.1cqw solid var(--steel-lit);
+  border-radius: 1.1cqw;
+  box-shadow:
+    inset 0 0 0 0.2cqw rgba(0, 0, 0, .45),
+    inset 0 1cqh 7cqh rgba(0, 0, 0, .32),
+    0 3cqh 8cqh rgba(0, 0, 0, .7);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.v-plate  { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.8%; }
+.v-screen { position: absolute; left: 4%;  top: 13.8%; width: 61%; height: 73.6%; }
+.v-status { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.v-rack   { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The nameplate bolted across the top --- */
+.v-plate {
+  display: flex;
+  align-items: center;
+  gap: 1.4cqw;
+  padding: 0 1.8cqw;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e6ebf2 0%, #c3ccd8 54%, #94a0b0 100%);
+  border-radius: 0.4cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.7cqh rgba(255, 255, 255, .85),
+    inset 0 -0.6cqh 1.2cqh rgba(40, 52, 68, .4),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .55);
+}
+/* Two bolts holding the plate on, one at each end. */
+.plate-bolts {
+  position: absolute;
+  inset: 50% 0.7cqw auto;
+  height: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, #f0f4f9 0 0.22cqw, #6d7a8b 0.22cqw 0.32cqw, rgba(0, 0, 0, 0) 0.32cqw) 0    50% / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 50% 50%, #f0f4f9 0 0.22cqw, #6d7a8b 0.22cqw 0.32cqw, rgba(0, 0, 0, 0) 0.32cqw) 100% 50% / 1cqw 1cqw no-repeat;
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 2.4cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0.14cqh 0 rgba(255, 255, 255, .8);
+}
+.plate-name em {
+  margin-left: 0.4cqw;
+  padding: 0 0.6cqw;
+  border-radius: 0.25cqw;
+  font-style: normal;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--cheese) 0%, #e09b12 100%);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.3cqw;
+  background: rgba(18, 24, 32, .9);
+  box-shadow: inset 0 0 0 0.06cqw rgba(255, 201, 60, .4);
+}
+.plate-read b {
+  min-width: 2.4cqw;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 1.5cqw;
+  color: var(--cheese);
+  text-shadow: 0 0 0.8cqh rgba(255, 201, 60, .6);
+}
+.plate-read i {
+  font-style: normal;
+  font-size: 0.78cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+/* --- The window into the vault --- */
+.v-screen { display: grid; place-items: center; }
+.glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.6cqw;
+  background: var(--glass);
+  box-shadow:
+    inset 0 0 0 0.5cqw #121822,
+    inset 0 0 0 0.75cqw rgba(255, 201, 60, .16),
+    inset 0 0 4cqh rgba(0, 0, 0, .9),
+    0 0 4cqh rgba(255, 201, 60, .12);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  image-rendering: pixelated;
+}
+/* Security glass has wire running through it. */
+.mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(190, 210, 235, .05) 0 1px,
+      rgba(0, 0, 0, 0) 1px 14px),
+    repeating-linear-gradient(-45deg,
+      rgba(190, 210, 235, .05) 0 1px,
+      rgba(0, 0, 0, 0) 1px 14px);
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 16%, rgba(255, 255, 255, .06) 0%, rgba(255, 255, 255, 0) 52%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .5) 100%);
+}
+
+/* --- The line chalked under the window --- */
+.v-status {
+  display: flex;
+  align-items: center;
+  padding: 0 1cqw;
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  letter-spacing: 0.03em;
+  color: var(--mint);
+  text-shadow: 0 0 0.7cqh rgba(142, 240, 201, .45);
+}
+
+/* --- The rack down the right-hand side --- */
+.v-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqh;
+}
+.panel {
+  padding: 1.1cqh 1cqw 1.3cqh;
+  border-radius: 0.4cqw;
+  background: linear-gradient(178deg, rgba(255, 255, 255, .07) 0%, rgba(0, 0, 0, .26) 100%);
+  box-shadow:
+    inset 0 0 0 0.06cqw rgba(255, 201, 60, .2),
+    0 0.5cqh 1.2cqh rgba(0, 0, 0, .45);
+}
+.panel-title {
+  margin-bottom: 0.9cqh;
+  font-size: 0.78cqw;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* Lives, drawn as little cheese wedges. */
+.lives { display: flex; gap: 0.6cqw; }
+.life {
+  width: 1.9cqw;
+  height: 1.5cqw;
+  background: var(--cheese);
+  box-shadow: 0 0 0.9cqh rgba(255, 201, 60, .55);
+  clip-path: polygon(4% 100%, 96% 100%, 96% 8%);
+}
+.life-gone {
+  background: rgba(255, 244, 220, .14);
+  box-shadow: none;
+}
+
+/* The number wells. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5cqw;
+  margin: 0;
+}
+.wells-three { grid-template-columns: repeat(3, 1fr); }
+.wells div {
+  padding: 0.6cqh 0.4cqw;
+  text-align: center;
+  border-radius: 0.25cqw;
+  background: rgba(13, 18, 25, .72);
+}
+.wells dt {
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.wells dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.2cqw;
+  color: var(--cheese);
+}
+.wells-label {
+  margin: 1cqh 0 0.5cqh;
+  font-size: 0.66cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+/* The four ways out of the cell you are standing in. */
+.compass {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3cqw;
+  width: 60%;
+}
+.way {
+  display: grid;
+  place-items: center;
+  padding: 0.5cqh 0;
+  border-radius: 0.25cqw;
+  font-size: 1cqw;
+  color: rgba(255, 244, 220, .2);
+  background: rgba(13, 18, 25, .72);
+  box-shadow: inset 0 0 0 0.06cqw rgba(255, 244, 220, .08);
+}
+#wayUp    { grid-area: 1 / 2; }
+#wayLeft  { grid-area: 2 / 1; }
+#wayRight { grid-area: 2 / 3; }
+#wayDown  { grid-area: 3 / 2; }
+.way-open {
+  color: var(--mint);
+  background: rgba(142, 240, 201, .16);
+  box-shadow: inset 0 0 0 0.06cqw rgba(142, 240, 201, .45);
+}
+.way-shut {
+  color: rgba(255, 95, 74, .8);
+  background: rgba(255, 95, 74, .12);
+  box-shadow: inset 0 0 0 0.06cqw rgba(255, 95, 74, .3);
+}
+
+.bar {
+  display: block;
+  height: 0.9cqh;
+  border-radius: 0.45cqh;
+  background: rgba(13, 18, 25, .8);
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--brass) 0%, var(--cheese) 100%);
+  transition: width .18s ease-out;
+}
+
+/* --- The instructions --- */
+.orders {
+  margin: 0;
+  padding-left: 1cqw;
+  font-size: 0.82cqw;
+  line-height: 1.7;
+  color: var(--cream-dim);
+}
+.orders li { margin-bottom: 0.3cqh; }
+.orders kbd {
+  display: inline-block;
+  min-width: 1.5cqw;
+  margin-right: 0.25cqw;
+  padding: 0 0.35cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.82cqw;
+  text-align: center;
+  color: var(--cream);
+  background: rgba(255, 201, 60, .16);
+  box-shadow: inset 0 0 0 0.05cqw rgba(255, 201, 60, .4);
+}
+
+/* --- What each thing is worth --- */
+.scoring {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82cqw;
+  color: var(--cream-dim);
+}
+.scoring li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  padding: 0.35cqh 0;
+}
+.scoring li + li { border-top: 0.05cqw solid rgba(255, 244, 220, .1); }
+.scoring b {
+  font-family: var(--mono);
+  font-size: 1cqw;
+  color: var(--cheese);
+}
+
+/* --- The two keys at the bottom of the rack --- */
+.panel-keys {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqh;
+}
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6cqw;
+  padding: 1.3cqh 0.8cqw;
+  border: none;
+  border-radius: 0.35cqw;
+  font-family: var(--display);
+  font-size: 1.15cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(180deg, #dfe6ee 0%, #a9b5c3 100%);
+  box-shadow: 0 0.55cqh 0 #63707f, 0 0.9cqh 1.4cqh rgba(0, 0, 0, .5);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  color: #fff6e6;
+  background: linear-gradient(180deg, var(--alarm) 0%, #c8331f 100%);
+  box-shadow: 0 0.55cqh 0 #7d1d10, 0 0.9cqh 1.8cqh rgba(255, 95, 74, .35);
+}
+.key kbd {
+  padding: 0 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  letter-spacing: 0;
+  background: rgba(0, 0, 0, .22);
+}
+.key:hover:not(:disabled) { transform: translateY(-0.2cqh); }
+.key:active:not(:disabled) {
+  transform: translateY(0.5cqh);
+  box-shadow: 0 0.1cqh 0 #63707f;
+}
+.key:disabled {
+  cursor: default;
+  filter: grayscale(.7);
+  opacity: .45;
+}
+
+:focus-visible { outline: 0.28cqw solid var(--cheese); outline-offset: 0.28cqw; }
+/* The window takes the keyboard once a game starts, so it says so.
+   The outline sits inside the glass, where the frame cannot clip it. */
+#screen:focus-visible { outline: 0.3cqw solid var(--cheese); outline-offset: -0.3cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key, .bar i { transition: none; }
+  .key:hover:not(:disabled), .key:active:not(:disabled) { transform: none; }
+}
+
+/* --- Narrow screens: the door stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .vault {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .v-plate, .v-screen, .v-status, .v-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  /* The status line belongs under the window, whatever the markup
+     order is. */
+  .v-plate { order: 1; }
+  .v-screen { order: 2; }
+  .v-status { order: 3; }
+  .v-rack { order: 4; }
+  .v-plate { margin-bottom: 12px; padding: 10px 14px; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .panel { padding: 12px 14px 14px; border-radius: 8px; }
+  .panel-title { margin-bottom: 8px; }
+  .wells div { padding: 6px 4px; }
+  .wells-label { margin: 10px 0 6px; }
+  .scoring li { padding: 4px 0; }
+  .panel-keys { gap: 10px; }
+  .key { padding: 12px 10px; box-shadow: 0 4px 0 #63707f, 0 8px 12px rgba(0, 0, 0, .5); }
+  .key-go { box-shadow: 0 4px 0 #7d1d10, 0 8px 14px rgba(255, 95, 74, .35); }
+  .plate-name { font-size: 26px; }
+  .plate-read b { font-size: 18px; min-width: 34px; }
+  .plate-read i { font-size: 10px; }
+  .glass { aspect-ratio: 4 / 3; height: auto; }
+  .v-status { margin: 10px 0 14px; font-size: 13px; }
+  .v-rack { gap: 12px; }
+  .panel-title { font-size: 11px; }
+  .wells dd { font-size: 18px; }
+  .wells dt { font-size: 9px; }
+  .wells-label, .orders, .orders kbd, .scoring { font-size: 13px; }
+  .scoring b { font-size: 16px; }
+  .orders kbd { min-width: 22px; padding: 0 6px; }
+  .life { width: 28px; height: 22px; }
+  .compass { width: 140px; gap: 4px; }
+  .way { font-size: 15px; padding: 6px 0; }
+  .bar { height: 8px; }
+  .key { min-height: 48px; font-size: 16px; }
+  .key kbd { font-size: 12px; }
+  :focus-visible { outline: 3px solid var(--cheese); outline-offset: 3px; }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Rooftop Run, in six files</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="console">
+    <div class="c-plate">
+      <span class="plate-tab" aria-hidden="true"></span>
+      <span class="plate-name">Rooftop <em>Run</em></span>
+      <span class="plate-read" aria-label="Metres this run">
+        <b id="distRead">0</b><i>m</i>
+      </span>
+      <span class="plate-read plate-best" aria-label="Best ever">
+        <i>best</i><b id="bestRead">0</b>
+      </span>
+    </div>
+
+    <section class="c-screen" aria-label="The rooftops">
+      <div class="glass">
+        <canvas id="screen" width="1024" height="768" tabindex="0" aria-label="A runner crossing city rooftops. Press up or space to jump"></canvas>
+        <div class="sheen" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="c-rack">
+      <div class="panel">
+        <p class="panel-title">This run</p>
+        <dl class="wells">
+          <div><dt>Metres</dt><dd id="metreRead">0</dd></div>
+          <div><dt>Speed</dt><dd id="speedRead">300</dd></div>
+        </dl>
+        <div class="gauge-row">
+          <span class="gauge-end">300</span>
+          <span class="track" role="img" aria-label="How fast the runner is going, between the starting speed and the top speed"><i id="speedMark"></i></span>
+          <span class="gauge-end">700</span>
+        </div>
+        <div class="lamps">
+          <span class="lamp-cell"><span class="lamp" id="roofLamp" role="img" aria-label="On the roof"></span><span class="gauge-label">On the roof</span></span>
+          <span class="lamp-cell"><span class="lamp" id="airLamp" role="img" aria-label="In the air"></span><span class="gauge-label">In the air</span></span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">The six files</p>
+        <ul class="files">
+          <li><span class="lamp lamp-file" id="lampNumbers" aria-hidden="true"></span><b>numbers.js</b><i id="countNumbers" aria-label="Jobs done by numbers.js">&mdash;</i></li>
+          <li><span class="lamp lamp-file" id="lampRecord" aria-hidden="true"></span><b>record.js</b><i id="countRecord" aria-label="Jobs done by record.js">0</i></li>
+          <li><span class="lamp lamp-file" id="lampWorld" aria-hidden="true"></span><b>world.js</b><i id="countWorld" aria-label="Jobs done by world.js">0</i></li>
+          <li><span class="lamp lamp-file" id="lampRunner" aria-hidden="true"></span><b>runner.js</b><i id="countRunner" aria-label="Jobs done by runner.js">0</i></li>
+          <li><span class="lamp lamp-file" id="lampRack" aria-hidden="true"></span><b>rack.js</b><i id="countRack" aria-label="Jobs done by rack.js">0</i></li>
+          <li><span class="lamp lamp-file" id="lampGame" aria-hidden="true"></span><b>game.js</b><i id="countGame" aria-label="Jobs done by game.js">0</i></li>
+        </ul>
+        <p class="note">Jobs done this run. Two files work every frame. Two work only at moments. <b>numbers.js</b> never works, because all it does is remember.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Obstacles in memory</p>
+        <p class="count"><b id="memRead">0</b><span>in the list</span></p>
+        <div class="split">
+          <span>ahead <b id="aheadRead">0</b></span>
+          <span>behind <b id="behindRead">0</b></span>
+        </div>
+        <p class="note">Kept by <b>world.js</b>, and by nothing else.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Saved record</p>
+        <dl class="wells">
+          <div><dt>Best</dt><dd id="recBest">0</dd></div>
+          <div><dt>Runs</dt><dd id="recRuns">0</dd></div>
+        </dl>
+        <p class="note" id="recNote">Kept by <b>record.js</b>, in this browser, so it lives through a refresh.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">Controls</p>
+        <ul class="orders">
+          <li><kbd>&uarr;</kbd><kbd>space</kbd> jump</li>
+          <li>You run on your own. You only ever jump.</li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Enter">Start <kbd aria-hidden="true">Enter</kbd></button>
+        <button class="key" id="again" type="button">Run again</button>
+      </div>
+    </aside>
+
+    <p class="c-status" id="status" aria-live="polite"></p>
+  </main>
+
+  <script src="phaser.min.js"></script>
+
+  <!-- The six files, in order. A file has to be loaded after the
+       files it uses, so numbers.js goes first and game.js goes last.
+       Swap two of these lines over and the page breaks. -->
+  <script src="numbers.js"></script>
+  <script src="record.js"></script>
+  <script src="world.js"></script>
+  <script src="runner.js"></script>
+  <script src="rack.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

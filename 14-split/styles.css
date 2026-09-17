@@ -1,0 +1,544 @@
+/* ============================================================
+   Rooftop Run. A cream plastic handheld, seen from the front.
+
+   The console is one box. Every region on it is placed as a
+   percentage of that box, so the whole console scales together
+   like one photograph. That is the same frame as the six
+   projects before it, in a different set of colours.
+   ============================================================ */
+
+:root {
+  --shell: #e6d8bd;
+  --shell-lit: #f8f1e2;
+  --shell-deep: #b9a684;
+  --ink: #2b2118;
+  --coral: #e8552f;
+  --coral-deep: #a8331a;
+  --sun: #ffb03a;
+  --mint: #2fd4c9;
+  --mint-dim: rgba(47, 212, 201, .5);
+  --night: #1b1030;
+  --ink-dim: rgba(43, 33, 24, .6);
+  --display: "Impact", "Haettenschweiler", "Arial Narrow", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--ink);
+  background: #2a1c2e radial-gradient(ellipse at 50% 16%, #4a3145 0%, #2a1c2e 56%, #140d17 100%);
+  container-type: size;
+}
+
+/* The handheld itself. */
+.console {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 255, 255, .5) 0 0.16cqw, rgba(0, 0, 0, 0) 0.16cqw) 0 0 / 2.6cqw 2.6cqw,
+    linear-gradient(168deg, var(--shell-lit) 0%, var(--shell) 46%, #c9b694 100%);
+  border: 1.1cqw solid #d8c6a5;
+  border-radius: 3cqw;
+  box-shadow:
+    inset 0 0 0 0.2cqw rgba(255, 255, 255, .6),
+    inset 0 -1.4cqh 6cqh rgba(120, 92, 56, .28),
+    0 3cqh 8cqh rgba(0, 0, 0, .55);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.c-plate  { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.8%; }
+.c-screen { position: absolute; left: 4%;  top: 13.8%; width: 61%; height: 73.6%; }
+.c-status { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.c-rack   { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The nameplate across the top --- */
+.c-plate {
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 0 1.4cqw 0 0;
+  overflow: hidden;
+  color: #fff3df;
+  background: linear-gradient(180deg, #f2703f 0%, var(--coral) 54%, var(--coral-deep) 100%);
+  border-radius: 1.2cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.7cqh rgba(255, 255, 255, .45),
+    inset 0 -0.6cqh 1.2cqh rgba(80, 20, 0, .4),
+    0 0.6cqh 1.6cqh rgba(60, 30, 10, .35);
+}
+/* The little sunset tab at the left end of the plate. */
+.plate-tab {
+  flex: none;
+  align-self: stretch;
+  width: 4cqw;
+  background: linear-gradient(180deg, var(--night) 0%, #7c3a6a 52%, var(--sun) 100%);
+  box-shadow: 0.2cqw 0 0 rgba(0, 0, 0, .18);
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 2.4cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0.16cqh 0 rgba(120, 30, 0, .45);
+}
+.plate-name em {
+  margin-left: 0.4cqw;
+  padding: 0 0.6cqw;
+  border-radius: 0.25cqw;
+  font-style: normal;
+  color: var(--sun);
+  text-shadow: none;
+  background: var(--night);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.3cqw;
+  background: rgba(27, 16, 48, .92);
+  box-shadow: inset 0 0 0 0.06cqw rgba(47, 212, 201, .35);
+}
+.plate-read b {
+  min-width: 2.6cqw;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 1.5cqw;
+  color: var(--mint);
+  text-shadow: 0 0 0.8cqh rgba(47, 212, 201, .6);
+}
+.plate-best b { color: var(--sun); text-shadow: 0 0 0.8cqh rgba(255, 176, 58, .6); }
+.plate-read i {
+  font-style: normal;
+  font-size: 0.78cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 243, 223, .72);
+}
+
+/* --- The screen --- */
+.c-screen { display: grid; place-items: center; }
+.glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.2cqw;
+  background: var(--night);
+  box-shadow:
+    inset 0 0 0 0.6cqw #3b2b23,
+    inset 0 0 0 0.9cqw rgba(255, 255, 255, .35),
+    inset 0 0 4cqh rgba(0, 0, 0, .75),
+    0 0.8cqh 2cqh rgba(60, 30, 10, .4);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  image-rendering: pixelated;
+}
+/* A plastic screen catches the light across one corner. */
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, .04) 26%, rgba(255, 255, 255, 0) 42%);
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 46%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .45) 100%);
+}
+
+/* --- The line printed under the screen --- */
+.c-status {
+  display: flex;
+  align-items: center;
+  padding: 0 1cqw;
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  letter-spacing: 0.03em;
+  color: #6b4a34;
+}
+
+/* --- The rack down the right-hand side --- */
+.c-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqh;
+}
+.panel {
+  padding: 1.1cqh 1cqw 1.3cqh;
+  border-radius: 0.9cqw;
+  background: linear-gradient(178deg, rgba(255, 255, 255, .5) 0%, rgba(160, 130, 90, .16) 100%);
+  box-shadow:
+    inset 0 0 0 0.06cqw rgba(232, 85, 47, .3),
+    0 0.5cqh 1cqh rgba(120, 92, 56, .22);
+}
+.panel-title {
+  margin-bottom: 0.9cqh;
+  font-size: 0.78cqw;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--coral-deep);
+}
+
+/* The number wells. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4cqw;
+  margin: 0;
+}
+.wells div {
+  padding: 0.6cqh 0.2cqw;
+  text-align: center;
+  border-radius: 0.3cqw;
+  background: rgba(27, 16, 48, .9);
+}
+.wells dt {
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 243, 223, .6);
+}
+.wells dd {
+  margin: 0;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 1cqw;
+  color: var(--mint);
+}
+
+/* The speed track. */
+.gauge-row {
+  display: grid;
+  grid-template-columns: 2.4cqw 1fr 2.4cqw;
+  align-items: center;
+  gap: 0.5cqw;
+  margin-top: 1cqh;
+  font-family: var(--mono);
+  font-size: 0.72cqw;
+  color: var(--ink-dim);
+}
+.gauge-end:last-child { text-align: right; }
+.track {
+  position: relative;
+  height: 1cqh;
+  border-radius: 0.5cqh;
+  background: rgba(27, 16, 48, .85);
+  box-shadow: inset 0 0 0 0.06cqw rgba(255, 255, 255, .25);
+}
+.track i {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0.5cqw;
+  height: 2.4cqh;
+  border-radius: 0.15cqw;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 243, 223, .25);
+}
+.track .going { background: var(--mint); box-shadow: 0 0 0.9cqh rgba(47, 212, 201, .7); }
+.track .flat-out { background: var(--coral); box-shadow: 0 0 1cqh rgba(232, 85, 47, .8); }
+
+/* The two lamps that say where the runner's feet are. */
+.lamps {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6cqw;
+  margin-top: 1.2cqh;
+}
+.lamp-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6cqh;
+}
+.lamp {
+  width: 2.2cqw;
+  height: 2.2cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #b6a58a 0%, #7d6e57 70%);
+  box-shadow: inset 0 0 0 0.12cqw rgba(60, 45, 25, .5);
+}
+.lamp-roof { background: radial-gradient(circle at 40% 35%, #d9fff6 0%, var(--mint) 55%, #10897f 100%); box-shadow: inset 0 0 0 0.12cqw rgba(0, 40, 36, .4), 0 0 1.4cqh rgba(47, 212, 201, .7); }
+.lamp-air { background: radial-gradient(circle at 40% 35%, #ffe9b0 0%, var(--sun) 55%, #b06a00 100%); box-shadow: inset 0 0 0 0.12cqw rgba(60, 30, 0, .4), 0 0 1.4cqh rgba(255, 176, 58, .7); }
+.gauge-label {
+  font-size: 0.6cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+/* How many obstacles the list is holding. */
+.count {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6cqw;
+  padding: 0.6cqh 0.8cqw;
+  border-radius: 0.3cqw;
+  background: rgba(27, 16, 48, .9);
+}
+.count b {
+  font-family: var(--mono);
+  font-size: 1.8cqw;
+  color: var(--sun);
+}
+.count span {
+  font-size: 0.68cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 243, 223, .6);
+}
+.split {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.8cqh;
+  font-size: 0.72cqw;
+  color: var(--ink-dim);
+}
+.split b { font-family: var(--mono); font-size: 0.92cqw; color: var(--coral-deep); }
+
+.note {
+  margin-top: 0.8cqh;
+  font-size: 0.7cqw;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+.note b { font-family: var(--mono); font-weight: 400; color: var(--coral-deep); }
+
+/* --- The instructions --- */
+.orders {
+  margin: 0;
+  padding-left: 1cqw;
+  font-size: 0.82cqw;
+  line-height: 1.7;
+  color: var(--ink-dim);
+}
+.orders kbd {
+  display: inline-block;
+  min-width: 1.5cqw;
+  margin-right: 0.25cqw;
+  padding: 0 0.35cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  text-align: center;
+  color: var(--ink);
+  background: rgba(232, 85, 47, .16);
+  box-shadow: inset 0 0 0 0.05cqw rgba(232, 85, 47, .45);
+}
+
+/* --- What each thing is worth --- */
+.scoring {
+  margin: 0.8cqh 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8cqw;
+  color: var(--ink-dim);
+}
+.scoring li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  padding: 0.35cqh 0;
+  border-top: 0.05cqw solid rgba(43, 33, 24, .14);
+}
+.scoring b {
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  color: var(--coral-deep);
+}
+
+/* --- The two keys at the bottom of the rack --- */
+.panel-keys {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqh;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6cqw;
+  padding: 1.3cqh 0.8cqw;
+  border: none;
+  border-radius: 1cqw;
+  font-family: var(--display);
+  font-size: 1.15cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fbf5e8 0%, #cfc0a3 100%);
+  box-shadow: 0 0.55cqh 0 #96866a, 0 0.9cqh 1.4cqh rgba(80, 60, 30, .35);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  color: #fff3df;
+  background: linear-gradient(180deg, #f2703f 0%, #c33d1d 100%);
+  box-shadow: 0 0.55cqh 0 #7c2712, 0 0.9cqh 1.8cqh rgba(232, 85, 47, .35);
+}
+.key kbd {
+  padding: 0 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  letter-spacing: 0;
+  background: rgba(0, 0, 0, .16);
+}
+.key:hover:not(:disabled) { transform: translateY(-0.2cqh); }
+.key:active:not(:disabled) {
+  transform: translateY(0.5cqh);
+  box-shadow: 0 0.1cqh 0 #96866a;
+}
+.key:disabled {
+  cursor: default;
+  filter: grayscale(.6);
+  opacity: .45;
+}
+
+:focus-visible { outline: 0.28cqw solid var(--coral); outline-offset: 0.28cqw; }
+/* The screen takes the keyboard once a run starts, so it says so.
+   The outline sits inside the glass, where the frame cannot clip it. */
+#screen:focus-visible { outline: 0.3cqw solid var(--mint); outline-offset: -0.3cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key { transition: none; }
+  .key:hover:not(:disabled), .key:active:not(:disabled) { transform: none; }
+}
+
+/* --- Narrow screens: the console stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .console {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 16px;
+    border-radius: 18px;
+  }
+  .c-plate, .c-screen, .c-status, .c-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  /* The status line belongs under the screen, whatever the markup
+     order is. */
+  .c-plate { order: 1; }
+  .c-screen { order: 2; }
+  .c-status { order: 3; }
+  .c-rack { order: 4; }
+  .c-plate { flex-wrap: wrap; margin-bottom: 12px; padding: 0 12px 0 0; min-height: 52px; border-radius: 10px; }
+  .plate-tab { width: 28px; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .panel { padding: 12px 14px 14px; border-radius: 10px; }
+  .panel-title { margin-bottom: 8px; font-size: 11px; }
+  .wells div { padding: 6px 4px; }
+  .wells dd { font-size: 15px; }
+  .wells dt, .gauge-label { font-size: 9px; }
+  .note, .split { margin-top: 8px; font-size: 12px; }
+  .split b { font-size: 14px; }
+  .gauge-row { grid-template-columns: 32px 1fr 32px; gap: 8px; margin-top: 10px; font-size: 12px; }
+  .track { height: 8px; border-radius: 4px; }
+  .track i { width: 6px; height: 20px; border-radius: 2px; }
+  .lamps { gap: 10px; margin-top: 12px; }
+  .lamp { width: 28px; height: 28px; }
+  .count { padding: 6px 10px; }
+  .count b { font-size: 26px; }
+  .count span { font-size: 10px; }
+  .scoring { margin-top: 8px; }
+  .scoring li { padding: 4px 0; }
+  .scoring b { font-size: 15px; }
+  .panel-keys { gap: 10px; }
+  .key { padding: 12px 10px; min-height: 48px; font-size: 16px; border-radius: 12px; box-shadow: 0 4px 0 #96866a, 0 8px 12px rgba(80, 60, 30, .35); }
+  .key-go { box-shadow: 0 4px 0 #7c2712, 0 8px 14px rgba(232, 85, 47, .35); }
+  .key kbd { font-size: 12px; }
+  .plate-name { font-size: 26px; }
+  .plate-read b { font-size: 18px; min-width: 34px; }
+  .plate-read i { font-size: 10px; }
+  .glass { aspect-ratio: 4 / 3; height: auto; border-radius: 12px; }
+  .c-status { margin: 10px 0 14px; font-size: 13px; }
+  .c-rack { gap: 12px; }
+  .orders, .orders kbd, .scoring { font-size: 13px; }
+  .orders kbd { min-width: 22px; padding: 0 6px; }
+  :focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+  #screen:focus-visible { outline: 3px solid var(--mint); outline-offset: -3px; }
+}
+
+/* ============================================================
+   The panel that counts the six files. This is the only part of
+   the look that project 13 did not have.
+   ============================================================ */
+.files {
+  display: grid;
+  gap: 0.45cqh;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.files li {
+  display: grid;
+  grid-template-columns: 1.1cqw 1fr auto;
+  align-items: center;
+  gap: 0.6cqw;
+  padding: 0.35cqh 0.6cqw;
+  border-radius: 0.3cqw;
+  background: rgba(27, 16, 48, .9);
+}
+.files b {
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  font-weight: 400;
+  color: rgba(255, 243, 223, .88);
+}
+.files i {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 0.78cqw;
+  color: var(--mint);
+}
+.lamp-file {
+  width: 1.1cqw;
+  height: 1.1cqw;
+  background: radial-gradient(circle at 40% 35%, #6b5c44 0%, #40372a 70%);
+  box-shadow: inset 0 0 0 0.06cqw rgba(255, 243, 223, .2);
+}
+.lamp-on {
+  background: radial-gradient(circle at 40% 35%, #ffe9b0 0%, var(--sun) 55%, #b06a00 100%);
+  box-shadow: inset 0 0 0 0.06cqw rgba(60, 30, 0, .4), 0 0 1cqh rgba(255, 176, 58, .75);
+}
+
+@media (max-width: 900px) {
+  .files { gap: 6px; }
+  .files li { grid-template-columns: 14px 1fr auto; gap: 10px; padding: 6px 10px; border-radius: 6px; }
+  .files b, .files i { font-size: 13px; }
+  .lamp-file { width: 14px; height: 14px; }
+}

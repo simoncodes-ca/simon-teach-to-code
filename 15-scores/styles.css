@@ -1,0 +1,552 @@
+/* ============================================================
+   Star Catch. A green enamel scoreboard, bolted to a wall.
+
+   The board is one box. Every region on it is placed as a
+   percentage of that box, so the whole thing scales together
+   like one photograph. That is the same frame as the eight
+   projects before it, in a new set of colours.
+
+   Enamel green is the board. Brass is the fittings. Chalk is
+   what is written on it. Coral is the line to the server, so
+   anything to do with the network is coral and nothing else
+   is.
+   ============================================================ */
+
+:root {
+  --enamel: #23483c;
+  --enamel-lit: #326353;
+  --enamel-deep: #16302a;
+  --ink: #0e211c;
+  --brass: #d7a94b;
+  --brass-lit: #f4dfa4;
+  --brass-deep: #8a6420;
+  --chalk: #f6f1e4;
+  --chalk-dim: rgba(246, 241, 228, .58);
+  --wire: #ff7a4d;
+  --wire-deep: #b8421c;
+  --live: #6fe3a6;
+  --night: #0a1030;
+  --display: "Impact", "Haettenschweiler", "Arial Narrow", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--chalk);
+  background: #1a1410 radial-gradient(ellipse at 50% 12%, #3b2f22 0%, #1a1410 58%, #0c0906 100%);
+  container-type: size;
+}
+
+/* The board itself. */
+.board {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    linear-gradient(162deg, var(--enamel-lit) 0%, var(--enamel) 44%, var(--enamel-deep) 100%);
+  border: 1.1cqw solid #6b4a24;
+  border-radius: 1.4cqw;
+  box-shadow:
+    inset 0 0 0 0.22cqw rgba(215, 169, 75, .55),
+    inset 0 -1.6cqh 7cqh rgba(0, 0, 0, .4),
+    0 3cqh 8cqh rgba(0, 0, 0, .6);
+  overflow: hidden;
+}
+
+/* Four brass bolts, one in each corner of the enamel. */
+.board::before,
+.board::after {
+  content: '';
+  position: absolute;
+  left: 1.1cqw;
+  right: 1.1cqw;
+  height: 1.5cqw;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 0.75cqw 50%, var(--brass-lit) 0 0.28cqw, var(--brass) 0.28cqw 0.55cqw, rgba(0, 0, 0, 0) 0.6cqw) left center / 50% 100% no-repeat,
+    radial-gradient(circle at calc(100% - 0.75cqw) 50%, var(--brass-lit) 0 0.28cqw, var(--brass) 0.28cqw 0.55cqw, rgba(0, 0, 0, 0) 0.6cqw) right center / 50% 100% no-repeat;
+}
+.board::before { top: 1.1cqw; }
+.board::after { bottom: 1.1cqw; }
+
+/* --- Region boxes --- */
+.c-plate  { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.8%; }
+.c-screen { position: absolute; left: 4%;  top: 13.8%; width: 61%; height: 73.6%; }
+.c-status { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.c-rack   { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The nameplate across the top --- */
+.c-plate {
+  display: flex;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 0 1.4cqw 0 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--brass-lit) 0%, var(--brass) 52%, var(--brass-deep) 100%);
+  border-radius: 0.6cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.7cqh rgba(255, 255, 255, .5),
+    inset 0 -0.6cqh 1.2cqh rgba(60, 40, 0, .35),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .35);
+}
+/* The night sky tab at the left end of the plate. */
+.plate-tab {
+  flex: none;
+  align-self: stretch;
+  width: 4cqw;
+  background: linear-gradient(180deg, var(--night) 0%, #24356e 60%, #4a4a7d 100%);
+  box-shadow: 0.2cqw 0 0 rgba(0, 0, 0, .25);
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 2.4cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0.16cqh 0 rgba(255, 255, 255, .35);
+}
+.plate-name em {
+  margin-left: 0.4cqw;
+  padding: 0 0.6cqw;
+  border-radius: 0.25cqw;
+  font-style: normal;
+  color: var(--brass-lit);
+  text-shadow: none;
+  background: var(--night);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.3cqw;
+  background: rgba(10, 16, 48, .92);
+  box-shadow: inset 0 0 0 0.06cqw rgba(215, 169, 75, .4);
+}
+.plate-read b {
+  min-width: 2.6cqw;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 1.5cqw;
+  color: var(--brass-lit);
+  text-shadow: 0 0 0.8cqh rgba(244, 223, 164, .55);
+}
+.plate-clock b { color: var(--live); text-shadow: 0 0 0.8cqh rgba(111, 227, 166, .55); }
+.plate-clock.low b { color: var(--wire); text-shadow: 0 0 0.9cqh rgba(255, 122, 77, .7); }
+.plate-read i {
+  font-style: normal;
+  font-size: 0.78cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(246, 241, 228, .68);
+}
+
+/* --- The screen --- */
+.c-screen { display: grid; place-items: center; }
+.glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.8cqw;
+  background: var(--night);
+  box-shadow:
+    inset 0 0 0 0.6cqw #4a3418,
+    inset 0 0 0 0.9cqw rgba(244, 223, 164, .4),
+    inset 0 0 4cqh rgba(0, 0, 0, .7),
+    0 0.8cqh 2cqh rgba(0, 0, 0, .45);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .12) 0%, rgba(255, 255, 255, .035) 26%, rgba(255, 255, 255, 0) 42%);
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 46%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .5) 100%);
+}
+
+/* --- The line chalked under the screen --- */
+.c-status {
+  display: flex;
+  align-items: center;
+  padding: 0 1cqw;
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  letter-spacing: 0.03em;
+  color: rgba(246, 241, 228, .82);
+}
+
+/* --- The rack down the right-hand side --- */
+.c-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2cqh;
+  overflow: hidden;
+}
+.panel {
+  padding: 1cqh 1cqw 1.2cqh;
+  border-radius: 0.5cqw;
+  background: linear-gradient(178deg, rgba(255, 255, 255, .09) 0%, rgba(0, 0, 0, .18) 100%);
+  box-shadow:
+    inset 0 0 0 0.06cqw rgba(215, 169, 75, .34),
+    0 0.5cqh 1cqh rgba(0, 0, 0, .25);
+}
+.panel-title {
+  margin-bottom: 0.8cqh;
+  font-size: 0.78cqw;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* --- The board itself: the shared list --- */
+.panel-board { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.table {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0.5cqh 0.6cqw;
+  overflow-y: auto;
+  list-style: none;
+  border-radius: 0.3cqw;
+  background: rgba(10, 16, 48, .85);
+  scrollbar-width: thin;
+}
+.table li {
+  display: grid;
+  grid-template-columns: 1.6cqw 1fr auto;
+  gap: 0.5cqw;
+  align-items: baseline;
+  padding: 0.35cqh 0;
+  border-top: 0.05cqw solid rgba(246, 241, 228, .12);
+  font-size: 0.88cqw;
+}
+.table li:first-child { border-top: none; }
+.table .rank { font-family: var(--mono); font-size: 0.74cqw; color: var(--chalk-dim); }
+.table .name { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--chalk); }
+.table .score { font-family: var(--mono); font-size: 1cqw; color: var(--brass-lit); }
+.table .top .name { color: var(--brass-lit); font-weight: 700; }
+.table .mine .name { color: var(--live); }
+.table .empty { display: block; padding: 0.6cqh 0; color: var(--chalk-dim); font-size: 0.8cqw; }
+
+/* --- The line to the server --- */
+.wire {
+  display: flex;
+  align-items: center;
+  gap: 0.4cqw;
+  margin-bottom: 0.9cqh;
+  font-size: 0.6cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chalk-dim);
+}
+.wire .end { flex: none; }
+.lamp {
+  flex: none;
+  width: 1.1cqw;
+  height: 1.1cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #5c6b62 0%, #2b3a33 70%);
+  box-shadow: inset 0 0 0 0.08cqw rgba(0, 0, 0, .5);
+}
+.lamp-ask { background: radial-gradient(circle at 40% 35%, #ffd0b8 0%, var(--wire) 55%, var(--wire-deep) 100%); box-shadow: 0 0 1.2cqh rgba(255, 122, 77, .75); }
+.lamp-answer { background: radial-gradient(circle at 40% 35%, #d6ffe9 0%, var(--live) 55%, #1f7d52 100%); box-shadow: 0 0 1.2cqh rgba(111, 227, 166, .7); }
+.lamp-bad { background: radial-gradient(circle at 40% 35%, #ffd4d4 0%, #e5484d 55%, #8a1f22 100%); box-shadow: 0 0 1.2cqh rgba(229, 72, 77, .7); }
+.cable {
+  position: relative;
+  flex: 1;
+  height: 0.35cqh;
+  border-radius: 0.2cqh;
+  background: rgba(246, 241, 228, .16);
+  overflow: hidden;
+}
+.cable i {
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 30%;
+  height: 100%;
+  background: var(--wire);
+  opacity: 0;
+}
+.cable i.there { animation: run-there .34s linear; }
+.cable i.back { animation: run-back .34s linear; }
+@keyframes run-there {
+  from { left: -30%; opacity: 1; }
+  to { left: 100%; opacity: 1; }
+}
+@keyframes run-back {
+  from { left: 100%; opacity: 1; }
+  to { left: -30%; opacity: 1; }
+}
+
+/* The number wells. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4cqw;
+  margin: 0;
+}
+.wells div {
+  padding: 0.5cqh 0.2cqw;
+  text-align: center;
+  border-radius: 0.3cqw;
+  background: rgba(10, 16, 48, .85);
+}
+.wells dt {
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--chalk-dim);
+}
+.wells dd {
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  color: var(--wire);
+}
+.wells .good { color: var(--live); }
+.wells .bad { color: #ff9b9e; }
+
+/* The last thing the server actually said, word for word. */
+.raw {
+  margin-top: 0.7cqh;
+  max-height: 5.4cqh;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 0.66cqw;
+  line-height: 1.45;
+  color: var(--chalk-dim);
+  word-break: break-all;
+}
+
+.note {
+  margin-top: 0.7cqh;
+  font-size: 0.7cqw;
+  line-height: 1.45;
+  color: var(--chalk-dim);
+}
+.note b { font-family: var(--mono); font-weight: 400; color: var(--brass); }
+
+/* --- The two things you type --- */
+.field {
+  display: grid;
+  grid-template-columns: 3.6cqw 1fr;
+  align-items: center;
+  gap: 0.5cqw;
+  margin-bottom: 0.7cqh;
+  font-size: 0.68cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--chalk-dim);
+}
+.field input {
+  width: 100%;
+  padding: 0.5cqh 0.5cqw;
+  color: var(--chalk);
+  background: rgba(10, 16, 48, .85);
+  border: none;
+  border-radius: 0.25cqw;
+  box-shadow: inset 0 0 0 0.06cqw rgba(215, 169, 75, .3);
+  font-family: var(--mono);
+  font-size: 0.82cqw;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* --- The instructions --- */
+.orders {
+  margin: 0.8cqh 0 0;
+  padding-left: 1cqw;
+  font-size: 0.8cqw;
+  line-height: 1.7;
+  color: var(--chalk-dim);
+}
+.orders kbd {
+  display: inline-block;
+  min-width: 1.5cqw;
+  margin-right: 0.25cqw;
+  padding: 0 0.35cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  text-align: center;
+  color: var(--chalk);
+  background: rgba(215, 169, 75, .18);
+  box-shadow: inset 0 0 0 0.05cqw rgba(215, 169, 75, .45);
+}
+
+/* --- What each thing is worth --- */
+.scoring {
+  margin: 0.7cqh 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78cqw;
+  color: var(--chalk-dim);
+}
+.scoring li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  padding: 0.3cqh 0;
+  border-top: 0.05cqw solid rgba(246, 241, 228, .12);
+}
+.scoring b {
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  color: var(--brass-lit);
+}
+
+/* --- The keys at the bottom of the rack --- */
+.panel-keys {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7cqh;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6cqw;
+  padding: 1.1cqh 0.8cqw;
+  border: none;
+  border-radius: 0.5cqw;
+  font-family: var(--display);
+  font-size: 1.05cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--brass-lit) 0%, var(--brass) 100%);
+  box-shadow: 0 0.5cqh 0 var(--brass-deep), 0 0.9cqh 1.4cqh rgba(0, 0, 0, .4);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  color: #fff3ec;
+  background: linear-gradient(180deg, #ff9068 0%, #d8542c 100%);
+  box-shadow: 0 0.5cqh 0 #8a2f13, 0 0.9cqh 1.8cqh rgba(255, 122, 77, .3);
+}
+.key-thin {
+  padding: 0.8cqh 0.8cqw;
+  font-family: var(--label);
+  font-size: 0.82cqw;
+  font-weight: 700;
+  color: var(--chalk);
+  background: rgba(246, 241, 228, .12);
+  box-shadow: inset 0 0 0 0.06cqw rgba(215, 169, 75, .45);
+}
+.key kbd {
+  padding: 0 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  letter-spacing: 0;
+  background: rgba(0, 0, 0, .18);
+}
+.key:hover:not(:disabled) { transform: translateY(-0.2cqh); }
+.key:active:not(:disabled) { transform: translateY(0.45cqh); box-shadow: 0 0.1cqh 0 var(--brass-deep); }
+.key:disabled { cursor: default; filter: grayscale(.6); opacity: .42; }
+
+:focus-visible { outline: 0.28cqw solid var(--brass-lit); outline-offset: 0.28cqw; }
+/* The screen takes the keyboard once a round starts, so it says so. */
+#screen:focus-visible { outline: 0.3cqw solid var(--live); outline-offset: -0.3cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key { transition: none; }
+  .key:hover:not(:disabled), .key:active:not(:disabled) { transform: none; }
+  .cable i.there, .cable i.back { animation: none; }
+}
+
+/* --- Narrow screens: the board stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .board {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .board::before, .board::after { display: none; }
+  .c-plate, .c-screen, .c-status, .c-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  .c-plate { order: 1; }
+  .c-screen { order: 2; }
+  .c-status { order: 3; }
+  .c-rack { order: 4; }
+  .c-plate { flex-wrap: wrap; margin-bottom: 12px; padding: 0 12px 0 0; min-height: 52px; border-radius: 8px; }
+  .plate-tab { width: 28px; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .panel { padding: 12px 14px 14px; border-radius: 8px; }
+  .panel-title { margin-bottom: 8px; font-size: 11px; }
+  .panel-board { flex: none; }
+  .table { max-height: none; padding: 6px 10px; }
+  .table li { grid-template-columns: 22px 1fr auto; gap: 8px; padding: 5px 0; font-size: 14px; }
+  .table .rank { font-size: 12px; }
+  .table .score { font-size: 16px; }
+  .table .empty { font-size: 13px; }
+  .wire { gap: 6px; margin-bottom: 10px; font-size: 10px; }
+  .lamp { width: 14px; height: 14px; }
+  .cable { height: 4px; }
+  .wells div { padding: 6px 4px; }
+  .wells dd { font-size: 14px; }
+  .wells dt { font-size: 9px; }
+  .raw { max-height: 54px; margin-top: 8px; font-size: 11px; }
+  .note { margin-top: 8px; font-size: 12px; }
+  .field { grid-template-columns: 54px 1fr; gap: 8px; margin-bottom: 8px; font-size: 10px; }
+  .field input { padding: 8px; font-size: 14px; border-radius: 4px; }
+  .orders, .orders kbd, .scoring { font-size: 13px; }
+  .orders kbd { min-width: 22px; padding: 0 6px; }
+  .scoring b { font-size: 15px; }
+  .panel-keys { gap: 10px; }
+  .key { padding: 12px 10px; min-height: 48px; font-size: 16px; border-radius: 10px; box-shadow: 0 4px 0 var(--brass-deep), 0 8px 12px rgba(0, 0, 0, .4); }
+  .key-go { box-shadow: 0 4px 0 #8a2f13, 0 8px 14px rgba(255, 122, 77, .3); }
+  .key-thin { font-size: 14px; box-shadow: inset 0 0 0 1px rgba(215, 169, 75, .45); }
+  .key kbd { font-size: 12px; }
+  .plate-name { font-size: 26px; }
+  .plate-read b { font-size: 18px; min-width: 34px; }
+  .plate-read i { font-size: 10px; }
+  .glass { aspect-ratio: 4 / 3; height: auto; border-radius: 10px; }
+  .c-status { margin: 10px 0 14px; font-size: 13px; }
+  .c-rack { gap: 12px; }
+  :focus-visible { outline: 3px solid var(--brass-lit); outline-offset: 3px; }
+  #screen:focus-visible { outline: 3px solid var(--live); outline-offset: -3px; }
+}
