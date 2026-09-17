@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the twenty finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the twenty-one finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -504,18 +504,45 @@ The search counts steps and ignores terrain speed. The tanks still drive at the 
 
 We left these out on purpose: diagonal moves, terrain cost, tanks that block each other, a priority queue, and smoothing the route. Named in the README as good things to try next: corners, forest costing more, painting a trap for A\*, the route length in the squad list, and a bridge on River Crossing.
 
+### 21. Resources
+
+An ore run. The six tanks from project 20 are harvesters now, and the map has ore on it. They dig, drive home, and tip their loads into a refinery while a credits counter climbs.
+
+- A rate times the seconds, moved from pixels to a resource
+- Never taking more than is there
+- A progress bar as one number between 0 and 1
+- A grid of numbers laid over the map
+- A worker's state machine, going round for ever
+
+Project 20 ended with a tank arriving somewhere. Nothing in the first twenty projects produces anything, and a strategy game needs something to spend.
+
+The idea the project exists to teach is project 7's rule, met again where it is less obvious. **A number that grows over time grows by a rate times the seconds.** A harvester digs 25 ore a second, so a frame of it is `25 * seconds`. The bug worth writing once is `digStep` without its `seconds`: the field empties in ten seconds and the run looks wonderful.
+
+The second lesson is the limit that comes with it. Ore moves from a cell into a drum, and from a drum into a refinery, and neither move may take more than is there. `takeOre`, `digStep` and `unloadStep` each end in a `Math.min`, and the README puts the three side by side. Leave one out and nothing crashes, which is what makes it worth naming.
+
+The third is that a bar is a number. `fullness(part, whole)` is three lines and the first job, and eight things on the page read it: six load bars in the squad list, a bar over each harvester, the refinery's bar, the field's bar, and the glow on every patch. An empty `fullness` leaves the whole page flat, so the first job has the largest visible payoff in the repository.
+
+The map keeps its ore in a second grid. `map.cells` says where ore grows and never changes. `field.amount` says how much is left and changes every frame. That is Battleship's pair of grids, and it is why a spent patch still looks like ore ground until the page draws it grey.
+
+`terrain.ts` gains one line and one column, and that is the point. Project 18 promised a new kind of ground would be one line and one picture. `ore` is that line, and `holds` is a column saying how much ore one fresh cell of a ground starts with. `makeField` reads the column, so no file outside the table ever names a kind of ground.
+
+**Seven stubs and two tests, all in `ore.ts` and `ore.test.ts`.** In order: `fullness`, `oreAt`, `nearestOre`, the never-more-than-it-holds test, `takeOre`, `digStep`, the whole-load test, `unloadStep`, and `nextJob`. Measured in a throwaway copy, the checker counts 7 errors at the start and 0 at the end, and Vitest goes from 4 failed and 2 todo to 6 passed.
+
+`nextJob` goes last, because it uses three of the others and closes the loop. It asks four questions in a fixed order, and the order is the lesson. A full harvester standing on a patch answers yes to two of them, so asking "is there ore here?" before "am I full?" leaves it digging a patch it has no room for, for ever.
+
+Measured in Chrome with the answer key: Ore Valley holds 3600 ore in 15 patches and pays about 1450 ore a minute. River Mine holds 4080 in 17, all of it across a river with one bridge, and pays about 1380. Project 20's `findRoute` finds the bridge without being asked.
+
+All six harvesters head for the same patch, because each asks `nearestOre` from the same place at the same moment. Nothing claims a patch. That is deferred on purpose and named in the README.
+
+We left these out on purpose: spending the credits, which is project 22, ore that grows back, a second resource, more than one refinery, and harvesters that queue or plan around each other. Named in the README as good things to try next: ore that grows back, a bigger drum for one harvester, claiming a patch, a second refinery, and a field painted in project 18's editor.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 21 | Resources | Production over time |
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 21. Resources
-
-This project teaches workers, resources, production over time, counters, and progress bars.
 
 ### 22. Building and production queue
 
@@ -557,7 +584,7 @@ Testing starts after TypeScript, and it stays small.
 
 **Runner: Vitest.** It runs TypeScript with no configuration, and npm already arrived at project 17. Put a fifteen-line `expect` helper in the README, so Simon can see what a runner does. Do not make that helper a project. Projects 9 and 17 already taught him to compare hand-written code with a tool.
 
-**Where: projects 18, 19 and 20.** All three are pure logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
+**Where: projects 18 to 21.** All four are pure logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
 
 Project 17 is the wrong place, because it already introduces types.
 
