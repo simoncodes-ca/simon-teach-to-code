@@ -188,6 +188,18 @@ Files: `17-typescript/tanks.html`, `17-typescript/styles.css`, `17-typescript/nu
 
 This one does not open by double-clicking. Open a terminal in `17-typescript`, run `npm install` once, then run `npm run dev`.
 
+### Map editor
+
+A map on a drafting table, under glass. You pick grass, road, sand, forest, water or rock, then click and drag to paint it. Give the map a name and save it.
+
+Every kind of ground is one line in a table. The palette, the pictures and the saved maps all read that table, so a new kind of ground is one new line.
+
+You write seven functions: making a map, painting it, counting it, and turning it into letters and back. You also write your first two tests, which are small programs that check your functions give the right answers. You write each test before the function it checks.
+
+Files: `18-editor/editor.html`, `18-editor/styles.css`, `18-editor/numbers.ts`, `18-editor/terrain.ts`, `18-editor/map.ts`, `18-editor/map.test.ts`, `18-editor/rack.ts`, `18-editor/editor.ts`, `18-editor/server.ts`, `18-editor/package.json`.
+
+Open three terminals in `18-editor`. Run `npm install` once. Then run `npm run dev` in the first, `npm run server` in the second, and `npm test` in the third.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -207,12 +219,13 @@ This one does not open by double-clicking. Open a terminal in `17-typescript`, r
 15. **Then write a server.** You learn that a server is just a second program, and that two programs only ever ask each other for things. You also learn `await`, which is how a program waits for an answer without freezing.
 16. **Then build Tank Duel.** You learn to drive at any angle, and to stop at a wall by taking back the part of a move that hit. A bounce turns out to be the same trick with one more line.
 17. **Then add types to it.** You learn what a type is, and what it catches before the game runs. You also learn what it cannot catch, and you install your first tools with npm.
+18. **Then build the map editor.** You learn to describe things in a table instead of in code. You also write your first tests, and you write each one before the function it checks.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-The map editor is next. It is the first program written in TypeScript from the first line, and it brings your first tests.
+Unit selection is next. You click a tank to select it, drag a box round several, and send them across a map made in the editor.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

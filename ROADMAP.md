@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the seventeen finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the eighteen finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -424,28 +424,42 @@ We left these out on purpose: tests, which start at project 18, and classes, `in
 
 Every project from here on uses TypeScript.
 
+### 18. Map editor
+
+A surveyor's drafting table. You paint six kinds of ground onto a 20 by 15 map, name it, and save it to a server. It is the first project with tests.
+
+- Content as data: a table that describes every kind of ground
+- Map data kept apart from the pictures that show it
+- Turning a map into rows of letters, and back again
+- Saving and loading through a server, the same shape as project 15's
+- Tests with Vitest, and writing a test before its function
+
+Project 11 read a map written as rows of characters, and project 16 read three. This project writes them and reads them back, so every map the strategy game uses can come from here.
+
+The idea the project exists to teach is that **what a thing is belongs in a table, not in the code.** `terrain.ts` is one table, and each line holds a terrain's letter, name, picture, colour, `walkable` and `speed`. The palette, the picture loader, the hover panel and the learner's own save and load functions all read that table. None of them names a kind of ground. A new terrain is one line and one picture, and `TerrainKey` is `keyof typeof TERRAIN`, so the type follows the table as well.
+
+The second lesson is that the map is only data. `map.cells` holds terrain keys and nothing else. The window draws them as pictures, and the Saved map panel draws the same cells as letters, live. Paint one cell and both change. `map.ts` imports nothing but the table, which is what lets the editor, the server and the tests all use it.
+
+The third is tests, and they answer a question Simon already has. Checking a grid function by clicking is slow. `map.test.ts` holds four finished tests and two `test.todo` stubs. He writes each test before the function it checks, so the failed count goes up at jobs 3 and 8 before it comes down. The README shows a fifteen-line `test` and `expect`, so the runner is a tool doing a job he could do himself.
+
+**Seven function stubs and two test stubs.** In order: `makeMap`, `isInside`, the painting-outside test, `paintCell`, `countTerrain`, `mapToLines`, `terrainFor`, the round-trip test, and `linesToMap`. Measured in a throwaway copy, the checker counts 7 errors at the start and 0 at the end, and Vitest goes from 4 failed and 2 todo to 6 passed. The README prints both counts after every job.
+
+The server is given in full, because project 15 taught every idea in it. It keeps one JSON file per map, one row of letters per line, so a saved map is readable in an editor. It calls the learner's `linesToMap` before it writes anything, so one function guards all three programs. Node runs `server.ts` directly with its own type stripping, which is why every import in the project ends in `.ts`.
+
+The page names the next empty function by trying each one on a tiny map of its own when it loads. The `#demo` hashes stay retired. With modules, a stand-in for an empty function would sit in a file the learner can open, and it would give the answer away.
+
+We left these out on purpose: undo, flood fill, which is project 20's frontier, maps of other sizes, a map larger than the window, deleting maps, and units or buildings on the map. Named in the README as good things to try next: snow, a bridge, a test for `countTerrain`, a broken map file, and a border function written test first.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 18 | Map editor | Content as data, and the first tests |
 | 19 | Unit selection | Selecting units and commanding them |
 | 20 | Pathfinding | Finding a route around walls |
 | 21 | Resources | Production over time |
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 18. Map editor
-
-- Grid editing and terrain types
-- Saving and loading maps through the server from project 15
-- Map data kept separate from how the map is drawn
-- **Content as data**: terrain types, and later unit stats, live in a table instead of in code
-
-Content as data is the idea the whole strategy game depends on.
-
-The first tests live here. See "Testing" below.
 
 ### 19. Unit selection
 
