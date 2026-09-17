@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Star Catch</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="board">
+    <div class="c-plate">
+      <span class="plate-tab" aria-hidden="true"></span>
+      <span class="plate-name">Star <em>Catch</em></span>
+      <span class="plate-read" aria-label="Caught this round">
+        <b id="caughtRead">0</b><i>caught</i>
+      </span>
+      <span class="plate-read plate-clock" aria-label="Seconds left in this round">
+        <i>left</i><b id="clockRead">30</b>
+      </span>
+    </div>
+
+    <section class="c-screen" aria-label="The meadow">
+      <div class="glass">
+        <canvas id="screen" width="1024" height="768" tabindex="0" aria-label="Stars falling into a meadow at night. Use the left and right arrows to move the net"></canvas>
+        <div class="sheen" aria-hidden="true"></div>
+        <div class="shade" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="c-rack">
+      <div class="panel panel-board">
+        <p class="panel-title">The board</p>
+        <ol class="table" id="table" aria-label="The shared score board">
+          <li class="empty">Nothing asked for yet. Press Ask for the board.</li>
+        </ol>
+        <p class="note" id="boardNote">Everybody who plays is on this one list.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">The line</p>
+        <div class="wire" role="img" aria-label="The line between this page and the server">
+          <span class="end">page</span>
+          <span class="lamp" id="askLamp"></span>
+          <span class="cable"><i id="pulse"></i></span>
+          <span class="lamp" id="answerLamp"></span>
+          <span class="end">server</span>
+        </div>
+        <dl class="wells">
+          <div><dt>Asked</dt><dd id="askRead">&mdash;</dd></div>
+          <div><dt>Answer</dt><dd id="statusRead">&mdash;</dd></div>
+        </dl>
+        <p class="raw" id="rawRead">Nothing has been said yet.</p>
+      </div>
+
+      <div class="panel">
+        <p class="panel-title">You</p>
+        <label class="field"><span>Name</span><input id="who" type="text" maxlength="12" autocomplete="off" spellcheck="false" placeholder="Simon"></label>
+        <label class="field"><span>Server</span><input id="where" type="text" autocomplete="off" spellcheck="false" placeholder="http://localhost:4000"></label>
+        <ul class="orders">
+          <li><kbd>&larr;</kbd><kbd>&rarr;</kbd> move the net</li>
+        </ul>
+        <ul class="scoring">
+          <li><span>Gold star</span><b>1</b></li>
+          <li><span>Blue star</span><b>3</b></li>
+          <li><span>A round lasts</span><b>30s</b></li>
+        </ul>
+      </div>
+
+      <div class="panel panel-keys">
+        <button class="key key-go" id="start" type="button" aria-keyshortcuts="Enter">Play <kbd aria-hidden="true">Enter</kbd></button>
+        <button class="key" id="send" type="button">Send my score</button>
+        <button class="key key-thin" id="refresh" type="button">Ask for the board</button>
+      </div>
+    </aside>
+
+    <p class="c-status" id="status" aria-live="polite"></p>
+  </main>
+  <script src="phaser.min.js"></script>
+  <script src="scores.js"></script>
+</body>
+</html>

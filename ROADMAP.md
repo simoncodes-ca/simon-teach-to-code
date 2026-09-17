@@ -334,11 +334,41 @@ The rack makes the split measurable rather than a matter of taste. It counts the
 
 We left these out on purpose: `import` and `export`, npm and a bundler, which all arrive together at project 17, and any change whatsoever to the game. Named in the README as good things to try next: breaking the script order, giving two files one name, moving a function to the wrong file, and adding a seventh file for the sounds.
 
+### 15. Cutover: client and server
+
+Star Catch, a thirty-second catching game, and a score board that two computers share. It is the first project with two programs in it, and the first that needs a terminal to play properly.
+
+- Why a page cannot do some things alone
+- A server as a second program
+- Requests and responses, as `GET` and `POST`
+- `fetch`, plus `async` and `await`, taught here as the lesson
+- JSON as the thing the two programs send each other
+- Never trusting what arrives
+
+Project 13 saved a best score in the browser's notebook. That notebook belongs to one browser on one machine, and nobody else can ever see it. This project is the smallest thing that genuinely needs a second program.
+
+The idea it exists to teach is that **a server is just another program, and the two of them only ever say two things to each other.** `GET /scores` asks for the board. `POST /scores` carries a score to it. Both are the same two lines of `fetch`, and the second one has an object in the middle.
+
+The second lesson is `await`, and it arrives because the project needs it rather than to be demonstrated. Two `await`s per function: one for the answer crossing the network, one for reading the words out of it. A missing one leaves `Promise { <pending> }` on the page, which the README names as a bug to expect.
+
+The third is the one that only appears once strangers can talk to your program. `isGoodScore` is six lines, and it is the most serious function in the repository so far. `addScore` then stores a name and a number, and nothing else about a person.
+
+The game is deliberately small and entirely given. Stars fall, a net catches them, gold is worth 1 and blue 3, and a round is thirty seconds so that two scores are comparable. Every idea in it was taught by projects 7 to 12.
+
+The rack makes the conversation visible rather than described. Two lamps and a cable light up in turn, the wells name what was asked and what came back, and the raw line shows the server's exact words before anything is done with them. The terminal shows the same conversation from the other side.
+
+The browser's own permission question earns a section. A double-clicked page counts as coming from nowhere, so every request needs the three lines in `allowTheBrowser`. Removing them breaks everything with an error that never mentions them, which is why the README asks for it to be broken once.
+
+Six stubs, split three and three across two files, and each file carries its own answer key. The server's three come first, because the page has nothing to talk to until they exist.
+
+We left these out on purpose: logins, two-player over the network, and real-time sync. Network multiplayer is a much larger lesson than this project. Named in the README as good things to try next: a board for today, counting the rounds, refusing an impossible score, keeping one score per person, and a second game on the same server.
+
+The browser half still opens by double-clicking. The server runs from a terminal, and it is the one thing in the first sixteen projects that does.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 15 | **Cutover: client and server** | Two programs that talk, and `await` |
 | 16 | Tank game | The last step before a strategy game |
 | 17 | **Cutover: TypeScript** | Types, npm, and a build step |
 | 18 | Map editor | Content as data, and the first tests |
@@ -348,22 +378,6 @@ We left these out on purpose: `import` and `export`, npm and a bundler, which al
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 15. Cutover: client and server
-
-Build a shared high-score table. It holds Simon's scores and yours, on one list, from two computers.
-
-- Why a page cannot do some things alone
-- A server as a second program
-- Requests and responses
-- `fetch`, plus **`async` and `await`**, taught here as the lesson
-- JSON as the thing the two programs send each other
-
-This is the smallest thing that truly needs a server. It is one request each way.
-
-We leave these out on purpose: logins, two-player over the network, and real-time sync. Network multiplayer is a much larger lesson than this project.
-
-The browser half still opens by double-clicking. The server runs from a terminal.
 
 ### 16. Tank game
 

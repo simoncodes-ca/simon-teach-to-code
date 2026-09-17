@@ -150,6 +150,20 @@ The rack down the side counts the jobs each file does while you play.
 
 Files: `14-split/split.html`, `14-split/styles.css`, `14-split/numbers.js`, `14-split/record.js`, `14-split/world.js`, `14-split/runner.js`, `14-split/rack.js`, `14-split/game.js`, `14-split/phaser.min.js`.
 
+### Client and server
+
+Stars fall into a meadow at night. You catch them in a net for thirty seconds. Then your score leaves the computer.
+
+This project has two programs in it. The page is the one you know. The second one is a server, and it runs in a terminal instead of a browser. It holds one score board for everybody who plays.
+
+You write six functions this time, three in each program. The server's three sort the board, check that an arriving score is really a score, and add it to the list. The page's three ask for the board, draw it, and send your own score.
+
+Your best score and mine end up on one list, from two computers. Nothing you have written before could do that.
+
+Files: `15-scores/scores.html`, `15-scores/styles.css`, `15-scores/scores.js`, `15-scores/server.js`, `15-scores/scores.json`, `15-scores/phaser.min.js`.
+
+Start the server first. Open a terminal in `15-scores` and run `node server.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -166,6 +180,7 @@ Files: `14-split/split.html`, `14-split/styles.css`, `14-split/numbers.js`, `14-
 12. **Then build the cave flyer.** You learn cameras. Screen position is world position minus camera position, and that one subtraction puts the whole cave in the window.
 13. **Then build Rooftop Run.** You learn how a game with no end makes its world as you go, and throws away what you have passed. Your best score is the first thing you write that lives through closing the page.
 14. **Then split it into six files.** You write nothing new. You learn where code goes, why the order of the script tags matters, and how git remembers every version of a program.
+15. **Then write a server.** You learn that a server is just a second program, and that two programs only ever ask each other for things. You also learn `await`, which is how a program waits for an answer without freezing.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
@@ -173,8 +188,8 @@ More projects will appear here over time. `ROADMAP.md` lists all of them. `showc
 
 You have a library now, so the games get bigger.
 
-1. **Client and server.** You write a second program, so two computers can share one score table.
-2. **Tank game.** Driving, aiming and firing. It is the last step before a strategy game.
+1. **Tank game.** Driving, aiming and firing. It is the last step before a strategy game.
+2. **TypeScript.** You rewrite the tank game with types. From here you install things, and the page needs a build step.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 
