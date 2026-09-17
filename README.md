@@ -224,6 +224,18 @@ Files: `20-pathfinding/paths.html`, `20-pathfinding/styles.css`, `20-pathfinding
 
 Open two terminals in `20-pathfinding`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
 
+### Resources
+
+The six tanks are harvesters now, and there is ore on the map. They drive out to a patch, dig until they are full, drive home to the refinery, and tip the load in. The credits counter climbs while you watch.
+
+A number that grows over time grows by a rate times the seconds, and it can never take more than is there. That is the whole economy, and both halves of it are one `Math.min`.
+
+You write seven functions: how full something is, the ore in a cell, the closest patch, taking ore out of a cell, digging, tipping a load in, and what a harvester should do next. You also write two tests. The last function closes the loop, and after that the run goes round on its own.
+
+Files: `21-resources/ore.html`, `21-resources/styles.css`, `21-resources/numbers.ts`, `21-resources/terrain.ts`, `21-resources/map.ts`, `21-resources/paths.ts`, `21-resources/units.ts`, `21-resources/ore.ts`, `21-resources/ore.test.ts`, `21-resources/rack.ts`, `21-resources/game.ts`, `21-resources/package.json`.
+
+Open two terminals in `21-resources`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -246,12 +258,13 @@ Open two terminals in `20-pathfinding`. Run `npm install` once. Then run `npm ru
 18. **Then build the map editor.** You learn to describe things in a table instead of in code. You also write your first tests, and you write each one before the function it checks.
 19. **Then command the tanks.** You learn that a click only changes what a tank remembers, and the frame does the driving. One order to a group turns out to be one goal for each tank.
 20. **Then teach the tanks to find a way.** You learn how a search spreads from a frontier, and how an empty frontier proves there is no route. Breadth-first and A\* turn out to differ in one choice.
+21. **Then run an ore field.** You learn that anything which grows over time grows by a rate times the seconds, and that it must never take more than is there. One small function turns out to draw every bar on the page.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-Resources are next. Workers gather, production takes time, and counters and progress bars show it happening.
+The production queue is next. The credits finally buy something, building takes time, and a button stays grey until you can afford what is on it.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

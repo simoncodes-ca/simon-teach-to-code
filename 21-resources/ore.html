@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Ore Run</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="post">
+    <div class="d-plate">
+      <span class="plate-bolts" aria-hidden="true"></span>
+      <span class="plate-name">Ore <em>Run</em></span>
+      <span class="plate-read plate-map" aria-label="The map the harvesters are on">
+        <i>map</i><b id="mapRead">&mdash;</b>
+      </span>
+      <span class="plate-read plate-credits" aria-label="Credits in the refinery" aria-live="polite">
+        <i>credits</i><b id="creditsRead">&mdash;</b>
+      </span>
+      <span class="plate-read" aria-label="Harvesters with a job">
+        <i>working</i><b id="workingRead">&mdash;</b>
+      </span>
+    </div>
+
+    <section class="d-screen" aria-label="The map">
+      <div class="board">
+        <canvas id="screen" width="960" height="720" tabindex="0" aria-label="The map, seen from above, with six harvesters and the refinery on it. Pick harvesters and click the ground to send them, or leave them to work on their own"></canvas>
+        <div class="glare" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="d-rack">
+      <div class="card card-squad">
+        <p class="card-title">Squad <span class="card-note">click a name to pick it</span></p>
+        <ul class="squad" id="squad" aria-label="The six harvesters"></ul>
+      </div>
+
+      <div class="card card-refinery">
+        <p class="card-title">Refinery <span class="card-note">cell 4, 10</span></p>
+        <dl class="wells wells-three">
+          <div><dt>Ore a minute</dt><dd id="rateRead">&mdash;</dd></div>
+          <div><dt>Loads tipped</dt><dd id="loadsRead">&mdash;</dd></div>
+          <div><dt>Tipping now</dt><dd id="tippingRead">&mdash;</dd></div>
+        </dl>
+        <div class="bar bar-wide" role="img" aria-label="How full the harvester at the refinery still is">
+          <span id="refineryBar"></span>
+        </div>
+      </div>
+
+      <div class="card card-field">
+        <p class="card-title">Field <span class="card-note">ore left on the map</span></p>
+        <dl class="wells wells-three">
+          <div><dt>Patches</dt><dd id="patchesRead">&mdash;</dd></div>
+          <div><dt>Ore left</dt><dd id="leftRead">&mdash;</dd></div>
+          <div><dt>Taken</dt><dd id="takenRead">&mdash;</dd></div>
+        </dl>
+        <div class="bar bar-wide" role="img" aria-label="How much of the field has been dug out">
+          <span id="fieldBar"></span>
+        </div>
+      </div>
+
+      <div class="card card-mouse">
+        <p class="card-title">Under the mouse</p>
+        <dl class="wells wells-three">
+          <div><dt>Cell</dt><dd id="cellRead">&mdash;</dd></div>
+          <div><dt>Ground</dt><dd id="groundRead">&mdash;</dd></div>
+          <div><dt>Ore</dt><dd id="cellOreRead">&mdash;</dd></div>
+          <div><dt>Full</dt><dd id="cellFullRead">&mdash;</dd></div>
+          <div><dt>Nearest</dt><dd id="nearestRead">&mdash;</dd></div>
+          <div><dt>Steps to it</dt><dd id="nearStepsRead">&mdash;</dd></div>
+        </dl>
+      </div>
+
+      <div class="card card-maps">
+        <p class="card-title">Maps <span class="card-note">from the maps folder</span></p>
+        <ul class="map-list" id="mapList" aria-label="Maps to play on"></ul>
+      </div>
+    </aside>
+
+    <p class="d-status" id="status" aria-live="polite"></p>
+  </main>
+  <script type="module" src="game.ts"></script>
+</body>
+</html>

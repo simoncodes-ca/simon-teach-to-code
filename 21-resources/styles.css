@@ -1,0 +1,482 @@
+/* ============================================================
+   Resources: a refinery weighbridge office. A blue-grey steel
+   desk in the colours of the mine, a stencilled name plate,
+   the yard under a plotting sheet, and graph-paper weigh
+   tickets clipped down the side.
+
+   The desk is one box. Every region on it is placed as a
+   percentage of that box, so the whole desk scales together
+   like one photograph. The same frame as projects 19 and 20.
+   ============================================================ */
+
+:root {
+  --steel: #3b4a55;
+  --steel-lit: #5b6d7a;
+  --steel-deep: #1b242b;
+  --night: #0d1216;
+  --paper: #eef1ea;
+  --paper-deep: #d3dbd2;
+  --paper-line: rgba(52, 104, 132, .16);
+  --ink: #1d2830;
+  --ink-soft: rgba(29, 40, 48, .64);
+  --signal: #ff9a2e;
+  --signal-deep: #b3621a;
+  --amber: #ffbe5c;
+  --amber-deep: #b3761a;
+  --alarm: #e04a3a;
+  --stencil: "Impact", "Haettenschweiler", "Arial Narrow Bold", "Arial Black", sans-serif;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--ink);
+  background: #06090b radial-gradient(ellipse at 50% 12%, #2a3843 0%, #10171c 62%, #040607 100%);
+  container-type: size;
+}
+
+/* The desk: painted steel, lit from the top left, with faint brush marks. */
+.post {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    radial-gradient(ellipse at 12% 4%, rgba(210, 232, 244, .12) 0%, rgba(236, 240, 200, 0) 44%),
+    repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, .05) 0 0.12cqh,
+      rgba(0, 0, 0, 0) 0.12cqh 0.9cqh),
+    linear-gradient(168deg, var(--steel-lit) 0%, var(--steel) 46%, var(--steel-deep) 100%);
+  border: 1.1cqw solid #131a1f;
+  border-radius: 1cqw;
+  box-shadow:
+    inset 0 0 0 0.18cqw rgba(255, 154, 46, .16),
+    inset 0 1cqh 7cqh rgba(0, 0, 0, .35),
+    0 3cqh 8cqh rgba(0, 0, 0, .75);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.d-plate  { position: absolute; left: 3%;    top: 4%;    width: 65.4%; height: 7.4%; }
+.d-screen { position: absolute; left: 3%;    top: 13.2%; width: 65.4%; height: 73.6%; }
+.d-status { position: absolute; left: 3%;    top: 88.6%; width: 65.4%; height: 7.4%; }
+.d-rack   { position: absolute; left: 70.6%; top: 4%;    width: 26.4%; height: 92%; }
+
+/* --- The name plate: dark steel, stencilled, bolted at both ends --- */
+.d-plate {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  padding: 0 2cqw;
+  border-radius: 0.3cqw;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .06) 0%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(180deg, #26313a 0%, #151c22 100%);
+  box-shadow:
+    inset 0 0 0 0.08cqw rgba(255, 154, 46, .3),
+    inset 0 0.25cqh 0.6cqh rgba(255, 255, 255, .06),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .5);
+}
+/* Two bolts, one at each end. */
+.plate-bolts {
+  position: absolute;
+  inset: 50% 0.5cqw auto;
+  height: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 40% 40%, #c6d0d6 0 0.12cqw, #76838c 0.12cqw 0.28cqw, #2e373e 0.28cqw 0.36cqw, rgba(0, 0, 0, 0) 0.36cqw) 0    50% / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 40% 40%, #c6d0d6 0 0.12cqw, #76838c 0.12cqw 0.28cqw, #2e373e 0.28cqw 0.36cqw, rgba(0, 0, 0, 0) 0.36cqw) 100% 50% / 1cqw 1cqw no-repeat;
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--stencil);
+  font-size: 2.3cqw;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e6eef2;
+}
+/* "Finder" is in route orange, the colour of routes and picking. */
+.plate-name em {
+  font-style: normal;
+  color: var(--signal);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.25cqw;
+  background: #0a0e11;
+  box-shadow: inset 0 0 0 0.06cqw rgba(255, 154, 46, .35);
+}
+.plate-read i {
+  font-style: normal;
+  font-size: 0.72cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(226, 236, 242, .55);
+}
+.plate-read b {
+  min-width: 1.6cqw;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 1.3cqw;
+  color: var(--signal);
+}
+.plate-credits b {
+  min-width: 3.4cqw;
+  font-size: 1.6cqw;
+  color: var(--amber);
+}
+.plate-map b {
+  max-width: 14cqw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- The map, framed in steel --- */
+.d-screen { display: grid; place-items: center; }
+.board {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.3cqw;
+  background: var(--night);
+  box-shadow:
+    0 0 0 0.45cqw #131a1f,
+    0 0 0 0.6cqw rgba(255, 154, 46, .4),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .6);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+/* The plotting sheet laid over the map: a faint shine, and dark edges. */
+.glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, .06) 44%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 70%, rgba(13, 18, 22, .34) 100%);
+  box-shadow: inset 0 0 0 0.12cqw rgba(0, 0, 0, .5);
+}
+
+/* --- The line under the map --- */
+.d-status {
+  display: flex;
+  align-items: center;
+  padding: 0 0.4cqw;
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  line-height: 1.35;
+  color: var(--signal);
+  text-shadow: 0 0.15cqh 0 rgba(0, 0, 0, .6);
+}
+
+/* --- The route cards down the right-hand side --- */
+.d-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqh;
+}
+.card {
+  position: relative;
+  padding: 1.5cqh 1cqw 1.3cqh;
+  border-radius: 0.3cqw;
+  background:
+    repeating-linear-gradient(0deg, var(--paper-line) 0 0.08cqh, rgba(0, 0, 0, 0) 0.08cqh 2.2cqh),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  box-shadow:
+    inset 0 0.2cqh 0.5cqh rgba(255, 255, 255, .45),
+    0 0.5cqh 1.3cqh rgba(0, 0, 0, .45);
+}
+/* A steel clip across the top of each card. */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -0.5cqh;
+  left: 50%;
+  width: 5cqw;
+  height: 1.2cqh;
+  transform: translateX(-50%);
+  border-radius: 0.2cqw;
+  background: linear-gradient(180deg, #a6b2ba 0%, #56636c 100%);
+  box-shadow: 0 0.2cqh 0.4cqh rgba(0, 0, 0, .45);
+}
+.card-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  margin-bottom: 0.9cqh;
+  padding-bottom: 0.5cqh;
+  border-bottom: 0.08cqw solid rgba(29, 40, 48, .35);
+  font-family: var(--stencil);
+  font-size: 1.05cqw;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.card-note {
+  font-family: var(--label);
+  font-size: 0.66cqw;
+  letter-spacing: 0;
+  text-transform: none;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* The squad: one row for each harvester. */
+.card-squad { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.squad {
+  flex: 1;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.6cqh;
+  padding: 0;
+  list-style: none;
+}
+.squad li {
+  display: grid;
+  grid-template-columns: 1fr 5.4cqw 2.9cqw 3.4cqw;
+  align-items: center;
+  gap: 0.4cqw;
+  padding: 0 0.5cqw 0 0.2cqw;
+  border-radius: 0.25cqw;
+  background: rgba(255, 255, 255, .45);
+  box-shadow: inset 0 0 0 0.06cqw rgba(29, 40, 48, .16);
+  transition: background .12s ease;
+}
+.squad li.picked { background: rgba(255, 154, 46, .55); box-shadow: inset 0 0 0 0.12cqw var(--ink); }
+.squad-pick {
+  display: flex;
+  align-items: center;
+  gap: 0.6cqw;
+  padding: 0.5cqh 0.4cqw;
+  border: none;
+  border-radius: 0.2cqw;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  background: none;
+  cursor: pointer;
+}
+.squad-pick:hover .squad-name { text-decoration: underline; }
+.lamp {
+  flex: none;
+  width: 0.9cqw;
+  height: 0.9cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #56626a 0%, #283138 100%);
+  box-shadow: inset 0 0 0 0.06cqw rgba(0, 0, 0, .5);
+}
+.picked .lamp {
+  background: radial-gradient(circle at 35% 35%, #ffe2bd 0%, var(--signal) 45%, var(--signal-deep) 100%);
+  box-shadow: 0 0 0.6cqw rgba(255, 154, 46, .8);
+}
+.squad-name {
+  font-family: var(--stencil);
+  font-size: 1cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.squad-doing {
+  padding: 0.2cqh 0;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.74cqw;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(226, 236, 242, .7);
+  background: #121a20;
+}
+.squad li[data-doing="to-ore"] .squad-doing,
+.squad li[data-doing="home"] .squad-doing,
+.squad li[data-doing="driving"] .squad-doing { color: var(--signal); }
+.squad li[data-doing="digging"] .squad-doing,
+.squad li[data-doing="unloading"] .squad-doing { color: var(--amber); }
+.squad li[data-doing="no-route"] .squad-doing { color: #fff; background: var(--alarm); }
+.squad-load {
+  text-align: right;
+  font-size: 0.7cqw;
+  font-style: italic;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* The number wells under the mouse. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5cqw;
+}
+.wells div {
+  padding: 0.5cqh 0.5cqw;
+  border-radius: 0.25cqw;
+  background: #121a20;
+}
+.wells dt {
+  font-size: 0.6cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(226, 236, 242, .55);
+}
+.wells dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.05cqw;
+  color: var(--signal);
+  white-space: nowrap;
+}
+
+/* Three across under the mouse, so six wells fit in two rows. */
+.wells-three { grid-template-columns: repeat(3, 1fr); }
+.wells-three dd { font-size: 0.95cqw; overflow: hidden; text-overflow: ellipsis; }
+
+/* The Refinery card's wells are amber, the colour of the ore. */
+.card-refinery .wells dd { color: var(--amber); }
+
+/* A bar: a dark track with an amber fill. Every one on the page is
+   set from your `fullness`, as a percentage of its track. */
+.bar {
+  display: block;
+  width: 100%;
+  height: 0.9cqh;
+  border-radius: 0.5cqh;
+  background: #121a20;
+  box-shadow: inset 0 0 0 0.06cqw rgba(0, 0, 0, .5);
+  overflow: hidden;
+}
+.bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 0.5cqh;
+  background: linear-gradient(180deg, #ffe0a8 0%, var(--amber) 55%, var(--amber-deep) 100%);
+  transition: width .1s linear;
+}
+.bar-wide { margin-top: 0.8cqh; height: 1.2cqh; }
+
+/* The maps in the maps folder. */
+.map-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5cqw;
+  padding: 0;
+  list-style: none;
+}
+.map-pick {
+  width: 100%;
+  padding: 0.9cqh 0.5cqw;
+  border: none;
+  border-radius: 0.3cqw;
+  font-family: var(--label);
+  font-size: 0.8cqw;
+  font-weight: 700;
+  color: #e6eef2;
+  background: linear-gradient(180deg, #586a77 0%, #36434c 100%);
+  box-shadow: 0 0.4cqh 0 #1a2228, 0 0.7cqh 1cqh rgba(0, 0, 0, .3);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: transform .12s ease;
+}
+.map-pick:hover { transform: translateY(-0.15cqh); }
+.map-pick[aria-pressed="true"] {
+  color: var(--ink);
+  background: linear-gradient(180deg, #ffc27a 0%, var(--signal) 55%, #d9761c 100%);
+  box-shadow: 0 0.4cqh 0 var(--signal-deep), 0 0.7cqh 1cqh rgba(0, 0, 0, .3);
+}
+
+:focus-visible { outline: 0.22cqw solid var(--alarm); outline-offset: 0.2cqw; }
+#screen:focus-visible { outline: 0.25cqw solid var(--signal); outline-offset: -0.25cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .map-pick, .squad li { transition: none; }
+  .map-pick:hover { transform: none; }
+  .bar span { transition: none; }
+}
+
+/* --- Narrow screens: the desk stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .post {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 14px;
+    border-width: 8px;
+    border-radius: 12px;
+  }
+  .d-plate, .d-screen, .d-status, .d-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  .d-plate { order: 1; }
+  .d-screen { order: 2; }
+  .d-status { order: 3; }
+  .d-rack { order: 4; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .d-plate { flex-wrap: wrap; gap: 8px; margin-bottom: 14px; padding: 10px 18px; }
+  .plate-name { flex-basis: 100%; font-size: 26px; }
+  .plate-credits b { font-size: 22px; min-width: 44px; }
+  .plate-read { padding: 4px 10px; gap: 6px; }
+  .plate-read i { font-size: 10px; }
+  .plate-read b { font-size: 16px; min-width: 20px; }
+  .plate-credits b {
+  min-width: 3.4cqw;
+  font-size: 1.6cqw;
+  color: var(--amber);
+}
+.plate-map b { max-width: 50vw; }
+  .board { width: 100%; height: auto; box-shadow: 0 0 0 4px #131a1f, 0 0 0 6px rgba(255, 154, 46, .4); }
+  .d-status { margin: 12px 0 14px; font-size: 13px; }
+  .d-rack { gap: 18px; }
+  .card { padding: 16px 14px 14px; border-radius: 6px; }
+  .card::before { top: -5px; width: 60px; height: 10px; }
+  .card-title { margin-bottom: 10px; padding-bottom: 6px; font-size: 17px; }
+  .card-note { font-size: 11px; }
+  .squad { gap: 6px; }
+  .squad li { grid-template-columns: 1fr 88px 56px 64px; gap: 6px; padding: 0 8px 0 2px; }
+  .squad li.picked { box-shadow: inset 0 0 0 2px var(--ink); }
+  .squad-pick { gap: 10px; min-height: 44px; padding: 6px; }
+  .lamp { width: 12px; height: 12px; }
+  .squad-name { font-size: 15px; }
+  .squad-doing { padding: 3px 0; font-size: 12px; }
+  .squad-load { font-size: 11px; }
+  .bar { height: 10px; border-radius: 5px; }
+  .bar-wide { margin-top: 10px; height: 14px; }
+  .wells { gap: 8px; }
+  .wells div { padding: 6px 8px; }
+  .wells dt { font-size: 9px; }
+  .wells dd { font-size: 16px; }
+  .wells-three dd { font-size: 15px; }
+  .map-list { gap: 10px; }
+  .map-pick { min-height: 48px; font-size: 14px; box-shadow: 0 4px 0 #1a2228; }
+  .map-pick[aria-pressed="true"] { box-shadow: 0 4px 0 var(--signal-deep); }
+  :focus-visible { outline: 3px solid var(--alarm); outline-offset: 3px; }
+}
