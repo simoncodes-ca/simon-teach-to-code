@@ -208,7 +208,7 @@ Everything else in the game works. Only the record stops living through a refres
 
 ## What comes next
 
-Project 14 does not add a game. It takes one you have already written and splits it into several files.
+Project 14 does not add a game. It takes this one and splits it into six files, in `14-split/`.
 
 Every project up to here has been one JavaScript file. That stops working when a file gets big, and you will have noticed this one is the longest yet.
 

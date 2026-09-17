@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the twelve finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the fourteen finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -308,11 +308,36 @@ The kinds of obstacle sit in a table, and each one carries a `from` field saying
 
 We left these out on purpose: gaps in the rooftop to fall through, a slide as well as a jump, things to collect, more than one life, and a score table shared between two computers, which is project 15. Named in the README as good things to try next: a fourth kind of obstacle, night falling as you run, a double jump, and a mark on the rooftop where your best run ended.
 
+### 14. Cutover: many files
+
+Rooftop Run again, cut into six files. It is the first project with no stubs, and the first that adds no gameplay at all.
+
+- Why one file stops working
+- Several `<script>` tags, in order
+- What each file is responsible for
+- Names shared between files
+- Git: commits, history, and getting back a file you broke
+
+The game is held still on purpose, the same way project 9 held the lookout post still. Same rules, same numbers, same art, same sounds, same stylesheet. Every difference Simon can see is a difference the split made.
+
+Nothing is missing from the six files, and there is no answer key, because there is nothing to answer. He reads a program he wrote himself last week, in a shape he has never seen.
+
+The idea the project exists to teach is that **a file is a job, and it owns the memory for that job.** `record.js` holds the record and is the only file that says `localStorage`. `world.js` holds the obstacle list and is the only file that makes or destroys an obstacle. A wrong best score is now 63 lines to read instead of 1203, and that number is the whole argument.
+
+The second lesson is that the order of the script tags is a real constraint. `numbers.js` needs nobody, so it loads first. `game.js` needs everybody, so it loads last. Moving one tag breaks the page, and the README asks him to do it once.
+
+The third is the cost of shared globals, and it gets equal billing. Two files cannot use one name, and nothing in a file says which other file a name came from. Both are in the README by name, and both are what `import` fixes at project 17. A learner who takes away only "many files are tidier" has learned the wrong half.
+
+The rack makes the split measurable rather than a matter of taste. It counts the jobs each file does, and the counts are unequal on purpose. Measured in a browser over a 25 second run: `rack.js` 1604 jobs and `game.js` 1540, because they work every frame. `world.js` 26 and `runner.js` 24, because they work at moments. `record.js` twice a run. `numbers.js` never, because all it does is remember.
+
+**Git is a chapter in the README, not a project.** Five commands: `git status`, `git diff`, `git add` with `git commit`, `git log --oneline`, and `git restore`. Branches, remotes and merges wait. The point is that a working program is worth a commit, and a broken file can be put back.
+
+We left these out on purpose: `import` and `export`, npm and a bundler, which all arrive together at project 17, and any change whatsoever to the game. Named in the README as good things to try next: breaking the script order, giving two files one name, moving a function to the wrong file, and adding a seventh file for the sounds.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 14 | **Cutover: many files** | One program in several files, and git |
 | 15 | **Cutover: client and server** | Two programs that talk, and `await` |
 | 16 | Tank game | The last step before a strategy game |
 | 17 | **Cutover: TypeScript** | Types, npm, and a build step |
@@ -323,23 +348,6 @@ We left these out on purpose: gaps in the rooftop to fall through, a slide as we
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 14. Cutover: many files
-
-Split a game Simon has already written. Add no new gameplay. The split is the only thing to think about.
-
-- Why one file stops working
-- Several `<script>` tags, in order
-- What each file is responsible for
-- Names shared between files
-
-Every project up to here uses one `.js` file. Every project from here on uses several.
-
-`file://` blocks ES modules, so this project uses `<script>` tags and shared globals. It does not use `import`. That limit ends at project 17.
-
-**Git belongs here too.** Put it in the README as a short chapter, not as a project. Cover commits, history, and getting back a file you broke. Simon will have worked inside a git repository for thirteen projects without hearing about it.
-
-This project has no stubs. `AGENTS.md` should record it as the one exception.
 
 ### 15. Cutover: client and server
 
