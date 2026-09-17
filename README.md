@@ -12,7 +12,7 @@ The JavaScript file is yours. Some of its functions are empty. Each empty functi
 
 Write those functions one at a time, in the order they appear in the file. Each function you finish makes something new happen on the screen.
 
-For every project on this page, you install nothing. Open the HTML file in a browser. Open the JavaScript file in a text editor. Put the two windows side by side. Change the JavaScript, save it, then refresh the browser page.
+For projects 1 to 16, you install nothing. Open the HTML file in a browser. Open the JavaScript file in a text editor. Put the two windows side by side. Change the JavaScript, save it, then refresh the browser page.
 
 ## The projects
 
@@ -176,6 +176,18 @@ Files: `16-tanks/tanks.html`, `16-tanks/styles.css`, `16-tanks/numbers.js`, `16-
 
 You write eight functions: four in `tank.js`, then four in `shells.js`.
 
+### Tank Duel, with types
+
+Tank Duel again. Same tanks, same blocks, same bouncing shells. Nothing about the duel changed.
+
+What changed is the language. The files are TypeScript now, which is JavaScript with types. A type is a written-down shape, and the computer checks every line against it before the game runs.
+
+Every function already works, because you wrote them all in project 16. You write six types: a point, a tank, a shell, a hit, and the signatures of the eight functions. Every type you finish makes the list of errors shorter, until it is empty.
+
+Files: `17-typescript/tanks.html`, `17-typescript/styles.css`, `17-typescript/numbers.ts`, `17-typescript/arena.ts`, `17-typescript/tank.ts`, `17-typescript/shells.ts`, `17-typescript/rack.ts`, `17-typescript/game.ts`, `17-typescript/package.json`.
+
+This one does not open by double-clicking. Open a terminal in `17-typescript`, run `npm install` once, then run `npm run dev`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -194,14 +206,13 @@ You write eight functions: four in `tank.js`, then four in `shells.js`.
 14. **Then split it into six files.** You write nothing new. You learn where code goes, why the order of the script tags matters, and how git remembers every version of a program.
 15. **Then write a server.** You learn that a server is just a second program, and that two programs only ever ask each other for things. You also learn `await`, which is how a program waits for an answer without freezing.
 16. **Then build Tank Duel.** You learn to drive at any angle, and to stop at a wall by taking back the part of a move that hit. A bounce turns out to be the same trick with one more line.
+17. **Then add types to it.** You learn what a type is, and what it catches before the game runs. You also learn what it cannot catch, and you install your first tools with npm.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-The tools change next.
-
-1. **TypeScript.** You rewrite Tank Duel with types. From here you install things, and the page needs a build step.
+The map editor is next. It is the first program written in TypeScript from the first line, and it brings your first tests.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 

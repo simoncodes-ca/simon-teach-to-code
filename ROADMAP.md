@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the sixteen finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the seventeen finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -396,11 +396,38 @@ The map and the four-corner check are given, because projects 11 and 12 made Sim
 
 We left these out on purpose: a computer opponent, a physics engine, a map the player can edit, and power-ups. Named in the README as good things to try next: a fourth arena, pushing a tank exactly to the edge of a block, crates that shells break, a repair kit, and armour that takes more damage from behind.
 
+### 17. Cutover: TypeScript
+
+Tank Duel again, rewritten in TypeScript. It is the first project that needs an install, and the first whose stubs are types instead of function bodies.
+
+- What a type is, and what it catches
+- Types for the tank and the shell from project 16
+- Signatures, `void`, and unions like `'blue' | 'red'`
+- npm, a build step, and a development server
+- `import` and `export`, which the build step now allows
+
+The game is held still, the same way projects 9 and 14 held theirs still. Same rules, same numbers, same art, same page. Every function body is given, copied from project 16's answer keys. Every difference Simon can see is one the types or the tools made.
+
+The idea the project exists to teach is that **a type is the comment that described a thing, turned into code the computer checks.** Project 16 described a tank and a shell in comments, on purpose. Here Simon turns those comments into `type Tank` and `type Shell`, and misspelling `tank.helth` stops being a bug that shows up later somewhere else.
+
+The second lesson is the limit, and it gets equal billing. Types check shape, not sense. An `aimOf` that hands back the turret alone is still a number. The README puts project 16's good bugs next to the mistakes types do catch.
+
+**Six stubs, three per file.** `tank.ts` holds `type Point`, `type Tank`, and the signatures of the four tank functions. `shells.ts` holds `type Shell`, `type Hit`, and the signatures of the four shell functions. Each file carries its own answer key.
+
+**The payoff is the error count, not the game.** Vite strips the types before the browser runs anything, so the duel plays the same with every stub empty. `vite-plugin-checker` prints the errors in the terminal and puts a count badge on the page. Measured with `tsc`: 119 errors to start, 27 after `type Tank`, and 0 when all six are done. The README prints the number to expect after each stub.
+
+`import` and `export` fix the two costs project 14 named: names that clash between files, and names with no visible source. `tanks.html` loads one module, and its imports load the rest. Three small changes to the wiring come from modules. `blocked` takes the tank list as an input, the tanks are never `null`, and the shell list is emptied by the file that owns it.
+
+Phaser moves from a vendored file to npm, at the same version. One of project 9's two double-click settings is gone, because the page is now served.
+
+We left these out on purpose: tests, which start at project 18, and classes, `interface`, generics, enums and a production build. Named in the README as good things to try next: a deliberate misspelling, a third tank colour, a turn typed as `-1 | 0 | 1`, hovering to read a type, and a type for `CONTROLS`.
+
+Every project from here on uses TypeScript.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 17 | **Cutover: TypeScript** | Types, npm, and a build step |
 | 18 | Map editor | Content as data, and the first tests |
 | 19 | Unit selection | Selecting units and commanding them |
 | 20 | Pathfinding | Finding a route around walls |
@@ -408,19 +435,6 @@ We left these out on purpose: a computer opponent, a physics engine, a map the p
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 17. Cutover: TypeScript
-
-Rewrite Tank Duel with types. This works the same way as project 9. Remake something finished, so the new idea is the only thing that changed.
-
-- What a type is, and what it catches
-- Adding types to the entities from project 16
-- npm, a build step, and a development server
-- `import` and `export`, which the build step now allows
-
-Types arrive here, before the strategy projects. Those projects have many kinds of entity to keep straight. Types help across all of them, not only at the end.
-
-Every project from here on uses TypeScript.
 
 ### 18. Map editor
 
