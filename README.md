@@ -236,6 +236,18 @@ Files: `21-resources/ore.html`, `21-resources/styles.css`, `21-resources/numbers
 
 Open two terminals in `21-resources`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
 
+### Building and production
+
+The harvesters keep digging, and now the credits buy something. A build yard beside the refinery sells more harvesters, a power plant, a barracks, a war factory and a tank. Each one costs money, takes time, and waits its turn in a queue.
+
+One function decides whether a button is grey, and what the reason is. The page only shows what it said. The whole build chain — what needs what — is one column in a table of five lines.
+
+You write seven functions: what is already built, whether a prerequisite is met, whether you may build a thing, buying it, building it for a moment, how long the queue has left, and handing over the finished one. You also write two tests. The last function makes the queue move, and after that the yard runs on its own.
+
+Files: `22-production/build.html`, `22-production/styles.css`, `22-production/numbers.ts`, `22-production/terrain.ts`, `22-production/map.ts`, `22-production/paths.ts`, `22-production/units.ts`, `22-production/ore.ts`, `22-production/catalogue.ts`, `22-production/build.ts`, `22-production/build.test.ts`, `22-production/rack.ts`, `22-production/game.ts`, `22-production/package.json`.
+
+Open two terminals in `22-production`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.

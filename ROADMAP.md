@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the twenty-one finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the twenty-two finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -536,17 +536,44 @@ All six harvesters head for the same patch, because each asks `nearestOre` from 
 
 We left these out on purpose: spending the credits, which is project 22, ore that grows back, a second resource, more than one refinery, and harvesters that queue or plan around each other. Named in the README as good things to try next: ore that grows back, a bigger drum for one harvester, claiming a patch, a second refinery, and a field painted in project 18's editor.
 
+### 22. Building and production
+
+A build yard beside project 21's refinery. The credits finally buy something: more harvesters, a power plant, a barracks, a war factory, a tank. Each one costs money and takes time.
+
+- An interface driven by state
+- Enabled and disabled buttons, each with a reason
+- A queue, joined at the back and left from the front
+- Build times
+- Prerequisites as a column in a table
+
+Project 21 made credits and spent them on nothing. This project is the first time a number the learner produced buys anything, and the first time a button on the page can be wrong rather than broken.
+
+The idea the project exists to teach is that **the page shows what a function said, and decides nothing itself.** `canBuild` looks at one line of the catalogue and hands back one word: `'ok'`, `'built'`, `'ordered'`, `'locked'`, `'too dear'` or `'busy'`. Five dead buttons wake up the moment it is written, each with its price, its build time and its own reason underneath. Nothing in `rack.ts` checks a price, and nothing in it names a power plant.
+
+The second lesson is the queue, and it is project 2's, with money attached. One `push` to join the back and one `shift` to leave the front, and nobody is ever built at the same time as anybody else. Clicking a war factory then a harvester makes the harvester wait eighteen seconds, however much it is wanted.
+
+The third is that prerequisites are data. `catalogue.ts` is five lines, and the whole chain — power plant, then barracks, then war factory, then tank — is one `needs` column. A sixth thing to build is a sixth line and no other change. That is the promise project 18 made about grounds, kept for a different kind of content.
+
+The order of the five questions inside `canBuild` is the hour that goes into this project, and it fails differently from project 21's `nextJob`. A wrong order does not break the button, it makes the button lie: a barracks that needs a power plant says "Too dear", and saving up never helps. The README puts the two orders side by side.
+
+Money moves in exactly one function. `startBuild` is the only place credits leave the refinery, and its first line is the `canBuild` check. Removing that line breaks nothing visible, because the buttons are already grey, which is why job 4's test exists.
+
+`ore.ts` is project 21, finished, copied from its answer key, so the harvesters work and the credits climb while the learner writes `build.ts`. The squad starts at three instead of six, so a fourth harvester is the obvious first buy, and the Ore a minute well is where its 400 credits pay for themselves. Measured in Chrome: 998 ore a minute at four units, 1097 at five, 1227 at six.
+
+A building lands on a plot beside the refinery, chosen for it. Placing one by clicking a cell belongs to project 24. A tank drives, and has nothing to shoot at, which is project 23. Both are named in the README as deliberate, not missing.
+
+**Seven stubs and two tests, all in `build.ts` and `build.test.ts`.** In order: `isBuilt`, `needsMet`, `canBuild`, the exact-price test, `startBuild`, `buildStep`, `waitTime`, the one-at-a-time test, and `takeFinished`. Measured in a throwaway copy, the checker counts 7 errors at the start and 0 at the end, and Vitest goes from 4 failed and 2 todo to 6 passed.
+
+Jobs 1 and 2 change nothing on screen on purpose. They are two and three lines each, and job 3 pays for all three at once.
+
+We left these out on purpose: cancelling an order, placing a building by hand, buildings that block a route, power as a resource, two things built at once, repairing and selling. Named in the README as good things to try next: a sixth line in the catalogue, cancelling an order, a price that climbs with each one built, a second queue, and a tank that follows a harvester about.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 22. Building and production queue
-
-This project teaches build times, queues, prerequisites, enabled and disabled buttons, and an interface driven by state.
 
 ### 23. Enemy AI
 
@@ -584,7 +611,7 @@ Testing starts after TypeScript, and it stays small.
 
 **Runner: Vitest.** It runs TypeScript with no configuration, and npm already arrived at project 17. Put a fifteen-line `expect` helper in the README, so Simon can see what a runner does. Do not make that helper a project. Projects 9 and 17 already taught him to compare hand-written code with a tool.
 
-**Where: projects 18 to 21.** All four are pure logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
+**Where: projects 18 to 22.** All five are pure logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
 
 Project 17 is the wrong place, because it already introduces types.
 
