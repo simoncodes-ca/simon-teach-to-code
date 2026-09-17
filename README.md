@@ -200,6 +200,18 @@ Files: `18-editor/editor.html`, `18-editor/styles.css`, `18-editor/numbers.ts`, 
 
 Open three terminals in `18-editor`. Run `npm install` once. Then run `npm run dev` in the first, `npm run server` in the second, and `npm test` in the third.
 
+### Unit selection
+
+A command post with six blue tanks on a map from the editor. Click a tank to pick it, or drag a box round several. Then click the ground, and they drive there.
+
+A click never moves a tank. It only changes what the tank remembers: whether it is picked, and where it is going. Every frame, the tanks read that and drive a little way.
+
+You write eight functions: finding the tank under the mouse, picking one, picking every tank in a box, giving an order, and driving. You also write two tests. The tanks drive in straight lines, so the water stops them, and project 20 fixes that.
+
+Files: `19-units/units.html`, `19-units/styles.css`, `19-units/numbers.ts`, `19-units/terrain.ts`, `19-units/map.ts`, `19-units/units.ts`, `19-units/units.test.ts`, `19-units/rack.ts`, `19-units/game.ts`, `19-units/package.json`.
+
+Open two terminals in `19-units`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -220,12 +232,13 @@ Open three terminals in `18-editor`. Run `npm install` once. Then run `npm run d
 16. **Then build Tank Duel.** You learn to drive at any angle, and to stop at a wall by taking back the part of a move that hit. A bounce turns out to be the same trick with one more line.
 17. **Then add types to it.** You learn what a type is, and what it catches before the game runs. You also learn what it cannot catch, and you install your first tools with npm.
 18. **Then build the map editor.** You learn to describe things in a table instead of in code. You also write your first tests, and you write each one before the function it checks.
+19. **Then command the tanks.** You learn that a click only changes what a tank remembers, and the frame does the driving. One order to a group turns out to be one goal for each tank.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-Unit selection is next. You click a tank to select it, drag a box round several, and send them across a map made in the editor.
+Pathfinding is next. The tanks stop getting stuck at the water, and find a route round it one cell at a time.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 
