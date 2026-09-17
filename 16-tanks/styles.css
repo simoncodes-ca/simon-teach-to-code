@@ -1,0 +1,441 @@
+/* ============================================================
+   Tank Duel: an army field console, seen from the front.
+
+   The console is one box. Every region on it is placed as a
+   percentage of that box, so the whole console scales together
+   like one photograph.
+   ============================================================ */
+
+:root {
+  --olive: #4c5a39;
+  --olive-lit: #6a7b4f;
+  --olive-deep: #1f2616;
+  --scope: #15190f;
+  --hazard: #ffc53d;
+  --hazard-dim: rgba(255, 197, 61, .34);
+  --sand: #f3e6c4;
+  --sand-dim: rgba(243, 230, 196, .6);
+  --blue: #6cc0ff;
+  --red: #ff7a6b;
+  --go: #7ee07a;
+  --stencil: #d7c79a;
+  --ink: #141a10;
+  --display: "Impact", "Haettenschweiler", "Arial Narrow", "Trebuchet MS", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--sand);
+  background: #0b0d08 radial-gradient(ellipse at 50% 16%, #2a3120 0%, #171b11 58%, #080a06 100%);
+  container-type: size;
+}
+
+/* The console itself: painted steel, scuffed at the edges. */
+.depot {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(255, 255, 255, .08) 0%, rgba(255, 255, 255, 0) 40%),
+    repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, .05) 0 1px,
+      rgba(0, 0, 0, 0) 1px 5px),
+    linear-gradient(168deg, var(--olive-lit) 0%, var(--olive) 46%, var(--olive-deep) 100%);
+  border: 1.1cqw solid #394429;
+  border-radius: 1.4cqw;
+  box-shadow:
+    inset 0 0 0 0.2cqw rgba(0, 0, 0, .45),
+    inset 0 1cqh 7cqh rgba(0, 0, 0, .3),
+    0 3cqh 8cqh rgba(0, 0, 0, .7);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.d-plate  { position: absolute; left: 4%;  top: 4.2%;  width: 61%; height: 7.8%; }
+.d-screen { position: absolute; left: 4%;  top: 13.8%; width: 61%; height: 73.6%; }
+.d-status { position: absolute; left: 4%;  top: 89.5%; width: 61%; height: 6%; }
+.d-rack   { position: absolute; left: 68%; top: 4.2%;  width: 28%; height: 91.4%; }
+
+/* --- The stencilled plate across the top --- */
+.d-plate {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  padding: 0 1.8cqw;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e3d6ae 0%, #cdbd8d 58%, #a8976a 100%);
+  border-radius: 0.4cqw;
+  box-shadow:
+    inset 0 0.3cqh 0.7cqh rgba(255, 255, 255, .6),
+    inset 0 -0.6cqh 1.2cqh rgba(60, 48, 20, .35),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .55);
+}
+/* Two rivets holding the plate on, one at each end. */
+.plate-rivets {
+  position: absolute;
+  inset: 50% 0.7cqw auto;
+  height: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 50%, #f6eed6 0 0.2cqw, #7d6f4b 0.2cqw 0.32cqw, rgba(0, 0, 0, 0) 0.32cqw) 0    50% / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 50% 50%, #f6eed6 0 0.2cqw, #7d6f4b 0.2cqw 0.32cqw, rgba(0, 0, 0, 0) 0.32cqw) 100% 50% / 1cqw 1cqw no-repeat;
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 2.4cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 0.14cqh 0 rgba(255, 255, 255, .5);
+}
+/* "Duel" sits on a strip of hazard tape. */
+.plate-name em {
+  margin-left: 0.4cqw;
+  padding: 0 0.6cqw;
+  border-radius: 0.2cqw;
+  font-style: normal;
+  color: var(--ink);
+  background:
+    repeating-linear-gradient(-45deg,
+      rgba(20, 26, 16, .16) 0 0.35cqw,
+      rgba(0, 0, 0, 0) 0.35cqw 0.9cqw),
+    linear-gradient(180deg, var(--hazard) 0%, #e09b12 100%);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35cqw;
+  padding: 0.5cqh 0.8cqw;
+  border-radius: 0.3cqw;
+  background: rgba(21, 25, 15, .92);
+  box-shadow: inset 0 0 0 0.06cqw var(--hazard-dim);
+}
+.plate-read b {
+  min-width: 1.4cqw;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 1.5cqw;
+  color: var(--hazard);
+  text-shadow: 0 0 0.8cqh rgba(255, 197, 61, .6);
+}
+.plate-read i {
+  font-style: normal;
+  font-size: 0.78cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+}
+.plate-blue { box-shadow: inset 0 0 0 0.08cqw rgba(108, 192, 255, .6); }
+.plate-blue b { color: var(--blue); text-shadow: 0 0 0.8cqh rgba(108, 192, 255, .6); }
+.plate-red { box-shadow: inset 0 0 0 0.08cqw rgba(255, 122, 107, .6); }
+.plate-red b { color: var(--red); text-shadow: 0 0 0.8cqh rgba(255, 122, 107, .6); }
+
+/* --- The window onto the arena --- */
+.d-screen { display: grid; place-items: center; }
+.scope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.6cqw;
+  background: var(--scope);
+  box-shadow:
+    inset 0 0 0 0.5cqw #1a1f12,
+    inset 0 0 0 0.75cqw rgba(255, 197, 61, .18),
+    0 0 4cqh rgba(0, 0, 0, .35);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+/* Faint scan lines, as if the arena is watched through a camera. */
+.scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+    rgba(20, 26, 16, .07) 0 1px,
+    rgba(0, 0, 0, 0) 1px 4px);
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 0.75cqw rgba(20, 26, 16, .9);
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 64%, rgba(20, 26, 16, .42) 100%);
+}
+
+/* --- The line stencilled under the window --- */
+.d-status {
+  display: flex;
+  align-items: center;
+  padding: 0 1cqw;
+  font-family: var(--mono);
+  font-size: 0.92cqw;
+  letter-spacing: 0.03em;
+  color: var(--hazard);
+  text-shadow: 0 0 0.7cqh rgba(255, 197, 61, .4);
+}
+
+/* --- The rack down the right-hand side --- */
+.d-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqh;
+}
+.panel {
+  padding: 1cqh 1cqw 1.2cqh;
+  border-radius: 0.4cqw;
+  background: linear-gradient(178deg, rgba(255, 255, 255, .06) 0%, rgba(0, 0, 0, .28) 100%);
+  box-shadow:
+    inset 0 0 0 0.06cqw rgba(215, 199, 154, .22),
+    0 0.5cqh 1.2cqh rgba(0, 0, 0, .45);
+}
+.panel-title {
+  margin-bottom: 0.8cqh;
+  font-size: 0.78cqw;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stencil);
+}
+/* Each tank's panel carries its colour down the left edge. */
+.panel-tank { border-left: 0.35cqw solid; }
+.panel-blue { border-left-color: var(--blue); }
+.panel-blue .panel-title { color: var(--blue); }
+.panel-red { border-left-color: var(--red); }
+.panel-red .panel-title { color: var(--red); }
+
+.health {
+  display: flex;
+  align-items: center;
+  gap: 0.6cqw;
+  margin-bottom: 0.9cqh;
+}
+.health .bar { flex: 1; }
+.health b {
+  min-width: 2.4cqw;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 1.1cqw;
+  color: var(--sand);
+}
+
+/* The number wells. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5cqw;
+  margin: 0;
+}
+.wells-three { grid-template-columns: repeat(3, 1fr); }
+.wells div {
+  padding: 0.5cqh 0.4cqw;
+  text-align: center;
+  border-radius: 0.25cqw;
+  background: rgba(21, 25, 15, .72);
+}
+.wells dt {
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+}
+.wells dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.15cqw;
+  color: var(--hazard);
+}
+.wells-label {
+  margin: 0.9cqh 0 0.5cqh;
+  font-size: 0.62cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sand-dim);
+}
+
+.bar {
+  display: block;
+  height: 0.9cqh;
+  border-radius: 0.45cqh;
+  background: rgba(21, 25, 15, .85);
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--stencil) 0%, var(--hazard) 100%);
+}
+.bar-health { height: 1.4cqh; }
+.bar-health i {
+  background: linear-gradient(90deg, #4fa84b 0%, var(--go) 100%);
+  transition: width .18s ease-out;
+}
+.bar-low i { background: linear-gradient(90deg, #c8331f 0%, var(--red) 100%); }
+.bar-reload { height: 0.6cqh; }
+
+/* --- The controls, one column per tank --- */
+.orders {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78cqw;
+  color: var(--sand-dim);
+}
+.orders th, .orders td {
+  padding: 0.3cqh 0.2cqw;
+  text-align: left;
+  font-weight: normal;
+}
+.orders thead th {
+  font-size: 0.66cqw;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.orders .col-blue { color: var(--blue); }
+.orders .col-red { color: var(--red); }
+.orders tbody tr + tr { border-top: 0.05cqw solid rgba(243, 230, 196, .08); }
+.orders kbd {
+  display: inline-block;
+  min-width: 1.35cqw;
+  margin-right: 0.2cqw;
+  padding: 0 0.3cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  text-align: center;
+  color: var(--sand);
+  background: rgba(255, 197, 61, .14);
+  box-shadow: inset 0 0 0 0.05cqw rgba(255, 197, 61, .38);
+}
+
+/* --- The two keys at the bottom of the rack --- */
+.panel-keys {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqh;
+}
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6cqw;
+  padding: 1.3cqh 0.8cqw;
+  border: none;
+  border-radius: 0.35cqw;
+  font-family: var(--display);
+  font-size: 1.15cqw;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(180deg, #e3d6ae 0%, #b9a878 100%);
+  box-shadow: 0 0.55cqh 0 #6f6343, 0 0.9cqh 1.4cqh rgba(0, 0, 0, .5);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--hazard) 0%, #e09b12 100%);
+  box-shadow: 0 0.55cqh 0 #8a5c08, 0 0.9cqh 1.8cqh rgba(255, 197, 61, .3);
+}
+.key kbd {
+  padding: 0 0.4cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  letter-spacing: 0;
+  background: rgba(0, 0, 0, .16);
+}
+.key:hover:not(:disabled) { transform: translateY(-0.2cqh); }
+.key:active:not(:disabled) {
+  transform: translateY(0.5cqh);
+  box-shadow: 0 0.1cqh 0 #6f6343;
+}
+.key:disabled {
+  cursor: default;
+  filter: grayscale(.7);
+  opacity: .45;
+}
+
+:focus-visible { outline: 0.28cqw solid var(--hazard); outline-offset: 0.28cqw; }
+/* The window takes the keyboard once a game starts, so it says so.
+   The outline sits inside the frame, where the frame cannot clip it. */
+#screen:focus-visible { outline: 0.3cqw solid var(--hazard); outline-offset: -0.3cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key, .bar-health i { transition: none; }
+  .key:hover:not(:disabled), .key:active:not(:disabled) { transform: none; }
+}
+
+/* --- Narrow screens: the console stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .depot {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .d-plate, .d-screen, .d-status, .d-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  /* The status line belongs under the window, whatever the markup
+     order is. */
+  .d-plate { order: 1; }
+  .d-screen { order: 2; }
+  .d-status { order: 3; }
+  .d-rack { order: 4; }
+  .d-plate { flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding: 10px 14px; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .panel { padding: 12px 14px 14px; border-radius: 8px; }
+  .panel-tank { border-left-width: 5px; }
+  .panel-title { margin-bottom: 8px; font-size: 11px; }
+  .health { gap: 10px; margin-bottom: 10px; }
+  .health b { min-width: 36px; font-size: 16px; }
+  .wells div { padding: 6px 4px; }
+  .wells-label { margin: 10px 0 6px; font-size: 11px; }
+  .wells dd { font-size: 18px; }
+  .wells dt { font-size: 9px; }
+  .bar { height: 8px; }
+  .bar-health { height: 12px; }
+  .bar-reload { height: 5px; }
+  .panel-keys { gap: 10px; }
+  .key { min-height: 48px; padding: 12px 10px; font-size: 16px; box-shadow: 0 4px 0 #6f6343, 0 8px 12px rgba(0, 0, 0, .5); }
+  .key-go { box-shadow: 0 4px 0 #8a5c08, 0 8px 14px rgba(255, 197, 61, .3); }
+  .key kbd { font-size: 12px; }
+  .plate-name { flex-basis: 100%; font-size: 26px; }
+  .plate-read b { font-size: 18px; min-width: 22px; }
+  .plate-read i { font-size: 10px; }
+  .scope { aspect-ratio: 4 / 3; height: auto; }
+  .d-status { margin: 10px 0 14px; font-size: 13px; }
+  .d-rack { gap: 12px; }
+  .orders, .orders kbd { font-size: 13px; }
+  .orders thead th { font-size: 11px; }
+  .orders th, .orders td { padding: 4px 2px; }
+  .orders kbd { min-width: 22px; padding: 0 6px; }
+  :focus-visible { outline: 3px solid var(--hazard); outline-offset: 3px; }
+}

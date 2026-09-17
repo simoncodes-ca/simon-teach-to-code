@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the fourteen finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the sixteen finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -365,11 +365,41 @@ We left these out on purpose: logins, two-player over the network, and real-time
 
 The browser half still opens by double-clicking. The server runs from a terminal, and it is the one thing in the first sixteen projects that does.
 
+### 16. Tank Duel
+
+Two tanks in a sand yard full of concrete blocks, and two players on one keyboard. It is the first game where things move at any angle, and the last project before the tools change.
+
+- Heading as one angle, and driving along it
+- A turret that turns separately from the hull
+- Stopping at walls without a grid
+- Projectiles that bounce
+- Health and damage
+- Rounds, and a two-player duel
+
+Every game since project 7 moved things across, down, or by a velocity nobody steered. A tank faces a way and drives that way. `stepAlong` turns an angle and a distance into a step, and after that, driving, the end of the barrel, a shell's speed and the gun sight are each one call to it.
+
+The idea the project exists to teach is that **a thing that is not on a grid moves first, then takes back the part that hit.** The cheese vault refused a step before it began, because the mouse lived in cells. A tank lives anywhere, so `driveTank` moves across and asks `blocked`, then moves down and asks again. Each half that hit is taken back. A tank driven into a block at a slant loses only the half pointing into the block, and slides along it. That is the push-back-out-of-a-wall lesson that projects 11 and 12 held back for this one.
+
+The second lesson is that a bounce is the same trick. `moveShell` has the shape of `driveTank`, with one extra line that turns the blocked half round. A shell off the side of a block flips `vx` and keeps `vy`, and no angle maths is written anywhere. The README puts the two functions side by side.
+
+The third is that an angle can be built from angles. The turret turns on top of the hull, so `aimOf` is `tank.angle + tank.turret`. Hand back the turret alone and the gun stays still while the tank turns, which the README names as a bug to expect.
+
+Health is the smallest lesson and borrows project 11's. The bars are drawn from `tank.health` on every frame, so the number is the truth and the bars are pictures. `Math.max` keeps the number off the floor, and `wrecked` is the only thing the rounds ever look at.
+
+**Two players, not a computer opponent.** Enemy AI is project 23, and any enemy that aims at you is target selection arriving early. A second player on the same keyboard is a real opponent with no AI in it.
+
+**Eight stubs across two files.** `tank.js` holds `stepAlong`, `turnTank`, `driveTank` and `aimOf`. `shells.js` holds `fireShell`, `moveShell`, `shellHitsTank` and `damageTank`, and each file carries its own answer key. The game is six script files, following project 14, so that project 17 has real files to connect with `import`.
+
+Every tank and every shell is a plain object with a comment above it listing its fields, and no picture inside it. `game.js` copies the numbers onto the sprites once a frame. That keeps all eight stubs pure logic, which is what project 17 adds types to.
+
+The map and the four-corner check are given, because projects 11 and 12 made Simon write both. A tank's box for walls is a square that never rotates. It is close enough to play, and the README says so.
+
+We left these out on purpose: a computer opponent, a physics engine, a map the player can edit, and power-ups. Named in the README as good things to try next: a fourth arena, pushing a tank exactly to the edge of a block, crates that shells break, a repair kit, and armour that takes more damage from behind.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 16 | Tank game | The last step before a strategy game |
 | 17 | **Cutover: TypeScript** | Types, npm, and a build step |
 | 18 | Map editor | Content as data, and the first tests |
 | 19 | Unit selection | Selecting units and commanding them |
@@ -379,15 +409,9 @@ The browser half still opens by double-clicking. The server runs from a terminal
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
 
-### 16. Tank game
-
-The tank game teaches top-down movement, aiming, projectiles, obstacles, health, and damage.
-
-It is the project closest to a strategy game. It is also the last project before the tools change.
-
 ### 17. Cutover: TypeScript
 
-Rewrite the tank game with types. This works the same way as project 9. Remake something finished, so the new idea is the only thing that changed.
+Rewrite Tank Duel with types. This works the same way as project 9. Remake something finished, so the new idea is the only thing that changed.
 
 - What a type is, and what it catches
 - Adding types to the entities from project 16

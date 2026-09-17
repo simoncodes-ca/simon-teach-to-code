@@ -164,6 +164,18 @@ Files: `15-scores/scores.html`, `15-scores/styles.css`, `15-scores/scores.js`, `
 
 Start the server first. Open a terminal in `15-scores` and run `node server.js`.
 
+### Tank Duel
+
+Two tanks in a sand yard full of concrete blocks. Two players share one keyboard. Blue drives with W A S D, and Red drives with the arrow keys.
+
+The page gives you the console, the arena and the keys. You write the tank: which way it faces, how it drives, how it stops at a wall, and where its gun points. Then you write the shells: firing, flying, bouncing, and what a hit does to a tank.
+
+This is the first game where things move at any angle. It is also the first where walls stop something that is not on a grid. The tank moves first, then takes back the part of the move that hit.
+
+Files: `16-tanks/tanks.html`, `16-tanks/styles.css`, `16-tanks/numbers.js`, `16-tanks/arena.js`, `16-tanks/tank.js`, `16-tanks/shells.js`, `16-tanks/rack.js`, `16-tanks/game.js`, `16-tanks/phaser.min.js`.
+
+You write eight functions: four in `tank.js`, then four in `shells.js`.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -181,15 +193,15 @@ Start the server first. Open a terminal in `15-scores` and run `node server.js`.
 13. **Then build Rooftop Run.** You learn how a game with no end makes its world as you go, and throws away what you have passed. Your best score is the first thing you write that lives through closing the page.
 14. **Then split it into six files.** You write nothing new. You learn where code goes, why the order of the script tags matters, and how git remembers every version of a program.
 15. **Then write a server.** You learn that a server is just a second program, and that two programs only ever ask each other for things. You also learn `await`, which is how a program waits for an answer without freezing.
+16. **Then build Tank Duel.** You learn to drive at any angle, and to stop at a wall by taking back the part of a move that hit. A bounce turns out to be the same trick with one more line.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-You have a library now, so the games get bigger.
+The tools change next.
 
-1. **Tank game.** Driving, aiming and firing. It is the last step before a strategy game.
-2. **TypeScript.** You rewrite the tank game with types. From here you install things, and the page needs a build step.
+1. **TypeScript.** You rewrite Tank Duel with types. From here you install things, and the page needs a build step.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 
