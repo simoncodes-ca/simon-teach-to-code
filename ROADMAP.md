@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the nineteen finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the twenty finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -477,26 +477,41 @@ The page tells a click from a drag by distance: 6 pixels. Project 18's map funct
 
 We left these out on purpose: pathfinding, which is project 20, tanks that block each other, checking a tank's whole box against terrain, shift-click, control groups and enemies. Named in the README as good things to try next: shift-click, pick all with A, a race on Sandy Island, faster roads from the table, and a map painted in the editor.
 
+### 20. Pathfinding
+
+A scout's route finder. The six tanks from project 19 wait on a map again. You pick some and click the ground, and each tank searches for a route round the rock and the water before it drives.
+
+- The neighbours of a cell
+- A frontier of cells still to try
+- Remembering where each cell came from, and reading the route back
+- Breadth-first search, then A\*
+- Why a route can fail
+- Tests, a third time
+
+Project 19 left the tanks stuck at the river on purpose. This project answers that dead end. It is the hardest idea in the strategy game, and also the easiest to test.
+
+The idea the project exists to teach is that **a search is a frontier and one repeated step.** `searchStep` takes a cell out of the frontier and stops if it is the goal. Otherwise it gives every walkable neighbour not found yet a step count and the cell it came from, and puts it in the frontier. An empty frontier proves no route exists. The first tank's search plays on the map at 45 cells a second, with its step count on every found cell and a blue square on every frontier cell.
+
+The second lesson is that **breadth-first and A\* differ in one choice.** The given `takeNext` takes index 0, the queue from project 2, or asks the learner's `bestIndex` for the cell with the smallest steps plus guess. Two buttons on the Search card replay the same search both ways, and the Looked at well counts the difference.
+
+The third is that a failed search costs the most. Measured from cell 4, 10 with the answer key: breadth-first looks at 119 cells and A\* at 48 to reach 2, 1 on River Crossing. A\* heads into the rock cup on Horseshoe Rocks, a map made for this project, and looks at 198 cells to breadth-first's 263. With no route across River Crossing, both look at all 123 cells the tank could reach.
+
+**Seven function stubs and two test stubs.** In order: `neighbours`, `startSearch`, `searchStep`, `routeBack`, the no-bridge test, `findRoute`, `guess`, the A\*-is-cheaper test, and `bestIndex`. Measured in a throwaway copy, the checker counts 7 errors at the start and 0 at the end, and Vitest goes from 4 failed and 2 todo to 6 passed.
+
+**Ties go to fewer steps.** On equal totals, `bestIndex` takes the cell with fewer steps. Measured over 18,000 random grids, letting the first-found cell win ties gave 169 routes longer than breadth-first's, and this rule gave none. It keeps `searchStep` simple, because a found cell never needs its steps replaced.
+
+The search counts steps and ignores terrain speed. The tanks still drive at the table's speed. Picking, boxes and orders are given, copied from project 19's answer key, and `driveTank` is given, rewritten to follow a route one cell at a time.
+
+We left these out on purpose: diagonal moves, terrain cost, tanks that block each other, a priority queue, and smoothing the route. Named in the README as good things to try next: corners, forest costing more, painting a trap for A\*, the route length in the squad list, and a bridge on River Crossing.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 20 | Pathfinding | Finding a route around walls |
 | 21 | Resources | Production over time |
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 20. Pathfinding
-
-Find a route from one cell to another, around walls.
-
-- The neighbours of a cell
-- A frontier of cells still to try
-- Breadth-first search, then A\*
-- Why a route can fail
-
-This is the hardest idea in the strategy game. It is also the easiest to test, so **the third set of tests lives here**.
 
 ### 21. Resources
 
