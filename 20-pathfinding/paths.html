@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Route Finder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="post">
+    <div class="d-plate">
+      <span class="plate-bolts" aria-hidden="true"></span>
+      <span class="plate-name">Route <em>Finder</em></span>
+      <span class="plate-read plate-map" aria-label="The map the tanks are on">
+        <i>map</i><b id="mapRead">&mdash;</b>
+      </span>
+      <span class="plate-read" aria-label="Tanks picked">
+        <i>picked</i><b id="pickedRead">&mdash;</b>
+      </span>
+      <span class="plate-read plate-way" aria-label="The way the search works">
+        <i>search</i><b id="wayRead">&mdash;</b>
+      </span>
+    </div>
+
+    <section class="d-screen" aria-label="The map">
+      <div class="board">
+        <canvas id="screen" width="960" height="720" tabindex="0" aria-label="The map, seen from above, with six tanks on it. Pick tanks, then click the ground, and each tank searches for a route there"></canvas>
+        <div class="glare" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="d-rack">
+      <div class="card card-squad">
+        <p class="card-title">Squad <span class="card-note">click a name to pick it</span></p>
+        <ul class="squad" id="squad" aria-label="The six tanks"></ul>
+      </div>
+
+      <div class="card card-search">
+        <p class="card-title">Search <span class="card-note">the first tank's, played slowly</span></p>
+        <div class="ways" role="group" aria-label="The way to search">
+          <button type="button" class="way-pick" id="wayBreadth" aria-pressed="true">Breadth-first</button>
+          <button type="button" class="way-pick" id="wayStar" aria-pressed="false">A*</button>
+        </div>
+        <dl class="wells">
+          <div><dt>Looked at</dt><dd id="lookedRead">&mdash;</dd></div>
+          <div><dt>Frontier</dt><dd id="frontierRead">&mdash;</dd></div>
+          <div><dt>Route</dt><dd id="routeRead">&mdash;</dd></div>
+          <div><dt>Result</dt><dd id="resultRead">&mdash;</dd></div>
+        </dl>
+      </div>
+
+      <div class="card card-mouse">
+        <p class="card-title">Under the mouse</p>
+        <dl class="wells wells-three">
+          <div><dt>Cell</dt><dd id="cellRead">&mdash;</dd></div>
+          <div><dt>Ground</dt><dd id="groundRead">&mdash;</dd></div>
+          <div><dt>Ways out</dt><dd id="waysRead">&mdash;</dd></div>
+          <div><dt>Steps</dt><dd id="stepsRead">&mdash;</dd></div>
+          <div><dt>Guess</dt><dd id="guessRead">&mdash;</dd></div>
+          <div><dt>Total</dt><dd id="totalRead">&mdash;</dd></div>
+        </dl>
+      </div>
+
+      <div class="card card-maps">
+        <p class="card-title">Maps <span class="card-note">from the maps folder</span></p>
+        <ul class="map-list" id="mapList" aria-label="Maps to play on"></ul>
+      </div>
+    </aside>
+
+    <p class="d-status" id="status" aria-live="polite"></p>
+  </main>
+  <script type="module" src="game.ts"></script>
+</body>
+</html>

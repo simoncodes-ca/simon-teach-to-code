@@ -212,6 +212,18 @@ Files: `19-units/units.html`, `19-units/styles.css`, `19-units/numbers.ts`, `19-
 
 Open two terminals in `19-units`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
 
+### Pathfinding
+
+The six tanks again, on a route finder desk. Pick some tanks and click the ground. Each tank searches the map for a route round the rock and the water, then drives along it.
+
+A search keeps a list of cells to look round next, called the frontier. It takes a cell out, and adds the cells next door that nobody has found yet. When the frontier is empty, no route exists. You watch the first tank's search spread across the map, with a number on every cell.
+
+You write seven functions: the cells next door, starting a search, one step of it, following the trail back, the whole route, a guess, and A\*'s choice of the next cell. You also write two tests. Breadth-first and A\* differ in that one choice, and a button lets you compare them.
+
+Files: `20-pathfinding/paths.html`, `20-pathfinding/styles.css`, `20-pathfinding/numbers.ts`, `20-pathfinding/terrain.ts`, `20-pathfinding/map.ts`, `20-pathfinding/paths.ts`, `20-pathfinding/paths.test.ts`, `20-pathfinding/units.ts`, `20-pathfinding/rack.ts`, `20-pathfinding/game.ts`, `20-pathfinding/package.json`.
+
+Open two terminals in `20-pathfinding`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
@@ -233,12 +245,13 @@ Open two terminals in `19-units`. Run `npm install` once. Then run `npm run dev`
 17. **Then add types to it.** You learn what a type is, and what it catches before the game runs. You also learn what it cannot catch, and you install your first tools with npm.
 18. **Then build the map editor.** You learn to describe things in a table instead of in code. You also write your first tests, and you write each one before the function it checks.
 19. **Then command the tanks.** You learn that a click only changes what a tank remembers, and the frame does the driving. One order to a group turns out to be one goal for each tank.
+20. **Then teach the tanks to find a way.** You learn how a search spreads from a frontier, and how an empty frontier proves there is no route. Breadth-first and A\* turn out to differ in one choice.
 
 More projects will appear here over time. `ROADMAP.md` lists all of them. `showcase.html` shows the same list as a map.
 
 ## What comes next
 
-Pathfinding is next. The tanks stop getting stuck at the water, and find a route round it one cell at a time.
+Resources are next. Workers gather, production takes time, and counters and progress bars show it happening.
 
 The trail then runs to a small strategy game. It has one map, two teams, two unit types, one resource, one building, and one way to win.
 
