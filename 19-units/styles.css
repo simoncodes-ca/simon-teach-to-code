@@ -1,0 +1,493 @@
+/* ============================================================
+   Unit Selection: a field command post. An olive steel desk,
+   a stencilled name plate, the map under a plotting sheet,
+   and manila order cards clipped down the side.
+
+   The desk is one box. Every region on it is placed as a
+   percentage of that box, so the whole desk scales together
+   like one photograph. The same frame as project 18.
+   ============================================================ */
+
+:root {
+  --olive: #4a5132;
+  --olive-lit: #69714a;
+  --olive-deep: #22261a;
+  --night: #14160d;
+  --manila: #e6d6a6;
+  --manila-deep: #cdb982;
+  --manila-line: rgba(80, 66, 30, .14);
+  --ink: #23261a;
+  --ink-soft: rgba(35, 38, 26, .62);
+  --signal: #f3c62b;
+  --signal-deep: #a9841a;
+  --alarm: #d64a2e;
+  --lamp: #8fdc5c;
+  --stencil: "Impact", "Haettenschweiler", "Arial Narrow Bold", "Arial Black", sans-serif;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--ink);
+  background: #0b0c07 radial-gradient(ellipse at 50% 12%, #2f3421 0%, #15170e 62%, #070804 100%);
+  container-type: size;
+}
+
+/* The desk: painted steel, lit from the top left, with faint brush marks. */
+.post {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    radial-gradient(ellipse at 12% 4%, rgba(236, 240, 200, .12) 0%, rgba(236, 240, 200, 0) 44%),
+    repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, .05) 0 0.12cqh,
+      rgba(0, 0, 0, 0) 0.12cqh 0.9cqh),
+    linear-gradient(168deg, var(--olive-lit) 0%, var(--olive) 46%, var(--olive-deep) 100%);
+  border: 1.1cqw solid #1b1e13;
+  border-radius: 1cqw;
+  box-shadow:
+    inset 0 0 0 0.18cqw rgba(243, 198, 43, .16),
+    inset 0 1cqh 7cqh rgba(0, 0, 0, .35),
+    0 3cqh 8cqh rgba(0, 0, 0, .75);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.d-plate  { position: absolute; left: 3%;    top: 4%;    width: 65.4%; height: 7.4%; }
+.d-screen { position: absolute; left: 3%;    top: 13.2%; width: 65.4%; height: 73.6%; }
+.d-status { position: absolute; left: 3%;    top: 88.6%; width: 65.4%; height: 7.4%; }
+.d-rack   { position: absolute; left: 70.6%; top: 4%;    width: 26.4%; height: 92%; }
+
+/* --- The name plate: dark steel, stencilled, bolted at both ends --- */
+.d-plate {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  padding: 0 2cqw;
+  border-radius: 0.3cqw;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .06) 0%, rgba(255, 255, 255, 0) 50%),
+    linear-gradient(180deg, #2a2e1f 0%, #1a1c12 100%);
+  box-shadow:
+    inset 0 0 0 0.08cqw rgba(243, 198, 43, .3),
+    inset 0 0.25cqh 0.6cqh rgba(255, 255, 255, .06),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .5);
+}
+/* Two bolts, one at each end. */
+.plate-bolts {
+  position: absolute;
+  inset: 50% 0.5cqw auto;
+  height: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 40% 40%, #c9cdb6 0 0.12cqw, #7b806a 0.12cqw 0.28cqw, #34382a 0.28cqw 0.36cqw, rgba(0, 0, 0, 0) 0.36cqw) 0    50% / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 40% 40%, #c9cdb6 0 0.12cqw, #7b806a 0.12cqw 0.28cqw, #34382a 0.28cqw 0.36cqw, rgba(0, 0, 0, 0) 0.36cqw) 100% 50% / 1cqw 1cqw no-repeat;
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--stencil);
+  font-size: 2.3cqw;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e9e3c8;
+}
+/* "Post" is in signal yellow, the colour of picking. */
+.plate-name em {
+  font-style: normal;
+  color: var(--signal);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.25cqw;
+  background: #0e0f09;
+  box-shadow: inset 0 0 0 0.06cqw rgba(243, 198, 43, .35);
+}
+.plate-read i {
+  font-style: normal;
+  font-size: 0.72cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(233, 227, 200, .55);
+}
+.plate-read b {
+  min-width: 1.6cqw;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 1.3cqw;
+  color: var(--signal);
+}
+.plate-map b {
+  max-width: 14cqw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- The map, framed in steel --- */
+.d-screen { display: grid; place-items: center; }
+.board {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.3cqw;
+  background: var(--night);
+  box-shadow:
+    0 0 0 0.45cqw #1b1e13,
+    0 0 0 0.6cqw rgba(243, 198, 43, .4),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .6);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+/* The plotting sheet laid over the map: a faint shine, and dark edges. */
+.glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, .06) 44%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 70%, rgba(20, 22, 13, .34) 100%);
+  box-shadow: inset 0 0 0 0.12cqw rgba(0, 0, 0, .5);
+}
+
+/* --- The line under the map --- */
+.d-status {
+  display: flex;
+  align-items: center;
+  padding: 0 0.4cqw;
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  line-height: 1.35;
+  color: var(--signal);
+  text-shadow: 0 0.15cqh 0 rgba(0, 0, 0, .6);
+}
+
+/* --- The order cards down the right-hand side --- */
+.d-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqh;
+}
+.card {
+  position: relative;
+  padding: 1.5cqh 1cqw 1.3cqh;
+  border-radius: 0.3cqw;
+  background:
+    repeating-linear-gradient(0deg, var(--manila-line) 0 0.08cqh, rgba(0, 0, 0, 0) 0.08cqh 2.2cqh),
+    linear-gradient(180deg, var(--manila) 0%, var(--manila-deep) 100%);
+  box-shadow:
+    inset 0 0.2cqh 0.5cqh rgba(255, 255, 255, .45),
+    0 0.5cqh 1.3cqh rgba(0, 0, 0, .45);
+}
+/* A steel clip across the top of each card. */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -0.5cqh;
+  left: 50%;
+  width: 5cqw;
+  height: 1.2cqh;
+  transform: translateX(-50%);
+  border-radius: 0.2cqw;
+  background: linear-gradient(180deg, #a3a88f 0%, #5d624d 100%);
+  box-shadow: 0 0.2cqh 0.4cqh rgba(0, 0, 0, .45);
+}
+.card-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  margin-bottom: 0.9cqh;
+  padding-bottom: 0.5cqh;
+  border-bottom: 0.08cqw solid rgba(35, 38, 26, .35);
+  font-family: var(--stencil);
+  font-size: 1.05cqw;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.card-note {
+  font-family: var(--label);
+  font-size: 0.66cqw;
+  letter-spacing: 0;
+  text-transform: none;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* The squad: one row for each tank. */
+.card-squad { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.squad {
+  flex: 1;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.6cqh;
+  padding: 0;
+  list-style: none;
+}
+.squad li {
+  display: grid;
+  grid-template-columns: 1fr 5.4cqw 4.4cqw;
+  align-items: center;
+  gap: 0.4cqw;
+  padding: 0 0.5cqw 0 0.2cqw;
+  border-radius: 0.25cqw;
+  background: rgba(255, 250, 230, .4);
+  box-shadow: inset 0 0 0 0.06cqw rgba(35, 38, 26, .16);
+  transition: background .12s ease;
+}
+.squad li.picked { background: rgba(243, 198, 43, .55); box-shadow: inset 0 0 0 0.12cqw var(--ink); }
+.squad-pick {
+  display: flex;
+  align-items: center;
+  gap: 0.6cqw;
+  padding: 0.5cqh 0.4cqw;
+  border: none;
+  border-radius: 0.2cqw;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  background: none;
+  cursor: pointer;
+}
+.squad-pick:hover .squad-name { text-decoration: underline; }
+.lamp {
+  flex: none;
+  width: 0.9cqw;
+  height: 0.9cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #5a5e48 0%, #2c2f22 100%);
+  box-shadow: inset 0 0 0 0.06cqw rgba(0, 0, 0, .5);
+}
+.picked .lamp {
+  background: radial-gradient(circle at 35% 35%, #fff4c0 0%, var(--signal) 45%, var(--signal-deep) 100%);
+  box-shadow: 0 0 0.6cqw rgba(243, 198, 43, .8);
+}
+.squad-name {
+  font-family: var(--stencil);
+  font-size: 1cqw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.squad-doing {
+  padding: 0.2cqh 0;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.74cqw;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(233, 227, 200, .7);
+  background: #1a1c12;
+}
+.squad li[data-doing="ordered"] .squad-doing,
+.squad li[data-doing="driving"] .squad-doing { color: var(--signal); }
+.squad li[data-doing="arrived"] .squad-doing { color: var(--lamp); }
+.squad li[data-doing="blocked"] .squad-doing { color: #fff; background: var(--alarm); }
+.squad-ground {
+  font-size: 0.74cqw;
+  font-style: italic;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* The number wells under the mouse. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5cqw;
+}
+.wells div {
+  padding: 0.5cqh 0.5cqw;
+  border-radius: 0.25cqw;
+  background: #1a1c12;
+}
+.wells dt {
+  font-size: 0.6cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(233, 227, 200, .55);
+}
+.wells dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.05cqw;
+  color: var(--signal);
+  white-space: nowrap;
+}
+
+/* The orders, and the box numbers. */
+.orders {
+  display: grid;
+  gap: 0.35cqh;
+  padding: 0;
+  list-style: none;
+  font-size: 0.76cqw;
+}
+.orders li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4cqw;
+}
+.orders span {
+  margin-left: auto;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.orders kbd {
+  min-width: 2.6cqw;
+  padding: 0 0.3cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.72cqw;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink);
+  background: rgba(35, 38, 26, .1);
+  box-shadow: inset 0 -0.12cqh 0 rgba(35, 38, 26, .28);
+}
+.box-read {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6cqw;
+  margin-top: 0.9cqh;
+  padding: 0.5cqh 0.6cqw;
+  border-radius: 0.25cqw;
+  background: #1a1c12;
+}
+.box-read i {
+  font-style: normal;
+  font-size: 0.6cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(233, 227, 200, .55);
+}
+.box-read b {
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  color: var(--signal);
+  white-space: pre;
+}
+
+/* The maps in the maps folder. */
+.map-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5cqw;
+  padding: 0;
+  list-style: none;
+}
+.map-pick {
+  width: 100%;
+  padding: 0.9cqh 0.5cqw;
+  border: none;
+  border-radius: 0.3cqw;
+  font-family: var(--label);
+  font-size: 0.8cqw;
+  font-weight: 700;
+  color: #e9e3c8;
+  background: linear-gradient(180deg, #5d6443 0%, #3c422a 100%);
+  box-shadow: 0 0.4cqh 0 #1f2216, 0 0.7cqh 1cqh rgba(0, 0, 0, .3);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: transform .12s ease;
+}
+.map-pick:hover { transform: translateY(-0.15cqh); }
+.map-pick[aria-pressed="true"] {
+  color: var(--ink);
+  background: linear-gradient(180deg, #f7d864 0%, var(--signal) 55%, #cf9f1c 100%);
+  box-shadow: 0 0.4cqh 0 var(--signal-deep), 0 0.7cqh 1cqh rgba(0, 0, 0, .3);
+}
+
+:focus-visible { outline: 0.22cqw solid var(--alarm); outline-offset: 0.2cqw; }
+#screen:focus-visible { outline: 0.25cqw solid var(--signal); outline-offset: -0.25cqw; }
+
+@media (prefers-reduced-motion: reduce) {
+  .map-pick, .squad li { transition: none; }
+  .map-pick:hover { transform: none; }
+}
+
+/* --- Narrow screens: the desk stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .post {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 14px;
+    border-width: 8px;
+    border-radius: 12px;
+  }
+  .d-plate, .d-screen, .d-status, .d-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  .d-plate { order: 1; }
+  .d-screen { order: 2; }
+  .d-status { order: 3; }
+  .d-rack { order: 4; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .d-plate { flex-wrap: wrap; gap: 8px; margin-bottom: 14px; padding: 10px 18px; }
+  .plate-name { flex-basis: 100%; font-size: 26px; }
+  .plate-read { padding: 4px 10px; gap: 6px; }
+  .plate-read i { font-size: 10px; }
+  .plate-read b { font-size: 16px; min-width: 20px; }
+  .plate-map b { max-width: 50vw; }
+  .board { width: 100%; height: auto; box-shadow: 0 0 0 4px #1b1e13, 0 0 0 6px rgba(243, 198, 43, .4); }
+  .d-status { margin: 12px 0 14px; font-size: 13px; }
+  .d-rack { gap: 18px; }
+  .card { padding: 16px 14px 14px; border-radius: 6px; }
+  .card::before { top: -5px; width: 60px; height: 10px; }
+  .card-title { margin-bottom: 10px; padding-bottom: 6px; font-size: 17px; }
+  .card-note { font-size: 11px; }
+  .squad { gap: 6px; }
+  .squad li { grid-template-columns: 1fr 88px 70px; gap: 6px; padding: 0 8px 0 2px; }
+  .squad li.picked { box-shadow: inset 0 0 0 2px var(--ink); }
+  .squad-pick { gap: 10px; min-height: 44px; padding: 6px; }
+  .lamp { width: 12px; height: 12px; }
+  .squad-name { font-size: 15px; }
+  .squad-doing { padding: 3px 0; font-size: 12px; }
+  .squad-ground { font-size: 12px; }
+  .wells { gap: 8px; }
+  .wells div { padding: 6px 8px; }
+  .wells dt { font-size: 9px; }
+  .wells dd { font-size: 16px; }
+  .orders { gap: 4px; font-size: 13px; }
+  .orders li { gap: 6px; }
+  .orders kbd { min-width: 44px; padding: 0 4px; font-size: 12px; }
+  .box-read { gap: 8px; margin-top: 10px; padding: 6px 8px; }
+  .box-read i { font-size: 9px; }
+  .box-read b { font-size: 14px; }
+  .map-list { gap: 10px; }
+  .map-pick { min-height: 48px; font-size: 14px; box-shadow: 0 4px 0 #1f2216; }
+  .map-pick[aria-pressed="true"] { box-shadow: 0 4px 0 var(--signal-deep); }
+  :focus-visible { outline: 3px solid var(--alarm); outline-offset: 3px; }
+}

@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the eighteen finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the nineteen finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -450,20 +450,42 @@ The page names the next empty function by trying each one on a tiny map of its o
 
 We left these out on purpose: undo, flood fill, which is project 20's frontier, maps of other sizes, a map larger than the window, deleting maps, and units or buildings on the map. Named in the README as good things to try next: snow, a bridge, a test for `countTerrain`, a broken map file, and a border function written test first.
 
+### 19. Unit selection
+
+A field command post. Six blue tanks wait on a map from the editor. You click one to pick it, drag a box round several, and click the ground to send them.
+
+- Finding the thing under the mouse
+- Picking one unit, and picking every unit inside a box
+- A box dragged in any direction
+- One order to a group, turned into one goal per unit
+- Driving at the speed the terrain table gives
+- Tests, a second time
+
+The idea the project exists to teach is that **a click never moves a tank, it only changes what the tank remembers.** Picking sets `tank.selected`. An order sets `goalX`, `goalY` and `moving`. Only `driveTank`, called every frame, moves anything. Every ring, corner, cross and squad lamp is drawn from those fields. It is project 8's split between deciding and moving, with the mouse doing the deciding.
+
+The second lesson is that a group order is one goal per unit. Six tanks sent to one spot would stack on it. `orderMove` walks the picked list and gives each tank its own spot from the given `parkingSpot`, so the squad arrives as a block.
+
+Project 18's table starts to matter. A step is `TANK_SPEED` times `speedAt` the tank times the seconds, so road is fast and forest is slow. `canDrive` stops a tank at water, rock or the edge. Driving is a straight line, so a tank sent across River Crossing stops at the river and its squad row turns red. That dead end is on screen on purpose, because it is the question project 20 answers.
+
+**Eight function stubs and two test stubs.** In order: `tankAt`, `selectOnly`, `selectedTanks`, the dragged-backwards test, `boxFrom`, `isInBox`, `selectInBox`, `orderMove`, the stops-at-water test, and `driveTank`. Measured in a throwaway copy, the checker counts 8 errors at the start and 0 at the end, and Vitest goes from 4 failed and 2 todo to 6 passed. `driveTank` returns the union `'still' | 'driving' | 'arrived' | 'blocked'`, which the squad card shows.
+
+**Tests here, not only at 18 and 20.** Selection is pure logic that is slow to check by clicking, and a box dragged backwards is exactly the case a hand forgets to try.
+
+**No server.** The maps are copies of project 18's files, read by Vite's `import.meta.glob`. A map painted in the editor turns up when its file is copied into `19-units/maps`.
+
+The page tells a click from a drag by distance: 6 pixels. Project 18's map functions are given in `map.ts`, copied from its answer key.
+
+We left these out on purpose: pathfinding, which is project 20, tanks that block each other, checking a tank's whole box against terrain, shift-click, control groups and enemies. Named in the README as good things to try next: shift-click, pick all with A, a race on Sandy Island, faster roads from the table, and a map painted in the editor.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 19 | Unit selection | Selecting units and commanding them |
 | 20 | Pathfinding | Finding a route around walls |
 | 21 | Resources | Production over time |
 | 22 | Production queue | Build times and prerequisites |
 | 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 19. Unit selection
-
-This project teaches selecting one unit, selecting several units, rectangle selection, and click-to-move commands.
 
 ### 20. Pathfinding
 
@@ -474,7 +496,7 @@ Find a route from one cell to another, around walls.
 - Breadth-first search, then A\*
 - Why a route can fail
 
-This is the hardest idea in the strategy game. It is also the easiest to test, so **the second set of tests lives here**.
+This is the hardest idea in the strategy game. It is also the easiest to test, so **the third set of tests lives here**.
 
 ### 21. Resources
 
@@ -520,7 +542,7 @@ Testing starts after TypeScript, and it stays small.
 
 **Runner: Vitest.** It runs TypeScript with no configuration, and npm already arrived at project 17. Put a fifteen-line `expect` helper in the README, so Simon can see what a runner does. Do not make that helper a project. Projects 9 and 17 already taught him to compare hand-written code with a tool.
 
-**Where: projects 18 and 20.** Both are pure grid logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
+**Where: projects 18, 19 and 20.** All three are pure logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
 
 Project 17 is the wrong place, because it already introduces types.
 
