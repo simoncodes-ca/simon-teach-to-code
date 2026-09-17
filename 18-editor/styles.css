@@ -1,0 +1,512 @@
+/* ============================================================
+   Map Editor: a surveyor's drafting table, seen from above.
+
+   The table is one box. Every region on it is placed as a
+   percentage of that box, so the whole table scales together
+   like one photograph.
+   ============================================================ */
+
+:root {
+  --walnut: #4a3222;
+  --walnut-lit: #6d4b32;
+  --walnut-deep: #231710;
+  --felt: #1b1712;
+  --paper: #f1e6c9;
+  --paper-deep: #dccb9f;
+  --paper-line: rgba(92, 70, 40, .16);
+  --ink: #2a2017;
+  --ink-soft: rgba(42, 32, 23, .62);
+  --brass: #e0b154;
+  --brass-deep: #9a6d22;
+  --pencil: #c9492f;
+  --go: #4c8a3a;
+  --display: "Georgia", "Palatino Linotype", "Book Antiqua", serif;
+  --label: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  --mono: "Courier New", Consolas, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--label);
+  color: var(--ink);
+  background: #0d0906 radial-gradient(ellipse at 50% 14%, #3a2819 0%, #1c130c 60%, #090604 100%);
+  container-type: size;
+}
+
+/* The table itself: walnut, with the grain running across it. */
+.table {
+  position: relative;
+  width: min(100cqw, 150cqh);
+  aspect-ratio: 1536 / 1024;
+  container-type: size;
+  background:
+    radial-gradient(ellipse at 14% 6%, rgba(255, 226, 180, .12) 0%, rgba(255, 226, 180, 0) 42%),
+    repeating-linear-gradient(177deg,
+      rgba(0, 0, 0, .07) 0 0.25cqh,
+      rgba(0, 0, 0, 0) 0.25cqh 1.1cqh,
+      rgba(255, 220, 170, .03) 1.1cqh 1.4cqh,
+      rgba(0, 0, 0, 0) 1.4cqh 2.6cqh),
+    linear-gradient(170deg, var(--walnut-lit) 0%, var(--walnut) 48%, var(--walnut-deep) 100%);
+  border: 1.1cqw solid #2e1f14;
+  border-radius: 1cqw;
+  box-shadow:
+    inset 0 0 0 0.18cqw rgba(224, 177, 84, .22),
+    inset 0 1cqh 7cqh rgba(0, 0, 0, .35),
+    0 3cqh 8cqh rgba(0, 0, 0, .75);
+  overflow: hidden;
+}
+
+/* --- Region boxes --- */
+.d-plate  { position: absolute; left: 3%;    top: 4%;    width: 65.4%; height: 7.4%; }
+.d-screen { position: absolute; left: 3%;    top: 13.2%; width: 65.4%; height: 73.6%; }
+.d-status { position: absolute; left: 3%;    top: 88.6%; width: 65.4%; height: 7.4%; }
+.d-rack   { position: absolute; left: 70.6%; top: 4%;    width: 26.4%; height: 92%; }
+
+/* --- The paper label across the top --- */
+.d-plate {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  padding: 0 1.6cqw;
+  background:
+    repeating-linear-gradient(0deg, var(--paper-line) 0 0.08cqh, rgba(0, 0, 0, 0) 0.08cqh 1.6cqh),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  border-radius: 0.3cqw;
+  box-shadow:
+    inset 0 0.25cqh 0.6cqh rgba(255, 255, 255, .55),
+    0 0.6cqh 1.6cqh rgba(0, 0, 0, .5);
+  transform: rotate(-0.25deg);
+}
+/* Two brass pins holding the label down. */
+.plate-pins {
+  position: absolute;
+  inset: 50% 0.6cqw auto;
+  height: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 40% 40%, #fff1c2 0 0.12cqw, var(--brass) 0.12cqw 0.28cqw, var(--brass-deep) 0.28cqw 0.36cqw, rgba(0, 0, 0, 0) 0.36cqw) 0    50% / 1cqw 1cqw no-repeat,
+    radial-gradient(circle at 40% 40%, #fff1c2 0 0.12cqw, var(--brass) 0.12cqw 0.28cqw, var(--brass-deep) 0.28cqw 0.36cqw, rgba(0, 0, 0, 0) 0.36cqw) 100% 50% / 1cqw 1cqw no-repeat;
+}
+.plate-name {
+  flex: 1;
+  white-space: nowrap;
+  font-family: var(--display);
+  font-size: 2.3cqw;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+/* "Editor" is written in red pencil. */
+.plate-name em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--pencil);
+}
+.plate-read {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5cqw;
+  padding: 0.5cqh 0.9cqw;
+  border-radius: 0.25cqw;
+  background: rgba(42, 32, 23, .9);
+  box-shadow: inset 0 0 0 0.06cqw rgba(224, 177, 84, .4);
+}
+.plate-read i {
+  font-style: normal;
+  font-size: 0.72cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(241, 230, 201, .6);
+}
+.plate-read b {
+  min-width: 1.6cqw;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 1.3cqw;
+  color: var(--brass);
+}
+.plate-map b {
+  max-width: 14cqw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- The map, under a sheet of glass --- */
+.d-screen { display: grid; place-items: center; }
+.glass {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.3cqw;
+  background: var(--felt);
+  box-shadow:
+    0 0 0 0.45cqw #2e1f14,
+    0 0 0 0.6cqw rgba(224, 177, 84, .45),
+    0 1.4cqh 3cqh rgba(0, 0, 0, .6);
+  overflow: hidden;
+}
+#screen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+/* A faint reflection across the glass. */
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, .07) 42%, rgba(255, 255, 255, 0) 56%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 70%, rgba(27, 23, 18, .32) 100%);
+  box-shadow: inset 0 0 0 0.12cqw rgba(0, 0, 0, .5);
+}
+
+/* --- The line written under the map --- */
+.d-status {
+  display: flex;
+  align-items: center;
+  padding: 0 0.4cqw;
+  font-family: var(--mono);
+  font-size: 0.95cqw;
+  line-height: 1.35;
+  color: var(--brass);
+  text-shadow: 0 0.15cqh 0 rgba(0, 0, 0, .6);
+}
+
+/* --- The cards down the right-hand side --- */
+.d-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqh;
+}
+.card {
+  padding: 1.1cqh 1cqw 1.3cqh;
+  border-radius: 0.3cqw;
+  background:
+    repeating-linear-gradient(0deg, var(--paper-line) 0 0.08cqh, rgba(0, 0, 0, 0) 0.08cqh 2.2cqh),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  box-shadow:
+    inset 0 0.2cqh 0.5cqh rgba(255, 255, 255, .5),
+    0 0.5cqh 1.3cqh rgba(0, 0, 0, .45);
+}
+.card-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  margin-bottom: 0.9cqh;
+  padding-bottom: 0.5cqh;
+  border-bottom: 0.06cqw solid rgba(42, 32, 23, .3);
+  font-family: var(--display);
+  font-size: 1.05cqw;
+  font-weight: 700;
+  color: var(--ink);
+}
+.card-note {
+  font-family: var(--label);
+  font-size: 0.66cqw;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.card-note.note-bad { color: var(--pencil); font-weight: 700; }
+
+/* The palette: one button for each line of the TERRAIN table. */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6cqw;
+}
+.ground {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 0.55cqw;
+  align-items: center;
+  padding: 0.45cqw;
+  border: none;
+  border-radius: 0.3cqw;
+  font-family: var(--label);
+  text-align: left;
+  color: var(--ink);
+  background: rgba(255, 252, 240, .55);
+  box-shadow:
+    inset 0.3cqw 0 0 var(--edge),
+    inset 0 0 0 0.06cqw rgba(42, 32, 23, .22);
+  cursor: pointer;
+  transition: background .12s ease, transform .12s ease;
+}
+.swatch {
+  grid-row: 1 / 3;
+  width: 2.7cqw;
+  height: 2.7cqw;
+  margin-left: 0.3cqw;
+  border-radius: 0.2cqw;
+  background-size: cover;
+  box-shadow: inset 0 0 0 0.06cqw rgba(0, 0, 0, .35);
+}
+.ground-name {
+  font-size: 0.86cqw;
+  font-weight: 700;
+}
+.ground kbd {
+  justify-self: end;
+  min-width: 1.2cqw;
+  padding: 0 0.25cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--mono);
+  font-size: 0.86cqw;
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink);
+  background: rgba(42, 32, 23, .1);
+  box-shadow: inset 0 -0.12cqh 0 rgba(42, 32, 23, .25);
+}
+.ground-count {
+  grid-column: 2 / 4;
+  font-family: var(--mono);
+  font-size: 0.78cqw;
+  color: var(--ink-soft);
+}
+.ground-count::after { content: " cells"; }
+.ground:hover { background: rgba(255, 252, 240, .9); }
+.ground[aria-pressed="true"] {
+  background: #fffaf0;
+  box-shadow:
+    inset 0.3cqw 0 0 var(--edge),
+    inset 0 0 0 0.14cqw var(--ink),
+    0 0.3cqh 0.8cqh rgba(0, 0, 0, .25);
+}
+.ground[aria-pressed="true"] .ground-name::after {
+  content: " ✎";
+  color: var(--pencil);
+}
+
+/* The number wells under the pencil. */
+.wells {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5cqw;
+}
+.wells div {
+  padding: 0.5cqh 0.5cqw;
+  border-radius: 0.25cqw;
+  background: rgba(42, 32, 23, .88);
+}
+.wells dt {
+  font-size: 0.6cqw;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(241, 230, 201, .6);
+}
+.wells dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 1.05cqw;
+  color: var(--brass);
+  white-space: nowrap;
+}
+
+/* The saved map, letter by letter. */
+.card-lines { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.lines {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  padding: 0.6cqh 0;
+  border-radius: 0.25cqw;
+  font-family: var(--mono);
+  font-size: 1.12cqh;
+  font-weight: 700;
+  line-height: 1.24;
+  letter-spacing: 0.42em;
+  color: var(--ink);
+  background: rgba(255, 252, 240, .6);
+  box-shadow: inset 0 0 0 0.06cqw rgba(42, 32, 23, .2);
+  overflow: hidden;
+}
+.lines-empty {
+  letter-spacing: 0;
+  font-weight: 400;
+  font-size: 1.5cqh;
+  text-align: center;
+  color: var(--pencil);
+}
+
+/* The maps on the server. */
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6cqw;
+  margin-bottom: 0.9cqh;
+}
+.name-row label {
+  font-size: 0.72cqw;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.name-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6cqh 0.5cqw;
+  border: none;
+  border-bottom: 0.12cqw solid var(--ink);
+  font-family: var(--display);
+  font-size: 1.05cqw;
+  font-style: italic;
+  color: var(--ink);
+  background: rgba(255, 252, 240, .55);
+}
+.keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6cqw;
+  margin-bottom: 1cqh;
+}
+.key {
+  padding: 1cqh 0.6cqw;
+  border: none;
+  border-radius: 0.3cqw;
+  font-family: var(--label);
+  font-size: 0.9cqw;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: linear-gradient(180deg, #6b513a 0%, #4a3525 100%);
+  box-shadow: 0 0.45cqh 0 #24170e, 0 0.8cqh 1.2cqh rgba(0, 0, 0, .35);
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.key-go {
+  color: var(--ink);
+  background: linear-gradient(180deg, #f0c66c 0%, var(--brass) 55%, #c08f33 100%);
+  box-shadow: 0 0.45cqh 0 var(--brass-deep), 0 0.8cqh 1.4cqh rgba(0, 0, 0, .35);
+}
+.key:hover { transform: translateY(-0.15cqh); }
+.key:active { transform: translateY(0.4cqh); box-shadow: 0 0.05cqh 0 #24170e; }
+
+.map-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4cqh;
+  padding: 0;
+  list-style: none;
+  max-height: 16cqh;
+  overflow-y: auto;
+}
+.map-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6cqw;
+  padding: 0.35cqh 0.2cqw 0.35cqh 0.6cqw;
+  border-radius: 0.2cqw;
+  font-family: var(--display);
+  font-size: 0.92cqw;
+  font-style: italic;
+}
+.map-list li + li { border-top: 0.05cqw dashed rgba(42, 32, 23, .25); }
+.map-list li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.map-list .map-current { background: rgba(224, 177, 84, .28); }
+.map-list .map-none { font-family: var(--label); font-style: normal; font-size: 0.8cqw; color: var(--pencil); }
+.load {
+  flex: none;
+  padding: 0.3cqh 0.6cqw;
+  border: 0.08cqw solid var(--ink);
+  border-radius: 0.2cqw;
+  font-family: var(--label);
+  font-size: 0.7cqw;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(255, 252, 240, .7);
+  cursor: pointer;
+}
+.load:hover { color: var(--paper); background: var(--ink); }
+
+:focus-visible { outline: 0.22cqw solid var(--pencil); outline-offset: 0.2cqw; }
+#screen:focus-visible { outline: 0.25cqw solid var(--brass); outline-offset: -0.25cqw; }
+.name-row input:focus-visible { outline-offset: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .key, .ground { transition: none; }
+  .key:hover, .key:active { transform: none; }
+}
+
+/* --- Narrow screens: the table stands up into one column --- */
+@media (max-width: 900px) {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; padding: 16px; }
+  .table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: auto;
+    container-type: inline-size;
+    padding: 14px;
+    border-width: 8px;
+    border-radius: 12px;
+  }
+  .d-plate, .d-screen, .d-status, .d-rack {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+  .d-plate { order: 1; }
+  .d-screen { order: 2; }
+  .d-status { order: 3; }
+  .d-rack { order: 4; }
+  /* A container measured by width has no cqh, so every height here is
+     given in pixels instead. */
+  .d-plate { flex-wrap: wrap; gap: 8px; margin-bottom: 14px; padding: 10px 16px; transform: none; }
+  .plate-name { flex-basis: 100%; font-size: 26px; }
+  .plate-read { padding: 4px 10px; gap: 6px; }
+  .plate-read i { font-size: 10px; }
+  .plate-read b { font-size: 16px; min-width: 20px; }
+  .plate-map b { max-width: 50vw; }
+  .glass { width: 100%; height: auto; box-shadow: 0 0 0 4px #2e1f14, 0 0 0 6px rgba(224, 177, 84, .45); }
+  .d-status { margin: 12px 0 14px; font-size: 13px; }
+  .d-rack { gap: 12px; }
+  .card { padding: 12px 14px 14px; border-radius: 6px; }
+  .card-title { margin-bottom: 10px; padding-bottom: 6px; font-size: 17px; }
+  .card-note { font-size: 11px; }
+  .palette { gap: 8px; }
+  .ground { column-gap: 8px; padding: 8px; min-height: 48px; box-shadow: inset 4px 0 0 var(--edge), inset 0 0 0 1px rgba(42, 32, 23, .22); }
+  .ground[aria-pressed="true"] { box-shadow: inset 4px 0 0 var(--edge), inset 0 0 0 2px var(--ink); }
+  .swatch { width: 36px; height: 36px; margin-left: 4px; }
+  .ground-name, .ground kbd { font-size: 14px; }
+  .ground kbd { min-width: 18px; padding: 0 4px; }
+  .ground-count { font-size: 12px; }
+  .wells { gap: 8px; }
+  .wells div { padding: 6px 8px; }
+  .wells dt { font-size: 9px; }
+  .wells dd { font-size: 16px; }
+  .lines { padding: 10px 0; font-size: 12px; }
+  .lines-empty { font-size: 14px; }
+  .name-row { gap: 10px; margin-bottom: 10px; }
+  .name-row label { font-size: 11px; }
+  .name-row input { padding: 8px; font-size: 16px; }
+  .keys { gap: 10px; margin-bottom: 12px; }
+  .key { min-height: 48px; font-size: 14px; box-shadow: 0 4px 0 #24170e; }
+  .key-go { box-shadow: 0 4px 0 var(--brass-deep); }
+  .map-list { max-height: none; gap: 4px; }
+  .map-list li { padding: 6px 4px 6px 10px; font-size: 16px; }
+  .map-list .map-none { font-size: 13px; }
+  .load { min-height: 40px; padding: 6px 12px; font-size: 12px; }
+  :focus-visible { outline: 3px solid var(--pencil); outline-offset: 3px; }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Map Editor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="table">
+    <div class="d-plate">
+      <span class="plate-pins" aria-hidden="true"></span>
+      <span class="plate-name">Map <em>Editor</em></span>
+      <span class="plate-read plate-map" aria-label="The map on the table">
+        <i>map</i><b id="mapRead">&mdash;</b>
+      </span>
+      <span class="plate-read" aria-label="Cells changed since the last save">
+        <i>unsaved</i><b id="changesRead">0</b>
+      </span>
+    </div>
+
+    <section class="d-screen" aria-label="The map">
+      <div class="glass">
+        <canvas id="screen" width="960" height="720" aria-label="The map, seen from above. Click and drag to paint the ground you picked"></canvas>
+        <div class="sheen" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="d-rack">
+      <div class="card card-ground">
+        <p class="card-title">Ground <span class="card-note">press its letter to pick it</span></p>
+        <div class="palette" id="palette" role="group" aria-label="Kinds of ground"></div>
+      </div>
+
+      <div class="card card-pencil">
+        <p class="card-title">Under the pencil</p>
+        <dl class="wells">
+          <div><dt>Cell</dt><dd id="cellRead">&mdash;</dd></div>
+          <div><dt>Ground</dt><dd id="groundRead">&mdash;</dd></div>
+          <div><dt>Tanks</dt><dd id="tanksRead">&mdash;</dd></div>
+          <div><dt>Speed</dt><dd id="speedRead">&mdash;</dd></div>
+        </dl>
+      </div>
+
+      <div class="card card-lines">
+        <p class="card-title">Saved map <span class="card-note">what the file holds</span></p>
+        <pre class="lines" id="lines" aria-label="The map written as rows of letters"></pre>
+      </div>
+
+      <div class="card card-maps">
+        <p class="card-title">Maps <span class="card-note" id="serverNote">on the server</span></p>
+        <div class="name-row">
+          <label for="mapName">Name</label>
+          <input id="mapName" type="text" maxlength="24" autocomplete="off" spellcheck="false" value="Untitled">
+        </div>
+        <div class="keys">
+          <button class="key key-go" id="save" type="button">Save</button>
+          <button class="key" id="new" type="button">New map</button>
+        </div>
+        <ul class="map-list" id="mapList" aria-label="Maps on the server"></ul>
+      </div>
+    </aside>
+
+    <p class="d-status" id="status" aria-live="polite"></p>
+  </main>
+  <script type="module" src="editor.ts"></script>
+</body>
+</html>
