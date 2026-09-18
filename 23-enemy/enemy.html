@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon's Forward Post</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="post">
+    <div class="d-plate">
+      <span class="plate-bolts" aria-hidden="true"></span>
+      <span class="plate-name">Forward <em>Post</em></span>
+      <span class="plate-read plate-map" aria-label="The map the tanks are on">
+        <i>map</i><b id="mapRead">&mdash;</b>
+      </span>
+      <span class="plate-read plate-blue" aria-label="Blue tanks still fighting" aria-live="polite">
+        <i>blue</i><b id="blueRead">&mdash;</b>
+      </span>
+      <span class="plate-read plate-red" aria-label="Red tanks still fighting" aria-live="polite">
+        <i>red</i><b id="redRead">&mdash;</b>
+      </span>
+    </div>
+
+    <section class="d-screen" aria-label="The map">
+      <div class="board">
+        <canvas id="screen" width="960" height="720" tabindex="0" aria-label="The map, seen from above, with your blue tanks and the red tanks that guard it. Pick your tanks and click the ground to send them"></canvas>
+        <div class="glare" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <aside class="d-rack">
+      <div class="card card-enemy">
+        <p class="card-title">Enemy <span class="card-note">three posts</span></p>
+        <ul class="force force-red" id="enemy" aria-label="The red tanks" aria-live="polite"></ul>
+      </div>
+
+      <div class="card card-battle">
+        <p class="card-title">Battle <span class="card-note">from your functions</span></p>
+        <dl class="wells wells-three">
+          <div><dt>Nearest red</dt><dd id="nearRead">&mdash;</dd></div>
+          <div><dt>Shots fired</dt><dd id="shotsRead">&mdash;</dd></div>
+          <div><dt>Wrecks</dt><dd id="wrecksRead">&mdash;</dd></div>
+        </dl>
+      </div>
+
+      <div class="card card-squad">
+        <p class="card-title">Squad <span class="card-note">click a name to pick it</span></p>
+        <ul class="force force-blue" id="squad" aria-label="Your tanks"></ul>
+      </div>
+
+      <div class="card card-maps">
+        <p class="card-title">Maps <span class="card-note">from the maps folder</span></p>
+        <ul class="map-list" id="mapList" aria-label="Maps to fight on"></ul>
+      </div>
+    </aside>
+
+    <p class="d-status" id="status" aria-live="polite"></p>
+  </main>
+  <script type="module" src="game.ts"></script>
+</body>
+</html>

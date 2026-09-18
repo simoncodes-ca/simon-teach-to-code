@@ -1,6 +1,6 @@
 # Coding Roadmap
 
-This roadmap runs from the twenty-two finished projects to a small Red Alert-style strategy game.
+This roadmap runs from the twenty-three finished projects to a small Red Alert-style strategy game.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
@@ -568,16 +568,47 @@ Jobs 1 and 2 change nothing on screen on purpose. They are two and three lines e
 
 We left these out on purpose: cancelling an order, placing a building by hand, buildings that block a route, power as a resource, two things built at once, repairing and selling. Named in the README as good things to try next: a sixth line in the catalogue, cancelling an order, a price that climbs with each one built, a second queue, and a tank that follows a harvester about.
 
+### 23. Enemy AI
+
+A forward post. Three red tanks guard a map, each one walking a beat of its own. You have four blue ones. It is the first project with an opponent that decides anything.
+
+- Distance checks, and how many questions one of them answers
+- Choosing a target from a list
+- Seeing further than you can shoot
+- A patrol that never ends
+- A brain as a fixed order of questions
+
+Project 22 turned out a tank with nothing to shoot at, and said so on the card. This project gives it something.
+
+The idea the project exists to teach is that **a brain is a list of questions, asked in a fixed order.** `nextMode` is five lines. It asks five questions about one tank and hands back one word: `'dead'`, `'attacking'`, `'chasing'` or `'patrolling'`. The page reads that word and does the one thing it means. Nobody wrote "hunt the player", and hunting is what comes out.
+
+The second lesson is the pair of ranges, and it is the reason a red tank ever drives anywhere. `SEE_RANGE` is 250 and `GUN_RANGE` is 130. A tank has seen you and cannot shoot you yet, so it moves. One `inRange` answers both questions, with a different reach each time.
+
+The third is the trap that pair sets, and it gets equal billing. Every tank inside gun range is inside sight range too, with no exceptions. Ask about sight before shooting and the red tanks chase for ever and never fire. Nothing crashes, nothing on screen says why, and it is the same shape of mistake as project 21's `nextJob` and project 22's `canBuild`. Three projects in a row, because it costs the most and shows the least.
+
+**Combat only.** The ore run and the build yard are dropped, on purpose. Both are finished work, and keeping them would have put eleven files of given wiring round seven stubs. Project 24 is where everything comes back together.
+
+**One brain, both sides.** `runTank` in `game.ts` is nine lines, and it is the same nine lines for a red tank and a blue one. Both sides pick a target, decide a mode, point the gun and fire. The sides differ in one line: a red tank drives itself where its mode says, and a blue tank goes where you sent it. That is project 8's lesson about sprites sharing a shape, applied to two armies.
+
+**Seven stubs and two tests, all in `enemy.ts` and `enemy.test.ts`.** In order: `farApart`, `inRange`, `nearestTarget`, `aimAt`, the exact-damage test, `shootStep`, `nextPost`, the question-order test, and `nextMode`. Measured in throwaway copies, the checker counts 7 errors at the start and 0 at the end, and Vitest goes from 4 failed and 2 todo to 6 passed.
+
+Every job is visible on the map, and the curve rises. Job 1 draws a measuring line with a distance on it. Job 2 lights two rings. Job 3 threads each tank to its target. Job 4 makes every turret track. Job 6 starts the shooting. Job 7 starts the patrols. Job 9 starts the hunting.
+
+Job 7 is the only job that leaves the test counts alone, the same as project 22's job 7. It changes the map more than any other job, because the red tanks stand still until it exists.
+
+Nothing in a map file mentions a red tank. Three posts are fractions of the map in `numbers.ts`, slid onto walkable ground, and a beat is the four corners of a square round a post, slid the same way. So a map painted in project 18's editor works with no extra work.
+
+Measured in Chrome with the answer key, on Crossroads. Four tanks sent at the middle post: red lost all three in 25 seconds, blue lost one, 64 shots. One tank sent alone: it wrecked one red tank and was wrecked itself, and then the fight stopped, because the surviving two lost sight and went back to their beats. Nobody wrote "give up and go home".
+
+`terrain.ts` is project 21's file, unchanged. Its `ore` line and `holds` column have no reader here. A table you leave alone is cheaper than a table you edit, and project 24 wants the ore back.
+
+We left these out on purpose: a leash that sends a chasing tank home, target choice by anything but distance, red tanks that tell each other where you are, per-tank ranges, and anything to build or dig. Named in the README as good things to try next: a leash, shooting at the weakest, a sniper, calling for help, and a map of his own.
+
 ## The sequence
 
 | # | Project | The new idea |
 |---|---|---|
-| 23 | Enemy AI | Choosing a target, patrolling, and attacking |
 | 24 | Small strategy game | All of it, kept small |
-
-### 23. Enemy AI
-
-This project teaches distance checks, target selection, patrol states, and attack states. It uses the pathfinding from project 20.
 
 ### 24. Small strategy game
 

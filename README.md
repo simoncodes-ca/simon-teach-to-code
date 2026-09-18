@@ -248,6 +248,20 @@ Files: `22-production/build.html`, `22-production/styles.css`, `22-production/nu
 
 Open two terminals in `22-production`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
 
+### Enemy AI
+
+Three red tanks guard the map. You have four blue ones. A red tank walks a beat, and when it spots one of yours it turns, works out a route round the rock, drives until it is close enough, stops, and opens fire.
+
+A brain is a list of questions asked in a fixed order. Five of them, in one function, hand back one word about one tank. The page does the one thing that word means, and nothing else decides anything.
+
+A gun does not reach as far as an eye does, and that gap is the only reason a tank ever drives anywhere. It is also the trap: ask about seeing before shooting and the red tanks chase you for ever without firing once.
+
+You write seven functions: the distance between two tanks, whether one is close enough, who is worth shooting at, pointing the gun, firing, the next cell on a beat, and what a tank is doing right now. You also write two tests. The last function starts the hunting.
+
+Files: `23-enemy/enemy.html`, `23-enemy/styles.css`, `23-enemy/numbers.ts`, `23-enemy/terrain.ts`, `23-enemy/map.ts`, `23-enemy/paths.ts`, `23-enemy/units.ts`, `23-enemy/enemy.ts`, `23-enemy/enemy.test.ts`, `23-enemy/rack.ts`, `23-enemy/game.ts`, `23-enemy/package.json`.
+
+Open two terminals in `23-enemy`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.
