@@ -262,6 +262,22 @@ Files: `23-enemy/enemy.html`, `23-enemy/styles.css`, `23-enemy/numbers.ts`, `23-
 
 Open two terminals in `23-enemy`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
 
+### The small strategy game
+
+The last project, and the one the whole list was heading for. You have a refinery, a build yard and a corner of the map. So has an enemy, and its corner works exactly the same way. Wreck its refinery to win.
+
+Everything on the map is work from an earlier project. The harvesters are project 21, the yard is project 22, the tank brain is project 23, and the routes are project 20. All of them arrive finished.
+
+What you write is the enemy's commander. A plan is a list of things to buy, in order, and the commander walks it. Saving up for the thing it wants beats buying the cheaper thing it can afford, and a commander that always spends ends with nine harvesters and no army.
+
+A refinery is a unit in the same list as the tanks, so project 23's targeting finds it and project 23's shooting wrecks it, with neither function changed. That is where the win condition comes from.
+
+You write seven functions: counting what a side has, how strong its army is, what it is saving for, buying that, whether it is strong enough to attack, who marches and who guards, and who has won. You also write two tests. The last function is the last stub in the repository.
+
+Files: `24-strategy/strategy.html`, `24-strategy/styles.css`, `24-strategy/numbers.ts`, `24-strategy/terrain.ts`, `24-strategy/map.ts`, `24-strategy/paths.ts`, `24-strategy/catalogue.ts`, `24-strategy/units.ts`, `24-strategy/ore.ts`, `24-strategy/build.ts`, `24-strategy/enemy.ts`, `24-strategy/commander.ts`, `24-strategy/commander.test.ts`, `24-strategy/rack.ts`, `24-strategy/game.ts`, `24-strategy/package.json`.
+
+Open two terminals in `24-strategy`. Run `npm install` once. Then run `npm run dev` in the first and `npm test` in the second.
+
 ## Suggested learning path
 
 1. **Start with the calculator.** It is the smallest program. You meet the main ideas one at a time: remembering values, listening for clicks, and changing the screen.

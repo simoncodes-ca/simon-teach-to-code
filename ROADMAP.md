@@ -1,14 +1,14 @@
 # Coding Roadmap
 
-This roadmap runs from the twenty-three finished projects to a small Red Alert-style strategy game.
+This roadmap runs from a calculator to a small Red Alert-style strategy game. All twenty-four projects are built.
 
 The order moves through five kinds of work. Webpage programs come first. Then grid games. Then Canvas and animation. Then a game library. Then the parts a strategy game needs: maps, units, resources, buildings, and a simple computer opponent.
 
 ## How to read this
 
-The strategy game is the real destination.
+The strategy game is the real destination, and project 24 is it.
 
-Simon finishes one or two small projects a week. A big project takes one or two weeks. The whole list is about a year of work at that pace.
+Simon finishes one or two small projects a week. A big project takes one or two weeks. The whole list was about a year of work at that pace.
 
 Three projects in the list are **cutovers** (a project that changes how we work, not just what we build). Each cutover is marked. Each one arrives because the next project needs it.
 
@@ -604,25 +604,45 @@ Measured in Chrome with the answer key, on Crossroads. Four tanks sent at the mi
 
 We left these out on purpose: a leash that sends a chasing tank home, target choice by anything but distance, red tanks that tell each other where you are, per-tank ranges, and anything to build or dig. Named in the README as good things to try next: a leash, shooting at the weakest, a sniper, calling for help, and a map of his own.
 
-## The sequence
+### 24. The small strategy game
 
-| # | Project | The new idea |
-|---|---|---|
-| 24 | Small strategy game | All of it, kept small |
+A war room. You have a refinery, a build yard and a corner of the map. So has an enemy, and its corner works exactly like yours. Wreck its refinery to win. It is the last project, and it is the game the whole list was heading for.
 
-### 24. Small strategy game
+- A plan held as data, and a commander that walks it
+- Saving up, instead of buying what you can afford
+- One number that stands in for a whole army
+- Keeping some of your force at home
+- A game that can be over
 
-Do not try to build all of Red Alert. The first strategy game contains:
+Projects 21, 22 and 23 each dropped the project before it, to keep eleven files of given wiring from surrounding seven stubs. This project puts all three back and keeps them. Being the whole game is the point of it, and the cost is a folder of twelve files with one stub file in it.
 
-- 1 small map
-- 2 teams
-- 2 unit types
-- 1 resource
-- 1 building
-- 1 production queue
-- 1 win condition
+The idea the project exists to teach is that **a plan is a list, and a commander walks it.** `RED_PLAN` in `catalogue.ts` is ten lines, and each one says "keep buying this until you have this many". `wantNext` reads the list from the top and hands back the first line the enemy has not finished. Move a line and the enemy plays a different game, with no code changed. That is project 18's promise about grounds and project 22's about buildings, kept a third time for behaviour.
 
-That game holds every important strategy-game idea. It needs no commercial engine.
+The second lesson is the one that looks like laziness. `spendStep` asks the plan what it wants, asks project 22's `canBuild` about it, and buys nothing at all when the answer is not `'ok'`. A war factory costs 1000 and a harvester costs 400, so a commander that spends whatever is in its pocket buys the harvester every time and never builds an army. Doing nothing on purpose is what gets the factory built.
+
+The third is free, and it is project 8's lesson met for the last time. A refinery is a unit: 900 health, no engine, no gun, sitting in the same list as the tanks. So project 23's `nearestTarget` finds it and project 23's `shootStep` wrecks it, with neither function changed by one character. A thing that never moves joins the list of things that do, and the win condition falls out of it. `whoWon` counts refineries.
+
+The order of the questions in `spendStep` fails quietly, which makes it the fourth project in a row built on that shape. A commander that asks "what can I afford?" instead of "what does the plan want?" looks busy for four minutes and fields nine harvesters. Nothing crashes, and the Enemy card goes on naming the right thing to save for, because `wantNext` is right. Only a credit counter that never climbs gives it away.
+
+**Both corners are provably equal.** Each map is unchanged by half a turn, so the two sides hold the same ground, the same ore and the same room to build. Measured in Chrome with the stubs empty, so neither side spends: both refineries held exactly 1199 credits at twenty seconds, and exactly 1799 at forty. Without that, every result measured is about a corner rather than about a commander.
+
+`terrain.ts` changes one number from project 21. Ore `holds` goes from 240 to 480, because two armies dig one field, and that one number moved a game from three minutes to about six.
+
+**Seven stubs and two tests, all in `commander.ts` and `commander.test.ts`.** In order: `countKind`, `armyStrength`, `wantNext`, the saving-up test, `spendStep`, `wantsAttack`, `attackOrders`, the refinery-gone test, and `whoWon`. Measured in throwaway copies, the checker counts 7 errors at the start and 0 at the end, and Vitest goes from 4 failed and 2 todo to 6 passed.
+
+Job 5 carries the project. Before it the enemy corner is three harvesters and a shed. After it the enemy plays the same game out of the same table, and the other four jobs are what let it choose its moment.
+
+Measured in Chrome with the answer key, on Twin Yards. With nobody playing blue, the enemy built its chain, massed three tanks, sent two and wrecked the undefended refinery at 3 minutes. Played properly, with two extra harvesters first and the tanks sent at the enemy ore field rather than its refinery, every enemy harvester died, its income stopped, its tanks were not replaced, and its refinery fell at 4 minutes 6 seconds. On Two Bridges the enemy crossed a bridge with project 20's `findRoute` while the squad was away at the ore, and won at 3 minutes 10 seconds.
+
+That is the game in one sentence: ore pays for everything, so a harvester is a target.
+
+We left these out on purpose: a second way to win, cancelling an order, placing a building by hand, ore that grows back, a leash on a chasing tank, an enemy that guards its own ore field, more than one enemy plan, fog of war, and saving a game. Named in the README as good things to try next: moving a line in the plan, a second plan with no harvesters in it, a leash, defending the harvesters, a win by wiping out, and a map of his own.
+
+## The list is finished
+
+Twenty-four projects, from a calculator to a strategy game. There is no project 25 in this file, and that is deliberate.
+
+What comes after the list is not another scaffold. It is Simon changing this game: a sixth line in the catalogue, a second enemy plan, a map of his own, a rule he thought of himself. The repository is his to break now.
 
 ## The three cutovers
 
@@ -642,13 +662,13 @@ Testing starts after TypeScript, and it stays small.
 
 **Runner: Vitest.** It runs TypeScript with no configuration, and npm already arrived at project 17. Put a fifteen-line `expect` helper in the README, so Simon can see what a runner does. Do not make that helper a project. Projects 9 and 17 already taught him to compare hand-written code with a tool.
 
-**Where: projects 18 to 22.** All five are pure logic, and checking that logic by clicking is slow. The tests answer a question Simon already has. Tests in every later project are optional.
+**Where: projects 18 to 24.** All seven hold pure logic, and checking that logic by clicking is slow. The tests answer a question Simon already has.
 
 Project 17 is the wrong place, because it already introduces types.
 
 **What we test: pure logic only.** Test functions that take values and return values. Do not test the DOM, Phaser, or drawing. This avoids a second round of new tools. It also rewards keeping the game rules separate from the drawing code.
 
-**Shape of a project with tests.** It has an eighth file, `NN.test.ts`. That file holds three or four finished tests and two stubbed ones. The test file carries its own answer key at its own bottom. Opening one file never gives away the other.
+**Shape of a project with tests.** It has one more file, named after the file it checks. That file holds three or four finished tests and two stubbed ones. The test file carries its own answer key at its own bottom. Opening one file never gives away the other.
 
 Simon writes the two test stubs before he writes the functions they test. The hint at the implementation stub says so:
 
