@@ -33,7 +33,7 @@ export function wrecked(unit: Unit): boolean {
   return unit.health <= 0;
 }
 
-/* Can this kind of unit fire at all? A harvester carries a drum and a
+/* Can this kind of unit fire at all? A harvester carries ore and a
    refinery is a shed, so neither one ever shoots back. */
 export function armed(unit: Unit): boolean {
   return unit.kind === 'tank';

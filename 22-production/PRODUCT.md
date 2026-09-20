@@ -60,8 +60,8 @@ The tanks it turns out drive, and nothing more. An enemy to point them at is pro
 - Project 21's whole ore run, given in full and running from the moment the page opens: harvesters, patches, loads, the refinery and the credits. `ore.ts` is project 21's answer key, with `Harvester` renamed `Unit`.
 - A refinery at cell 4, 10 that starts with `START_CREDITS`, 500, so the first build needs no waiting.
 - Three harvesters at the start, not six.
-- A build catalogue of five things in one table, `catalogue.ts`, each with a cost, a build time, a prerequisite, a kind, three letters and a colour. Nothing outside that table names a power plant.
-- Two kinds of thing. A `building` is built once, unlocks the next line, and lands on a plot near the refinery. A `unit` is built over and over, and rolls out onto the map.
+- A build catalogue of five things in one table, `catalogue.ts`, each with a cost, a build time, a prerequisite, a kind, three letters, a picture and a colour. Nothing outside that table names a power plant.
+- Two kinds of thing. A `building` is built once, unlocks the next line, and lands on a plot near the refinery. A `unit` is built over and over, and rolls out onto the map at the building its `needs` column names — a tank at the war factory — or at the refinery when it needs nothing.
 - A queue of at most `QUEUE_MAX`, 5. Only the front one is ever worked on.
 - A Build card of five buttons, each showing its price, its build time, and one word from `canBuild`. A button whose word is not 'ok' is a disabled `<button>`, so the browser itself refuses the click.
 - A Queue card: what is being built, a countdown to an empty queue, and one docket per job with a bar on the front one.
@@ -99,7 +99,7 @@ Job 7 is the only job that changes no count but its own error. It changes the pa
 - Tests cover pure logic only: `build.ts`. Never the DOM or Phaser.
 - No thing you can build is named outside `catalogue.ts`, except in the test files and their hints and answers, and in `game.ts` where a tank is told apart from a harvester at the moment it rolls out.
 - Sounds keep the `Audio` pattern every project since the calculator has used. No new sound files: a purchase reuses the order pip, a finished build reuses project 20's found pips, and a refused click reuses the blocked buzz.
-- No new art. A building is drawn as a coloured pad with the three letters from its table line. A tank is project 17's hull and turret; a harvester is the same two pictures with the turret tinted amber.
+- New art for the three buildings: `power-plant.png`, `barracks.png` and `war-factory.png`, one 48px picture each, named by the table's `picture` column and by nothing else. A line with no picture still draws as a coloured pad, so a sixth line is still a one-line change. A tank is project 17's hull and turret; a harvester is project 21's truck with its amber load.
 - Comments use plain language for an 11-year-old.
 
 ## Brand Commitments

@@ -101,7 +101,7 @@ Job 7 is the only job that changes no test count, the same as project 22's job 7
 - `ore.ts`, `build.ts` and `enemy.ts` are projects 21, 22 and 23 copied from their answer keys. `ore.ts` takes a cell in `makeRefinery` because there are two refineries now, and `enemy.ts` gains `armed`, which says whether a kind of unit has a gun. Those are the only two changes across the three files.
 - `terrain.ts` changes exactly one number from project 21: ore `holds` goes from 240 to 480, because two armies dig one field. It is recorded in that file's header.
 - Sounds keep the `Audio` pattern every project since the calculator has used. Nine files, all of them from projects 22 and 23.
-- No new art. Both sides drive project 17's hull and turret, told apart by a coloured disc, because tinting a blue hull red produces mud.
+- No new art. Both sides drive project 17's hull and turret for tanks and project 21's truck for harvesters, told apart by a coloured disc, because tinting a blue hull red produces mud. The buildings are project 22's three pictures, and a ring in each side's colour tells whose they are. A unit rolls out at the building it needed, so each side's tanks appear at its own war factory.
 - Comments use plain language for an 11-year-old.
 
 ## Brand Commitments
@@ -119,7 +119,7 @@ Project 22's build yard desk, with a Forces card added at the top of the rack an
 - Measured in Chrome with every stub filled, on Twin Yards, played through Playwright: two extra harvesters, then the chain, then five tanks sent at the enemy ore field rather than its refinery. Every enemy harvester died, its income stopped, its tanks were not replaced, and its refinery fell. The banner read `You won` at 4 minutes 6 seconds.
 - Measured in Chrome on Two Bridges, played the same way: the enemy crossed a bridge with project 20's `findRoute` while the squad was away at the ore, and won at 3 minutes 10 seconds. Both maps produce a contest that either side can take.
 - Measured in Chrome with every stub still empty: the page loads, your harvesters dig, your Build card spends, every enemy well reads a dash, and the console holds nothing but the two favicon 404s that projects 20 to 23 also produce.
-- Measured in Chrome with the stubs empty, so neither side spends: both refineries held equal credits at twenty, thirty, forty and sixty seconds, over two runs, at 1199, 1499, 1799 and 2400. That is the fairness of the two corners, measured rather than asserted. A reading taken between those points can differ by one load, because the two sides do not tip their drums in the same instant.
+- Measured in Chrome with the stubs empty, so neither side spends: both refineries held equal credits at twenty, thirty, forty and sixty seconds, over two runs, at 1199, 1499, 1799 and 2400. That is the fairness of the two corners, measured rather than asserted. A reading taken between those points can differ by one load, because the two sides do not tip their loads in the same instant.
 - Measured in Chrome at 430 pixels wide: no horizontal scroll, and all six cards fit.
 - Measured in Chrome at 1600 by 1000: the rack ends 56 pixels inside the desk, and all three starting squad rows are visible without scrolling.
 - The terrain tiles, the unit pictures and all nine sounds are projects 22 and 23's, unchanged.

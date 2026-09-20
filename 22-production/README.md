@@ -154,12 +154,16 @@ Nowhere in `build.ts`, `rack.ts` or `game.ts` is there a line that says a barrac
 
 A sixth thing to build is a sixth line in that table, and no other change anywhere. That is the promise project 18 made about grounds, kept for a different kind of content.
 
+The table has a `picture` column too. A building names the file in `assets/` that is drawn on its plot, and a unit leaves it `null`, because a unit is drawn as a hull and a top instead. A new building with no picture of its own still lands, as a pad in its own colour.
+
+The `needs` column does a second job on the map: a unit appears at the building it needed. A tank needs the war factory, so a tank drives out of the war factory. A harvester needs nothing, so it starts at the refinery.
+
 ### Two kinds of thing
 
 | | Built | Where it goes |
 |---|---|---|
 | A **building** | Once | A plot beside the refinery |
-| A **unit** | As often as you like | Out of the gate and onto the map |
+| A **unit** | As often as you like | Out of the building it needed, onto the map |
 
 That difference shows up twice in your code, and both times it is the `kind` column doing the work.
 

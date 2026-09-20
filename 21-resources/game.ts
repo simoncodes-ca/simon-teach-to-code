@@ -173,10 +173,11 @@ function done(number: number): boolean {
    SETTING PHASER UP
    --------------------------------------------------------------------- */
 
-/* The two pictures that make one harvester. */
+/* The two pictures that make one harvester: the truck, and the ore
+   sitting in its bed. */
 type Look = {
   hull: Phaser.GameObjects.Image;
-  drum: Phaser.GameObjects.Image;
+  load: Phaser.GameObjects.Image;
 };
 
 /* Everything Phaser builds once the scene starts. */
@@ -209,8 +210,8 @@ function preload(this: Phaser.Scene): void {
   for (const key of TERRAIN_KEYS) {
     this.load.image(key, 'assets/' + TERRAIN[key].picture);
   }
-  this.load.image('hull', 'assets/hull-blue.png');
-  this.load.image('drum', 'assets/turret-blue.png');
+  this.load.image('hull', 'assets/truck-blue.png');
+  this.load.image('load', 'assets/load-ore.png');
 }
 
 function create(this: Phaser.Scene): void {
@@ -353,17 +354,16 @@ function putMapOnTheBoard(index: number): void {
 
   for (const look of stage.looks) {
     look.hull.destroy();
-    look.drum.destroy();
+    look.load.destroy();
   }
   harvesters = placeSquad(map);
   stage.looks = [];
   for (const harvester of harvesters) {
     stage.looks.push({
       hull: stage.scene.add.image(harvester.x, harvester.y, 'hull').setScale(0.7).setDepth(3),
-      /* The tank's turret, tinted amber: it stands in for the drum the
-         ore goes into. */
-      drum: stage.scene.add.image(harvester.x, harvester.y, 'drum')
-        .setScale(0.7).setOrigin(20 / 64, 0.5).setDepth(4).setTint(0xffbe5c)
+      /* The amber load in the truck's bed: the ore it carries. */
+      load: stage.scene.add.image(harvester.x, harvester.y, 'load')
+        .setScale(0.7).setDepth(4)
     });
   }
   marks = [];
@@ -564,7 +564,7 @@ function update(this: Phaser.Scene, time: number, delta: number): void {
   for (let i = 0; i < harvesters.length; i += 1) {
     const harvester = harvesters[i];
     stage.looks[i].hull.setPosition(harvester.x, harvester.y).setRotation(harvester.angle);
-    stage.looks[i].drum.setPosition(harvester.x, harvester.y).setRotation(harvester.angle);
+    stage.looks[i].load.setPosition(harvester.x, harvester.y).setRotation(harvester.angle);
   }
 
   const box = dragging ? boxFrom(pressX, pressY, mouseX, mouseY) : null;

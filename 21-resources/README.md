@@ -211,7 +211,7 @@ The best bug in this project is `digStep` without its `seconds`. The run looks w
 ### Try this next
 
 - **Ore that grows back.** Give each spent patch a little ore every second, up to what it started with. Then the field never runs out, and the six harvesters settle into a rhythm.
-- **A bigger drum.** Give one harvester a `capacity` of its own instead of using `CAPACITY` for all six. Is a bigger drum always better?
+- **A bigger bed.** Give one harvester a `capacity` of its own instead of using `CAPACITY` for all six. Is a bigger truck always better?
 - **One patch each.** Stop two harvesters heading for the same patch. `nearestOre` would need to know which cells are already claimed.
 - **A second refinery.** Put another one on the map, and send each harvester to the nearer one.
 - **Paint your own field.** Add the `ore` line from `terrain.ts` to `18-editor/terrain.ts`, draw a map, and copy the file into `21-resources/maps`.

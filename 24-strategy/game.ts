@@ -235,9 +235,10 @@ function done(number: number): boolean {
    SETTING PHASER UP
    --------------------------------------------------------------------- */
 
-/* The two pictures that make one unit: a hull, and a top that is either
-   a gun or an ore drum. A refinery has a look of its own, drawn with
-   lines, so both of its pictures are switched off. */
+/* The two pictures that make one unit: a tank is a hull with a gun, a
+   harvester is a truck with an ore load in its bed. A refinery has a
+   look of its own, drawn with lines, so both of its pictures are
+   switched off. */
 type Look = {
   hull: Phaser.GameObjects.Image;
   top: Phaser.GameObjects.Image;
@@ -251,6 +252,7 @@ type Stage = {
   patches: Phaser.GameObjects.Graphics;     // the amber shading on the ore
   base: Phaser.GameObjects.Graphics;        // both refineries and every building
   labels: Phaser.GameObjects.Text[];        // the words on them
+  slabs: Phaser.GameObjects.Image[];        // one picture for each finished building
   beats: Phaser.GameObjects.Graphics;       // the ring a guard walks
   routes: Phaser.GameObjects.Graphics;      // the routes the units are driving
   discs: Phaser.GameObjects.Graphics;       // a coloured disc under each unit
@@ -276,6 +278,14 @@ function preload(this: Phaser.Scene): void {
   }
   this.load.image('hull', 'assets/hull-blue.png');
   this.load.image('top', 'assets/turret-blue.png');
+  this.load.image('truck', 'assets/truck-blue.png');
+  this.load.image('load', 'assets/load-ore.png');
+  /* One picture for each building in the table, under its own key. A
+     unit has no picture here, because it is drawn as a hull and a top. */
+  for (const key of ITEM_KEYS) {
+    const picture = CATALOGUE[key].picture;
+    if (picture !== null) this.load.image(key, 'assets/' + picture);
+  }
 }
 
 function create(this: Phaser.Scene): void {
@@ -308,6 +318,7 @@ function create(this: Phaser.Scene): void {
     patches: this.add.graphics().setDepth(2),
     base: this.add.graphics().setDepth(2.2),
     labels: [],
+    slabs: [],
     beats: this.add.graphics().setDepth(2.6),
     routes: this.add.graphics().setDepth(2.7),
     discs: this.add.graphics().setDepth(2.8),
@@ -459,15 +470,20 @@ function addUnit(base: Base, kind: UnitKind, x: number, y: number, post: Cell): 
 
   if (stage !== null) {
     const shown = kind !== 'base';
-    const tint = kind === 'harvester'
-      ? 0xffbe5c
-      : (base.side === 'blue' ? 0xa8c4e0 : 0xe04a3a);
+    const harvests = kind === 'harvester';
+    const top = stage.scene.add.image(x, y, harvests ? 'load' : 'top')
+      .setScale(0.7).setDepth(4).setVisible(shown);
+    /* A gun turns about its middle, a fifth of the way along its
+       picture. A load sits in the bed and turns with the truck, so it
+       keeps the middle it came with, and its amber is in the picture. */
+    if (!harvests) {
+      top.setOrigin(20 / 64, 0.5).setTint(base.side === 'blue' ? 0xa8c4e0 : 0xe04a3a);
+    }
     stage.looks.push({
-      hull: stage.scene.add.image(x, y, 'hull').setScale(0.7).setDepth(3).setVisible(shown)
+      hull: stage.scene.add.image(x, y, harvests ? 'truck' : 'hull')
+        .setScale(0.7).setDepth(3).setVisible(shown)
         .setTint(base.side === 'blue' ? 0xffffff : 0xd8a09a),
-      top: stage.scene.add.image(x, y, 'top')
-        .setScale(0.7).setOrigin(20 / 64, 0.5).setDepth(4).setVisible(shown)
-        .setTint(tint)
+      top
     });
   }
   return unit;
@@ -577,6 +593,16 @@ buildCatalogue((key) => {
   say(item.name + ' on order. ' + item.cost + ' credits gone, and ' + item.seconds + ' seconds to wait.');
 });
 
+/* Where a unit appears when it rolls out of a yard: the plot of the
+   building it needed, so a tank drives out of the war factory that
+   opened it. A unit that needed nothing starts at that side's refinery.
+   The `needs` column says which building, so this never names one. */
+function gateCell(base: Base, key: ItemKey): Cell {
+  const needs = CATALOGUE[key].needs;
+  const gate = base.placed.find((each) => each.key === needs);
+  return gate?.cell ?? base.refinery.cell;
+}
+
 /* What comes out of a yard when `takeFinished` hands a key over. A unit
    rolls onto the map. A building takes the next free plot.
 
@@ -586,7 +612,7 @@ function rollOut(base: Base, key: ItemKey): void {
   const item = CATALOGUE[key];
 
   if (item.kind === 'unit') {
-    const gate = middleOf(base.refinery.cell);
+    const gate = middleOf(gateCell(base, key));
     const unit = addUnit(base, key === 'tank' ? 'tank' : 'harvester', gate.x, gate.y, base.refinery.cell);
     if (unit.kind === 'harvester') takeNextJob(unit);
     if (base.side === 'blue') {
@@ -734,7 +760,7 @@ function takeNextJob(unit: Unit): void {
 
   if (word === 'home') {
     /* Already standing on the refinery, with the last of the ore in it.
-       Project 21's `nextJob` only says 'unloading' for a full drum, so a
+       Project 21's `nextJob` only says 'unloading' for a full bed, so a
        harvester that comes home part full once the field is finished
        would hold on to its load for ever. One line tips it in. */
     if (sameCell(cellAt(unit.x, unit.y), base.refinery.cell)) {
@@ -1174,6 +1200,8 @@ function drawBase(onStage: Stage): void {
   pen.clear();
   for (const label of onStage.labels) label.destroy();
   onStage.labels = [];
+  for (const slab of onStage.slabs) slab.destroy();
+  onStage.slabs = [];
 
   for (const base of bases) {
     const colour = sideColour(base.side);
@@ -1213,12 +1241,21 @@ function drawBase(onStage: Stage): void {
       pen.fillRect(x + 2, y + 2, TILE - 4, TILE - 4);
       pen.lineStyle(2.5, tint, 0.9);
       pen.strokeRect(x + 2, y + 2, TILE - 4, TILE - 4);
-      pen.fillStyle(tint, 0.25);
-      pen.fillRect(x + 7, y + 7, TILE - 14, TILE - 14);
       pen.lineStyle(2, colour, 0.7);
       pen.strokeRect(x + 5, y + 5, TILE - 10, TILE - 10);
 
-      onStage.labels.push(nameTag(onStage, x + TILE / 2, y + TILE / 2, item.tag, item.colour, 0.5));
+      /* Its own picture, from the table. A line with no picture falls
+         back to a wash of its colour, so a sixth line still shows up. */
+      if (item.picture === null) {
+        pen.fillStyle(tint, 0.25);
+        pen.fillRect(x + 7, y + 7, TILE - 14, TILE - 14);
+      } else {
+        onStage.slabs.push(onStage.scene.add
+          .image(x + TILE / 2, y + TILE / 2, building.key)
+          .setDepth(2.25));
+      }
+
+      onStage.labels.push(nameTag(onStage, x + TILE / 2, y - 2, item.tag, item.colour));
     }
   }
 }

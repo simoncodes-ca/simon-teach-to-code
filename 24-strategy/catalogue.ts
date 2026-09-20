@@ -29,6 +29,7 @@ export type Item = {
   seconds: number;     // how long it takes to build
   needs: string | null;  // the key of the thing you must build first, or null
   tag: string;         // the three letters drawn on it when it is on the map
+  picture: string | null;  // the file in assets/ drawn on its plot, or null for a unit
   colour: string;      // its colour on the cards and on the map
   note: string;        // one line the card says about it
 };
@@ -43,23 +44,23 @@ export type Item = {
 export const CATALOGUE = {
   harvester: {
     name: 'Harvester', kind: 'unit', cost: 400, seconds: 8, needs: null,
-    tag: 'HRV', colour: '#ffbe5c', note: 'Digs ore and brings it home'
+    tag: 'HRV', picture: null, colour: '#ffbe5c', note: 'Digs ore and brings it home'
   },
   power: {
     name: 'Power plant', kind: 'building', cost: 300, seconds: 6, needs: null,
-    tag: 'PWR', colour: '#6fd3c7', note: 'The first building. It opens the barracks'
+    tag: 'PWR', picture: 'power-plant.png', colour: '#6fd3c7', note: 'The first building. It opens the barracks'
   },
   barracks: {
     name: 'Barracks', kind: 'building', cost: 500, seconds: 10, needs: 'power',
-    tag: 'BKS', colour: '#8fb7e8', note: 'Opens the war factory'
+    tag: 'BKS', picture: 'barracks.png', colour: '#8fb7e8', note: 'Opens the war factory'
   },
   factory: {
     name: 'War factory', kind: 'building', cost: 1000, seconds: 18, needs: 'barracks',
-    tag: 'FAC', colour: '#c79ae8', note: 'Opens the tank'
+    tag: 'FAC', picture: 'war-factory.png', colour: '#c79ae8', note: 'Opens the tank'
   },
   tank: {
     name: 'Tank', kind: 'unit', cost: 700, seconds: 12, needs: 'factory',
-    tag: 'TNK', colour: '#7fa8d8', note: 'Drives, aims and fires on its own'
+    tag: 'TNK', picture: null, colour: '#7fa8d8', note: 'Drives, aims and fires on its own'
   }
 } satisfies Record<string, Item>;
 

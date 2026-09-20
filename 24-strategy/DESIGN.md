@@ -103,9 +103,9 @@ A 960 by 720 canvas in a steel frame with an orange hairline, under a plotting-s
 | Ore left | The cell's number in amber, over an amber wash that fades as it empties |
 | A spent patch | A dark wash, and no number |
 | A refinery | A dark pad with a hopper in its side's colour, and `YOURS` or `THEIRS` over it |
-| A building | A dark pad edged in the catalogue's colour, with its three letters on it, inside a ring in its side's colour |
-| A unit | Project 17's hull and turret, over a disc in its side's colour |
-| A harvester's top | Amber, whichever side it belongs to, because it carries a drum |
+| A building | A dark pad edged in the catalogue's colour, holding its own picture, inside a ring in its side's colour, with its three letters over the top |
+| A tank | Project 17's hull and turret, over a disc in its side's colour |
+| A harvester | A blue truck with an amber load in its bed, over the same disc, whichever side it belongs to |
 | A wreck | Both pictures tinted near-black, the turret knocked askew, the disc faded |
 | Health | A bar over the unit. A refinery's is wider, because it matters more |
 | A load | An amber bar under the harvester, and only while it is carrying |
@@ -114,7 +114,7 @@ A 960 by 720 canvas in a steel frame with an orange hairline, under a plotting-s
 | A guard's beat | A red dotted ring round the enemy refinery |
 | Your gun's reach | An orange circle, and only round a unit you have picked |
 
-A disc under every unit does the work that tinting cannot. Both sides drive the same two pictures, because a blue hull tinted red comes out the colour of mud.
+A disc under every unit does the work that tinting cannot. Both sides drive the same pictures, because a blue hull tinted red comes out the colour of mud.
 
 ## The banner
 

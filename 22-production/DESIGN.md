@@ -53,10 +53,10 @@ Every mark carries a dark shadow under a bright line or fill, so it reads on gra
 | Mark | Drawn as |
 |---|---|
 | The refinery | A near-black pad, an amber outline, and an amber hopper |
-| **A finished building** | A near-black pad, an outline and a 25% wash in its own catalogue colour |
-| **Its name** | Its three letters in 11px bold, in the same colour, in the middle of the pad |
-| A harvester | Project 17's blue hull, turret tinted amber, at 70% |
-| A tank | The same hull and turret, tinted pale blue |
+| **A finished building** | A near-black pad, an outline in its own catalogue colour, and its own 48px picture: a power plant of cooling towers, a barracks of two huts, a war factory with a striped roller door |
+| **Its name** | Its three letters in 11px bold, in the same colour, over the top of the pad |
+| A harvester | A blue truck with an amber load in its bed, at 70% |
+| A tank | Project 17's hull and turret, tinted pale blue |
 | Load of a harvester | A 28 by 5 amber bar above it. A tank has none |
 | Patch with ore left | An amber fill and outline, from 12% to 42%, by how full it is |
 | Spent patch | A 42% dark shade over the tile, and no number |

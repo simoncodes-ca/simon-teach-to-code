@@ -185,7 +185,7 @@ That matters more than it sounds. If one corner has more ore, every result you m
 
 Measured with the stubs still empty, so neither side spends anything. Both refineries held the same number of credits at twenty, thirty, forty and sixty seconds: 1199, 1499, 1799 and 2400. Two runs, the same eight numbers.
 
-A reading taken mid-second can differ by one load, because one harvester tips its drum in a moment before the other.
+A reading taken mid-second can differ by one load, because one harvester tips its load in a moment before the other.
 
 ### How a game actually goes
 

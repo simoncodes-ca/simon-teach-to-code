@@ -94,7 +94,7 @@ The harvesters spend the credits on nothing. Buying things is project 22, and a 
 
 **The two clamps.** `takeOre` hands back the smaller of what was asked for and what the cell holds. `digStep` asks for the smaller of `DIG_RATE × seconds` and the room left in the harvester. Remove either one and the load bar runs off the end of its track, which the README names as a bug to expect.
 
-**Explicitly deferred:** spending credits, which is project 22, ore that grows back, more than one refinery, harvesters that queue at the refinery, a second resource, and a harvester that picks a patch another harvester has already claimed. Named in the README as good things to try next: ore that grows back, a bigger drum for one harvester, stopping two harvesters heading for the same patch, a second refinery, and a field painted in project 18's editor.
+**Explicitly deferred:** spending credits, which is project 22, ore that grows back, more than one refinery, harvesters that queue at the refinery, a second resource, and a harvester that picks a patch another harvester has already claimed. Named in the README as good things to try next: ore that grows back, a bigger bed for one harvester, stopping two harvesters heading for the same patch, a second refinery, and a field painted in project 18's editor.
 
 **Hard constraints:**
 
@@ -119,7 +119,7 @@ A refinery weighbridge office: dark steel, amber lamps, a brass ore counter, and
 - Measured in Chrome through `npm run dev`, with every stub filled, from the moment a map appears. Ore Valley: 15 patches, 3600 ore, 1600 credits after a minute, 2938 after two, about 1450 ore a minute. River Mine: 17 patches, 4080 ore, 1199 credits after a minute, 2751 after two, about 1380 ore a minute.
 - Measured in Chrome: the run starts itself, a squad click then a map click sends one harvester, the only console messages are two favicon 404s that project 20's page also produces, and a 390px viewport has no sideways scroll with 44px squad buttons and 48px map buttons.
 - All six harvesters head for the same patch, because each asks `nearestOre` from the same place at the same time. Recorded as a deferred limit, and named in the README.
-- The terrain tiles, the harvester pictures and the six sounds are copied from project 20. `ore.png` is new, written by a short script that deflates a PNG by hand. The drum is project 20's turret, tinted amber.
+- The terrain tiles and the six sounds are copied from project 20. `ore.png` is new, written by a short script that deflates a PNG by hand. The harvester is new art: `truck-blue.png`, a top-down truck in project 20's blue, and `load-ore.png`, the amber ore sitting in its bed.
 - No public claims, scores, or testimonials exist; none should be fabricated.
 
 ## Product Principles

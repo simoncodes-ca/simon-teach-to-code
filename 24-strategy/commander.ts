@@ -126,7 +126,7 @@ export function countKind(units: Unit[], side: Side, kind: UnitKind): number {
  * fresh tanks is 400 strong. The same four tanks, all of them half shot
  * away, are 200.
  *
- * Only tanks count. A harvester carries a drum and a refinery is a
+ * Only tanks count. A harvester carries ore and a refinery is a
  * shed, so neither one can win a fight or lose one.
  *
  * This is one number standing in for a whole army, and job 6 is the

@@ -50,7 +50,7 @@ Three black wells sit at the right-hand end. The map name and the working count 
 
 The map sits in a 4:3 frame of near-black steel, then a thin orange line. A faint diagonal shine crosses it, and the edges darken slightly.
 
-The canvas is 960 by 720, twenty cells by fifteen at 48 pixels each, drawn with the terrain table's seven tiles. The ore tile is new: brown dirt with amber crystals, made by a short script. Each harvester is project 17's blue hull with the turret tinted amber, at 70% scale.
+The canvas is 960 by 720, twenty cells by fifteen at 48 pixels each, drawn with the terrain table's seven tiles. The ore tile is new: brown dirt with amber crystals, made by a short script. Each harvester is a blue truck with an amber load in its bed, two new pictures, at 70% scale.
 
 Every mark on the map has a dark shadow under a bright line or fill, so it reads on grass, sand and ore alike:
 
