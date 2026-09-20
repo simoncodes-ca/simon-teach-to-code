@@ -24,6 +24,7 @@ export const WIDTH = COLS * TILE;   // so the window is 960 pixels wide
 export const HEIGHT = ROWS * TILE;  // and 720 pixels tall
 
 export const TANK_SPEED = 90;       // pixels a second, on ground with a speed of 1
+export const INFANTRY_SPEED = 130;  // infantry carry only a rifle, so they are quicker
 export const TANK_REACH = 22;       // a click this close to a unit's middle is a click on it
 export const SPACING = 54;          // how far apart units park when they arrive together
 export const DRAG_START = 6;        // the mouse must move this far before a click becomes a drag
@@ -61,8 +62,29 @@ export const SEE_RANGE = 250;       // pixels. Closer than this and a tank has s
 export const GUN_RANGE = 130;       // pixels. Closer than this and it can hit you
 
 export const MAX_HEALTH = 100;      // how much damage a tank takes before it is wrecked
-export const SHOT_DAMAGE = 9;       // how much health one shot takes off
+export const SHOT_DAMAGE = 9;       // how much health one tank shot takes off
 export const RELOAD = 0.7;          // seconds a tank waits between shots
+
+
+/* --- The other thing with a gun ---------------------------------------
+
+   Infantry come out of the barracks for 200 credits in four seconds. A
+   tank is 700 credits, twelve seconds, and a 1000-credit war factory
+   before you may order one at all.
+
+   So one tank is worth three and a half infantry, and these numbers are
+   what you get for the money:
+
+       four infantry     160 health, and 32 damage a second
+       one tank          100 health, and 13 damage a second
+
+   Infantry win a straight fight and lose a long one, because a tank
+   that shoots one down is still nearly whole. Rush with them or screen
+   your harvesters with them; do not besiege a refinery with them.    */
+
+export const INFANTRY_HEALTH = 40;  // infantry are shot down in five tank shots
+export const INFANTRY_DAMAGE = 4;   // and a rifle takes off less than half what a shell does
+export const INFANTRY_RELOAD = 0.5; // but it fires quicker
 
 export const BEAT = 3;              // how far from its refinery a guard walks, in cells
 
@@ -91,18 +113,22 @@ export const BASE_HEALTH = 900;
    These are yours to change once the game works. Each one moves the
    enemy a long way.
 
-       ATTACK_TANKS   fewer, and it attacks early with too little
+       ATTACK_FORCE   fewer, and it attacks early with too little
        ATTACK_EDGE    1 means it attacks an even fight. 1.2 means it
                         waits until it is a fifth stronger than you
-       GUARDS         tanks it keeps at home, whatever else happens
+       GUARDS         fighters it keeps at home, whatever else happens
 
    A commander that never waits loses its tanks two at a time. A
    commander that waits for too much never attacks at all, because you
-   are building tanks as fast as it is.                                */
+   are building tanks as fast as it is.
 
-export const ATTACK_TANKS = 3;      // tanks it wants before it will attack at all
+   Four is the number because infantry count too. Two riflemen guarding
+   the ore are not a wave, and the plan buys them long before the war
+   factory. It marches when it has two tanks as well.                */
+
+export const ATTACK_FORCE = 4;      // things with guns it wants before it will attack at all
 export const ATTACK_EDGE = 1.2;     // how much stronger than you it wants to be
-export const GUARDS = 1;            // tanks that stay at home to guard the refinery
+export const GUARDS = 1;            // fighters that stay at home to guard the refinery
 
 export const THINK_EVERY = 1;       // seconds between one decision and the next
 export const MARCH_EVERY = 2.5;     // seconds between one wave of orders and the next

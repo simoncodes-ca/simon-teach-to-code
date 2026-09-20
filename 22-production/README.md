@@ -2,7 +2,7 @@
 
 The harvesters from project 21 are still digging. The credits still climb. This time you can spend them.
 
-A build yard stands beside the refinery. You click what you want, it costs money, it takes time, and then it rolls out: another harvester, a power plant, a barracks, a war factory, a tank.
+A build yard stands beside the refinery. You click what you want, it costs money, it takes time, and then it rolls out: another harvester, a power plant, a barracks, infantry, a war factory, a tank.
 
 You write seven functions and two tests. The last one makes the queue move, and after that the yard runs without you.
 
@@ -16,7 +16,7 @@ That is the whole Build card. Every button that is grey is grey because of that 
 
 This is what people mean when they say an interface is **driven by state**. Write the answer once, in one function, and let the page be a window onto it.
 
-The proof is easy to see. Write `canBuild` and five dead buttons wake up at the same moment.
+The proof is easy to see. Write `canBuild` and six dead buttons wake up at the same moment.
 
 ## The other big idea
 
@@ -138,7 +138,7 @@ Read `01-calculator/README.md` through `21-resources/README.md` again for the fu
 - A test has three steps: make, call, expect. Write it before the function it checks.
 - `fullness(part, whole)` is your own, from last project. Every bar here reads it too.
 
-### The catalogue is five lines of data
+### The catalogue is six lines of data
 
 Open `catalogue.ts`. The whole build chain is there:
 
@@ -147,16 +147,21 @@ Open `catalogue.ts`. The whole build chain is there:
 | Harvester | 400 | 8 | — |
 | Power plant | 300 | 6 | — |
 | Barracks | 500 | 10 | Power plant |
+| Infantry | 200 | 4 | Barracks |
 | War factory | 1000 | 18 | Barracks |
 | Tank | 700 | 12 | War factory |
 
 Nowhere in `build.ts`, `rack.ts` or `game.ts` is there a line that says a barracks needs a power plant. There is only a `needs` column, and your `needsMet` reading it.
 
-A sixth thing to build is a sixth line in that table, and no other change anywhere. That is the promise project 18 made about grounds, kept for a different kind of content.
+A seventh thing to build is a seventh line in that table, and no other change anywhere. That is the promise project 18 made about grounds, kept for a different kind of content.
+
+Two lines need the barracks, so the chain forks there. Infantry are 200 credits and out in four seconds. A tank is 700 credits, twelve seconds, and a 1000-credit war factory before you may even order one. Cheap and now, or dear and later, is the first real choice the yard gives you.
 
 The table has a `picture` column too. A building names the file in `assets/` that is drawn on its plot, and a unit leaves it `null`, because a unit is drawn as a hull and a top instead. A new building with no picture of its own still lands, as a pad in its own colour.
 
-The `needs` column does a second job on the map: a unit appears at the building it needed. A tank needs the war factory, so a tank drives out of the war factory. A harvester needs nothing, so it starts at the refinery.
+The `needs` column does a second job on the map: a unit appears at the building it needed. A tank needs the war factory, so a tank drives out of the war factory. Infantry come out of the barracks. A harvester needs nothing, so it starts at the refinery.
+
+Each `unit` line is keyed by the same word `units.ts` uses for its kind — `harvester`, `infantry`, `tank`. That is why `game.ts` can hand the key straight to `addUnit` without asking which one it is.
 
 ### Two kinds of thing
 
@@ -243,15 +248,16 @@ The rate climbs because you spent 400 credits on something that earns more than 
 
 The field does run out. Ore that grows back is in "try this next".
 
-### What a tank is for
+### What infantry and tanks are for
 
-Nothing, yet. A tank drives, you can pick it, box it and send it, and that is all it does.
+Nothing, yet. They drive, you can pick them, box them and send them, and that is all they do. Infantry are quicker — 130 pixels a second against a tank's 90 — and `speedFor` in `units.ts` is the whole of that difference.
 
-That is honest rather than unfinished. Something for it to shoot at is project 23, and giving it one now would mean building target selection early and badly.
+That is honest rather than unfinished. Something for them to shoot at is project 23, and giving them one now would mean building target selection early and badly.
 
 ## Try this next
 
-- **A sixth line.** Add something to `catalogue.ts` — a repair bay, a radar, a second kind of harvester. One line, and the card draws itself.
+- **A seventh line.** Add something to `catalogue.ts` — a repair bay, a radar, a second kind of harvester. One line, and the card draws itself.
+- **An infantry rush.** Skip the war factory and spend everything on infantry instead. How many do you have by the time a tank would have rolled out?
 - **Cancel an order.** Right-click a docket, take it off the queue, and give the credits back. Careful: how much do you give back for one that is half built?
 - **A price that climbs.** Make each harvester cost a little more than the one before. `canBuild` would need to ask how many you have.
 - **A second queue.** Buildings in one, units in the other, both building at once. Two `yard.queue`s, and `buildStep` called twice.

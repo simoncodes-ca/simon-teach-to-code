@@ -3,30 +3,42 @@
 
    One job: the things that drive about. It is finished.
 
-   It is project 21's units.ts with one word changed and one field
-   added. There are two kinds of unit on the map now, so the type is
-   called `Unit` instead of `Harvester`, and every unit says which kind
-   it is:
+   It is project 21's units.ts with one word changed, one field added
+   and one little function at the top. There are three kinds of unit on
+   the map now, so the type is called `Unit` instead of `Harvester`, and
+   every unit says which kind it is:
 
-       kind   'harvester', which digs ore, or 'tank', which does not
+       kind   'harvester', which digs ore, or 'infantry' or 'tank',
+                which do not
 
-   A tank drives exactly as a harvester drives. You can pick it, drag a
-   box round it and send it somewhere. It has nothing to shoot at, and
-   nothing to dig. Giving it something to do is project 23.
+   Infantry and tanks drive exactly as a harvester drives. You can pick
+   one, drag a box round it and send it somewhere. They have nothing to
+   shoot at, and nothing to dig. Giving them something to do is project
+   23. The only difference between the two is how fast they go, and
+   `speedFor` below is the whole of it.
 
    Picking and driving work exactly as they did in projects 19, 20 and
    21. Like ore.ts and build.ts, this file never draws anything.
    ===================================================================== */
 
-import { SPACING, TANK_REACH, TANK_SPEED } from './numbers.ts';
+import { INFANTRY_SPEED, SPACING, TANK_REACH, TANK_SPEED } from './numbers.ts';
 import { middleOf, speedAt } from './map.ts';
 import type { Cell, GameMap } from './map.ts';
 
 
 /* --- The shapes --- */
 
-/* The two kinds of unit the yard can turn out. */
-export type UnitKind = 'harvester' | 'tank';
+/* The three kinds of unit the yard can turn out. They are the keys of
+   the `unit` lines in catalogue.ts, spelled the same way, so the thing
+   that rolls out of the yard is named by the table and not here. */
+export type UnitKind = 'harvester' | 'infantry' | 'tank';
+
+/* How fast one kind of unit goes, in pixels a second on ground with a
+   speed of 1. Infantry carry nothing but a rifle, so they are quicker
+   than anything with an engine in it. */
+export function speedFor(kind: UnitKind): number {
+  return kind === 'infantry' ? INFANTRY_SPEED : TANK_SPEED;
+}
 
 /* What a unit is doing. Only these seven words are allowed.
 
@@ -39,13 +51,14 @@ export type UnitKind = 'harvester' | 'tank';
        'driving'     going where you sent it, and not to a job of its own
 
    Project 21's `nextJob` hands back one of the first six, and it is
-   only ever asked about a harvester. A tank is 'waiting' or 'driving'. */
+   only ever asked about a harvester. Infantry and tanks are 'waiting'
+   or 'driving'. */
 export type Job = 'waiting' | 'to ore' | 'digging' | 'home' | 'unloading' | 'no route' | 'driving';
 
 /* One unit on the map. */
 export type Unit = {
   name: string;          // what the page calls it, like 'Able'
-  kind: UnitKind;        // 'harvester' or 'tank'
+  kind: UnitKind;        // 'harvester', 'infantry' or 'tank'
   x: number;             // where its middle is, in pixels across the map
   y: number;             // and in pixels down the map
   angle: number;         // which way it faces. 0 is to the right
@@ -54,7 +67,7 @@ export type Unit = {
   goalX: number;         // where it is going, when `moving` is true
   goalY: number;
   route: Cell[];         // the cells still to drive through, nearest first
-  load: number;          // ore it is carrying. A tank always carries 0
+  load: number;          // ore it is carrying. Only a harvester ever carries any
   job: Job;              // what it is doing
 };
 
@@ -172,7 +185,8 @@ export function sendTo(unit: Unit, cell: Cell, route: Cell[]): void {
 }
 
 /* Move a unit a little way along its route. Project 20's `driveTank`,
-   with nothing changed but the name. */
+   with the name changed and its speed taken from the kind, so infantry
+   outrun tanks on the same ground. */
 export function driveUnit(unit: Unit, map: GameMap, seconds: number): Drive {
   if (!unit.moving) return 'still';
 
@@ -187,7 +201,7 @@ export function driveUnit(unit: Unit, map: GameMap, seconds: number): Drive {
   const across = aimX - unit.x;
   const down = aimY - unit.y;
   const distance = Math.sqrt(across * across + down * down);
-  const step = TANK_SPEED * speedAt(map, unit.x, unit.y) * seconds;
+  const step = speedFor(unit.kind) * speedAt(map, unit.x, unit.y) * seconds;
 
   if (distance > step) {
     unit.x += across / distance * step;

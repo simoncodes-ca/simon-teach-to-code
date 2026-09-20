@@ -238,7 +238,7 @@ Open two terminals in `21-resources`. Run `npm install` once. Then run `npm run 
 
 ### Building and production
 
-The harvesters keep digging, and now the credits buy something. A build yard beside the refinery sells more harvesters, a power plant, a barracks, a war factory and a tank. Each one costs money, takes time, and waits its turn in a queue.
+The harvesters keep digging, and now the credits buy something. A build yard beside the refinery sells more harvesters, a power plant, a barracks, infantry, a war factory and a tank. Each one costs money, takes time, and waits its turn in a queue.
 
 One function decides whether a button is grey, and what the reason is. The page only shows what it said. The whole build chain — what needs what — is one column in a table of five lines.
 

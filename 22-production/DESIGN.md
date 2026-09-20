@@ -30,7 +30,7 @@ The page is project 21's weighbridge office, given an order pad. The furniture d
 
 Two cards are new and they sit at the top of the rack, because they are what the project is about. **Build** is a price list. **Queue** is the dockets under it. The Field card is gone, and Under the mouse is gone with it — both belonged to project 21's lesson, and keeping them would have buried this one.
 
-Ore amber still marks ore, loads and credits. Route orange still marks routes, goals, picked units, the drag box and the chosen map. The catalogue adds five tints of its own, one per line of the table, and they appear in exactly two places: a stripe down the left of each button, and the pad the building lands on.
+Ore amber still marks ore, loads and credits. Route orange still marks routes, goals, picked units, the drag box and the chosen map. The catalogue adds six tints of its own, one per line of the table, and they appear in exactly two places: a stripe down the left of each button, and the pad the building lands on.
 
 ## The desk
 
@@ -56,8 +56,9 @@ Every mark carries a dark shadow under a bright line or fill, so it reads on gra
 | **A finished building** | A near-black pad, an outline in its own catalogue colour, and its own 48px picture: a power plant of cooling towers, a barracks of two huts, a war factory with a striped roller door |
 | **Its name** | Its three letters in 11px bold, in the same colour, over the top of the pad |
 | A harvester | A blue truck with an amber load in its bed, at 70% |
+| Infantry | A blue soldier seen from above with a rifle that turns, at 70%, smaller than either vehicle |
 | A tank | Project 17's hull and turret, tinted pale blue |
-| Load of a harvester | A 28 by 5 amber bar above it. A tank has none |
+| Load of a harvester | A 28 by 5 amber bar above it. Nothing else carries ore, so nothing else has one |
 | Patch with ore left | An amber fill and outline, from 12% to 42%, by how full it is |
 | Spent patch | A 42% dark shade over the tile, and no number |
 | Route of a driving unit | A thin orange line, ending in a small orange X |
@@ -71,7 +72,7 @@ Gone: the amber ring on the nearest patch, which belonged to project 21's `neare
 
 Five graph-paper cards down the right, each held by a steel clip at the top centre, with faint blue ruled lines and an Impact title over a thin ink rule.
 
-**Build** is the new centre of the page. Five buttons, one per line of the catalogue, in the table's own order. Each is a two-row grid: the name in Impact on the left, the price and build time in small mono on the right, and one line of state under both.
+**Build** is the new centre of the page. Six buttons, one per line of the catalogue, in the table's own order. Each is a two-row grid: the name in Impact on the left, the price and build time in small mono on the right, and one line of state under both.
 
 A 0.3cqw stripe of the item's own colour runs down the left edge. A live button sits on white at 50%, lifts to warm amber on hover, and its state line reads **BUILD** in deep orange. A dead button is a real `disabled` button on white at 20%, with its state line in one of four words:
 

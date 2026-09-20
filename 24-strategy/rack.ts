@@ -48,6 +48,8 @@ const redReadEl = findElement('redRead');
 const forceCellEls: Record<string, HTMLElement> = {
   blueHarvesters: findElement('blueHarvesters'),
   redHarvesters: findElement('redHarvesters'),
+  blueInfantry: findElement('blueInfantry'),
+  redInfantry: findElement('redInfantry'),
   blueTanks: findElement('blueTanks'),
   redTanks: findElement('redTanks'),
   blueBase: findElement('blueBase'),
@@ -141,6 +143,7 @@ export function showPlate(report: PlateReport): void {
 
 export type SideReport = {
   harvesters: number | null | undefined;
+  infantry: number | null | undefined;
   tanks: number | null | undefined;
   base: number | null | undefined;
   strength: number | null | undefined;
@@ -158,6 +161,8 @@ function strengthOf(value: number | null | undefined): number {
 export function showForces(report: ForcesReport): void {
   write(forceCellEls.blueHarvesters, numberOrDash(report.blue.harvesters));
   write(forceCellEls.redHarvesters, numberOrDash(report.red.harvesters));
+  write(forceCellEls.blueInfantry, numberOrDash(report.blue.infantry));
+  write(forceCellEls.redInfantry, numberOrDash(report.red.infantry));
   write(forceCellEls.blueTanks, numberOrDash(report.blue.tanks));
   write(forceCellEls.redTanks, numberOrDash(report.red.tanks));
   write(forceCellEls.blueBase, baseWords(report.blue.base));

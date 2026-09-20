@@ -35,9 +35,9 @@ Project 21 made credits. They bought nothing. This project spends them, and two 
 
 **A queue is a list you join at the back and leave from the front.** `push` puts a thing on, `shift` takes it off, and nobody is ever built at the same time as anybody else. That is project 2's lift queue, with a progress bar on the front item and money at stake.
 
-**An interface driven by state shows what a function said, and decides nothing itself.** `canBuild` hands back one word about one thing, and the Build card is drawn from five of those words. Every grey button, every reason line and every padlock is that one function's answer. Nothing on the page knows what a power plant costs.
+**An interface driven by state shows what a function said, and decides nothing itself.** `canBuild` hands back one word about one thing, and the Build card is drawn from six of those words. Every grey button, every reason line and every padlock is that one function's answer. Nothing on the page knows what a power plant costs.
 
-A third idea runs underneath both: prerequisites are a column in a table. `catalogue.ts` has a `needs` column, and the whole build chain — power plant, barracks, war factory, tank — is five lines of data. A sixth thing to build is a sixth line.
+A third idea runs underneath both: prerequisites are a column in a table. `catalogue.ts` has a `needs` column, and the whole build chain — power plant, barracks, infantry, war factory, tank — is six lines of data. A seventh thing to build is a seventh line.
 
 ## Positioning
 
@@ -60,10 +60,11 @@ The tanks it turns out drive, and nothing more. An enemy to point them at is pro
 - Project 21's whole ore run, given in full and running from the moment the page opens: harvesters, patches, loads, the refinery and the credits. `ore.ts` is project 21's answer key, with `Harvester` renamed `Unit`.
 - A refinery at cell 4, 10 that starts with `START_CREDITS`, 500, so the first build needs no waiting.
 - Three harvesters at the start, not six.
-- A build catalogue of five things in one table, `catalogue.ts`, each with a cost, a build time, a prerequisite, a kind, three letters, a picture and a colour. Nothing outside that table names a power plant.
+- A build catalogue of six things in one table, `catalogue.ts`, each with a cost, a build time, a prerequisite, a kind, three letters, a picture and a colour. Nothing outside that table names a power plant.
+- A chain that forks at the barracks: infantry at 200 credits and four seconds, or a 1000-credit war factory and then a 700-credit tank. The barracks is a thing you build for what it turns out, not only for what it unlocks.
 - Two kinds of thing. A `building` is built once, unlocks the next line, and lands on a plot near the refinery. A `unit` is built over and over, and rolls out onto the map at the building its `needs` column names — a tank at the war factory — or at the refinery when it needs nothing.
 - A queue of at most `QUEUE_MAX`, 5. Only the front one is ever worked on.
-- A Build card of five buttons, each showing its price, its build time, and one word from `canBuild`. A button whose word is not 'ok' is a disabled `<button>`, so the browser itself refuses the click.
+- A Build card of six buttons, each showing its price, its build time, and one word from `canBuild`. A button whose word is not 'ok' is a disabled `<button>`, so the browser itself refuses the click.
 - A Queue card: what is being built, a countdown to an empty queue, and one docket per job with a bar on the front one.
 - A Refinery card: ore a minute, ore left in the ground, and how many harvesters are out.
 - A squad card that grows as units roll out, and scrolls once it is taller than its space.
@@ -90,7 +91,7 @@ Job 7 is the only job that changes no count but its own error. It changes the pa
 
 **The order of the questions in `canBuild`.** Five checks, and the order decides which reason a button gives. `too dear` before `locked` tells a learner that a barracks they cannot build yet is a money problem. `too dear` before `built` says a finished power plant is unaffordable. Both are visible on the page in one click, and both are in the README.
 
-**Explicitly deferred:** cancelling a build and getting the credits back, placing a building by clicking a cell (project 24), buildings that block a harvester's path, power as a resource, more than one thing built at a time, repairing, selling, and anything for a tank to shoot at, which is project 23. Named in the README as good things to try next: a sixth line in the catalogue, cancelling an order, a second queue, a price that rises with each one built, and a tank that follows a harvester about.
+**Explicitly deferred:** cancelling a build and getting the credits back, placing a building by clicking a cell (project 24), buildings that block a harvester's path, power as a resource, more than one thing built at a time, repairing, selling, and anything for a tank to shoot at, which is project 23. Named in the README as good things to try next: a seventh line in the catalogue, an infantry rush, cancelling an order, a second queue, a price that rises with each one built, and a tank that follows a harvester about.
 
 **Hard constraints:**
 
@@ -99,7 +100,7 @@ Job 7 is the only job that changes no count but its own error. It changes the pa
 - Tests cover pure logic only: `build.ts`. Never the DOM or Phaser.
 - No thing you can build is named outside `catalogue.ts`, except in the test files and their hints and answers, and in `game.ts` where a tank is told apart from a harvester at the moment it rolls out.
 - Sounds keep the `Audio` pattern every project since the calculator has used. No new sound files: a purchase reuses the order pip, a finished build reuses project 20's found pips, and a refused click reuses the blocked buzz.
-- New art for the three buildings: `power-plant.png`, `barracks.png` and `war-factory.png`, one 48px picture each, named by the table's `picture` column and by nothing else. A line with no picture still draws as a coloured pad, so a sixth line is still a one-line change. A tank is project 17's hull and turret; a harvester is project 21's truck with its amber load.
+- New art for the three buildings: `power-plant.png`, `barracks.png` and `war-factory.png`, one 48px picture each, named by the table's `picture` column and by nothing else. A line with no picture still draws as a coloured pad, so a seventh line is still a one-line change. A tank is project 17's hull and turret; a harvester is project 21's truck with its amber load; infantry are a soldier and a rifle, two new pictures.
 - Comments use plain language for an 11-year-old.
 
 ## Brand Commitments
@@ -116,14 +117,14 @@ Project 21's refinery weighbridge office, with the weigh tickets down the side s
 - Measured in Chrome through `npm run dev`, with every stub filled, on Ore Valley: the yard starts with 500 credits and 3 harvesters; buying a harvester leaves 100 and the Ready in well reads 0:08; it rolls out on time and the squad grows to 4. A power plant in the queue reads "On order", and reads "Built" the moment it lands, at which point the barracks stops saying "Needs power plant".
 - Measured in Chrome over a two-minute run, buying whatever was affordable: ore a minute climbed from 998 at four units to 1227 at six, and the field fell from 3600 to 1385.
 - Measured in Chrome: the ore run starts itself with every stub still empty, and the only console messages are the two favicon 404s that projects 20 and 21 also produce.
-- The maps, the terrain tiles, the unit pictures and the six sounds are all project 21's, unchanged.
+- The maps, the terrain tiles, the harvester pictures and the six sounds are all project 21's, unchanged. Infantry are two new pictures, `soldier-blue.png` and `rifle-blue.png`, drawn in the same flat style as project 17's hull and turret.
 - No public claims, scores, or testimonials exist; none should be fabricated.
 
 ## Product Principles
 
 1. **The source is a deliverable.** Code an 11-year-old cannot read is a defect of the same severity as a dropped frame.
 2. **The page shows, and never decides.** Every grey button on the Build card is one word from `canBuild`.
-3. **Content lives in a table.** A sixth thing to build is a sixth line and no other change.
+3. **Content lives in a table.** A seventh thing to build is a seventh line and no other change.
 4. **A queue is joined at the back and left from the front.** One `push`, one `shift`, and nothing built in parallel.
 5. **Money only moves in one function.** `startBuild` is the only place credits leave the refinery.
 6. **Name the next job.** The status line always says which function is next.

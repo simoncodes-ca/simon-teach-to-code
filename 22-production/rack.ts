@@ -323,7 +323,7 @@ export function showSquad(units: Unit[], bars: number[]): void {
     row.item.classList.toggle('picked', unit.selected);
     row.item.dataset.doing = unit.job.replace(/ /g, '-');
     write(row.doing, unit.job);
-    write(row.load, unit.kind === 'tank' ? 'tank' : Math.floor(unit.load) + ' ore');
+    write(row.load, unit.kind === 'harvester' ? Math.floor(unit.load) + ' ore' : unit.kind);
     setBar(row.bar, bars[i]);
   }
 }

@@ -7,7 +7,7 @@
    content. One line describes one thing you can buy, and no other file
    in the project ever names a power plant or a tank.
 
-   Want a sixth thing to build? Add a line. The buttons, the prices,
+   Want a seventh thing to build? Add a line. The buttons, the prices,
    the padlocks and the queue all follow the table, so nothing else has
    to change.
    ===================================================================== */
@@ -34,13 +34,22 @@ export type Item = {
   note: string;        // one line the card says about it
 };
 
-/* The table. Five lines, and the `needs` column is the chain:
+/* The table. Six lines, and the `needs` column is the chain:
 
        Harvester    needs nothing
        Power plant  needs nothing
        Barracks     needs the power plant
+       Infantry     needs the barracks
        War factory  needs the barracks
-       Tank         needs the war factory                                */
+       Tank         needs the war factory
+
+   The chain forks at the barracks. It opens infantry, which are cheap
+   and quick, and it opens the war factory, which is the long way round
+   to a tank. That fork is the first real choice the yard gives you.
+
+   A `unit` line is keyed by the same word its `UnitKind` uses in
+   units.ts, so what rolls out of the yard is named here and nowhere
+   else.                                                                 */
 export const CATALOGUE = {
   harvester: {
     name: 'Harvester', kind: 'unit', cost: 400, seconds: 8, needs: null,
@@ -52,7 +61,11 @@ export const CATALOGUE = {
   },
   barracks: {
     name: 'Barracks', kind: 'building', cost: 500, seconds: 10, needs: 'power',
-    tag: 'BKS', picture: 'barracks.png', colour: '#8fb7e8', note: 'Opens the war factory'
+    tag: 'BKS', picture: 'barracks.png', colour: '#8fb7e8', note: 'Turns out infantry, and opens the war factory'
+  },
+  infantry: {
+    name: 'Infantry', kind: 'unit', cost: 200, seconds: 4, needs: 'barracks',
+    tag: 'INF', picture: null, colour: '#9fd88f', note: 'Cheap, quick, and out in four seconds'
   },
   factory: {
     name: 'War factory', kind: 'building', cost: 1000, seconds: 18, needs: 'barracks',

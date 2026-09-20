@@ -6,7 +6,7 @@
 
    The table is project 22's, with one word changed in the tank's note.
    Both sides build from it. Your Build card draws a button for every
-   line, and the enemy commander reads the same five lines.
+   line, and the enemy commander reads the same six lines.
 
    What is new here is the second list at the bottom of the file. It is
    the enemy's shopping list, and your `wantNext` walks it.
@@ -34,13 +34,18 @@ export type Item = {
   note: string;        // one line the card says about it
 };
 
-/* The table. Five lines, and the `needs` column is the chain:
+/* The table. Six lines, and the `needs` column is the chain:
 
        Harvester    needs nothing
        Power plant  needs nothing
        Barracks     needs the power plant
+       Infantry     needs the barracks
        War factory  needs the barracks
-       Tank         needs the war factory                                */
+       Tank         needs the war factory
+
+   The chain forks at the barracks, exactly as it did in project 22.
+   Infantry are cheap and now, a tank is dear and later, and both sides
+   choose from the same fork.                                           */
 export const CATALOGUE = {
   harvester: {
     name: 'Harvester', kind: 'unit', cost: 400, seconds: 8, needs: null,
@@ -52,7 +57,11 @@ export const CATALOGUE = {
   },
   barracks: {
     name: 'Barracks', kind: 'building', cost: 500, seconds: 10, needs: 'power',
-    tag: 'BKS', picture: 'barracks.png', colour: '#8fb7e8', note: 'Opens the war factory'
+    tag: 'BKS', picture: 'barracks.png', colour: '#8fb7e8', note: 'Turns out infantry, and opens the war factory'
+  },
+  infantry: {
+    name: 'Infantry', kind: 'unit', cost: 200, seconds: 4, needs: 'barracks',
+    tag: 'INF', picture: null, colour: '#9fd88f', note: 'Cheap, quick, and shoots'
   },
   factory: {
     name: 'War factory', kind: 'building', cost: 1000, seconds: 18, needs: 'barracks',
@@ -85,9 +94,12 @@ export const ITEM_KEYS = Object.keys(CATALOGUE) as ItemKey[];
    commander intends to play:
 
        two more harvesters, because ore pays for everything
-       a power plant, then a barracks, then a war factory, because
-         nothing opens the tank but those three in that order
-       four tanks, and then more harvesters and more tanks for ever
+       a power plant, then a barracks, then two infantry, because a
+         rifleman is 200 credits and four seconds and the ore field
+         cannot be left to look after itself
+       a war factory, because nothing else opens the tank
+       two tanks, and then more harvesters, more infantry, and tanks
+         for ever
 
    A plan is data, the same as a kind of ground and a thing to build.
    Move a line and the enemy plays differently, and no code changes.  */
@@ -102,9 +114,11 @@ export const RED_PLAN: PlanLine[] = [
   { key: 'power', upTo: 1 },
   { key: 'harvester', upTo: 4 },
   { key: 'barracks', upTo: 1 },
+  { key: 'infantry', upTo: 2 },
   { key: 'factory', upTo: 1 },
   { key: 'tank', upTo: 2 },
   { key: 'harvester', upTo: 5 },
+  { key: 'infantry', upTo: 4 },
   { key: 'tank', upTo: 4 },
   { key: 'harvester', upTo: 6 },
   { key: 'tank', upTo: 12 }

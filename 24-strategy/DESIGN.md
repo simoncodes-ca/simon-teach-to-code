@@ -72,7 +72,7 @@ Six cards, each one a sheet of graph paper under a steel clip. Card padding and 
 
 | Card | What it holds | Which job fills it |
 |---|---|---|
-| Forces | Four rows by two columns, and two strength bars | 1 and 2 |
+| Forces | Five rows by two columns, and two strength bars | 1 and 2 |
 | Build | One button for each line of the catalogue | Given, works from the start |
 | Queue | Two wells and a docket list | Given, works from the start |
 | Enemy | Four wells: credits, saving for, orders, marching | 3, 6 and 7 |
@@ -105,6 +105,7 @@ A 960 by 720 canvas in a steel frame with an orange hairline, under a plotting-s
 | A refinery | A dark pad with a hopper in its side's colour, and `YOURS` or `THEIRS` over it |
 | A building | A dark pad edged in the catalogue's colour, holding its own picture, inside a ring in its side's colour, with its three letters over the top |
 | A tank | Project 17's hull and turret, over a disc in its side's colour |
+| Infantry | A soldier seen from above with a rifle that turns, over the same disc, smaller than either vehicle |
 | A harvester | A blue truck with an amber load in its bed, over the same disc, whichever side it belongs to |
 | A wreck | Both pictures tinted near-black, the turret knocked askew, the disc faded |
 | Health | A bar over the unit. A refinery's is wider, because it matters more |

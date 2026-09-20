@@ -20,9 +20,9 @@
 
 import Phaser from 'phaser';
 import {
-  BASE_HEALTH, BEAT, BLUE_BASE, CAPACITY, COLS, DRAG_START, GUN_RANGE,
-  HEIGHT, MARCH_EVERY, MAX_HEALTH, RED_BASE, ROWS, START_HARVESTERS,
-  TANK_REACH, THINK_EVERY, TILE, WIDTH
+  BEAT, BLUE_BASE, CAPACITY, COLS, DRAG_START, GUN_RANGE, HEIGHT,
+  MARCH_EVERY, RED_BASE, ROWS, START_HARVESTERS, TANK_REACH, THINK_EVERY,
+  TILE, WIDTH
 } from './numbers.ts';
 import { BLANK, TERRAIN, TERRAIN_KEYS } from './terrain.ts';
 import { cellAt, isInside, linesToMap, makeMap, middleOf, sameCell } from './map.ts';
@@ -31,9 +31,9 @@ import { findRoute } from './paths.ts';
 import { CATALOGUE, ITEM_KEYS } from './catalogue.ts';
 import type { ItemKey } from './catalogue.ts';
 import {
-  boxFrom, driveUnit, foeOf, halt, isInBox, makeUnit, orderMove, otherSide,
-  parkingSpot, selectedUnits, selectInBox, selectOnly, sendTo, sendToSpot,
-  unitAt
+  boxFrom, driveUnit, foeOf, halt, healthFor, isInBox, makeUnit, orderMove,
+  otherSide, parkingSpot, selectedUnits, selectInBox, selectOnly, sendTo,
+  sendToSpot, unitAt
 } from './units.ts';
 import type { Box, Mode, Side, Unit, UnitKind } from './units.ts';
 import {
@@ -236,9 +236,9 @@ function done(number: number): boolean {
    --------------------------------------------------------------------- */
 
 /* The two pictures that make one unit: a tank is a hull with a gun, a
-   harvester is a truck with an ore load in its bed. A refinery has a
-   look of its own, drawn with lines, so both of its pictures are
-   switched off. */
+   harvester is a truck with an ore load in its bed, and infantry is a
+   soldier with a rifle. A refinery has a look of its own, drawn with
+   lines, so both of its pictures are switched off. */
 type Look = {
   hull: Phaser.GameObjects.Image;
   top: Phaser.GameObjects.Image;
@@ -280,6 +280,8 @@ function preload(this: Phaser.Scene): void {
   this.load.image('top', 'assets/turret-blue.png');
   this.load.image('truck', 'assets/truck-blue.png');
   this.load.image('load', 'assets/load-ore.png');
+  this.load.image('soldier', 'assets/soldier-blue.png');
+  this.load.image('rifle', 'assets/rifle-blue.png');
   /* One picture for each building in the table, under its own key. A
      unit has no picture here, because it is drawn as a hull and a top. */
   for (const key of ITEM_KEYS) {
@@ -462,25 +464,35 @@ function nextName(base: Base): string {
   return name;
 }
 
+/* The two pictures each kind of unit is drawn with. One line per kind,
+   the same shape as the tables in terrain.ts and catalogue.ts. A
+   refinery is drawn with lines instead, so its two are never shown. */
+const PICTURES: Record<UnitKind, { hull: string; top: string }> = {
+  harvester: { hull: 'truck', top: 'load' },
+  infantry: { hull: 'soldier', top: 'rifle' },
+  tank: { hull: 'hull', top: 'top' },
+  base: { hull: 'hull', top: 'top' }
+};
+
 function addUnit(base: Base, kind: UnitKind, x: number, y: number, post: Cell): Unit {
   const unit = makeUnit(base.side, kind, nextName(base), x, y, post);
-  if (kind === 'tank') unit.beat = beatAround(map, base.refinery.cell);
+  if (armed(unit)) unit.beat = beatAround(map, base.refinery.cell);
   units.push(unit);
   replanIn.push(0);
 
   if (stage !== null) {
     const shown = kind !== 'base';
-    const harvests = kind === 'harvester';
-    const top = stage.scene.add.image(x, y, harvests ? 'load' : 'top')
+    const pictures = PICTURES[kind];
+    const top = stage.scene.add.image(x, y, pictures.top)
       .setScale(0.7).setDepth(4).setVisible(shown);
     /* A gun turns about its middle, a fifth of the way along its
        picture. A load sits in the bed and turns with the truck, so it
        keeps the middle it came with, and its amber is in the picture. */
-    if (!harvests) {
+    if (kind !== 'harvester') {
       top.setOrigin(20 / 64, 0.5).setTint(base.side === 'blue' ? 0xa8c4e0 : 0xe04a3a);
     }
     stage.looks.push({
-      hull: stage.scene.add.image(x, y, harvests ? 'truck' : 'hull')
+      hull: stage.scene.add.image(x, y, pictures.hull)
         .setScale(0.7).setDepth(3).setVisible(shown)
         .setTint(base.side === 'blue' ? 0xffffff : 0xd8a09a),
       top
@@ -613,7 +625,9 @@ function rollOut(base: Base, key: ItemKey): void {
 
   if (item.kind === 'unit') {
     const gate = middleOf(gateCell(base, key));
-    const unit = addUnit(base, key === 'tank' ? 'tank' : 'harvester', gate.x, gate.y, base.refinery.cell);
+    /* A unit line of the table is keyed by its kind, so the table says
+       what rolls out and this line never names one. */
+    const unit = addUnit(base, key as UnitKind, gate.x, gate.y, base.refinery.cell);
     if (unit.kind === 'harvester') takeNextJob(unit);
     if (base.side === 'blue') {
       rebuildSquad();
@@ -803,7 +817,7 @@ function runUnit(unit: Unit, index: number, seconds: number): void {
     if (shootStep(unit, unit.target, seconds)) recordShot(unit, unit.target);
   }
 
-  if (unit.side === 'red' && unit.kind === 'tank') steerRed(unit, index, seconds);
+  if (unit.side === 'red' && armed(unit)) steerRed(unit, index, seconds);
 }
 
 /* A shot has just left a barrel. The page draws it and counts it. */
@@ -939,7 +953,7 @@ function runCommander(base: Base, seconds: number): void {
     const going = done(6) && wantsAttack(units, base.side) ? attackOrders(units, base.side) ?? [] : [];
 
     for (const unit of units) {
-      if (unit.side === base.side && unit.kind === 'tank') unit.marching = false;
+      if (unit.side === base.side && armed(unit)) unit.marching = false;
     }
     for (let i = 0; i < going.length; i += 1) {
       going[i].marching = true;
@@ -1041,7 +1055,7 @@ function update(this: Phaser.Scene, time: number, delta: number): void {
     if (unit.kind === 'base') continue;
     look.hull.setPosition(unit.x, unit.y).setRotation(unit.angle);
     look.top.setPosition(unit.x, unit.y)
-      .setRotation(unit.kind === 'tank' ? unit.turret : unit.angle);
+      .setRotation(armed(unit) ? unit.turret : unit.angle);
     if (wrecked(unit)) {
       look.hull.setTint(0x2a3138);
       look.top.setTint(0x2a3138).setRotation(unit.turret + 0.6);
@@ -1061,8 +1075,8 @@ function update(this: Phaser.Scene, time: number, delta: number): void {
   showPlate({
     mapName: map.name,
     credits: mine.refinery.credits,
-    blue: done(1) ? countKind(units, 'blue', 'harvester') + countKind(units, 'blue', 'tank') : undefined,
-    red: done(1) ? countKind(units, 'red', 'harvester') + countKind(units, 'red', 'tank') : undefined
+    blue: done(1) ? livingCount('blue') : undefined,
+    red: done(1) ? livingCount('red') : undefined
   });
   showForces({ blue: sideReport('blue'), red: sideReport('red') });
   showCatalogue(verdicts());
@@ -1072,11 +1086,20 @@ function update(this: Phaser.Scene, time: number, delta: number): void {
   showBanner(won);
 }
 
+/* Everything one side still has on the map that is not its refinery,
+   counted with your `countKind`, one kind at a time. */
+function livingCount(side: Side): number {
+  return countKind(units, side, 'harvester')
+    + countKind(units, side, 'infantry')
+    + countKind(units, side, 'tank');
+}
+
 /* One column of the Forces card. Every number in it is one of your
    functions, asked about one side. */
 function sideReport(side: Side): SideReport {
   return {
     harvesters: done(1) ? countKind(units, side, 'harvester') : undefined,
+    infantry: done(1) ? countKind(units, side, 'infantry') : undefined,
     tanks: done(1) ? countKind(units, side, 'tank') : undefined,
     base: done(1) ? countKind(units, side, 'base') : undefined,
     strength: done(2) ? armyStrength(units, side) : undefined
@@ -1140,7 +1163,7 @@ function squadRow(unit: Unit): SquadRowReport {
   return {
     doing: wrecked(unit) ? 'wrecked' : (harvester ? unit.job : MODE_WORDS[unit.mode]),
     note: harvester ? Math.floor(unit.load) + ' ore' : Math.round(unit.health) + ' hp',
-    health: unit.health / MAX_HEALTH,
+    health: unit.health / healthFor(unit.kind),
     picked: unit.selected
   };
 }
@@ -1245,7 +1268,7 @@ function drawBase(onStage: Stage): void {
       pen.strokeRect(x + 5, y + 5, TILE - 10, TILE - 10);
 
       /* Its own picture, from the table. A line with no picture falls
-         back to a wash of its colour, so a sixth line still shows up. */
+         back to a wash of its colour, so a seventh line still shows up. */
       if (item.picture === null) {
         pen.fillStyle(tint, 0.25);
         pen.fillRect(x + 7, y + 7, TILE - 14, TILE - 14);
@@ -1327,7 +1350,7 @@ function drawOver(pen: Phaser.GameObjects.Graphics, box: Box | null, hovered: Ce
 
   /* How far a picked tank of yours can shoot. */
   for (const unit of units) {
-    if (!unit.selected || unit.kind !== 'tank' || wrecked(unit)) continue;
+    if (!unit.selected || !armed(unit) || wrecked(unit)) continue;
     pen.lineStyle(2, ORANGE, 0.5);
     pen.strokeCircle(unit.x, unit.y, GUN_RANGE);
   }
@@ -1346,7 +1369,7 @@ function drawOver(pen: Phaser.GameObjects.Graphics, box: Box | null, hovered: Ce
   for (const unit of units) {
     if (wrecked(unit)) continue;
     const isBase = unit.kind === 'base';
-    const whole = isBase ? BASE_HEALTH : MAX_HEALTH;
+    const whole = healthFor(unit.kind);
     const share = Math.max(0, Math.min(1, unit.health / whole));
     const width = isBase ? 40 : 28;
     const barLeft = unit.x - width / 2;

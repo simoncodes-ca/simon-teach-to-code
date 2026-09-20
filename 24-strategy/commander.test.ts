@@ -20,7 +20,7 @@
 
 import { expect, test } from 'vitest';
 import { armyStrength, countKind, wantNext, wantsAttack } from './commander.ts';
-import { ATTACK_TANKS, MAX_HEALTH } from './numbers.ts';
+import { ATTACK_FORCE, INFANTRY_HEALTH, MAX_HEALTH } from './numbers.ts';
 import { makeYard } from './build.ts';
 import { makeUnit } from './units.ts';
 import type { Side, Unit, UnitKind } from './units.ts';
@@ -33,11 +33,13 @@ function unit(side: Side, kind: UnitKind, name: string): Unit {
 }
 
 /* A side's whole force in one line. `army('red', 2, 3)` is two red
-   harvesters, three red tanks and one red refinery. */
-function army(side: Side, harvesters: number, tanks: number): Unit[] {
+   harvesters, three red tanks and one red refinery. The last number is
+   infantry, and it is 0 unless a test asks for some. */
+function army(side: Side, harvesters: number, tanks: number, infantry = 0): Unit[] {
   const made: Unit[] = [unit(side, 'base', side + ' refinery')];
   for (let i = 0; i < harvesters; i += 1) made.push(unit(side, 'harvester', 'HRV ' + i));
   for (let i = 0; i < tanks; i += 1) made.push(unit(side, 'tank', 'TNK ' + i));
+  for (let i = 0; i < infantry; i += 1) made.push(unit(side, 'infantry', 'INF ' + i));
   return made;
 }
 
@@ -56,17 +58,21 @@ test('countKind counts one side, one kind, and no wrecks', () => {
   expect(countKind(units, 'blue', 'tank')).toBe(1);
   expect(countKind(units, 'red', 'tank')).toBe(0);        // none at all is 0, not nothing
   expect(countKind(units, 'blue', 'base')).toBe(1);       // a refinery counts like anything else
+  expect(countKind(army('red', 0, 1, 4), 'red', 'infantry')).toBe(4);
 
   units[0].health = 0;                                    // the blue refinery is wrecked
 
   expect(countKind(units, 'blue', 'base')).toBe(0);       // and a wreck is not a refinery
 });
 
-test('armyStrength adds up the health of the tanks, and only the tanks', () => {
+test('armyStrength adds up the health of everything with a gun', () => {
   const units = army('red', 4, 3);
 
   expect(armyStrength(units, 'red')).toBe(MAX_HEALTH * 3);   // three fresh tanks
   expect(armyStrength(units, 'blue')).toBe(0);               // blue has nobody at all
+
+  // Infantry carry a rifle, so they count too, at 40 health each.
+  expect(armyStrength(army('red', 0, 1, 2), 'red')).toBe(MAX_HEALTH + INFANTRY_HEALTH * 2);
 
   // Four harvesters and a refinery are worth nothing in a fight.
   expect(armyStrength(army('red', 9, 0), 'red')).toBe(0);
@@ -97,44 +103,48 @@ test('wantNext walks the plan from the top and stops at the first unfinished lin
 
   yard.built.push('barracks');
 
-  expect(wantNext(yard, army('red', 4, 0), 'red')).toBe('factory');
+  /* The barracks opens infantry, and the plan wants two of them to
+     guard the ore before it saves up for the war factory. */
+  expect(wantNext(yard, army('red', 4, 0), 'red')).toBe('infantry');
+  expect(wantNext(yard, army('red', 4, 0, 2), 'red')).toBe('factory');
 
   yard.built.push('factory');
 
-  expect(wantNext(yard, army('red', 4, 0), 'red')).toBe('tank');
+  expect(wantNext(yard, army('red', 4, 0, 2), 'red')).toBe('tank');
 
   /* Everything the plan ever asks for: six harvesters, twelve tanks,
-     and all three buildings. Then there is nothing left to want. */
-  expect(wantNext(yard, army('red', 6, 12), 'red')).toBe(null);
+     four infantry and all three buildings. Then there is nothing left
+     to want. */
+  expect(wantNext(yard, army('red', 6, 12, 4), 'red')).toBe(null);
 });
 
-test('wantsAttack needs enough tanks and enough strength', () => {
-  expect(ATTACK_TANKS).toBe(3);   // this test is written around that number
+test('wantsAttack needs enough guns and enough strength', () => {
+  expect(ATTACK_FORCE).toBe(4);   // this test is written around that number
 
-  // Two tanks is not an attack, however empty the other side is.
-  expect(wantsAttack(army('red', 4, 2), 'red')).toBe(false);
+  // Three tanks is not an attack, however empty the other side is.
+  expect(wantsAttack(army('red', 4, 3), 'red')).toBe(false);
 
-  // Three fresh tanks against nobody at all is plenty.
-  expect(wantsAttack(army('red', 0, 3), 'red')).toBe(true);
+  // Four fresh tanks against nobody at all is plenty.
+  expect(wantsAttack(army('red', 0, 4), 'red')).toBe(true);
 
-  // Three against three is even, and ATTACK_EDGE is 1.2, so it waits.
-  const even = [...army('red', 0, 3), ...army('blue', 0, 3)];
+  // A gun is a gun: two tanks and two riflemen are four of them.
+  expect(wantsAttack(army('red', 0, 2, 2), 'red')).toBe(true);
+
+  // Four against four is even, and ATTACK_EDGE is 1.2, so it waits.
+  const even = [...army('red', 0, 4), ...army('blue', 0, 4)];
 
   expect(wantsAttack(even, 'red')).toBe(false);
   expect(wantsAttack(even, 'blue')).toBe(false);   // the same question, asked about you
 
-  // Four against three is a fifth stronger and more, so it goes.
-  const four = [...army('red', 0, 4), ...army('blue', 0, 3)];
+  // Five against four is a fifth stronger and more, so it goes.
+  const five = [...army('red', 0, 5), ...army('blue', 0, 4)];
 
-  expect(wantsAttack(four, 'red')).toBe(true);
+  expect(wantsAttack(five, 'red')).toBe(true);
 
-  // The same four tanks, shot to pieces, are weaker than three fresh ones.
-  four[1].health = 20;
-  four[2].health = 20;
-  four[3].health = 20;
-  four[4].health = 20;
+  // The same five tanks, shot to pieces, are weaker than four fresh ones.
+  for (let i = 1; i <= 5; i += 1) five[i].health = 20;
 
-  expect(wantsAttack(four, 'red')).toBe(false);
+  expect(wantsAttack(five, 'red')).toBe(false);
 });
 
 

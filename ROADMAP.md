@@ -538,7 +538,7 @@ We left these out on purpose: spending the credits, which is project 22, ore tha
 
 ### 22. Building and production
 
-A build yard beside project 21's refinery. The credits finally buy something: more harvesters, a power plant, a barracks, a war factory, a tank. Each one costs money and takes time.
+A build yard beside project 21's refinery. The credits finally buy something: more harvesters, a power plant, a barracks, infantry, a war factory, a tank. Each one costs money and takes time.
 
 - An interface driven by state
 - Enabled and disabled buttons, each with a reason
@@ -552,7 +552,7 @@ The idea the project exists to teach is that **the page shows what a function sa
 
 The second lesson is the queue, and it is project 2's, with money attached. One `push` to join the back and one `shift` to leave the front, and nobody is ever built at the same time as anybody else. Clicking a war factory then a harvester makes the harvester wait eighteen seconds, however much it is wanted.
 
-The third is that prerequisites are data. `catalogue.ts` is five lines, and the whole chain — power plant, then barracks, then war factory, then tank — is one `needs` column. A sixth thing to build is a sixth line and no other change. That is the promise project 18 made about grounds, kept for a different kind of content.
+The third is that prerequisites are data. `catalogue.ts` is six lines, and the whole chain — power plant, then barracks, which opens both infantry and the war factory, then tank — is one `needs` column. A seventh thing to build is a seventh line and no other change. That is the promise project 18 made about grounds, kept for a different kind of content.
 
 The order of the five questions inside `canBuild` is the hour that goes into this project, and it fails differently from project 21's `nextJob`. A wrong order does not break the button, it makes the button lie: a barracks that needs a power plant says "Too dear", and saving up never helps. The README puts the two orders side by side.
 

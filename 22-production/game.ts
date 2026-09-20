@@ -27,7 +27,7 @@ import {
   boxFrom, driveUnit, isInBox, makeUnit, orderMove, selectedUnits,
   selectInBox, selectOnly, sendTo, unitAt
 } from './units.ts';
-import type { Box, Unit } from './units.ts';
+import type { Box, Unit, UnitKind } from './units.ts';
 import {
   digStep, fullness, makeField, makeRefinery, nearestOre, nextJob, oreAt,
   unloadStep
@@ -192,8 +192,8 @@ function done(number: number): boolean {
    --------------------------------------------------------------------- */
 
 /* The two pictures that make one unit. A harvester is a truck with an
-   amber load in its bed. A tank is a hull with a turret, left the
-   colour it came in. */
+   amber load in its bed, infantry is a soldier with a rifle, and a
+   tank is a hull with a turret. */
 type Look = {
   hull: Phaser.GameObjects.Image;
   top: Phaser.GameObjects.Image;
@@ -233,6 +233,8 @@ function preload(this: Phaser.Scene): void {
   this.load.image('top', 'assets/turret-blue.png');
   this.load.image('truck', 'assets/truck-blue.png');
   this.load.image('load', 'assets/load-ore.png');
+  this.load.image('soldier', 'assets/soldier-blue.png');
+  this.load.image('rifle', 'assets/rifle-blue.png');
   /* One picture for each building in the table, under its own key. A
      unit has no picture here, because it is drawn as a hull and a top. */
   for (const key of ITEM_KEYS) {
@@ -368,19 +370,28 @@ function gateSpot(key: ItemKey): { x: number; y: number } {
   return middleOf(gate?.cell ?? refinery.cell);
 }
 
-function addUnit(kind: 'harvester' | 'tank', x: number, y: number): Unit {
+/* The two pictures each kind of unit is drawn with. One line per kind,
+   the same shape as the tables in terrain.ts and catalogue.ts. */
+const PICTURES: Record<UnitKind, { hull: string; top: string }> = {
+  harvester: { hull: 'truck', top: 'load' },
+  infantry: { hull: 'soldier', top: 'rifle' },
+  tank: { hull: 'hull', top: 'top' }
+};
+
+function addUnit(kind: UnitKind, x: number, y: number): Unit {
   const unit = makeUnit(kind, nextName(), x, y);
   units.push(unit);
   if (stage !== null) {
-    const harvests = kind === 'harvester';
-    const top = stage.scene.add.image(x, y, harvests ? 'load' : 'top')
+    const pictures = PICTURES[kind];
+    const top = stage.scene.add.image(x, y, pictures.top)
       .setScale(0.7).setDepth(4);
-    /* A turret turns about its middle, which sits a fifth of the way
-       along its picture. A load sits in the bed, so it turns with the
-       truck and keeps the middle it came with. */
-    if (!harvests) top.setOrigin(20 / 64, 0.5).setTint(0xa8c4e0);
+    /* A gun turns about its middle, which sits a fifth of the way along
+       its picture. A load sits in the bed, so it turns with the truck
+       and keeps the middle it came with. */
+    if (kind !== 'harvester') top.setOrigin(20 / 64, 0.5);
+    if (kind === 'tank') top.setTint(0xa8c4e0);
     stage.looks.push({
-      hull: stage.scene.add.image(x, y, harvests ? 'truck' : 'hull').setScale(0.7).setDepth(3),
+      hull: stage.scene.add.image(x, y, pictures.hull).setScale(0.7).setDepth(3),
       top
     });
   }
@@ -469,7 +480,9 @@ function rollOut(key: ItemKey): void {
 
   if (item.kind === 'unit') {
     const gate = gateSpot(key);
-    const unit = addUnit(key === 'tank' ? 'tank' : 'harvester', gate.x, gate.y);
+    /* A unit line of the table is keyed by its kind, so the table says
+       what rolls out and this line never names one. */
+    const unit = addUnit(key as UnitKind, gate.x, gate.y);
     buildSquad(units, pickOne);
     if (unit.kind === 'harvester') takeNextJob(unit);
     say(unit.name + ' rolled out of the yard. That is ' + units.length + ' units.');
@@ -576,7 +589,7 @@ function giveRoute(unit: Unit, goal: Cell, loud: boolean): boolean {
 }
 
 function takeNextJob(unit: Unit): void {
-  if (unit.kind === 'tank') {
+  if (unit.kind !== 'harvester') {
     unit.job = unit.moving ? 'driving' : 'waiting';
     return;
   }
@@ -812,7 +825,7 @@ function drawBase(onStage: Stage): void {
     pen.lineStyle(2.5, colour, 0.9);
     pen.strokeRect(x + 2, y + 2, TILE - 4, TILE - 4);
     /* Its own picture, from the table. A line with no picture falls
-       back to a wash of its colour, so a sixth line still shows up. */
+       back to a wash of its colour, so a seventh line still shows up. */
     if (item.picture === null) {
       pen.fillStyle(colour, 0.25);
       pen.fillRect(x + 7, y + 7, TILE - 14, TILE - 14);
@@ -865,8 +878,8 @@ function drawOver(pen: Phaser.GameObjects.Graphics, box: Box | null, hovered: Ce
     pen.strokeCircle(mark.x, mark.y, TANK_REACH + 4);
   }
 
-  /* One load bar over each harvester. A tank carries nothing, so it
-     gets no bar. */
+  /* One load bar over each harvester. Nothing else carries ore, so
+     nothing else gets a bar. */
   for (const unit of units) {
     if (unit.kind !== 'harvester') continue;
     const share = fullness(unit.load, CAPACITY);

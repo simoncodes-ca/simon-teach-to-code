@@ -4,11 +4,17 @@
    One job: the things on the map. It is finished.
 
    Every unit in the game is one of these, on both sides, and there are
-   three kinds of them:
+   four kinds of them:
 
        'harvester'   digs ore and brings it home. Project 21
+       'infantry'    cheap, quick, and shoots. Out of the barracks
        'tank'        drives, aims and fires. Projects 16 and 23
        'base'        a refinery. It never moves and it never shoots
+
+   Infantry are a tank with four numbers changed, and the four little
+   functions below hold all four: how fast it goes, how much punishment
+   it takes, how hard it hits, and how long it waits between shots.
+   Nothing else in the game asks whether a unit is infantry.
 
    A refinery in the list of units is the one new idea in this file, and
    it is worth a minute.
@@ -30,7 +36,10 @@
    file never draws anything.
    ===================================================================== */
 
-import { BASE_HEALTH, MAX_HEALTH, SPACING, TANK_REACH, TANK_SPEED } from './numbers.ts';
+import {
+  BASE_HEALTH, INFANTRY_DAMAGE, INFANTRY_HEALTH, INFANTRY_RELOAD, INFANTRY_SPEED,
+  MAX_HEALTH, RELOAD, SHOT_DAMAGE, SPACING, TANK_REACH, TANK_SPEED
+} from './numbers.ts';
 import { middleOf, speedAt } from './map.ts';
 import type { Cell, GameMap } from './map.ts';
 
@@ -40,8 +49,10 @@ import type { Cell, GameMap } from './map.ts';
 /* The two sides. Yours is blue. */
 export type Side = 'blue' | 'red';
 
-/* The three kinds of unit. Only the first two are ever built. */
-export type UnitKind = 'harvester' | 'tank' | 'base';
+/* The four kinds of unit. Only the first three are ever built, and
+   those three are spelled exactly as catalogue.ts keys them, so what
+   rolls out of a yard is named by the table and not here. */
+export type UnitKind = 'harvester' | 'infantry' | 'tank' | 'base';
 
 /* What a unit is doing about the ore. Project 21's seven words, and
    `nextJob` still hands back one of the first six.
@@ -71,7 +82,7 @@ export type Mode = 'dead' | 'attacking' | 'chasing' | 'patrolling';
 export type Unit = {
   name: string;          // what the page calls it, like 'Able'
   side: Side;            // 'blue', which is yours, or 'red', which is not
-  kind: UnitKind;        // 'harvester', 'tank' or 'base'
+  kind: UnitKind;        // 'harvester', 'infantry', 'tank' or 'base'
   x: number;             // where its middle is, in pixels across the map
   y: number;             // and in pixels down the map
   angle: number;         // which way it faces. 0 is to the right
@@ -97,10 +108,29 @@ export type Unit = {
   marching: boolean;     // has the commander sent it into battle?     24
 };
 
-/* How much punishment one kind of unit takes. A refinery takes twelve
-   times a tank, because wrecking one wins the game. */
+/* The four numbers that tell one kind of unit from another.
+
+   How much punishment it takes. A refinery takes nine times a tank,
+   because wrecking one wins the game, and infantry take less than
+   half of one. */
 export function healthFor(kind: UnitKind): number {
-  return kind === 'base' ? BASE_HEALTH : MAX_HEALTH;
+  if (kind === 'base') return BASE_HEALTH;
+  return kind === 'infantry' ? INFANTRY_HEALTH : MAX_HEALTH;
+}
+
+/* How fast it goes, in pixels a second on ground with a speed of 1. */
+export function speedFor(kind: UnitKind): number {
+  return kind === 'infantry' ? INFANTRY_SPEED : TANK_SPEED;
+}
+
+/* How much health one of its shots takes off. */
+export function damageFor(kind: UnitKind): number {
+  return kind === 'infantry' ? INFANTRY_DAMAGE : SHOT_DAMAGE;
+}
+
+/* How long it waits between two shots. */
+export function reloadFor(kind: UnitKind): number {
+  return kind === 'infantry' ? INFANTRY_RELOAD : RELOAD;
 }
 
 export function makeUnit(side: Side, kind: UnitKind, name: string, x: number, y: number, post: Cell): Unit {
@@ -264,7 +294,8 @@ export function halt(unit: Unit): void {
 }
 
 /* Move a unit a little way along its route. Project 20's `driveTank`,
-   with nothing changed but the name. A refinery never has anywhere to
+   with the name changed and its speed taken from the kind, so infantry
+   outrun tanks on the same ground. A refinery never has anywhere to
    go, so this hands back 'still' for one every time. */
 export function driveUnit(unit: Unit, map: GameMap, seconds: number): Drive {
   if (!unit.moving) return 'still';
@@ -280,7 +311,7 @@ export function driveUnit(unit: Unit, map: GameMap, seconds: number): Drive {
   const across = aimX - unit.x;
   const down = aimY - unit.y;
   const distance = Math.sqrt(across * across + down * down);
-  const step = TANK_SPEED * speedAt(map, unit.x, unit.y) * seconds;
+  const step = speedFor(unit.kind) * speedAt(map, unit.x, unit.y) * seconds;
 
   if (distance > step) {
     unit.x += across / distance * step;

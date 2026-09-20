@@ -7,6 +7,10 @@
    apart two units are, who is worth shooting at, where to point the
    gun, when to fire, and which of four things a tank is doing.
 
+   Two lines of `shootStep` ask the kind how hard it hits and how long
+   it reloads, so infantry fire quicker and hit softer than a tank. That
+   is the only change in the file besides `armed`.
+
    Two things are worth noticing, and neither one is a change to this
    file.
 
@@ -20,7 +24,8 @@
    tank is which.
    ===================================================================== */
 
-import { GUN_RANGE, RELOAD, SEE_RANGE, SHOT_DAMAGE } from './numbers.ts';
+import { GUN_RANGE, SEE_RANGE } from './numbers.ts';
+import { damageFor, reloadFor } from './units.ts';
 import type { Mode, Unit } from './units.ts';
 
 
@@ -34,9 +39,10 @@ export function wrecked(unit: Unit): boolean {
 }
 
 /* Can this kind of unit fire at all? A harvester carries ore and a
-   refinery is a shed, so neither one ever shoots back. */
+   refinery is a shed, so neither one ever shoots back. A tank and a
+   rifleman both do. */
 export function armed(unit: Unit): boolean {
-  return unit.kind === 'tank';
+  return unit.kind === 'tank' || unit.kind === 'infantry';
 }
 
 
@@ -84,8 +90,8 @@ export function shootStep(shooter: Unit, target: Unit, seconds: number): boolean
   if (shooter.reload > 0) return false;
   if (!inRange(shooter, target, GUN_RANGE)) return false;
 
-  target.health = Math.max(0, target.health - SHOT_DAMAGE);
-  shooter.reload = RELOAD;
+  target.health = Math.max(0, target.health - damageFor(shooter.kind));
+  shooter.reload = reloadFor(shooter.kind);
   return true;
 }
 

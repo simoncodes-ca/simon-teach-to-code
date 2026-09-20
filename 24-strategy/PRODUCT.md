@@ -61,12 +61,13 @@ The cost is eleven finished files around one stub file. That is accepted here an
 - A 20 by 15 map of 48-pixel cells, drawn from the terrain table. Two new maps, `twin-yards.json` and `two-bridges.json`, each one unchanged by half a turn, so the two corners are provably equal.
 - Two sides with the same shape: a refinery on the map, credits, a build yard, a plot list, and three harvesters. Blue is worked by the Build card. Red is worked by `commander.ts`.
 - One ore field, dug by both sides. Project 21's run, finished, for six harvesters at the start and more as they are built.
-- Project 22's catalogue and queue, finished, for both yards. Nothing outside `catalogue.ts` names a power plant.
+- Project 22's catalogue and queue, finished, for both yards, including the infantry line the barracks opens. Nothing outside `catalogue.ts` names a power plant.
+- Two things with guns, not one. Infantry cost 200 credits and four seconds, go at 130 pixels a second, take 40 damage and fire 4 every half second. A tank costs 700 and twelve, goes at 90, takes 100 and fires 9 every seven tenths. `armed` in `enemy.ts` is the one place that says which kinds shoot, and `armyStrength` and `attackOrders` ask it rather than naming a kind.
 - Project 23's tank brain, finished, for both sides. `runUnit` is project 23's nine lines.
 - A refinery as a unit of kind `'base'`: 900 health, never drives, never fires, and a target like anything else.
 - Marching orders: red re-issues them every 2.5 seconds, and a marching tank still stops to fight whatever comes into range.
 - A banner over the map for a win, a loss, and the draw where both refineries fall together.
-- Six rack cards: Forces, Build, Queue, Enemy, Squad, Maps.
+- Six rack cards: Forces, Build, Queue, Enemy, Squad, Maps. The Forces card counts harvesters, infantry, tanks and the refinery, all four from `countKind`.
 - A status line that names the next empty function, found by trying each one on a yard and a pair of tanks when the page loads.
 
 **Stubs, in order:**
@@ -92,16 +93,17 @@ Job 7 is the only job that changes no test count, the same as project 22's job 7
 
 **The order of the questions in `spendStep`.** Asking "what can I afford?" instead of "what does the plan want?" produces a commander with nine harvesters and no army. Nothing crashes, and the Enemy card goes on naming the right thing to save for, because `wantNext` is correct. Only a credit counter that never climbs gives it away. Job 4's test is what catches it. It is the same shape of trap as project 21's `nextJob`, project 22's `canBuild` and project 23's `nextMode`, and it is the fourth in a row on purpose.
 
-**Explicitly deferred:** a second way to win, cancelling an order, placing a building by hand, ore that grows back, a leash on a chasing tank, an enemy that defends its own ore field, more than one enemy plan, fog of war, and saving a game. All are named in the README as things to try next.
+**Explicitly deferred:** a second way to win, cancelling an order, placing a building by hand, a unit that is strong against one kind and weak against another, ore that grows back, a leash on a chasing tank, an enemy that defends its own ore field, more than one enemy plan, fog of war, and saving a game. All are named in the README as things to try next.
 
 **Hard constraints:**
 
-- `commander.ts` imports `numbers.ts`, `catalogue.ts`, `build.ts`, `ore.ts` for one type, `units.ts` for types and `foeOf`, and `enemy.ts` for `wrecked`. Never Phaser, never the page.
+- `howMany`, which is given, counts a side's units on the map **and** the matching jobs in its queue. Without that a four-second rifleman and a once-a-second decision turn a plan line of two into five, and the plan stops meaning what it says.
+- `commander.ts` imports `numbers.ts`, `catalogue.ts`, `build.ts`, `ore.ts` for one type, `units.ts` for types and `foeOf`, and `enemy.ts` for `wrecked` and `armed`. Never Phaser, never the page.
 - Tests cover pure logic only: `commander.ts`. Never the DOM or Phaser.
-- `ore.ts`, `build.ts` and `enemy.ts` are projects 21, 22 and 23 copied from their answer keys. `ore.ts` takes a cell in `makeRefinery` because there are two refineries now, and `enemy.ts` gains `armed`, which says whether a kind of unit has a gun. Those are the only two changes across the three files.
+- `ore.ts`, `build.ts` and `enemy.ts` are projects 21, 22 and 23 copied from their answer keys. `ore.ts` takes a cell in `makeRefinery` because there are two refineries now; `enemy.ts` gains `armed`, which says whether a unit has a gun, and its `shootStep` asks the kind for its damage and its reload. Those are the only changes across the three files.
 - `terrain.ts` changes exactly one number from project 21: ore `holds` goes from 240 to 480, because two armies dig one field. It is recorded in that file's header.
 - Sounds keep the `Audio` pattern every project since the calculator has used. Nine files, all of them from projects 22 and 23.
-- No new art. Both sides drive project 17's hull and turret for tanks and project 21's truck for harvesters, told apart by a coloured disc, because tinting a blue hull red produces mud. The buildings are project 22's three pictures, and a ring in each side's colour tells whose they are. A unit rolls out at the building it needed, so each side's tanks appear at its own war factory.
+- Both sides drive project 17's hull and turret for tanks and project 21's truck for harvesters, told apart by a coloured disc, because tinting a blue hull red produces mud. Infantry are project 22's two new pictures, `soldier-blue.png` and `rifle-blue.png`. The buildings are project 22's three pictures, and a ring in each side's colour tells whose they are. A unit rolls out at the building it needed, so each side's tanks appear at its own war factory and its riflemen at its own barracks.
 - Comments use plain language for an 11-year-old.
 
 ## Brand Commitments
@@ -115,9 +117,9 @@ Project 22's build yard desk, with a Forces card added at the top of the rack an
 - Projects 21, 22 and 23 each set the shape `spendStep` copies: a fixed order of questions where the wrong order fails quietly.
 - Project 8 proved that one set of functions moves every kind of sprite when they share a shape. A refinery in the units list is that lesson applied to a thing that cannot move.
 - Measured with `tsc` 7.0.2 and Vitest 5.0.1, filling the answer key into throwaway copies one job at a time: every count in the stub table above, start to finish.
-- Measured in Chrome with every stub filled, on Twin Yards, with nobody touching the keyboard: the enemy built a power plant, a barracks and a war factory, massed three tanks, sent two, and wrecked the undefended refinery. The banner read `You lost` at 3 minutes.
-- Measured in Chrome with every stub filled, on Twin Yards, played through Playwright: two extra harvesters, then the chain, then five tanks sent at the enemy ore field rather than its refinery. Every enemy harvester died, its income stopped, its tanks were not replaced, and its refinery fell. The banner read `You won` at 4 minutes 6 seconds.
-- Measured in Chrome on Two Bridges, played the same way: the enemy crossed a bridge with project 20's `findRoute` while the squad was away at the ore, and won at 3 minutes 10 seconds. Both maps produce a contest that either side can take.
+- Measured in Chrome with every stub filled, on Twin Yards, with nobody touching the keyboard: the enemy bought a fourth harvester, a power plant, a barracks, two riflemen, a war factory and two tanks, marched with all but one guard, and wrecked the undefended refinery. The banner read `You lost` at 2 minutes 17 seconds, over two runs that differed by four seconds.
+- Measured in Chrome with every stub filled, on Twin Yards, played through Playwright on the enemy's own plan, sending whatever it had as soon as it had four: blue lost at 2 minutes 30 seconds, aiming at the refinery and at the enemy ore field alike. The script attacks in fours, which is the mistake the README names; no scripted line has beaten the commander since infantry arrived, and the dials that move that are `ATTACK_FORCE`, `ATTACK_EDGE` and where the two infantry lines sit in `RED_PLAN`.
+- Measured in Chrome, played through Playwright as a rifleman rush — a barracks, no war factory, seven infantry: the two riflemen `RED_PLAN` keeps at home held the rush until the first enemy tank rolled out, and blue lost at 5 minutes 15 seconds. With those two lines moved below the war factory the enemy has nothing at home when the rush lands. That is the plan deciding a game, and it is the claim project 22 made about a table being the strategy.
 - Measured in Chrome with every stub still empty: the page loads, your harvesters dig, your Build card spends, every enemy well reads a dash, and the console holds nothing but the two favicon 404s that projects 20 to 23 also produce.
 - Measured in Chrome with the stubs empty, so neither side spends: both refineries held equal credits at twenty, thirty, forty and sixty seconds, over two runs, at 1199, 1499, 1799 and 2400. That is the fairness of the two corners, measured rather than asserted. A reading taken between those points can differ by one load, because the two sides do not tip their loads in the same instant.
 - Measured in Chrome at 430 pixels wide: no horizontal scroll, and all six cards fit.

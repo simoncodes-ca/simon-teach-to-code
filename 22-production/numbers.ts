@@ -19,6 +19,7 @@ export const WIDTH = COLS * TILE;   // so the window is 960 pixels wide
 export const HEIGHT = ROWS * TILE;  // and 720 pixels tall
 
 export const TANK_SPEED = 90;       // pixels a second, on ground with a speed of 1
+export const INFANTRY_SPEED = 130;  // infantry are quicker, because they carry nothing
 export const TANK_REACH = 22;       // a click this close to a unit's middle is a click on it
 export const SPACING = 54;          // how far apart units park when they arrive together
 export const DRAG_START = 6;        // the mouse must move this far before a click becomes a drag

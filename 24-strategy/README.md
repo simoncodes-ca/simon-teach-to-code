@@ -125,7 +125,7 @@ Twelve source files, and eleven of them are finished. The thirteenth is your tes
 | `map.ts` | The map, and turning cells into pixels and back | Finished |
 | `paths.ts` | Your project 20 pathfinder | Finished |
 | `catalogue.ts` | The things a yard can build, and the enemy's plan | Finished |
-| `units.ts` | Harvesters, tanks and refineries | Finished |
+| `units.ts` | Harvesters, infantry, tanks and refineries | Finished |
 | `ore.ts` | Your project 21 ore run | Finished |
 | `build.ts` | Your project 22 build yard | Finished |
 | `enemy.ts` | Your project 23 tank brain | Finished |
@@ -169,11 +169,13 @@ Open `numbers.ts`. These are the ones worth playing with once the game works.
 
 | | Value | What it means |
 |---|---|---|
-| `ATTACK_TANKS` | 3 | Tanks it wants before it will attack at all |
+| `ATTACK_FORCE` | 4 | Things with guns it wants before it will attack at all |
 | `ATTACK_EDGE` | 1.2 | How much stronger than you it wants to be |
-| `GUARDS` | 1 | Tanks it keeps at home whatever happens |
+| `GUARDS` | 1 | Fighters it keeps at home whatever happens |
 
-`ATTACK_TANKS` is the clock on the whole game. At 2 the first wave arrives before you can have a war factory. At 5 you get so long that the enemy never catches up.
+`ATTACK_FORCE` is the clock on the whole game. At 2 the first wave is three riflemen a minute in, long before you can have a war factory. At 6 you get so long that the enemy never catches up.
+
+It counts guns and not tanks, so three riflemen are a wave. That is `armed` doing the deciding, in `armyStrength` and in `attackOrders`, and it is why neither of those two functions ever names a tank.
 
 `ATTACK_EDGE` is its nerve. At 1 it attacks an even fight and trades its tanks away two at a time. At 2 it waits for a war it will never get, because you are building tanks as fast as it is.
 
@@ -191,11 +193,13 @@ A reading taken mid-second can differ by one load, because one harvester tips it
 
 Measured in Chrome with the answer key, on Twin Yards.
 
-**Nobody plays blue.** The enemy built a power plant, a barracks and a war factory, massed three tanks, sent two, and wrecked the undefended refinery. The game ended at 3 minutes with `You lost`.
+**Nobody plays blue.** The enemy bought a fourth harvester, a power plant, a barracks, two riflemen to watch its ore, a war factory and two tanks. Then it marched with everything but one guard and wrecked the undefended refinery. The game ended at 2 minutes 17 seconds with `You lost`.
 
-**Blue plays properly.** Two more harvesters first, then the chain, then tanks. Then the tanks went to the enemy ore field instead of the enemy refinery, and killed harvesters until it had none left. With its income gone, the enemy could not replace its tanks. The refinery fell at 4 minutes 6 seconds with `You won`.
+**Blue feeds its army in a few at a time.** Played by a script on the enemy's own plan, sending whatever it had as soon as it had four: the first three died at the enemy's corner, the second wave died on its way, and the refinery fell at 2 minutes 30 seconds. Aiming the waves at the enemy ore field instead made no difference, because the waves were too small to get there.
 
-That is the game in one sentence: **ore pays for everything, so a harvester is a target.**
+That is the game in one sentence: **a wave of four is not a wave.** Riflemen are 200 credits and four seconds, so the cheapest way to make a wave big enough is to build some.
+
+**A rifleman rush.** A barracks, no war factory, and everything spent on infantry: seven of them reached the enemy corner at about a minute. The two riflemen the enemy keeps at home held them long enough for its first tank to roll out, and the game ended at 5 minutes 15 seconds with `You lost`. Move the two infantry lines of `RED_PLAN` down below the war factory and the enemy has nothing at all at home when that rush arrives. The plan is the whole difference, and it is twelve lines of data.
 
 ### The order of the questions in spendStep
 
@@ -218,7 +222,7 @@ So any map works. Paint one in project 18's editor, copy the file into `maps/`, 
 ### Already written for you
 
 - Your ore run, your yard, your pathfinder and your tank brain, copied from the answer keys of projects 20 to 23.
-- `howMany`, which turns a catalogue key into a count. It asks your `countKind` about units and project 22's `isBuilt` about buildings.
+- `howMany`, which turns a catalogue key into a count. It asks your `countKind` about units and project 22's `isBuilt` about buildings, and it counts what is already on order as well. A rifleman takes four seconds and the commander decides every second, so a plan line for two would buy five if the queue did not count.
 - `foeOf`, which hands you the other side. `foeOf('red')` is `'blue'`.
 - `wrecked` and `armed`, from project 23.
 - `runCommander` in `game.ts`, which calls your functions once a second and hands the marching tanks their routes.
@@ -232,14 +236,16 @@ So any map works. Paint one in project 18's editor, copy the file into `maps/`, 
 | A wrecked tank is still counted | `countKind` did not skip the wrecks |
 | Both columns show the same number | `countKind` ignored the side it was given |
 | The strength bars stay flat | `armyStrength` is still empty |
-| Strength counts harvesters | `armyStrength` did not check the kind |
+| Strength counts harvesters | `armyStrength` did not ask `armed` |
+| Infantry are worth nothing, however many there are | `armyStrength` asked for `'tank'` instead of asking `armed` |
+| The enemy's riflemen stay at home while its tanks march | `attackOrders` asked for `'tank'` instead of asking `armed` |
 | Saving for never changes | `wantNext` handed back the first line every time, instead of the first unfinished one |
 | Saving for says `nothing` straight away | `wantNext` compared the wrong way round, so every line looked finished |
 | The enemy buys harvesters for ever and never a factory | `spendStep` looked for something it could afford instead of obeying the plan |
 | The enemy spends credits it has not got | `spendStep` never asked `canBuild` |
 | The enemy builds nothing at all | `spendStep` is still empty, or `wantNext` handed back `null` |
 | Orders never says `attack` | `wantsAttack` compared strength the wrong way round |
-| The enemy attacks with one tank and loses it | `wantsAttack` never checked `ATTACK_TANKS` |
+| The enemy attacks with one tank and loses it | `wantsAttack` never checked `ATTACK_FORCE` |
 | Its whole army leaves home and its refinery falls to one tank | `attackOrders` forgot the guards |
 | Nothing marches | `attackOrders` is still empty, or it handed back an empty list |
 | A fight that wrecks both refineries says you won | `whoWon` only looked at the enemy's |
@@ -251,6 +257,7 @@ The best bug in this project is the first `spendStep` one. Everything works. The
 ## Try this next
 
 - **Move a line in `RED_PLAN`.** Put the war factory before the extra harvesters and see whether an early army beats a bigger mine.
+- **An infantry rush.** Move the two infantry lines up above the war factory. The enemy then has three guns a minute into the game, long before you can have one tank. Play against it and see whether you can hold.
 - **A second plan.** Write a `RUSH_PLAN` with no harvesters in it at all, and let the enemy pick one at random when a map starts.
 - **A leash.** Project 23 offered this and it still applies. A chasing tank that gets too far from home drives back.
 - **Defend the harvesters.** The enemy never guards its ore field, which is why starving it works. Give `attackOrders` a second job.

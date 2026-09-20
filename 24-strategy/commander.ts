@@ -40,15 +40,15 @@
    Keep `npm test` running in a second terminal while you work.
    ===================================================================== */
 
-import { ATTACK_EDGE, ATTACK_TANKS, GUARDS } from './numbers.ts';
+import { ATTACK_EDGE, ATTACK_FORCE, GUARDS } from './numbers.ts';
 import { CATALOGUE, RED_PLAN } from './catalogue.ts';
 import type { ItemKey } from './catalogue.ts';
-import { canBuild, isBuilt, startBuild } from './build.ts';
+import { canBuild, isBuilt, queued, startBuild } from './build.ts';
 import type { Yard } from './build.ts';
 import type { Refinery } from './ore.ts';
 import { foeOf } from './units.ts';
 import type { Side, Unit, UnitKind } from './units.ts';
-import { wrecked } from './enemy.ts';
+import { armed, wrecked } from './enemy.ts';
 
 
 /* ---------------------------------------------------------------------
@@ -63,15 +63,27 @@ import { wrecked } from './enemy.ts';
    'barracks'. Those are two different questions, so this function asks
    the table which kind of thing it is:
 
-       a unit       count them on the map. That is your `countKind`
-       a building   there is either one or there is not, so the answer
-                      is 1 or 0. Project 22's `isBuilt` knows
+       a unit       count them on the map, and add the ones already on
+                      order. That is your `countKind`, plus the queue
+       a building   there is either one, or one on order, or neither.
+                      Project 22's `isBuilt` and `queued` know
+
+   **The queue counts.** A rifleman takes four seconds to build and the
+   commander decides once a second, so a plan line that asked for two
+   would order five before the first one rolled out. Counting only what
+   stands on the map is how an army buys four of everything and wonders
+   where its money went.
 
    It is here rather than in your list of jobs because it is bookkeeping
    and not a decision. */
 export function howMany(yard: Yard, units: Unit[], side: Side, key: ItemKey): number {
-  if (CATALOGUE[key].kind === 'building') return isBuilt(yard, key) ? 1 : 0;
-  return countKind(units, side, key as UnitKind);
+  if (CATALOGUE[key].kind === 'building') return isBuilt(yard, key) || queued(yard, key) ? 1 : 0;
+
+  let onOrder = 0;
+  for (const job of yard.queue) {
+    if (job.key === key) onOrder += 1;
+  }
+  return countKind(units, side, key as UnitKind) + onOrder;
 }
 
 
@@ -85,13 +97,14 @@ export function howMany(yard: Yard, units: Unit[], side: Side, key: ItemKey): nu
 /**
  * 1. How many of this kind has that side got?
  *
- * `units` is every unit in the game, both sides and all three kinds.
+ * `units` is every unit in the game, both sides and all four kinds.
  * Count the ones that are on `side`, are of `kind`, and are still in
  * one piece.
  *
  * So `countKind(units, 'red', 'tank')` is how many tanks the enemy has
- * left, and `countKind(units, 'blue', 'base')` is 1 while your refinery
- * stands and 0 once it is gone.
+ * left, `countKind(units, 'red', 'infantry')` is how many riflemen, and
+ * `countKind(units, 'blue', 'base')` is 1 while your refinery stands
+ * and 0 once it is gone.
  *
  * **Skip the wrecks.** A burnt-out tank is still in the list, and this
  * is the number the enemy decides whether to attack on. Counting
@@ -109,8 +122,8 @@ export function howMany(yard: Yard, units: Unit[], side: Side, key: ItemKey): nu
  *   `if (wrecked(unit)) continue;` skips the wrecks.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. The Forces card fills in: harvesters, tanks and
- * refineries, for you and for the enemy, side by side. Both columns
+ * Save the file. The Forces card fills in: harvesters, infantry, tanks
+ * and refineries, for you and for the enemy, side by side. Both columns
  * come out of this one function, because a red unit and a blue unit are
  * the same shape of object. Watch your harvester count go up when one
  * rolls out of your yard.
@@ -122,38 +135,42 @@ export function countKind(units: Unit[], side: Side, kind: UnitKind): number {
 /**
  * 2. How much fight is left in that side?
  *
- * Add up the health of every tank a side still has. A side with four
- * fresh tanks is 400 strong. The same four tanks, all of them half shot
- * away, are 200.
+ * Add up the health of everything a side has that can shoot. A side
+ * with four fresh tanks is 400 strong. The same four tanks, all of them
+ * half shot away, are 200. Four fresh infantry are 160.
  *
- * Only tanks count. A harvester carries ore and a refinery is a
- * shed, so neither one can win a fight or lose one.
+ * Only the ones with guns count. A harvester carries ore and a refinery
+ * is a shed, so neither one can win a fight or lose one. The given
+ * `armed` from project 23 answers that, and it is the reason this
+ * function never names a tank: the day the catalogue grows a third
+ * thing with a gun, this line is already right.
  *
  * This is one number standing in for a whole army, and job 6 is the
  * decision that reads it. That is why health belongs in it and a plain
- * count of tanks does not: two tanks with 10 health each should not
+ * count of units does not: two tanks with 10 health each should not
  * frighten anybody.
  *
  * Gentle hint: project 22's `waitTime` is the shape. A total, a loop
  *   over the units, and one `if` about who counts.
  * Stronger hint: `total += unit.health;` is the line inside the loop,
- *   and the `if` above it skips anything that is not this side's tank.
+ *   and `if (unit.side !== side || !armed(unit)) continue;` is the `if`
+ *   above it.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Save the file. Two strength bars appear on the plate at the top, one
- * for each side. Yours is empty until you build a tank, and so is the
- * enemy's. Send a tank into a fight and watch a bar go down as it takes
- * damage.
+ * for each side. Yours is empty until you build infantry or a tank, and
+ * so is the enemy's. Send one into a fight and watch a bar go down as
+ * it takes damage.
  */
 export function armyStrength(units: Unit[], side: Side): number {
-  // TODO: the total health of every living tank on `side`.
+  // TODO: the total health of everything on `side` that can shoot.
 }
 
 /**
  * 3. What is the enemy saving up for?
  *
- * `RED_PLAN` in catalogue.ts is the enemy's shopping list. Ten lines,
- * in order, and each one says "keep buying this until you have `upTo`
+ * `RED_PLAN` in catalogue.ts is the enemy's shopping list. Twelve
+ * lines, in order, and each one says "keep buying this until you have `upTo`
  * of them":
  *
  *     { key: 'harvester', upTo: 3 }
@@ -244,8 +261,8 @@ export function spendStep(yard: Yard, refinery: Refinery, units: Unit[], side: S
  *
  * Two questions, and both have to say yes:
  *
- *     a. Has it got at least ATTACK_TANKS tanks? One tank on its own
- *          is a present, not an attack
+ *     a. Has it got at least ATTACK_FORCE things with guns? One tank on
+ *          its own is a present, not an attack
  *     b. Is its strength at least ATTACK_EDGE times yours?
  *
  * ATTACK_EDGE is 1.2, so the enemy waits until it is a fifth stronger
@@ -256,7 +273,9 @@ export function spendStep(yard: Yard, refinery: Refinery, units: Unit[], side: S
  * `side`, and once about the other side. The given `foeOf` in units.ts
  * hands you the other side, so `foeOf('red')` is `'blue'`.
  *
- * Question a is about `countKind` from job 1.
+ * Question a is about `countKind` from job 1, asked twice and added
+ * up: infantry are worth counting, even though four of them are worth
+ * less in a fight than two tanks.
  *
  * Gentle hint: three lines. One `if` that hands back false, then one
  *   comparison handed back.
@@ -271,22 +290,23 @@ export function spendStep(yard: Yard, refinery: Refinery, units: Unit[], side: S
  * which is job 7.
  */
 export function wantsAttack(units: Unit[], side: Side): boolean {
-  // TODO: true when this side has enough tanks and enough strength.
+  // TODO: true when this side has enough guns and enough strength.
 }
 
 /**
  * 7. Who marches, and who stays at home?
  *
- * Hand back the list of tanks that should go. The page gives every tank
- * in that list a route to your refinery and sends it.
+ * Hand back the list of fighters that should go. The page gives every
+ * unit in that list a route to your refinery and sends it.
  *
  * Two rules:
  *
- *     every living tank on that side is in the force
+ *     every living unit on that side with a gun is in the force
  *     GUARDS of them stay behind, and GUARDS is 1
  *
- * So a side with four tanks marches with three. A side with one tank
- * marches with nobody, and hands back an empty list.
+ * So a side with four fighters marches with three. A side with one
+ * marches with nobody, and hands back an empty list. Harvesters stay
+ * home whatever happens, which is `armed` doing the work again.
  *
  * Leaving a guard at home is the oldest idea in war and it costs one
  * line. An army that all goes at once wins the battle at your refinery
@@ -301,17 +321,18 @@ export function wantsAttack(units: Unit[], side: Side): boolean {
  *
  * Gentle hint: build the force with a loop and a `continue`, the same
  *   way as job 1, then hand back a `slice` of it.
- * Stronger hint: `if (unit.side !== side || unit.kind !== 'tank') continue;`
+ * Stronger hint: `if (unit.side !== side || !armed(unit)) continue;`
  *   is the skip, and `return force.slice(GUARDS);` is the last line.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. The first wave rolls. Every enemy tank but one drives
- * out of its corner, finds a route round the rock with project 20's
- * pathfinder, and comes at your refinery. The one left behind circles
- * its own. You have a war on, and the game still cannot end.
+ * Save the file. The first wave rolls. Every enemy tank and rifleman
+ * but one drives out of its corner, finds a route round the rock with
+ * project 20's pathfinder, and comes at your refinery. The one left
+ * behind circles its own. You have a war on, and the game still cannot
+ * end.
  */
 export function attackOrders(units: Unit[], side: Side): Unit[] {
-  // TODO: every living tank on `side`, except the first GUARDS of them.
+  // TODO: every living gun on `side`, except the first GUARDS of them.
 }
 
 /**
@@ -389,7 +410,7 @@ export function whoWon(units: Unit[]): Side | null {
 
      let total = 0;
      for (const unit of units) {
-       if (unit.side !== side || unit.kind !== 'tank') continue;
+       if (unit.side !== side || !armed(unit)) continue;
        total += unit.health;
      }
      return total;
@@ -418,7 +439,8 @@ export function whoWon(units: Unit[]): Side | null {
 
    --- wantsAttack(units, side) ---
 
-     if (countKind(units, side, 'tank') < ATTACK_TANKS) return false;
+     const guns = countKind(units, side, 'tank') + countKind(units, side, 'infantry');
+     if (guns < ATTACK_FORCE) return false;
      return armyStrength(units, side) >= armyStrength(units, foeOf(side)) * ATTACK_EDGE;
 
 
@@ -426,7 +448,7 @@ export function whoWon(units: Unit[]): Side | null {
 
      const force: Unit[] = [];
      for (const unit of units) {
-       if (unit.side !== side || unit.kind !== 'tank') continue;
+       if (unit.side !== side || !armed(unit)) continue;
        if (wrecked(unit)) continue;
        force.push(unit);
      }
