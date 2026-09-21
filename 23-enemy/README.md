@@ -100,7 +100,7 @@ Job 7 is the only one that leaves the test line alone. `nextPost` has no test of
 | `units.ts` | Your project 19 and 20 units, with five fields added | Finished |
 | `enemy.ts` | Looking, aiming, firing, patrolling, and deciding | **You. Seven functions** |
 | `enemy.test.ts` | The tests for `enemy.ts` | **You. Two tests** |
-| `rack.ts` | Everything you read: the two rosters, the wells, the bars | Finished |
+| `rack.ts` | Everything you read: the two rosters, the numbers, the bars | Finished |
 | `game.ts` | Phaser, the mouse, the tanks, and every frame | Finished |
 | `maps/` | Two new maps, made for a fight | Finished |
 
@@ -205,7 +205,7 @@ That means any map works. Paint one in project 18's editor, copy the file into `
 
 | What you see | What went wrong |
 |---|---|
-| Every well and every tag says a dash | `farApart` is still empty |
+| Every number and every tag says a dash | `farApart` is still empty |
 | The rings never light up | `inRange` compared the wrong way round |
 | Every gun points east and stays there | `aimAt` is still empty |
 | A gun points the wrong way by a quarter turn | `aimAt` gave `Math.atan2` the two numbers the wrong way round |

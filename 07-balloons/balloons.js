@@ -104,9 +104,8 @@ let aim = -Math.PI / 2;          // the angle the cannon points, in radians. Thi
  * Gentle hint: build the balloon object described up in the memory. It
  *   needs x, y, radius, speed and colour. Work out the radius first,
  *   because y depends on it.
- * Stronger hint: `const radius = randomBetween(24, 44);` then
- *   `return { x: randomBetween(90, WIDTH - 90), y: HEIGHT + radius,
- *   radius: radius, speed: randomBetween(70, 150), colour: randomColour() };`
+ * Stronger hint: choose a radius, a safe horizontal position, a point
+ *   below the canvas, a speed, and a colour. Return those five parts.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start and one balloon appears at the bottom of the sky, then
@@ -140,7 +139,8 @@ function makeBalloon() {
  *
  * Gentle hint: one line. Take the distance away from `balloon.y`,
  *   because up means less.
- * Stronger hint: `balloon.y -= balloon.speed * seconds;`
+ * Stronger hint: change y by speed multiplied by seconds. Up means y gets
+ *   smaller on this canvas.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The balloons rise now. Press Slow motion on the counter and watch
@@ -164,9 +164,8 @@ function moveBalloon(balloon, seconds) {
  *
  * Gentle hint: the bottom of the balloon is at `balloon.y`, and its top
  *   is `radius` higher up. Higher up means a smaller y.
- * Stronger hint: `return balloon.y + balloon.radius < 0;`
- *   Notice you write `return` on a comparison. A comparison is already
- *   true or false, so there is nothing to add.
+ * Stronger hint: compare the balloon's top edge with a point above the
+ *   canvas. A comparison already gives the true-or-false result.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Balloons now leave at the top instead of piling up above the sky, and
@@ -198,7 +197,8 @@ function hasEscaped(balloon) {
  *
  * Gentle hint: how far across is one x take away the other. How far
  *   down is one y take away the other. Take `from` away from `to`.
- * Stronger hint: `return Math.atan2(to.y - from.y, to.x - from.x);`
+ * Stronger hint: pass the vertical difference and horizontal difference
+ *   to Math.atan2 in that order.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The barrel follows your mouse now, and the Aim panel on the counter
@@ -234,9 +234,8 @@ function aimAngle(from, to) {
  *
  * Gentle hint: start the dart at the muzzle. Then work out vx from the
  *   cosine and vy from the sine, each one times DART_SPEED.
- * Stronger hint: `const start = muzzlePoint(angle);` then
- *   `return { x: start.x, y: start.y, vx: Math.cos(angle) * DART_SPEED,
- *   vy: Math.sin(angle) * DART_SPEED };`
+ * Stronger hint: get the muzzle point first. Use cosine for horizontal
+ *   velocity and sine for vertical velocity, each scaled by DART_SPEED.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Click on the sky. A dart appears at the end of the barrel and hangs
@@ -269,8 +268,8 @@ function makeDart(angle) {
  *
  * Gentle hint: move x by vx, move y by vy, then add gravity to vy.
  *   Every one of the three is multiplied by `seconds`.
- * Stronger hint: `dart.x += dart.vx * seconds;` then
- *   `dart.y += dart.vy * seconds;` then `dart.vy += GRAVITY * seconds;`
+ * Stronger hint: update x and y from their velocities and seconds. Then
+ *   add gravity times seconds to vy.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Darts fly in a curve now. Aim straight up and watch one slow, stop,
@@ -296,8 +295,8 @@ function moveDart(dart, seconds) {
  *
  * Gentle hint: three comparisons joined by `||`, which means "or". Do
  *   not write one for the top edge.
- * Stronger hint: `return dart.y > HEIGHT + 40 || dart.x < -40 ||
- *   dart.x > WIDTH + 40;`
+ * Stronger hint: use three outside tests joined by ||. Check below the
+ *   canvas and beyond both side margins.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Watch "In the air" on the counter. It went up and stayed up. Now it
@@ -325,9 +324,8 @@ function dartIsGone(dart) {
  * Gentle hint: work out how far apart they are across, and how far
  *   apart they are down. Then use those two for the distance, and
  *   compare it with `balloon.radius`.
- * Stronger hint: `const across = dart.x - balloon.x;` then
- *   `const down = dart.y - balloon.y;` then
- *   `return Math.sqrt(across * across + down * down) < balloon.radius;`
+ * Stronger hint: find horizontal and vertical gaps. Use the distance made
+ *   from those two gaps and compare it with the balloon radius.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Balloons pop now, and the score counts them. This is the last piece
@@ -355,8 +353,8 @@ function hits(dart, balloon) {
  *
  * Gentle hint: five lines. Two empty lists, two zeros, and the lives
  *   back up to START_LIVES.
- * Stronger hint: `balloons = [];` `darts = [];` `score = 0;`
- *   `escaped = 0;` `lives = START_LIVES;`
+ * Stronger hint: replace both lists with empty lists and restore score,
+ *   escaped, and lives from their starting constants.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Play again works. Lose all three lives, press it, and the stall opens

@@ -28,6 +28,8 @@ That subtraction is `toScreen`, the first function you write. Every picture in t
 
 The rack shows all three numbers for the ship while you fly. World minus camera equals screen, on every frame. Watch it happen.
 
+Keep collision questions in world coordinates. The cave and ship keep their world positions. The camera changes where they appear in the window.
+
 ## The other big idea
 
 **Gravity pulls, the engine pushes, and the ship never stops on its own.**

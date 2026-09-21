@@ -157,7 +157,7 @@ export function countKind(units: Unit[], side: Side, kind: UnitKind): number {
  *   above it.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. Two strength bars appear on the plate at the top, one
+ * Save the file. Two strength bars appear in the summary at the top, one
  * for each side. Yours is empty until you build infantry or a tank, and
  * so is the enemy's. Send one into a fight and watch a bar go down as
  * it takes damage.
@@ -196,7 +196,7 @@ export function armyStrength(units: Unit[], side: Side): number {
  *   is the line inside the loop.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. The Enemy card's Saving for well names what the enemy
+ * Save the file. The Enemy card's Saving for field names what the enemy
  * wants, and it changes as the game goes on. It still has not spent a
  * credit, so it wants a harvester for ever. That is job 5.
  */
@@ -284,8 +284,8 @@ export function spendStep(yard: Yard, refinery: Refinery, units: Unit[], side: S
  *   is the last line.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. The Enemy card's Orders well starts saying `massing`
- * or `attack`, and the plate's two strength bars are the reason why.
+ * Save the file. The Enemy card's Orders field starts saying `massing`
+ * or `attack`, and the summary's two strength bars are the reason why.
  * Nothing has moved yet. The word is right and nobody is acting on it,
  * which is job 7.
  */

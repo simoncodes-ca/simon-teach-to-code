@@ -62,9 +62,9 @@ Seven jobs are functions in `build.ts`. Two jobs are tests in `build.test.ts`. D
 | 2 | `build.ts` | `needsMet` | Still nothing. The next test goes green |
 | 3 | `build.ts` | `canBuild` | Every button on the Build card wakes up |
 | 4 | `build.test.ts` | Test: buying charges exactly the price | A new red test in terminal 2 |
-| 5 | `build.ts` | `startBuild` | Clicking buys. The credits drop, and a docket appears |
-| 6 | `build.ts` | `buildStep` | The front docket's bar fills up |
-| 7 | `build.ts` | `waitTime` | The Ready in well counts down |
+| 5 | `build.ts` | `startBuild` | Clicking buys. The credits drop, and a queue row appears |
+| 6 | `build.ts` | `buildStep` | The front queue row's bar fills up |
+| 7 | `build.ts` | `waitTime` | The Ready in number counts down |
 | 8 | `build.test.ts` | Test: the queue builds one at a time, in order | Another red test |
 | 9 | `build.ts` | `takeFinished` | Things roll out. The yard runs on its own |
 
@@ -220,12 +220,12 @@ Take that line out and the yard still looks fine, because the buttons are alread
 | A locked thing says "Too dear" | `canBuild` asked about the money before the padlock |
 | A power plant you own says "Too dear" | `canBuild` asked about the money before `isBuilt` |
 | Nothing ever unlocks, however much you build | `takeFinished` never put the building into `yard.built` |
-| You can only ever build one harvester | `takeFinished` put a unit into `yard.built` as well |
+| You can only ever build one harvester | `takeFinished` put a unit into `yard.built` too |
 | You can queue five power plants | `canBuild` never asked `queued` |
 | Clicking takes the money and queues nothing | `startBuild` charged before it checked `canBuild` |
 | The credits go down twice for one click | `startBuild` took the cost off more than once |
 | The front bar runs past the end of its track | `buildStep` forgot `Math.min` |
-| The Ready in well counts up, not down | `waitTime` added `done` instead of taking it away |
+| The Ready in number counts up, not down | `waitTime` added `done` instead of taking it away |
 | Everything is built the instant you click | `buildStep` added a fixed amount instead of `seconds` |
 | The queue fills up and never moves | `takeFinished` is still empty, or it never calls `shift` |
 | The same thing rolls out over and over | `takeFinished` handed the key back without taking it off the queue |
@@ -258,7 +258,7 @@ That is honest rather than unfinished. Something for them to shoot at is project
 
 - **A seventh line.** Add something to `catalogue.ts` — a repair bay, a radar, a second kind of harvester. One line, and the card draws itself.
 - **An infantry rush.** Skip the war factory and spend everything on infantry instead. How many do you have by the time a tank would have rolled out?
-- **Cancel an order.** Right-click a docket, take it off the queue, and give the credits back. Careful: how much do you give back for one that is half built?
+- **Cancel an order.** Right-click a queue row, take it off the queue, and give the credits back. Careful: how much do you give back for one that is half built?
 - **A price that climbs.** Make each harvester cost a little more than the one before. `canBuild` would need to ask how many you have.
 - **A second queue.** Buildings in one, units in the other, both building at once. Two `yard.queue`s, and `buildStep` called twice.
 - **A tank that follows.** Pick a tank, click a harvester, and have it drive to wherever that harvester is, over and over.

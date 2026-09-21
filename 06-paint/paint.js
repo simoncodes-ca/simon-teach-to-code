@@ -116,9 +116,8 @@ let tool = 'brush';              // 'brush' or 'eraser'
  *   the mouse is, counted in screen pixels. Now turn that into paper
  *   pixels. The paper looks `box.width` wide, but it is really
  *   `paper.width` wide.
- * Stronger hint: x is `(event.clientX - box.left) * paper.width / box.width`.
- *   y is the same line, with clientY, top, height and paper.height.
- *   Send both back together: `return { x: x, y: y };`
+ * Stronger hint: subtract the box position first, then multiply by the
+ *   paper-to-screen scale. Return one object with the scaled x and y.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The tape along the top shows the point under your cursor. It shows
@@ -154,9 +153,8 @@ function canvasPoint(event) {
  *
  * Gentle hint: move to the first point. Then run a loop that traces a
  *   line to every point in the list. Then stroke once at the end.
- * Stronger hint: start with `const first = stroke.points[0];` then
- *   `pen.moveTo(first.x, first.y);` then `for (const p of stroke.points)
- *   pen.lineTo(p.x, p.y);`.
+ * Stronger hint: read the first point for moveTo, then visit every point
+ *   with lineTo. Set the brush style before one final stroke call.
  *   You trace the first point twice, and that is on purpose. A stroke
  *   with one point becomes a line that goes nowhere. A round tip turns
  *   that into a dot.
@@ -183,8 +181,8 @@ function drawStroke(pen, stroke) {
  * Gentle hint: build the object described up in the memory, then return
  *   it. The `colour` and `size` it needs are the variables with those
  *   same names.
- * Stronger hint: `return { colour: colour, size: size, points: [point] };`
- *   Use square brackets, because points is a list with one item in it.
+ * Stronger hint: make an object with colour and size, and make points a
+ *   one-item list containing the point.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Now press on the paper. A dot lands where you pressed, in your colour
@@ -208,8 +206,7 @@ function startStroke(point) {
  *
  * Gentle hint: the stroke's points are a list. You already know how to
  *   put something on the end of a list.
- * Stronger hint: `stroke.points.push(point);` and that is the whole
- *   function.
+ * Stronger hint: use the list method that adds one item to its end.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Now drag the mouse. The dot stretches into a line that follows it.
@@ -233,7 +230,8 @@ function extendStroke(stroke, point) {
  *
  * Gentle hint: `strokes` is the list of what is on the paper. Add to
  *   it, then make `undone` empty again.
- * Stronger hint: `strokes.push(stroke);` and then `undone = [];`
+ * Stronger hint: add the stroke to the paper list, then replace the undo
+ *   list with a new empty list.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Now the paper keeps everything you draw. The tape counts your strokes
@@ -258,8 +256,8 @@ function finishStroke(stroke) {
  *
  * Gentle hint: `.pop()` takes the last item off a list and hands it to
  *   you. The stroke comes off `strokes` and goes onto `undone`.
- * Stronger hint: check first with `if (strokes.length === 0) return;`
- *   then write `undone.push(strokes.pop());`
+ * Stronger hint: return when the paper list is empty. Otherwise remove its
+ *   last item and add that item to the undo list.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The Undo key now works. The tape starts counting what is waiting.
@@ -277,8 +275,8 @@ function undo() {
  *
  * Gentle hint: the same two lines as undo, with the two lists swapped
  *   over.
- * Stronger hint: `if (undone.length === 0) return;` then
- *   `strokes.push(undone.pop());`
+ * Stronger hint: return when the undo list is empty. Otherwise remove its
+ *   last item and add that item to the paper list.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Undo and Redo now move back and forth through your drawing. Draw
@@ -302,7 +300,7 @@ function redo() {
  *
  * Gentle hint: use a `while` loop. Keep going while the paper still has
  *   something on it, and call the function you already wrote.
- * Stronger hint: `while (strokes.length > 0) { undo(); }`
+ * Stronger hint: keep calling undo while the paper list still has items.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Clear now empties the sheet. Press Redo afterwards and watch the
@@ -326,7 +324,8 @@ function clearPaper() {
  *
  * Gentle hint: the canvas is the `paper` variable. The method you want
  *   is called toDataURL. Ask it for 'image/png'.
- * Stronger hint: `return paper.toDataURL('image/png');`
+ * Stronger hint: ask paper for a data URL using the PNG image type, then
+ *   return the text it gives you.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Save now downloads your drawing as `painting.png`. Open the file and

@@ -78,7 +78,8 @@ let tanks = [];
  *
  * Gentle hint: one line for x, one line for y, each one a cos or a
  *   sin times the distance.
- * Stronger hint: `return { x: Math.cos(angle) * distance, y: ... };`
+ * Stronger hint: return an object. Multiply `Math.cos(angle)` by the
+ *   distance for x, and `Math.sin(angle)` by it for y.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start. A small arrow appears in front of each tank. It shows
@@ -109,7 +110,7 @@ function stepAlong(angle, distance) {
  * Change `tank.angle`. Nothing else.
  *
  * Gentle hint: one line that adds to `tank.angle`.
- * Stronger hint: `tank.angle += turn * TURN_SPEED * ...;`
+ * Stronger hint: add `turn * TURN_SPEED * seconds` to the current angle.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Hold A or D. Blue spins on the spot. Red spins with the left and
@@ -153,8 +154,8 @@ function turnTank(tank, turn, seconds) {
  *
  * Gentle hint: get the step, then two moves. Each move is one line to
  *   add and one `if` to take it back.
- * Stronger hint: `tank.x += step.x;` then
- *   `if (blocked(tank)) tank.x -= step.x;` and the same for y.
+ * Stronger hint: add the x step, undo it if blocked, then do the same
+ *   with the y step. Check after each separate move.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Hold W. Blue drives. Point it at a block at a slant and it slides
@@ -180,7 +181,7 @@ function driveTank(tank, drive, seconds) {
  * Hand back that one number.
  *
  * Gentle hint: two angles, added together.
- * Stronger hint: `return tank.angle + ...;`
+ * Stronger hint: return the hull angle plus the turret angle.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The turrets swing round with Q and E. A dotted gun sight appears in

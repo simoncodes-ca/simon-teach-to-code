@@ -187,7 +187,8 @@ let level = 1;                   // which of the three vaults is open
  *
  * Gentle hint: the left edge is `col * TILE`, and the middle is half a
  *   tile further along.
- * Stronger hint: `return { x: col * TILE + TILE / 2, y: ... };`
+ * Stronger hint: return an object. Add half a tile to each multiplied
+ *   coordinate.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start. The mouse stops hiding in the top corner and appears in
@@ -213,7 +214,8 @@ function middleOf(col, row) {
  *     { col: 3, row: 5 }
  *
  * Gentle hint: divide by TILE, then round down.
- * Stronger hint: `return { col: Math.floor(x / TILE), row: ... };`
+ * Stronger hint: make both properties the floored result of dividing
+ *   the matching pixel coordinate by `TILE`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The Cell readout on the rack starts counting as you move, and it
@@ -247,8 +249,8 @@ function cellAt(x, y) {
  *
  * Gentle hint: one loop for the rows, one loop inside it for the
  *   columns, and an `if` for each of the two characters.
- * Stronger hint: `const spot = middleOf(col, row);` then
- *   `if (grid[row][col] === '#') walls.create(spot.x, spot.y, 'wall');`
+ * Stronger hint: find the pixel middle for each cell. Test the character
+ *   before creating either a wall or a crumb sprite.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The empty floor fills up with steel blocks and cheese. This is the
@@ -277,8 +279,8 @@ function buildVault(scene) {
  *
  * Gentle hint: one `if` for anything off the map, then one line that
  *   compares the character with '#'.
- * Stronger hint: `if (col < 0 || row < 0 || col >= COLS || row >= ROWS) return true;`
- *   then `return grid[row][col] === '#';`
+ * Stronger hint: return true for a column or row outside its limit.
+ *   Otherwise compare the map character with `'#'`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The four ways out light up on the rack: green for a way you can go,
@@ -314,7 +316,8 @@ function isWall(col, row) {
  *
  * Gentle hint: four `if`s, or an `if` and three `else if`s. Two lines
  *   inside each.
- * Stronger hint: `if (keys.left.isDown) { mouse.wantX = -1; mouse.wantY = 0; }`
+ * Stronger hint: for each arrow, set one wanted direction to `-1` or
+ *   `1` and set the other direction to `0`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Hold an arrow. The mouse still does not move, but the gold square on
@@ -357,8 +360,8 @@ function steerMouse(keys) {
  *
  * Gentle hint: three guards that `return` early, then four lines that
  *   set the step up.
- * Stronger hint: `if (thing.goX !== 0 || thing.goY !== 0) return;` is
- *   the first guard, and `if (isWall(col, row)) return;` is the third.
+ * Stronger hint: guard while moving, guard with no wanted direction,
+ *   then guard when the next cell is a wall.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The gold square stops jumping into walls. It only ever lands on a
@@ -398,9 +401,8 @@ function startStep(thing) {
  * Otherwise it is a plain move, one step in the direction it is going.
  *
  * Gentle hint: an `if` for arriving, and an `else` for still going.
- * Stronger hint: `thing.sprite.x += thing.goX * step;` is the ordinary
- *   move, and arriving is `thing.sprite.x = target.x;` with
- *   `thing.goX = 0;`
+ * Stronger hint: compare the remaining distance with `step`. Snap both
+ *   coordinates and clear both movement values when it fits.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The mouse runs. It stops dead at walls, turns cleanly at junctions,
@@ -438,8 +440,8 @@ function moveThing(thing, seconds) {
  *
  * Gentle hint: a guard, then one line for the map, one for the sprite,
  *   and one for the point.
- * Stronger hint: `if (grid[here.row][here.col] !== '.') return;` is the
- *   guard, and `grid[here.row][here.col] = ' ';` is the important line.
+ * Stronger hint: return unless the cell has `'.'`. Replace that map
+ *   character with a space, destroy its crumb, then call `nibble()`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Crumbs vanish as you run over them, the score climbs, and the

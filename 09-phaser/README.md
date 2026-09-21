@@ -46,6 +46,8 @@ Those crossed-off names are on the rack beside the window, so you can see them g
 
 Double-click `remake.html` to open it. Change `remake.js`, save the file, then refresh the browser page.
 
+`Phaser.CANVAS` uses the canvas already in the page. The browser reads local assets and the vendored `phaser.min.js` directly. Double-clicking `remake.html` remains the complete workflow.
+
 Eight functions in `remake.js` are marked `// TODO`. Write them in file order, from the top down. Each one gives you two hints. All the answers sit in one block at the very bottom of the file.
 
 Press Start now. Green boxes cross the sky. A green box is what Phaser draws when you ask for a picture it has never heard of, and the first function fixes it.

@@ -140,8 +140,8 @@ let aim = -Math.PI / 2;          // the angle the gun points, in radians. This i
  *
  * Gentle hint: five lines, all the same shape. Copy the line above and
  *   change the two words in it.
- * Stronger hint: `scene.load.image('trooper-fall',
- *   'assets/trooper-fall.png');` and four more like it.
+ * Stronger hint: use the five key-and-path pairs above. Call
+ *   `scene.load.image` once for each pair.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start. The green boxes crossing the sky turn into planes. A
@@ -184,9 +184,8 @@ function loadArt(scene) {
  *
  * Gentle hint: four lines. Make him with `troopers.create`, set his
  *   state, switch his gravity on, then return him.
- * Stronger hint: `const trooper = troopers.create(plane.x, plane.y +
- *   24, 'trooper-fall');` then `trooper.setState('falling');` then
- *   `trooper.setGravityY(GRAVITY);` then `return trooper;`
+ * Stronger hint: create at the plane's x and 24 pixels below its y.
+ *   Set the falling state, turn on gravity, then return the sprite.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Troopers drop out of the planes and fall, and they keep falling
@@ -224,9 +223,8 @@ function dropTrooper(scene, plane) {
  *
  * Gentle hint: all four lines are written above. You only have to
  *   choose the order, and any order works.
- * Stronger hint: `trooper.setState('chute');` then
- *   `trooper.setTexture('trooper-chute');` then
- *   `trooper.setGravityY(0);` then `trooper.setVelocityY(CHUTE_SPEED);`
+ * Stronger hint: set the state and texture first. Then turn gravity off
+ *   and set the chute's downward velocity.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Chutes snap open halfway down and the troopers come down slowly.
@@ -271,11 +269,8 @@ function openChute(trooper) {
  * Gentle hint: five lines. Set the state, stop him falling, send him
  *   sideways, flip the picture if he is going left, then play the
  *   walk.
- * Stronger hint: `trooper.setState('walking');` then
- *   `trooper.setVelocityY(0);` then
- *   `trooper.setVelocityX(towardsPost(trooper.x) * WALK_SPEED);` then
- *   `trooper.setFlipX(towardsPost(trooper.x) < 0);` then
- *   `trooper.play('walk');`
+ * Stronger hint: set the walking state and stop vertical motion. Use
+ *   `towardsPost(trooper.x)` for speed and facing, then play `'walk'`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The troopers land on their feet and march at you, arms and legs
@@ -314,8 +309,8 @@ function landTrooper(trooper) {
  *
  * Gentle hint: one line. The three things going into it are `troopers`,
  *   `gate` and `trooperAtPost`.
- * Stronger hint: `scene.physics.add.overlap(troopers, gate,
- *   trooperAtPost);`
+ * Stronger hint: register one overlap for `troopers` and `gate`, with
+ *   `trooperAtPost` as the callback.
  * Stuck? The answer key is at the bottom of this file.
  *
  * A trooper who reaches you now takes a sandbag with him, and the post
@@ -361,8 +356,8 @@ function watchTheGate(scene) {
  * Then `return shell;` so the wiring can see it left the barrel.
  *
  * Gentle hint: five lines, and four of them are written above.
- * Stronger hint: muzzle, create, velocityFromRotation, setRotation,
- *   return.
+ * Stronger hint: get the muzzle point, create a shell, set its velocity
+ *   from the angle, rotate it, and return it.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Click on the sky and a shell streaks out of the barrel. It goes
@@ -397,9 +392,8 @@ function fireShell(scene, angle) {
  * clearest look at it you will get.
  *
  * Gentle hint: two lines, both `scene.physics.add.overlap(...)`.
- * Stronger hint: `scene.physics.add.overlap(shells, troopers,
- *   shellHitsTrooper);` and `scene.physics.add.overlap(shells, planes,
- *   shellHitsPlane);`
+ * Stronger hint: register one overlap for shells and troopers, then one
+ *   for shells and planes. Use the two hit callbacks already given.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Shells knock troopers out of the sky now, and a plane is worth five.
@@ -449,7 +443,8 @@ function watchForHits(scene) {
  *
  * Gentle hint: two statements. Add the image small, then tween it
  *   bigger and see-through.
- * Stronger hint: both of them are written above, in order.
+ * Stronger hint: create the `'boom'` image at the given point. Scale it
+ *   small, then tween its scale and alpha before destroying it.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The explosions bloom and fade, and the game is finished. Eight

@@ -83,6 +83,8 @@ These all work the same way here. Read `01-calculator/README.md` through `09-pha
 
 The pictures are loaded for you this time. You wrote those five lines in project 9, so this file spends its stubs on the game instead.
 
+Phaser groups have two useful questions here. `getChildren()` gives the sprites for a loop. `getLength()` gives their count for the rack and the wave rules.
+
 ### The keyboard
 
 Every game so far waited for the mouse. This one reads keys, and keys work differently.

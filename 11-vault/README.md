@@ -19,6 +19,8 @@ Here are two rows of the first vault, copied straight out of `vault.js`:
 
 A `#` is a wall. A `.` is a crumb. A space is bare floor. Twelve rows of that is the whole level.
 
+The map also uses `@` for the mouse start and `C` for a cat start. The given `loadLevel` removes those letters before play.
+
 Nothing in the game draws a maze by hand. `buildVault` reads those characters and puts a steel block wherever it finds a `#`.
 
 Because the map is written down, the game can ask it questions:

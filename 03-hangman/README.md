@@ -20,6 +20,8 @@ Inside `hangman.js` seven functions are marked `// TODO`. Write them in file ord
 
 Right now the page does nothing. The gallows is drawn and the letters are there, but no round can be played. The status line asks you to write the first function. That is on purpose.
 
+Use one new-word round as your test. First reveal a correct letter. Then press a wrong letter. Press the wrong letter again to check that a repeat does not add another mistake.
+
 ## What you will learn
 
 - How to look inside a string, one character at a time

@@ -59,6 +59,8 @@ Our record is not text. It is an object with two things in it:
 
 `JSON.stringify` turns that object into text, and `JSON.parse` turns the text back into the object. JSON is how programs write objects down, and how they send them to each other. Project 15 uses it again, to talk to a server.
 
+Use the given `RECORD_KEY` in both functions. A different key would save one record and read another.
+
 Beat your best, then press refresh. The score is still there.
 
 ## The four files

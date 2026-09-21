@@ -115,7 +115,7 @@ function writeMapFile(file: string, saved: SavedMap): void {
 /* ---------------------------------------------------------------------
    NEVER TRUST WHAT ARRIVES
 
-   Before your `linesToMap` sees anything, the server checks the shape.
+   Before your `linesToMap` sees anything, the server checks the fields.
    A map must be an object with a name that is text, and a list of
    lines that are all text.
 

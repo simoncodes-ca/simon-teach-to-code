@@ -293,7 +293,7 @@ export function buildStep(yard: Yard, seconds: number): number {
  *   the loop.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. The Queue card's Ready in well counts down while the
+ * Save the file. The Queue card's Ready in number counts down while the
  * yard works, and jumps up every time you buy something else.
  */
 export function waitTime(yard: Yard): number {

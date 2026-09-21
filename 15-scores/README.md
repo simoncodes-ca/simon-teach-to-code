@@ -84,6 +84,8 @@ Each file has its own answer key, at its own bottom. Opening one never gives awa
 | `server.js` | The second program. It holds the list | You write three |
 | `scores.json` | The list itself, on the disk | The server writes it |
 
+The server stores every accepted score in `scores.json`. `sortedTop` limits the board response to 10 entries.
+
 ## What you will learn
 
 - Why some things are impossible for a page on its own

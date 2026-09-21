@@ -16,7 +16,9 @@ The page is finished. The way it looks is finished. What the calculator does is 
 
 Double-click `calculator.html` to open the calculator in your browser. After you change `calculator.js`, save the file. Then refresh the browser page to see your change.
 
-Inside `calculator.js` you will find empty functions marked `// TODO`. Write them in the order listed at the top of the file. Each one is a small puzzle.
+Inside `calculator.js` you will find empty functions marked `// TODO`. First add the four memory values in `calculator`. Then write the functions in file order. Each function is a small puzzle.
+
+The order is `showOnDisplay`, `renderBuffer`, `pressDigit`, `pressDecimal`, `pressOperator`, `calculate`, `pressEquals`, `pressClear`, and `init`. The display and buffer helpers come first because the other functions call them.
 
 ## What you will learn
 
@@ -96,6 +98,8 @@ const calculator = {
 
 calculator.left = '12';   // set the left part to '12'
 ```
+
+The calculator memory uses four named parts. `current` holds the text on the screen. `left` holds the first number during a calculation. `operator` holds `+`, `-`, `*`, or `/`. `startNew` tells the next digit to replace the screen instead of joining it.
 
 An **array** is a numbered list that keeps its order:
 
@@ -193,9 +197,9 @@ Number('12') + Number('3')   // gives 15
 
 `calculate()` receives both of its values as strings. Converting them is part of its job.
 
-JavaScript also does something odd when you divide by zero. It does not crash, and it shows no error. It produces the value `Infinity` instead.
+JavaScript also does something odd when you divide by zero. It does not crash. It produces the value `Infinity`, which is not useful on this calculator.
 
-Decide what the person using the calculator should see instead. You make that choice inside one of the TODO functions.
+This scaffold uses the readable result `'Cannot divide by 0'`. Return that text from `calculate()` when the right number is zero.
 
 ### Finding your mistakes
 
@@ -208,7 +212,7 @@ When a function does the wrong thing, add a `console.log` inside it. Print the v
 
 ### Already written for you
 
-The bottom of `calculator.js` is already written. Read it, but do not change it.
+Section 4 of `calculator.js` is already written. Read it, but do not change it.
 
 An object called `BUTTONS` has one part for each key id. Each part holds the function that runs when you click that key.
 

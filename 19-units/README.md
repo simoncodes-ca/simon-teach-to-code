@@ -155,6 +155,13 @@ River Crossing has no way across at all, because its road stops at the water. Tr
 
 To drive on a map you painted yourself, copy its file from `18-editor/maps` into `19-units/maps`. It turns up in the Maps card. The map must be 20 cells by 15, the editor's size.
 
+### How the page finds every map
+
+`game.ts` uses Vite's `import.meta.glob` to collect every JSON file in `maps/`.
+Vite parses those files when it builds the project. The page checks each parsed file before it uses the map.
+
+Keep each file valid JSON so Vite can build the project. The check handles JSON data with the wrong shape. The data might be a number, a list, or an object with wrong fields. The page keeps a file only when it has a name, rows of letters, and the right map size.
+
 ### Already written for you
 
 - The terrain table and the map functions, from project 18.

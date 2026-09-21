@@ -1,7 +1,7 @@
 /* =====================================================================
    rack.ts. File 7 of 8.
 
-   One job: everything you read on the page. The plate across the top,
+   One job: everything you read on the page. The summary across the top,
    the squad list, the Refinery card, the Field card, the panel under
    the mouse, the list of maps, and the line under the window.
 
@@ -88,7 +88,7 @@ export function say(text: string): void {
 }
 
 
-/* --- The plate across the top --- */
+/* --- The summary across the top --- */
 
 export function showPlate(mapName: string, credits: number, working: number): void {
   write(mapReadEl, mapName);

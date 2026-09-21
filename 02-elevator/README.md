@@ -18,6 +18,8 @@ Inside `elevator.js` six functions are marked `// TODO`. Write them in file orde
 
 Every function carries two hints in its comments: a gentle hint first, then a stronger one. Try the gentle hint first. If you are still stuck, the answers are all together in a block at the very bottom of the file — scroll down to it when you want it, and only then.
 
+Test one request after each function. Press the same floor twice to test the queue. Press two different floors to test the order. Then watch the car move, open its doors, and return to `idle`.
+
 ## What you will learn
 
 - What a state machine is, and why an elevator is a perfect example

@@ -182,7 +182,7 @@ export function showMouse(map: GameMap, cell: Cell | null, ways: number | undefi
 
 /* --- The Search card ---
 
-   The two way buttons, and four wells about the search on the map. */
+   The two way buttons, and four numbers about the search on the map. */
 
 export type SearchReport = {
   looked: number | null;         // how many cells it looked round
