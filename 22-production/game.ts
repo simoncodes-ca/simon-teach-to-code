@@ -171,7 +171,7 @@ function whichJob(): { number: number; text: string } {
     return { number: 6, text: 'Job 6: buildStep() is still empty, so the front of the queue never gets any work done on it.' };
   }
   if (waitTime(tinyYard) === undefined) {
-    return { number: 7, text: 'Job 7: waitTime() is still empty, so the Ready in well has nothing to count down.' };
+    return { number: 7, text: 'Job 7: waitTime() is still empty, so the Ready in number has nothing to count down.' };
   }
   if (takeFinished(tinyYard) === undefined) {
     return { number: 8, text: 'Jobs 8 and 9: write the second test in build.test.ts, then takeFinished(). Then the queue starts to move.' };

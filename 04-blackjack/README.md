@@ -18,6 +18,8 @@ Double-click `blackjack.html` to play. After you change `blackjack.js`, save the
 
 Inside `blackjack.js` twelve functions are marked `// TODO`. Write them in file order, from top to bottom. Each one carries two hints in its comments: a gentle hint first, then a stronger one. Try the gentle hint first. If you are still stuck, the answers are all together in a block at the very bottom of the file — scroll down to it when you want it, and only then.
 
+Deal a few rounds after each checkpoint. Check the shoe count, the value under each card, an ace in a hand, and the dealer's stop at 17. These checks catch one small rule at a time.
+
 Right now the page does nothing. The felt is there and the chips are there, but the shoe is blank and no cards come out. The status line asks you to write the first function. That is on purpose.
 
 ## The rules of the game

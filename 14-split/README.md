@@ -8,6 +8,8 @@ The difference is in the folder. Project 13 was one file of 1203 lines. This is 
 
 **There is nothing to write in this project.** Every other project in this repository hands you empty functions. This one hands you a finished game and asks you to read it. The lesson is where the code went, and why.
 
+This project uses classic script tags. Shared names and script order are part of the lesson. `import` and `export` arrive in project 17.
+
 ## Why one file stops working
 
 Open `13-runner/runner.js` and scroll. It is a long way from the jump to the rooftops, and neither of them is near the saved score.

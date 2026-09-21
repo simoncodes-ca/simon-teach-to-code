@@ -93,7 +93,8 @@ let scores = [];
  * Hand back an array. The wiring checks that you did.
  *
  * Gentle hint: copy the list, put it in order, then take the first few.
- * Stronger hint: `return scores.slice().sort((a, b) => b.score - a.score).slice(0, TOP_HOW_MANY);`
+ * Stronger hint: copy before sorting. Sort by score from high to low,
+ *   then keep only the first `TOP_HOW_MANY` entries.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Start the server, open the page, and the board fills with the three
@@ -135,8 +136,8 @@ function sortedTop(scores) {
  *
  * Gentle hint: give up early on each thing that is wrong, and `return
  *   true` at the end.
- * Stronger hint: `if (sent === null || typeof sent !== 'object') return false;`
- *   then one line for the name and one for the score.
+ * Stronger hint: reject `null` and non-objects first. Then check for a
+ *   non-empty string name and a finite, non-negative score.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The Line panel on the page stops saying stub. Empty the Name box on
@@ -169,8 +170,8 @@ function isGoodScore(sent) {
  *
  * Gentle hint: push a tidy object, save, then hand back your own
  *   `sortedTop`.
- * Stronger hint: `scores.push({ name: sent.name.trim().slice(0, LONGEST_NAME), score: Math.round(sent.score) });`
- *   then `saveScores();` then `return sortedTop(scores);`
+ * Stronger hint: push trimmed, shortened text and a rounded number.
+ *   Save the list, then return `sortedTop(scores)`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Play a round and press Send. Your name appears on the board, and it

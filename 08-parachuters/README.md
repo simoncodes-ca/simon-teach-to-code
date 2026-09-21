@@ -40,6 +40,8 @@ Nine functions in `parachuters.js` are marked `// TODO`. Write them in file orde
 
 Press Start now. Planes cross the sky and drop nothing. That is on purpose.
 
+Test each new behaviour in order. Watch one trooper change from `falling` to `chute` to `walking`. Then fire one shell past the sky, hit a trooper, and check that the explosion grows before it fades.
+
 ## What the post does
 
 - The **sky** is a canvas, the same as the last two projects. The game paints all of it, sixty times a second.

@@ -20,6 +20,8 @@ Double-click `battleship.html` to play. After you change `battleship.js`, save t
 
 Inside `battleship.js` eleven functions are marked `// TODO`. Write them in file order, from top to bottom. Each one carries two hints: a gentle hint first, then a stronger one. Try the gentle hint first. The answers are all together in a block at the very bottom of the file — scroll down to it when you want it, and only then.
 
+Move across a chart before you place ships. The square label tests row and column order. Then place a ship at an edge, fire at an empty square, and fire at that same square again.
+
 Right now the page does nothing. Both charts are empty frames and the status line asks you to write the first function. That is on purpose.
 
 ## The rules of the game

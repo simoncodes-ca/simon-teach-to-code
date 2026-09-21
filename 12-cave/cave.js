@@ -161,7 +161,8 @@ let lives = START_LIVES;           // ships left
  * subtraction once and know exactly what it does.
  *
  * Gentle hint: take the camera away from the world position.
- * Stronger hint: `return { x: worldX - camera.x, y: ... };`
+ * Stronger hint: return an object with each world coordinate minus its
+ *   matching camera coordinate.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start. The cave and the ship appear in the window, and the
@@ -190,8 +191,8 @@ function toScreen(worldX, worldY) {
  *
  * Gentle hint: an `if`, an `else if` and an `else` for vx, then one
  *   line for thrust.
- * Stronger hint: `if (keys.left.isDown) ship.vx = -SIDE_SPEED;` and
- *   `ship.thrust = keys.up.isDown;`
+ * Stronger hint: choose negative speed for left, positive for right,
+ *   and zero otherwise. Copy the up key into `ship.thrust`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Hold the up arrow. The ship still hangs in the air, but a flame
@@ -234,8 +235,8 @@ function steerShip(keys) {
  * project 7. Both x and y.
  *
  * Gentle hint: change vy twice, clamp it, then move x and y.
- * Stronger hint: `if (ship.thrust) ship.vy -= THRUST * seconds;` then
- *   `ship.vy = Phaser.Math.Clamp(ship.vy, -TOP_SPEED, TOP_SPEED);`
+ * Stronger hint: add gravity first. Subtract engine force when thrusting,
+ *   clamp `vy`, then add velocity times seconds to x and y.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press an arrow key. The ship drops, and the engine holds it up. Fly
@@ -276,7 +277,8 @@ function flyShip(seconds) {
  * carries on.
  *
  * Gentle hint: two lines to aim, and a clamp on each one.
- * Stronger hint: `camera.x = Phaser.Math.Clamp(ship.x - WIDTH / 2, 0, WORLD_WIDTH - WIDTH);`
+ * Stronger hint: subtract half the window from each ship coordinate.
+ *   Clamp x to the world width and y to the world height.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The cave scrolls. The ship stays in the window wherever you fly, and
@@ -305,8 +307,8 @@ function aimCamera() {
  * Hand back true or false.
  *
  * Gentle hint: find the screen spot, then check four edges with `&&`.
- * Stronger hint: `return spot.x > -TILE && spot.x < WIDTH + TILE && ...`
- *   and the same two checks for y.
+ * Stronger hint: accept x between one tile before the left edge and one
+ *   tile after the right edge. Apply the same test to y.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Pictures drawn, on the rack, drops. It stops counting every picture
@@ -331,8 +333,8 @@ function isOnScreen(worldX, worldY) {
  *
  * Gentle hint: divide by TILE and round down, check the four edges,
  *   then compare with '#'.
- * Stronger hint: `const col = Math.floor(worldX / TILE);` then
- *   `if (col < 0 || row < 0 || col >= COLS || row >= ROWS) return true;`
+ * Stronger hint: floor both coordinates divided by `TILE`. Return true
+ *   outside the row and column limits, otherwise compare with `'#'`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Nothing crashes yet. But fly into the rock and watch the Corners on
@@ -365,8 +367,8 @@ function isRock(worldX, worldY) {
  *
  * Gentle hint: work out the four edges, then call `isRock` four times,
  *   joined with `||`.
- * Stronger hint: `return isRock(left, top) || isRock(right, top) || ...`
- *   and the two bottom corners.
+ * Stronger hint: use `isRock` for left and right at the top, then left
+ *   and right at the bottom. Join the four answers with `||`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Touch the rock and the ship breaks. You lose a ship, and the next one

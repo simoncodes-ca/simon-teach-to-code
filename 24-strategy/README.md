@@ -14,7 +14,7 @@ What you write this time is the enemy's commander. Seven functions and two tests
 
 **A plan is a list, and a commander walks it.**
 
-Open `catalogue.ts` and look at `RED_PLAN`. Ten lines, in order, and each line says "keep buying this until you have this many".
+Open `catalogue.ts` and look at `RED_PLAN`. Twelve lines sit in order. Each line says "keep buying this until you have this many".
 
 ```text
 { key: 'harvester', upTo: 3 }
@@ -84,7 +84,7 @@ Seven jobs are functions in `commander.ts`. Two jobs are tests in `commander.tes
 | 3 | `commander.ts` | `wantNext` | The Enemy card names what it is saving for |
 | 4 | `commander.test.ts` | Test: it saves up instead of buying something cheaper | A new red test in terminal 2 |
 | 5 | `commander.ts` | `spendStep` | The enemy starts spending. Its corner grows |
-| 6 | `commander.ts` | `wantsAttack` | Its orders flip between `massing` and `attack` |
+| 6 | `commander.ts` | `wantsAttack` | Its orders flip between `massing` (building strength) and `attack` |
 | 7 | `commander.ts` | `attackOrders` | The first wave rolls out |
 | 8 | `commander.test.ts` | Test: a game is over when a refinery is gone | Another red test |
 | 9 | `commander.ts` | `whoWon` | The game can end |
@@ -234,7 +234,7 @@ So any map works. Paint one in project 18's editor, copy the file into `maps/`, 
 ### Already written for you
 
 - Your ore run, your yard, your pathfinder and your tank brain, copied from the answer keys of projects 20 to 23.
-- `howMany`, which turns a catalogue key into a count. It asks your `countKind` about units and project 22's `isBuilt` about buildings, and it counts what is already on order as well. A rifleman takes four seconds, so a plan line for two would buy several if the queue did not count.
+- `howMany`, which turns a catalogue key into a count. It asks your `countKind` about units and project 22's `isBuilt` about buildings. It also counts items already on order. A rifleman takes four seconds, so a plan line for two would buy several if the queue did not count.
 - `foeOf`, which hands you the other side. `foeOf('red')` is `'blue'`.
 - `wrecked` and `armed`, from project 23.
 - `runCommander` in `game.ts`, which calls your functions every few seconds and hands the marching units their routes.

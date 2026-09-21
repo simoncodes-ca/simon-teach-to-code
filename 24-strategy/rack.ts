@@ -1,7 +1,7 @@
 /* =====================================================================
    rack.ts. File 11 of 12.
 
-   One job: everything you read on the page. The plate across the top,
+   One job: everything you read on the page. The summary across the top,
    the Forces card, the Build card, the Queue card, the Enemy card, the
    squad list, the list of maps, the line under the window, and the
    banner that comes down when somebody wins.
@@ -11,7 +11,7 @@
 
    Two cards are worth reading. The Forces card is one function of
    yours, `countKind`, asked six times, three times about each side. The
-   Enemy card is four wells, and every one of them is a word or a number
+   Enemy card is four fields, and every one of them is a word or a number
    your commander handed back. Nothing in this file works anything out
    for itself.
    ===================================================================== */
@@ -117,7 +117,7 @@ export function say(text: string): void {
 }
 
 
-/* --- The plate across the top --- */
+/* --- The summary across the top --- */
 
 export type PlateReport = {
   mapName: string;
@@ -322,7 +322,7 @@ export function showQueue(report: QueueReport): void {
 
 /* --- The Enemy card ---
 
-   Four wells, and all four of them are your commander thinking out
+   Four fields, and all four of them show your commander's decisions
    loud. Saving for is `wantNext`. Orders is `wantsAttack`. Marching is
    how many tanks `attackOrders` handed over. */
 

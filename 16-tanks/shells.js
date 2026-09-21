@@ -69,8 +69,8 @@ let shells = [];
  *
  * Gentle hint: a guard, then the aim, two steps, one `push`, and one
  *   line for the reload.
- * Stronger hint: `if (tank.reload > 0) return;` then
- *   `shells.push({ x: tank.x + barrel.x, y: ..., vx: speed.x, ... });`
+ * Stronger hint: return while reload is positive. Find aim, barrel, and
+ *   speed with the helpers, then push one shell object and reset reload.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Space. A glowing shell appears at the end of Blue's barrel,
@@ -108,9 +108,8 @@ function fireShell(tank) {
  *
  * Gentle hint: two halves. Each half is a move, then an `if` with
  *   three lines inside: take it back, turn round, count it.
- * Stronger hint: `if (isWallAt(shell.x, shell.y)) {` then
- *   `shell.x -= shell.vx * seconds;` `shell.vx = -shell.vx;`
- *   `shell.bounces += 1; }`
+ * Stronger hint: move x, test the wall, and undo x before flipping
+ *   `vx` and counting. Repeat the same steps for y and `vy`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The shells fly. They bounce off the blocks with a ping, and vanish
@@ -143,7 +142,8 @@ function moveShell(shell, seconds) {
  *
  * Gentle hint: one `if` for the owner rule, then one line that
  *   compares a distance with TANK_RADIUS.
- * Stronger hint: `if (shell.owner === tank.name && shell.bounces === 0) return false;`
+ * Stronger hint: reject the owner's shell only when its bounce count is
+ *   zero. Otherwise compare the shell-to-tank distance with the radius.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Shells burst when they reach a tank. Nobody loses any health yet.
@@ -171,7 +171,8 @@ function shellHitsTank(shell, tank) {
  *
  * Gentle hint: one line to take the health away with a floor at 0,
  *   and one `if` to wreck the tank.
- * Stronger hint: `tank.health = Math.max(0, tank.health - amount);`
+ * Stronger hint: subtract `amount` with `Math.max(0, ...)`. If health
+ *   reaches zero, set `tank.wrecked` to true.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Hits count. The health bars drop, the fourth hit wrecks a tank, and

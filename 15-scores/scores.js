@@ -136,8 +136,8 @@ let board = [];
  * Hand back whatever the server said. The wiring looks inside it.
  *
  * Gentle hint: two lines, and both of them start with `await`.
- * Stronger hint: `const response = await fetch(whereTheServerIs() + '/scores');`
- *   then `return await response.json();`
+ * Stronger hint: fetch the server's `/scores` path. Await the response,
+ *   then await its `json()` result and return that object.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Ask for the board. The Line panel lights up and the raw answer
@@ -175,8 +175,8 @@ async function getScores() {
  *
  * Gentle hint: clear it, deal with an empty list, then one row per
  *   score.
- * Stronger hint: `tableEl.textContent = '';` then
- *   `for (let i = 0; i < list.length; i += 1) tableEl.appendChild(makeRow(i + 1, list[i]));`
+ * Stronger hint: clear `tableEl`. For each item, call `makeRow` with a
+ *   one-based place and append the returned row.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The board fills with the three scores this project came with. That is
@@ -214,9 +214,8 @@ function showScores(list) {
  *
  * Gentle hint: the same two lines as `getScores`, with an object of
  *   three things in the middle of the first one.
- * Stronger hint: `const response = await fetch(whereTheServerIs() + '/scores', {`
- *   then `method: 'POST', headers: { 'Content-Type': 'application/json' },`
- *   then `body: JSON.stringify({ name: name, score: score }) });`
+ * Stronger hint: fetch `/scores` with method `'POST'`. Set the JSON
+ *   content type, stringify the name and score, then await the JSON reply.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Play a round and press Send my score. Your name arrives on the board,

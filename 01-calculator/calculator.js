@@ -11,12 +11,16 @@
    here, and this file is where all the thinking happens.
 
    A good order to work in:
-     1. showOnDisplay  — get a number onto the screen
-     2. pressDigit     — make the number keys work
-     3. pressOperator  — remember + - x /
-     4. pressEquals    — do the maths
-     5. pressClear     — start over
-     6. renderBuffer    — show the working out in the column
+     1. add the four memory values
+     2. showOnDisplay  — get a number onto the screen
+     3. renderBuffer   — show the working out in the column
+     4. pressDigit          — enter a digit
+     5. pressDecimal        — enter a decimal point
+     6. pressOperator       — remember + - x /
+     7. calculate           — do the maths
+     8. pressEquals         — show the answer
+     9. pressClear          — start over
+    10. init                — connect the controls
    ===================================================================== */
 
 
@@ -37,7 +41,10 @@
    --------------------------------------------------------------------- */
 
 const calculator = {
-  // your memory goes here
+  // TODO: add current, left, operator, and startNew.
+  // Gentle hint: current begins as '0'; the other two text values begin empty.
+  // Stronger hint: startNew begins true so the first digit replaces the zero.
+  // Stuck? The answer key is at the bottom of this file.
 };
 
 
@@ -65,7 +72,10 @@ const entered = [];
  * @param {string} value  what to show, for example '12' or '0'
  */
 function showOnDisplay(value) {
-  // TODO
+  // TODO: put value into the display element.
+  // Gentle hint: find the element whose id is 'display'.
+  // Stronger hint: give that element the value through its textContent.
+  // Stuck? The answer key is at the bottom of this file.
 }
 
 /**
@@ -94,7 +104,10 @@ function showOnDisplay(value) {
  * element.replaceChildren   (given no arguments, it empties the element)
  */
 function renderBuffer() {
-  // TODO
+  // TODO: rebuild the buffer from entered.
+  // Gentle hint: clear the buffer, then make one line for each item.
+  // Stronger hint: create a div, set its text, add buffer__line, and append it.
+  // Stuck? The answer key is at the bottom of this file.
 }
 
 
@@ -117,7 +130,10 @@ function renderBuffer() {
  * @param {string} digit  a single character, '0' through '9'
  */
 function pressDigit(digit) {
-  // TODO
+  // TODO: add this digit to the number being typed.
+  // Gentle hint: use calculator.current and calculator.startNew.
+  // Stronger hint: replace the starting zero or old answer; otherwise join the digit, then call showOnDisplay.
+  // Stuck? The answer key is at the bottom of this file.
 }
 
 /**
@@ -130,7 +146,10 @@ function pressDigit(digit) {
  * Look up: string.includes
  */
 function pressDecimal() {
-  // TODO
+  // TODO: add one decimal point when the current number has none.
+  // Gentle hint: treat a fresh number like pressDigit does, then inspect its text.
+  // Stronger hint: use includes('.') to reject a second point, then call showOnDisplay.
+  // Stuck? The answer key is at the bottom of this file.
 }
 
 /**
@@ -150,33 +169,10 @@ function pressDecimal() {
  * @param {string} operator  one of '+', '-', '*', '/'
  */
 function pressOperator(operator) {
-  // TODO
-}
-
-/**
- * The equals key was pressed. Work out the answer and show it.
- *
- * Think about:
- *   - what do you need in memory before this can work at all?
- *   - what should happen if the user presses = with nothing waiting?
- *   - after showing the answer, what should the next digit typed do?
- *
- * Do the actual arithmetic in calculate() below, not in here. This
- * function's job is deciding WHEN to calculate; that one's job is HOW.
- */
-function pressEquals() {
-  // TODO
-}
-
-/**
- * The clear key was pressed. Everything goes back to how it started.
- *
- * Think about: what counts as "everything"? The display, the memory,
- * and the buffer are three separate things. Missing one is the most
- * common bug in a calculator.
- */
-function pressClear() {
-  // TODO
+  // TODO: remember the number and the operator.
+  // Gentle hint: save the current text with entered.push before you start a new number.
+  // Stronger hint: if a new number has started, call pressEquals; otherwise replace the waiting operator, then call renderBuffer.
+  // Stuck? The answer key is at the bottom of this file.
 }
 
 /**
@@ -198,7 +194,53 @@ function pressClear() {
  * @returns {string}           the answer, ready to show
  */
 function calculate(left, operator, right) {
-  // TODO
+  // TODO: convert the two text values, then apply the chosen operator.
+  // Gentle hint: use a separate case for '+', '-', '*', and '/'.
+  // Stronger hint: use Number() for the inputs, guard division by zero, and use String() for each answer.
+  // Stuck? The answer key is at the bottom of this file.
+}
+
+/**
+ * The equals key was pressed. Work out the answer and show it.
+ *
+ * Think about:
+ *   - what do you need in memory before this can work at all?
+ *   - what should happen if the user presses = with nothing waiting?
+ *   - after showing the answer, what should the next digit typed do?
+ *
+ * Do the actual arithmetic in calculate() above, not in here. This
+ * function's job is deciding WHEN to calculate; that one's job is HOW.
+ */
+function pressEquals() {
+  // TODO: calculate only when a left value and operator are ready.
+  // Gentle hint: check the memory before calling calculate.
+  // Stronger hint: call calculate, save its answer with entered.push, then call showOnDisplay and renderBuffer.
+  // Stuck? The answer key is at the bottom of this file.
+}
+
+/**
+ * The clear key was pressed. Everything goes back to how it started.
+ *
+ * Think about: what counts as "everything"? The display, the memory,
+ * and the buffer are three separate things. Missing one is the most
+ * common bug in a calculator.
+ */
+function pressClear() {
+  // TODO: restore every piece of memory and both visible areas.
+  // Gentle hint: clear the calculator object, entered, display, and buffer.
+  // Stronger hint: use the same starting values as the memory answer key, then call showOnDisplay and renderBuffer.
+  // Stuck? The answer key is at the bottom of this file.
+}
+
+/** Set the calculator up when the page has finished loading. */
+function init() {
+  registerClickHandlers();
+  registerKeyHandler();
+
+  // TODO: put the calculator into its starting state.
+  // Gentle hint: use pressClear after the handlers are ready.
+  // Stronger hint: the clear action already knows how to reset memory and the page.
+  // Stuck? The answer key is at the bottom of this file.
 }
 
 /* ---------------------------------------------------------------------
@@ -306,13 +348,109 @@ function registerKeyHandler() {
   });
 }
 
-/** Set the calculator up when the page has finished loading. */
-function init() {
-  registerClickHandlers();
-  registerKeyHandler();
-
-  // TODO: put the calculator into its starting state.
-  // What should the display show before anything is pressed?
-}
-
 document.addEventListener('DOMContentLoaded', init);
+
+/* ---------------------------------------------------------------------
+   5. THE ANSWER KEY
+
+   Try the functions first. The key is here when you want to check one.
+   The memory comes first, then the functions in the order above.
+   ---------------------------------------------------------------------
+
+   --- calculator memory ---
+
+     current: '0',
+     left: '',
+     operator: '',
+     startNew: true
+
+   --- showOnDisplay(value) ---
+
+     document.getElementById('display').textContent = value;
+
+   --- renderBuffer() ---
+
+     const buffer = document.getElementById('buffer');
+     buffer.replaceChildren();
+     for (const item of entered) {
+       const line = document.createElement('div');
+       line.textContent = item;
+       line.classList.add('buffer__line');
+       if (item === '+' || item === '-' || item === '*' || item === '/') {
+         line.classList.add('buffer__line--operator');
+       }
+       buffer.append(line);
+     }
+
+   --- pressDigit(digit) ---
+
+     if (calculator.startNew || calculator.current === '0') {
+       calculator.current = digit;
+       calculator.startNew = false;
+     } else {
+       calculator.current += digit;
+     }
+     showOnDisplay(calculator.current);
+
+   --- pressDecimal() ---
+
+     if (calculator.startNew) {
+       calculator.current = '0';
+       calculator.startNew = false;
+     }
+     if (!calculator.current.includes('.')) calculator.current += '.';
+     showOnDisplay(calculator.current);
+
+   --- pressOperator(operator) ---
+
+     if (calculator.operator && calculator.startNew) {
+       calculator.operator = operator;
+       entered[entered.length - 1] = operator;
+       renderBuffer();
+       return;
+     }
+     if (calculator.operator && calculator.left !== '') pressEquals();
+     calculator.left = calculator.current;
+     calculator.operator = operator;
+     calculator.startNew = true;
+     entered.push(calculator.left, operator);
+     renderBuffer();
+
+   --- calculate(left, operator, right) ---
+
+     const a = Number(left);
+     const b = Number(right);
+     if (operator === '/' && b === 0) return 'Cannot divide by 0';
+     if (operator === '+') return String(a + b);
+     if (operator === '-') return String(a - b);
+     if (operator === '*') return String(a * b);
+     if (operator === '/') return String(a / b);
+     return '0';
+
+   --- pressEquals() ---
+
+     if (!calculator.operator || calculator.left === '') return;
+     const answer = calculate(calculator.left, calculator.operator, calculator.current);
+     calculator.current = answer;
+     calculator.left = '';
+     calculator.operator = '';
+     calculator.startNew = true;
+     entered.push(answer);
+     showOnDisplay(answer);
+     renderBuffer();
+
+   --- pressClear() ---
+
+     calculator.current = '0';
+     calculator.left = '';
+     calculator.operator = '';
+     calculator.startNew = true;
+     entered.length = 0;
+     showOnDisplay(calculator.current);
+     renderBuffer();
+
+   --- init() ---
+
+     pressClear();
+
+   --------------------------------------------------------------------- */

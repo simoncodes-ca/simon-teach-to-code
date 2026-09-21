@@ -117,7 +117,7 @@ export function takeNext(search: Search): Cell {
  * Stuck? The answer key is at the bottom of this file.
  *
  * Save the file. Move the mouse over the map. Small blue dots mark the
- * cells next door, and the Ways out well counts them. Try it beside
+ * cells next door, and the Ways out number counts them. Try it beside
  * the water.
  */
 export function neighbours(map: GameMap, cell: Cell): Cell[] {
@@ -264,7 +264,7 @@ export function findRoute(map: GameMap, start: Cell, goal: Cell, way: Way): Cell
  * Stuck? The answer key is at the bottom of this file.
  *
  * Save the file. Send a tank, then move the mouse over the cells the
- * search found. The Guess well says how far each one is from the goal.
+ * search found. The Guess number says how far each one is from the goal.
  */
 export function guess(from: Cell, to: Cell): number {
   // TODO: the steps across plus the steps down, both counted as positive numbers.
@@ -303,7 +303,7 @@ export function guess(from: Cell, to: Cell): number {
  *
  * Save the file. Press A* on the Search card. The search stops
  * spreading like a ripple, and heads for the goal. Watch the Looked at
- * well, then press Breadth-first and compare.
+ * number, then press Breadth-first and compare.
  */
 export function bestIndex(search: Search): number {
   // TODO: the index in the frontier with the smallest steps + guess. Ties go to fewer steps.

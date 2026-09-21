@@ -144,7 +144,7 @@ export function showCounts(map: GameMap | null): void {
 }
 
 
-/* --- The plate across the top --- */
+/* --- The summary across the top --- */
 
 export function showPlate(map: GameMap | null, changes: number): void {
   mapReadEl.textContent = map === null ? '—' : map.name;

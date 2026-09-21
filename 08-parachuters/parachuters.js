@@ -128,9 +128,9 @@ let aim = -Math.PI / 2;          // the angle the gun points, in radians. This i
  * Gentle hint: build the trooper object described up in the memory. It
  *   needs kind, x, y, w, h, vx, vy and state. Work out x from the
  *   plane's middle.
- * Stronger hint: `return { kind: 'trooper',
- *   x: plane.x + plane.w / 2 - TROOPER_W / 2, y: plane.y + plane.h,
- *   w: TROOPER_W, h: TROOPER_H, vx: 0, vy: 0, state: 'falling' };`
+ * Stronger hint: use the plane's middle for the trooper's middle. Put the
+ *   trooper below the plane, copy the two size constants, and start both
+ *   velocities at zero with state 'falling'.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start. Planes cross the sky and troopers appear under them.
@@ -176,10 +176,8 @@ function makeTrooper(plane) {
  *   (trooper.state === 'chute') { ... } else if (trooper.state ===
  *   'walking') { ... }`. Two lines in the first, one in each of the
  *   others.
- * Stronger hint: falling is `trooper.vy += GRAVITY * seconds;` then
- *   `trooper.y += trooper.vy * seconds;`. Chute is
- *   `trooper.y += CHUTE_SPEED * seconds;`. Walking is
- *   `trooper.x += towardsPost(trooper.x) * WALK_SPEED * seconds;`
+ * Stronger hint: falling changes vy before y. Chute changes y by the
+ *   fixed chute speed. Walking changes x by the post direction and speed.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The troopers drop now, and they keep dropping straight past the
@@ -213,10 +211,8 @@ function moveTrooper(trooper, seconds) {
  * Gentle hint: two `if` lines, each one checking the state and the
  *   height together with `&&`. Then `return trooper.state;` at the end
  *   for every other case.
- * Stronger hint: `if (trooper.state === 'falling' && trooper.y >
- *   CHUTE_AT) return 'chute';` then `if (trooper.state === 'chute' &&
- *   trooper.y + trooper.h >= GROUND) return 'walking';` then
- *   `return trooper.state;`
+ * Stronger hint: test the falling threshold first, then the feet against
+ *   the ground. Return the current state when neither change applies.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Chutes snap open halfway down and the troopers land on their feet and
@@ -248,8 +244,8 @@ function nextTrooperState(trooper) {
  *
  * Gentle hint: check the state first, then the distance. Use Math.abs
  *   so it works from either side.
- * Stronger hint: `return trooper.state === 'walking' &&
- *   Math.abs(trooper.x + trooper.w / 2 - POST.x) < REACH;`
+ * Stronger hint: combine a walking-state check with an absolute-distance
+ *   check between the trooper's middle and the post.
  * Stuck? The answer key is at the bottom of this file.
  *
  * A trooper who reaches you now takes a sandbag with him. Lose all
@@ -284,11 +280,8 @@ function reachedThePost(trooper) {
  * Gentle hint: start at the muzzle, then turn the angle into vx and vy
  *   with cosine and sine, each times BULLET_SPEED. That part is
  *   exactly project 7.
- * Stronger hint: `const start = muzzlePoint(angle);` then
- *   `return { kind: 'bullet', x: start.x - BULLET_W / 2,
- *   y: start.y - BULLET_H / 2, w: BULLET_W, h: BULLET_H,
- *   vx: Math.cos(angle) * BULLET_SPEED, vy: Math.sin(angle) *
- *   BULLET_SPEED, state: 'flying' };`
+ * Stronger hint: get the muzzle point, move back by half the shell size,
+ *   and use cosine and sine for its two velocities.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Click on the sky and a shell streaks out of the barrel in a straight
@@ -317,8 +310,8 @@ function makeBullet(angle) {
  *
  * Gentle hint: four comparisons joined by `||`, which means "or". One
  *   for the top, one for the bottom, one for each side.
- * Stronger hint: `return bullet.y < -40 || bullet.y > HEIGHT + 40 ||
- *   bullet.x < -40 || bullet.x > WIDTH + 40;`
+ * Stronger hint: check the shell against all four edge margins. Join the
+ *   four outside tests with ||.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Watch "Shells" on the rack. It climbed and stayed climbed. Now it
@@ -360,8 +353,8 @@ function bulletIsGone(bullet) {
  *
  * Gentle hint: four comparisons with `&&` between them. Compare each
  *   edge of a with the opposite edge of b.
- * Stronger hint: `return a.x < b.x + b.w && a.x + a.w > b.x &&
- *   a.y < b.y + b.h && a.y + a.h > b.y;`
+ * Stronger hint: write four overlap tests: left, right, top, and bottom.
+ *   Join them with && so every edge pair must overlap.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Shells knock troopers out of the sky now, and a plane is worth five.
@@ -395,8 +388,8 @@ function hitsSprite(a, b) {
  *
  * Gentle hint: one return, with the four parts above in it. Start the
  *   radius at about 14 so the first frame is already visible.
- * Stronger hint: `return { kind: 'boom', x: x, y: y, radius: 14,
- *   life: BOOM_LIFE };`
+ * Stronger hint: return an object with kind 'boom', the given point, the
+ *   small starting radius, and the BOOM_LIFE constant.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Every hit leaves a ring of fire behind now. The rings never go out,
@@ -427,8 +420,8 @@ function makeBoom(x, y) {
  *
  * Gentle hint: add to the radius, take away from the life. Both are
  *   multiplied by `seconds`.
- * Stronger hint: `boom.radius += BOOM_GROWTH * seconds;` then
- *   `boom.life -= seconds;`
+ * Stronger hint: increase radius by growth times seconds. Decrease life
+ *   by seconds so the wiring can remove it at zero.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The explosions bloom and fade. Four kinds of thing are now moving in

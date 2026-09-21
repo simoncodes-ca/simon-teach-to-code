@@ -247,7 +247,7 @@ Try typing a `?` into one row, then load that map in the editor. Your `linesToMa
 
 - The table in `terrain.ts`, and every picture it names.
 - The type `GameMap` at the top of `map.ts`.
-- The server, and the shape check it does before your `linesToMap` sees anything.
+- The server, and its check that incoming data has the expected fields.
 - The palette, which builds one button per line of the table.
 - Painting with the mouse, and picking with the keys.
 - Four of the six tests.

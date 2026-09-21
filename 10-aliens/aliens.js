@@ -124,8 +124,8 @@ let marchDir = 1;                // which way the block is marching. 1 is right,
  * at the edge of the screen, so you never have to check.
  *
  * Gentle hint: an `if`, an `else if`, and an `else`.
- * Stronger hint: `if (keys.left.isDown) ship.setVelocityX(-SHIP_SPEED);`
- *   then the same for right, then `else ship.setVelocityX(0);`
+ * Stronger hint: check left first, right second, and set zero speed in
+ *   the final `else` branch.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Start, then hold an arrow key. The ship flies along the deck
@@ -150,9 +150,8 @@ function steerShip(ship, keys) {
  *
  * Gentle hint: three lines. `bolts.create(...)`, then
  *   `setVelocityY`, then `return`.
- * Stronger hint: `const bolt = bolts.create(ship.x, ship.y - 26,
- *   'bolt');` then `bolt.setVelocityY(-BOLT_SPEED);` then
- *   `return bolt;`
+ * Stronger hint: create at the ship's x and 26 pixels above its y.
+ *   Set upward speed, then return the new bolt.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Tap the space bar and a bolt streaks up the screen. It has nothing
@@ -199,10 +198,8 @@ function fireBolt(scene, ship) {
  *
  * Gentle hint: a `for` loop over rows, with a `for` loop over columns
  *   inside it. Two lines in the middle.
- * Stronger hint: `for (let row = 0; row < rows; row += 1) {` then
- *   `for (let column = 0; column < COLUMNS; column += 1) {` then
- *   `const alien = aliens.create(BLOCK_X + column * GAP_X, BLOCK_Y +
- *   row * GAP_Y, 'alien-a');` and `alien.play('wiggle');`
+ * Stronger hint: the outer loop counts rows. The inner loop counts
+ *   columns. Create at the row and column gaps, then play `'wiggle'`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The swarm appears, in neat rows, wiggling. It does not move yet, and
@@ -261,10 +258,9 @@ function buildWave(scene, rows) {
  * Gentle hint: work out the speed, loop over the aliens and move each
  *   one, then ask `blockAtEdge()` and, if it says true, turn and drop
  *   them in a second loop.
- * Stronger hint: `for (const alien of aliens.getChildren()) alien.x +=
- *   marchDir * speed * seconds;` then `if (blockAtEdge()) { marchDir =
- *   -marchDir; for (const alien of aliens.getChildren()) alien.y +=
- *   STEP_DOWN; }`
+ * Stronger hint: move every child by direction, speed, and seconds.
+ *   If the block reaches an edge, reverse direction and move every child
+ *   down by `STEP_DOWN`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The swarm marches, turns at both walls, and comes down a step each
@@ -294,9 +290,8 @@ function marchAliens(seconds) {
  *
  * Gentle hint: four lines. Pick an alien, make a bomb below him, set
  *   its velocity, return it.
- * Stronger hint: the two lines above, then `const bomb =
- *   bombs.create(alien.x, alien.y + 22, 'bomb');` then
- *   `bomb.setVelocityY(BOMB_SPEED);` then `return bomb;`
+ * Stronger hint: choose one child by a random list index. Create below
+ *   it, set downward speed, and return the bomb.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Bombs start falling out of the swarm. They go straight through your
@@ -325,9 +320,8 @@ function alienFires(scene) {
  * function name reads.
  *
  * Gentle hint: two lines, both `scene.physics.add.overlap(...)`.
- * Stronger hint: `scene.physics.add.overlap(bolts, aliens,
- *   boltHitsAlien);` and `scene.physics.add.overlap(bombs, ship,
- *   bombHitsShip);`
+ * Stronger hint: register a bolt-to-alien overlap and a bomb-to-ship
+ *   overlap. Use the two hit callbacks already given.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Aliens blow up when you hit them, and a bomb that reaches your ship
@@ -365,9 +359,8 @@ function watchForHits(scene) {
  *
  * Gentle hint: subtract one, clear the bombs, then an `if` with a
  *   `return` in it, then the respawn.
- * Stronger hint: `lives -= 1;` then `bombs.clear(true, true);` then
- *   `if (lives <= 0) { gameOver(); return; }` then
- *   `respawnShip(scene);`
+ * Stronger hint: reduce lives and clear every bomb. If no lives remain,
+ *   end and return. Otherwise call `respawnShip`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The ships on the rack go out one at a time, a new ship flashes in
@@ -405,7 +398,8 @@ function loseLife(scene) {
  *
  * Gentle hint: the guard first, then `wave += 1`, then the rows sum,
  *   then `startWave`.
- * Stronger hint: all four lines are written above, in order.
+ * Stronger hint: guard against living aliens, increase `wave`, calculate
+ *   rows with the cap, then call `startWave`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Clear the swarm and a bigger one arrives. The game is finished:

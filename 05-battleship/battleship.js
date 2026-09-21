@@ -81,8 +81,8 @@ let enemyAim = null;        // the square the enemy is about to fire at
  *
  * Gentle hint: you are building a list of lists. The outer loop makes
  *   one row at a time. The inner loop fills that row before it is added.
- * Stronger hint: inside the outer loop, start with `const row = [];`
- *   then push `fill` into it SIZE times, then push `row` onto `rows`.
+ * Stronger hint: inside the outer loop, make a fresh row. Add the same
+ *   fill value SIZE times, then add that completed row to rows.
  *   Making the row inside the loop matters — one row made outside would
  *   be the same row ten times over, and changing one square would change
  *   a whole column.
@@ -111,8 +111,8 @@ function makeGrid(fill) {
  * Gentle hint: COLUMNS is a piece of text, and you can pick one letter
  *   out of it by position, exactly the way you pick one item out of a
  *   list. Row 0 has to come out as 1.
- * Stronger hint: joining text to a number with + turns the number into
- *   text, which is what you want here.
+ * Stronger hint: read one letter from COLUMNS, change the zero-based row
+ *   to a one-based number, then join the two pieces.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The brass plate at the top right shows the square under your cursor.
@@ -137,9 +137,8 @@ function cellName(row, col) {
  *
  * Gentle hint: one loop that runs ship.length times. Each time round,
  *   one of row or col moves on by one and the other stays put.
- * Stronger hint: with `for (let i = 0; i < ship.length; i += 1)`, the
- *   square across is { row: row, col: col + i } and the square down is
- *   { row: row + i, col: col }.
+ * Stronger hint: count from zero to one less than the ship length. Add
+ *   the counter to col for across, or to row for down.
  * Stuck? The answer key is at the bottom of this file.
  *
  * As soon as this works, move the mouse over your own chart. A ghost of
@@ -224,9 +223,8 @@ function placeShip(sea, ship, cells) {
  * Gentle hint: the random-number pattern is the one you shuffled the
  *   deck with in blackjack. For the direction you want true or false,
  *   which is a different question: Math.random() < 0.5.
- * Stronger hint: build the squares with shipCells, ask canPlace about
- *   them, and if the answer is yes call placeShip and set placed to true
- *   so the trying stops.
+ * Stronger hint: choose coordinates and a direction inside the retry
+ *   loop. Build cells, test them, and stop trying after a legal placement.
  * Stuck? The answer key is at the bottom of this file.
  *
  * This is also how the enemy fleet gets to sea, so until it works there
@@ -259,8 +257,8 @@ function placeFleetAtRandom(sea) {
  *
  * Gentle hint: an untouched square holds '', an empty piece of text.
  *   A square with no ship holds null.
- * Stronger hint: `return` leaves the function at once, so each case is
- *   one or two lines and none of them needs an `else`.
+ * Stronger hint: check an old shot first. Then separate an empty square
+ *   from a ship square, recording the result before returning it.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Order matters here the same way it did when blackjack settled a round.
@@ -283,9 +281,8 @@ function fireAt(sea, row, col) {
  *
  * Gentle hint: you have to look at all 100 squares, so this is a loop
  *   inside a loop — the same shape as makeGrid.
- * Stronger hint: `sea.ships[row][col] === ship.name` and
- *   `sea.shots[row][col] === 'hit'` both have to be true of a square
- *   before you count it.
+ * Stronger hint: count a square only when its ship name matches and its
+ *   shot grid says it was hit. Compare the count with the ship length.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Counting is safer here than checking that no square is left unhit. A
@@ -309,8 +306,8 @@ function isSunk(sea, ship) {
  *
  * Gentle hint: walk FLEET and ask isSunk about each ship. One ship still
  *   afloat is enough to make the answer false.
- * Stronger hint: this is the same shape as canPlace — return false from
- *   inside the loop, and true after it.
+ * Stronger hint: inspect each ship in FLEET. Stop with false when one is
+ *   not sunk; return true only after every ship passes.
  * Stuck? The answer key is at the bottom of this file.
  *
  * This is what ends the game. Sink all five enemy ships and the plaque
@@ -335,9 +332,8 @@ function allSunk(sea) {
  *
  * Gentle hint: the same random pattern as placeFleetAtRandom, but you
  *   are looking for an empty square instead of room for a ship.
- * Stronger hint: `return { row: row, col: col };` from inside the loop
- *   the moment you find one. Returning leaves the function, so there is
- *   nothing to keep track of.
+ * Stronger hint: choose random coordinates inside the retry loop. Return
+ *   the first pair whose shot square still holds the empty text.
  * Stuck? The answer key is at the bottom of this file.
  *
  * A real opponent would hunt around its last hit. This one does not, and
@@ -374,8 +370,8 @@ function enemyChoice(sea) {
  * Gentle hint: `takeShot`, in the wiring below, is your half of exactly
  *   this and is already written. Read it first — this is the same four
  *   jobs with the seas the other way round.
- * Stronger hint: `return` after finish('enemy') is what stops jobs 3 and
- *   4 both running. Without it the game ends and then hands you a turn.
+ * Stronger hint: finish the enemy win before changing back to your turn.
+ *   Exit immediately after that win so the later jobs cannot run.
  * Stuck? The answer key is at the bottom of this file.
  *
  * enemyChoice never picks a square twice, so this one never has to deal

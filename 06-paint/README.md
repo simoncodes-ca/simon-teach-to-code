@@ -30,6 +30,8 @@ Each one gives you two hints. Read the gentle hint first. Read the stronger hint
 
 The paper is blank right now. It stays blank however hard you press. That is on purpose.
 
+Work in short checkpoints. First make one dot. Then drag a line. Next test undo, redo, clear, and Save. If a stroke appears in the wrong place, inspect `canvasPoint()` before changing the drawing code.
+
 ## What the bench does
 
 The **tin** holds ten pans of paint and four nibs. Pick a pan and a nib. The Brush panel above the tin then shows the exact stroke you are about to make.

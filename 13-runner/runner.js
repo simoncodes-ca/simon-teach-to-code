@@ -130,7 +130,8 @@ const RECORD_KEY = 'rooftop-run';
  *
  * Gentle hint: start at START_SPEED, add a little for every pixel run,
  *   then put a lid on the answer.
- * Stronger hint: `return Math.min(START_SPEED + distance * SPEED_GROWTH, TOP_SPEED);`
+ * Stronger hint: calculate the start speed plus growth, then pass that
+ *   value and `TOP_SPEED` to `Math.min`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press Enter. The runner sets off, the rooftop scrolls past, and the
@@ -161,7 +162,8 @@ function runSpeed(distance) {
  *
  * Gentle hint: check `runner.onRoof` first, and do nothing if he is in
  *   the air.
- * Stronger hint: `if (!runner.onRoof) return;` then the one line above.
+ * Stronger hint: return when `runner.onRoof` is false. Otherwise assign
+ *   the negative jump speed to `runner.vy`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Press the up arrow. He jumps, the In the air lamp comes on, and a
@@ -200,8 +202,8 @@ function startJump() {
  *
  * Gentle hint: work out the seconds first, add a random extra, then
  *   multiply the lot by `runSpeed(distance)`.
- * Stronger hint: `const seconds = Math.max(MIN_GAP_TIME, START_GAP_TIME - distance * GAP_QUICKEN);`
- *   then `return runSpeed(distance) * (seconds + Math.random() * GAP_SPREAD);`
+ * Stronger hint: use `Math.max` for the minimum seconds. Add a random
+ *   extra, then multiply the seconds by `runSpeed(distance)`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Gap on the rack stops showing a dash and starts showing a number
@@ -240,8 +242,8 @@ function nextGap(distance) {
  *
  * Gentle hint: one line to pick a kind, then one object with five
  *   things in it.
- * Stronger hint: `const kind = Phaser.Utils.Array.GetRandom(kindsAllowed(distance));`
- *   then `return { kind: kind.name, x: worldX, y: GROUND_Y - kind.h / 2, w: kind.w, h: kind.h };`
+ * Stronger hint: choose from `kindsAllowed(distance)`. Return its name,
+ *   world x, roof y, width, and height in one object.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Kind on the rack stops showing a dash and starts naming a real
@@ -279,8 +281,8 @@ function pickObstacle(worldX, distance) {
  * starts, so the first rooftops are ready before you see them.
  *
  * Gentle hint: an `if` that gives up early, then two lines.
- * Stronger hint: `if (builtTo > whereTheWindowEnds() + AHEAD) return;`
- *   then `builtTo += nextGap(distance);`
+ * Stronger hint: return while `builtTo` is ahead of the window plus
+ *   `AHEAD`. Otherwise add `nextGap(distance)` and add one obstacle.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The rooftops fill up with crates, and the run becomes a game.
@@ -308,8 +310,8 @@ function growTheWorld() {
  * backwards and every list since has done the same.
  *
  * Gentle hint: a backwards loop, one `if` about x, and `removeObstacle`.
- * Stronger hint: `for (let i = obstacles.length - 1; i >= 0; i -= 1) {`
- *   then `if (obstacles[i].x < whereTheWindowStarts() - BEHIND) removeObstacle(i);`
+ * Stronger hint: count down from the last index. Remove an obstacle when
+ *   its x is left of the window start minus `BEHIND`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Obstacles in memory stops climbing and settles at about eight.
@@ -348,8 +350,8 @@ function forgetOldObstacles() {
  * `runs` in it, whatever happens.
  *
  * Gentle hint: read the text, deal with `null` first, then parse it.
- * Stronger hint: `const saved = localStorage.getItem(RECORD_KEY);` then
- *   `if (saved === null) return { best: 0, runs: 0 };`
+ * Stronger hint: read `RECORD_KEY`. Return zero values for `null`, or
+ *   parse the saved text and return the object.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Best on the plate stops showing a dash. It still says 0, because
@@ -375,7 +377,8 @@ function loadRecord() {
  * `loadRecord` never looks.
  *
  * Gentle hint: one line. Turn it into text, and set it under the key.
- * Stronger hint: `localStorage.setItem(RECORD_KEY, JSON.stringify(record));`
+ * Stronger hint: stringify `record`, then store that text under
+ *   `RECORD_KEY` with `localStorage.setItem`.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Beat your best, then press the refresh button in the browser. The

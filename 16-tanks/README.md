@@ -113,6 +113,8 @@ These all work the same way here. Read `01-calculator/README.md` through `15-sco
 
 Three things arrive already written. The map and the four-corner check are given, because projects 11 and 12 made you write both. The script tags are given, because project 14 was about them.
 
+The tank picture can turn, but its collision box stays square and upright. `blocked(tank)` checks that fixed box against blocks and the other tank.
+
 ### Deciding first, or moving first
 
 Two projects, two ways to stop at a wall.

@@ -1,7 +1,7 @@
 /* =====================================================================
    rack.ts. File 9 of 10.
 
-   One job: everything you read on the page. The plate across the top,
+   One job: everything you read on the page. The summary across the top,
    the Build card, the Queue card, the Refinery card, the squad list,
    the list of maps, and the line under the window.
 
@@ -92,7 +92,7 @@ export function say(text: string): void {
 }
 
 
-/* --- The plate across the top --- */
+/* --- The summary across the top --- */
 
 export function showPlate(mapName: string, credits: number, units: number): void {
   write(mapReadEl, mapName);
@@ -186,7 +186,7 @@ export function showCatalogue(verdicts: (Verdict | undefined)[]): void {
 
 /* --- The Queue card ---
 
-   One docket for each thing waiting, front first. The front one has a
+   One queue row for each thing waiting, front first. The front one has a
    bar, because it is the only one anybody is working on. */
 
 export type QueueRow = {

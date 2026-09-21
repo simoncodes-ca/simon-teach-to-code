@@ -36,6 +36,8 @@ Nine functions in `balloons.js` are marked `// TODO`. Write them in file order, 
 
 Press Start now. Nothing rises. That is on purpose.
 
+Check one rule at a time. First watch a balloon rise. Then fire a dart straight up and watch its arc. Finally pop a balloon, let one escape, and press Play again.
+
 ## What the stall does
 
 The **sky** is a canvas, the same as the paper in project 6. The cannon, the balloons and the darts are all painted on it, sixty times a second.

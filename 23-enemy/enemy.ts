@@ -82,7 +82,7 @@ export function wrecked(unit: Unit): boolean {
  *
  * Save the file. Pick one of your tanks. A faint line reaches from it
  * to every red tank on the map, with the distance written along it, and
- * the Nearest red well fills in. Drive about and watch the numbers move.
+ * the Nearest red number fills in. Drive about and watch the numbers move.
  * That is your ruler, and the next eight jobs are measured with it.
  */
 export function farApart(a: Unit, b: Unit): number {
@@ -297,7 +297,7 @@ export function nextPost(unit: Unit): Cell {
  * **The order of c and d is the hour that goes into this project.**
  *
  * GUN_RANGE is 130 and SEE_RANGE is 250. So anybody close enough to
- * shoot is also close enough to see — every single time, with no
+ * shoot is also close enough to see every time, with no
  * exceptions. That means asking `chasing` before `attacking` is not a
  * near miss. It is a red tank that drives at you and never, ever fires,
  * because by the time it is close enough to shoot, the answer 'chasing'

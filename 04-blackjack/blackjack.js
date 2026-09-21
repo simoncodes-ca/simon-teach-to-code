@@ -72,9 +72,8 @@ const DEALER_STANDS_ON = 17; // the dealer takes cards until it reaches this
  *
  * Gentle hint: you need every combination of a suit and a rank. One loop
  *   can only walk through one list, so you need a loop inside a loop.
- * Stronger hint: `for (const suit of SUITS)` on the outside, and
- *   `for (const rank of RANKS)` on the inside. Inside both, build one
- *   card object and cards.push(...) it onto the end.
+ * Stronger hint: nest one loop inside the other. The inner loop should
+ *   make one object with the current suit and rank, then add it to cards.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The moment this works the ribbon under the shoe draws one tick per
@@ -119,9 +118,8 @@ function renderShoe() {
  *
  * Gentle hint: Math.random() gives a decimal between 0 and 1.
  *   Math.floor(Math.random() * n) gives a whole number from 0 to n - 1.
- * Stronger hint: to swap two things you need a third box to hold one of
- *   them for a moment, or the first one is lost:
- *     const keep = cards[i]; cards[i] = cards[j]; cards[j] = keep;
+ * Stronger hint: keep one card in a temporary variable while you exchange
+ *   the two array positions. Walk backwards so each card gets one chance.
  * Stuck? The answer key is at the bottom of this file.
  *
  * You can see this one work. The ribbon shows the deck's order: four
@@ -145,9 +143,8 @@ function shuffleDeck(cards) {
  *
  * Gentle hint: `pop` takes the last item off an array and gives it back
  *   to you. It removes it — that is exactly what you want here.
- * Stronger hint: one line, `return deck.pop();`, and the `if` above it
- *   is already written so an empty deck hands back nothing instead of
- *   breaking.
+ * Stronger hint: remove the final array item and use that removed item as
+ *   the function's result. The guard above handles an empty deck.
  * Stuck? The answer key is at the bottom of this file.
  *
  * Until this works the felt stays bare: startRound asks for four cards
@@ -186,7 +183,8 @@ function cardValue(card) {
  *
  * Gentle hint: `for (const card of hand)` walks a hand one card at a
  *   time. Use cardValue — you have already written it.
- * Stronger hint: `total = total + cardValue(card);` inside the loop.
+ * Stronger hint: start at zero, then replace total with its old value plus
+ *   the value of the card on each pass.
  * Stuck? The answer key is at the bottom of this file.
  *
  * The dealer's first card is face up and the second is face down, so
@@ -247,8 +245,9 @@ function handTotal(hand) {
  *
  * Gentle hint: this function changes one variable and nothing else. No
  *   `return`, no `if`.
- * Stronger hint: `holeHidden` is true while the card is hidden, so
- *   turning it over means setting it to false.
+ * Stronger hint: change the flag from its hidden value to its revealed
+ *   value. `revealHoleCard` changes the flag, and `render` updates the
+ *   cards and totals.
  * Stuck? The answer key is at the bottom of this file.
  *
  * handleStand calls this the moment you stand, and render animates the

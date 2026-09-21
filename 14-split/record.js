@@ -5,8 +5,8 @@
    when the page opens, and writes it down at the end of a run.
 
    No other file says the word localStorage. If the saved score ever
-   goes wrong, this is the only file you open, and it is forty lines
-   long. That is the whole argument for splitting, in one file.
+   goes wrong, this is the only file you open, and its 63 lines hold
+   the whole story. That is the whole argument for splitting, in one file.
    ===================================================================== */
 
 /* The name the browser files the record under. It stays 'rooftop-run',

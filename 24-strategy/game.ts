@@ -1146,7 +1146,7 @@ function queueReport(): { making: string; wait: number | null; rows: QueueRow[] 
   };
 }
 
-/* The Enemy card. Four wells, and every one of them is your commander
+/* The Enemy card. Four fields, and every one of them is your commander's
    saying what it is thinking. */
 function enemyReport(): { credits: number; wants: string; orders: string; marching: number | undefined } {
   const base = baseOf('red');

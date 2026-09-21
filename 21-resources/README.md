@@ -176,7 +176,7 @@ Measured in Chrome, with the answer key filled in, from the moment the map appea
 
 One patch holds 240 ore. A harvester carries 100, digs 25 a second, and tips 60 a second. So one full load is four seconds of digging and under two seconds of tipping, and everything else in that minute is driving.
 
-River Mine keeps all its ore on the far side of a river, and there is one bridge. The run still works, because `findRoute` finds the bridge. It is slower, and the Ore a minute well is where you see it.
+River Mine keeps all its ore on the far side of a river, and there is one bridge. The run still works, because `findRoute` finds the bridge. It is slower, and the Ore a minute number shows that difference.
 
 Watch what the six of them do. They all head for the same patch, because they all ask `nearestOre` from the same place at the same time. Nothing tells a harvester that another one is already on its way. That is a real limit, and it is in "try this next".
 

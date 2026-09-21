@@ -505,7 +505,7 @@ function playSearch(seconds: number): void {
   }
 }
 
-/* The four wells on the Search card. */
+/* The four numbers on the Search card. */
 function searchResult(): string {
   if (shownStep === 'found') return 'found';
   if (shownStep === 'stuck') return 'no route';

@@ -147,7 +147,7 @@ export function fullness(part: number, whole: number): number {
  * Stronger hint: `if (!isInside(field.map, cell.col, cell.row)) return 0;`
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. Move the mouse over the map. The Ore well says how
+ * Save the file. Move the mouse over the map. The Ore number says how
  * much is left in that cell, and every patch shows its number.
  */
 export function oreAt(field: OreField, cell: Cell): number {
@@ -175,7 +175,7 @@ export function oreAt(field: OreField, cell: Cell): number {
  *   far < bestFar`.
  * Stuck? The answer key is at the bottom of this file.
  *
- * Save the file. Move the mouse over the map. The Nearest patch well
+ * Save the file. Move the mouse over the map. The Nearest patch number
  * names the closest patch to the mouse, and an amber ring marks it.
  */
 export function nearestOre(field: OreField, from: Cell): Cell | null {

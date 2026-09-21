@@ -32,7 +32,8 @@ A\* (say "A star") takes the cell that looks best. For each cell it adds two num
 total = steps from the start + guess to the goal
 ```
 
-The cell with the smallest total comes out first. So the search heads towards the goal, and only spreads out when something is in the way.
+The cell with the smallest total comes out first. The search heads towards the goal.
+It spreads out only when something is in the way. If totals tie, it uses fewer steps first.
 
 Both ways find a route of the same length. A\* usually looks at far fewer cells to find it. Press the two buttons on the Search card and watch the Looked at number.
 
@@ -67,7 +68,7 @@ Seven jobs are functions in `paths.ts`. Two jobs are tests in `paths.test.ts`. D
 | 4 | `paths.ts` | `routeBack` | When the search finds the goal, an orange line draws the route |
 | 5 | `paths.test.ts` | Test: no route across a river with no bridge | A new red test in terminal 2 |
 | 6 | `paths.ts` | `findRoute` | The tanks drive along their routes, round the rock and the water |
-| 7 | `paths.ts` | `guess` | The Guess and Total wells fill in under the mouse |
+| 7 | `paths.ts` | `guess` | The Guess and Total numbers fill in under the mouse |
 | 8 | `paths.test.ts` | Test: A\* finds as short a route, and looks at fewer cells | A new red test in terminal 2 |
 | 9 | `paths.ts` | `bestIndex` | The A\* button works. The search heads straight for the goal |
 
