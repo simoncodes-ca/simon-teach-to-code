@@ -179,6 +179,18 @@ It counts guns and not tanks, so three riflemen are a wave. That is `armed` doin
 
 `ATTACK_EDGE` is its nerve. At 1 it attacks an even fight and trades its tanks away two at a time. At 2 it waits for a war it will never get, because you are building tanks as fast as it is.
 
+### The head start
+
+`HEAD_START` is 30. The enemy does nothing for the first thirty seconds of a map: no digging, no buying, no orders. Its harvesters stand by its refinery and wait, and yours have the field to themselves.
+
+That is there because the commander is quicker than you are and always will be. It never misclicks, never leaves a tank in a corner, and never has to read the Build card to remember what a war factory costs. Thirty seconds is about two loads of ore and a power plant — enough to get your hand in. Put it to 0 for the fight without it, and up if you are practising an opening.
+
+It is the honest dial, and two things had to be measured before it worked.
+
+`THINK_EVERY` is how often the commander decides, and turning it from 1 up to 3 moved its win by three seconds. It is waiting for credits, not for its next think, so a slow thinker with money is not slow.
+
+Then letting its harvesters dig through the head start moved its win by thirteen seconds instead of the whole of it, because it banked every credit and spent the lot the moment it woke. A sleeping side has to stop mining too, or it is not asleep. That is the line in `takeNextJob` that checks `asleep`.
+
 ### Both maps are fair, and here is how
 
 Turn either map through half a turn and you get the same map back. Your corner and the enemy's hold the same ground, the same ore and the same room to build.
@@ -193,13 +205,13 @@ A reading taken mid-second can differ by one load, because one harvester tips it
 
 Measured in Chrome with the answer key, on Twin Yards.
 
-**Nobody plays blue.** The enemy bought a fourth harvester, a power plant, a barracks, two riflemen to watch its ore, a war factory and two tanks. Then it marched with everything but one guard and wrecked the undefended refinery. The game ended at 2 minutes 17 seconds with `You lost`.
+**Nobody plays blue.** The enemy sat still for its thirty-second head start, then bought a fourth harvester, a power plant, a barracks, two riflemen to watch its ore, a war factory and two tanks. Then it marched with everything but one guard and wrecked the undefended refinery. The game ended at 2 minutes 54 seconds with `You lost`. With `HEAD_START` at 0 the same run ends at 2 minutes 17 seconds, which is what that dial is worth.
 
-**Blue feeds its army in a few at a time.** Played by a script on the enemy's own plan, sending whatever it had as soon as it had four: the first three died at the enemy's corner, the second wave died on its way, and the refinery fell at 2 minutes 30 seconds. Aiming the waves at the enemy ore field instead made no difference, because the waves were too small to get there.
+**Blue feeds its army in a few at a time.** Measured with `HEAD_START` at 0, played by a script on the enemy's own plan, sending whatever it had as soon as it had four: the first three died at the enemy's corner, the second wave died on its way, and the refinery fell at 2 minutes 30 seconds. Aiming the waves at the enemy ore field instead made no difference, because the waves were too small to get there.
 
 That is the game in one sentence: **a wave of four is not a wave.** Riflemen are 200 credits and four seconds, so the cheapest way to make a wave big enough is to build some.
 
-**A rifleman rush.** A barracks, no war factory, and everything spent on infantry: seven of them reached the enemy corner at about a minute. The two riflemen the enemy keeps at home held them long enough for its first tank to roll out, and the game ended at 5 minutes 15 seconds with `You lost`. Move the two infantry lines of `RED_PLAN` down below the war factory and the enemy has nothing at all at home when that rush arrives. The plan is the whole difference, and it is twelve lines of data.
+**A rifleman rush.** Measured with `HEAD_START` at 0 as well. A barracks, no war factory, and everything spent on infantry: seven of them reached the enemy corner at about a minute. The two riflemen the enemy keeps at home held them long enough for its first tank to roll out, and the game ended at 5 minutes 15 seconds with `You lost`. Move the two infantry lines of `RED_PLAN` down below the war factory and the enemy has nothing at all at home when that rush arrives. The plan is the whole difference, and it is twelve lines of data.
 
 ### The order of the questions in spendStep
 
@@ -222,10 +234,10 @@ So any map works. Paint one in project 18's editor, copy the file into `maps/`, 
 ### Already written for you
 
 - Your ore run, your yard, your pathfinder and your tank brain, copied from the answer keys of projects 20 to 23.
-- `howMany`, which turns a catalogue key into a count. It asks your `countKind` about units and project 22's `isBuilt` about buildings, and it counts what is already on order as well. A rifleman takes four seconds and the commander decides every second, so a plan line for two would buy five if the queue did not count.
+- `howMany`, which turns a catalogue key into a count. It asks your `countKind` about units and project 22's `isBuilt` about buildings, and it counts what is already on order as well. A rifleman takes four seconds, so a plan line for two would buy several if the queue did not count.
 - `foeOf`, which hands you the other side. `foeOf('red')` is `'blue'`.
 - `wrecked` and `armed`, from project 23.
-- `runCommander` in `game.ts`, which calls your functions once a second and hands the marching tanks their routes.
+- `runCommander` in `game.ts`, which calls your functions every few seconds and hands the marching units their routes.
 - Four of the six tests.
 
 ### Finding your mistakes

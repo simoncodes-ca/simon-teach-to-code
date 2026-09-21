@@ -130,5 +130,39 @@ export const ATTACK_FORCE = 4;      // things with guns it wants before it will 
 export const ATTACK_EDGE = 1.2;     // how much stronger than you it wants to be
 export const GUARDS = 1;            // fighters that stay at home to guard the refinery
 
-export const THINK_EVERY = 1;       // seconds between one decision and the next
+export const THINK_EVERY = 1;       // seconds between one buying decision and the next
 export const MARCH_EVERY = 2.5;     // seconds between one wave of orders and the next
+
+
+/* --- The head start --------------------------------------------------
+
+   The enemy does nothing at all for this long at the start of a map:
+   no digging, no buying, no orders. Its harvesters stand by their
+   refinery and wait.
+
+   The digging has to stop too. A side that sleeps but keeps mining
+   only banks the credits and spends them all in one go the moment it
+   wakes, which is no head start at all: measured, that version moved
+   its first wave by thirteen seconds instead of the whole of it.
+
+   It is here because the commander is quicker than you are, and always
+   will be. It never misclicks, never loses a unit in a corner, and
+   never has to read a card to remember what a war factory costs. A
+   head start is not the commander playing worse. It is the one honest
+   way to hand a person the seconds that the mouse costs them.
+
+   Thirty seconds is about two loads of ore and a power plant for you,
+   and nothing at all for the enemy: enough to get your hand in, and
+   not so much that the game is over before it starts. Cut it to 0 when
+   you want the fight you were losing, and put it up when you want to
+   practise a new opening.
+
+   Changing it moves everything the enemy does later by the same amount,
+   because a plan is a list and this only decides when the list starts.
+
+   Note that `THINK_EVERY` and `MARCH_EVERY` above are not a second dial
+   for this. Making the enemy decide less often barely slows it down: it
+   is waiting for credits, not for its next think. Measured, three
+   seconds instead of one moved its win by three seconds.             */
+
+export const HEAD_START = 30;       // seconds before the enemy does anything at all

@@ -21,7 +21,7 @@
 import Phaser from 'phaser';
 import {
   BEAT, BLUE_BASE, CAPACITY, COLS, DRAG_START, GUN_RANGE, HEIGHT,
-  MARCH_EVERY, RED_BASE, ROWS, START_HARVESTERS, TANK_REACH, THINK_EVERY,
+  HEAD_START, MARCH_EVERY, RED_BASE, ROWS, START_HARVESTERS, TANK_REACH, THINK_EVERY,
   TILE, WIDTH
 } from './numbers.ts';
 import { BLANK, TERRAIN, TERRAIN_KEYS } from './terrain.ts';
@@ -134,6 +134,10 @@ let pressX = 0;                        // where it was pressed
 let pressY = 0;
 let dragging = false;                  // has it moved far enough to be a box?
 let askAgainIn = 0;                    // seconds until idle harvesters ask for a job again
+
+/* Seconds of the enemy's head start still to run. While it is above 0
+   the red side does nothing at all: no digging, no buying, no orders. */
+let asleep = HEAD_START;
 
 /* A ring that fades: red where a unit found no route, white where one
    blew up. */
@@ -511,8 +515,10 @@ function startBase(side: Side, cell: Cell, taken: Cell[]): Base {
     plots: freeSpots(map, cell, taken),
     placed: [],
     named: 0,
-    thinkIn: 0,
-    marchIn: 0,
+    /* The enemy's head start: it decides nothing until these run out.
+       Yours are never read, because your side is worked by the cards. */
+    thinkIn: HEAD_START,
+    marchIn: HEAD_START,
     marching: 0
   };
 
@@ -554,6 +560,7 @@ function putMapOnTheBoard(index: number): void {
   wrecks = 0;
   won = null;
   askAgainIn = 0;
+  asleep = HEAD_START;   // every map hands you the same head start
   field = makeField(map);
 
   const blueCell = nearestWalkable(map, BLUE_BASE.col, BLUE_BASE.row);
@@ -758,6 +765,16 @@ function giveRoute(unit: Unit, goal: Cell, loud: boolean): boolean {
 
 function takeNextJob(unit: Unit): void {
   if (unit.kind !== 'harvester' || wrecked(unit)) return;
+
+  /* The enemy's head start covers its whole side, digging included. A
+     side that sleeps but keeps mining only banks the money and spends
+     it all at once the moment it wakes up, which is no head start at
+     all: measured, it moved the enemy's first wave by thirteen
+     seconds instead of forty-five. */
+  if (unit.side === 'red' && asleep > 0) {
+    unit.job = 'waiting';
+    return;
+  }
 
   const base = baseOf(unit.side);
   const word = nextJob(unit, field, base.refinery);
@@ -1000,6 +1017,8 @@ function update(this: Phaser.Scene, time: number, delta: number): void {
 
     /* A harvester with nothing to do asks again once a second, and that
        is also what starts both ore runs when the page opens. */
+    asleep -= seconds;
+
     askAgainIn -= seconds;
     if (askAgainIn <= 0) {
       askAgainIn = 1;

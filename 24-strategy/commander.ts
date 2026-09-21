@@ -69,8 +69,8 @@ import { armed, wrecked } from './enemy.ts';
                       Project 22's `isBuilt` and `queued` know
 
    **The queue counts.** A rifleman takes four seconds to build and the
-   commander decides once a second, so a plan line that asked for two
-   would order five before the first one rolled out. Counting only what
+   commander decides every few seconds, so a plan line that asked for
+   two could order several before the first one rolled out. Counting only what
    stands on the map is how an army buys four of everything and wonders
    where its money went.
 
@@ -213,7 +213,7 @@ export function wantNext(yard: Yard, units: Unit[], side: Side): ItemKey | null 
  *
  * Write its test first. See commander.test.ts.
  *
- * The page calls this once a second. Three steps:
+ * The page calls this every THINK_EVERY seconds. Three steps:
  *
  *     a. Ask `wantNext` what the side is after. `null` means the plan
  *          is finished, so hand back `null`
